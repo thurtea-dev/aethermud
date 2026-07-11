@@ -1,0 +1,77 @@
+RIFTSMUD ROLEPLAY WIZARD HANDBOOK
+
+WHO THIS IS FOR
+Staff who handle starting skills, RP fairness, skill requests, tattoos,
+and player-facing support for character capabilities.
+
+POSITION AND ROLE
+  position: rp_wiz
+  wiz_role: rp (synced automatically from position)
+
+TOOLS YOU MUST HOLD
+Granted on promotion:
+  RP Skill Tool (commands: tool or rptool)
+  Tattoo Gun (command: inscribe)
+  Skill slip (for processing mailbox requests)
+
+Your workroom also has a request mailbox object.
+
+COMMAND ACCESS
+Roleplay wizards do NOT get creator or admin command paths.
+You CAN use:
+  tool / rptool (via RP skill tool only)
+  inscribe (via tattoo gun only)
+  Mailbox verbs in your workroom: read mailbox, take request, read slip,
+    approve slip, deny slip
+  Ambassador file tools and workroom (same as all wizards)
+
+RP SKILL TOOL MENU
+  1. Select a player (required first)
+  2. View player skills
+  3. Grant a skill (name and percentage)
+  4. Remove a skill
+  5. Grant a language (proficiency percentage)
+  6. Remove a language (cannot remove native languages)
+  7. View skill request queue
+
+TATTOO GUN MENU (inscribe)
+For Atlantean and Tattooed Man characters:
+  1. Select a player
+  2. View tattoos
+  3. Grant a tattoo (pick tattoo, then body location)
+  4. Remove a tattoo by location number
+
+SKILL REQUEST WORKFLOW
+Players submit: requestskill <text>
+In your workroom:
+  read mailbox       list pending requests
+  take request       pull oldest request as a slip
+  read slip          view details
+  approve slip       grant skill and percentage
+  deny slip          discard request
+Offline grants are saved and applied on next login.
+
+DIRECTORY ACCESS
+  Your workroom: /realms/<yourname>/workroom
+  Skill request saves: /secure/save/skill_requests/
+You do not receive a QCS area tree unless promoted to another role.
+
+YOUR RESPONSIBILITIES
+  Review and approve skill requests fairly
+  Grant starting and elective skills within Rifts rules
+  Manage Atlantean/Tattooed Man tattoos
+  Support Domain and Admin on RP disputes and player-kill fairness
+  Document unusual grants in wiz chat or mail to Domain/Admin
+
+NOT YOUR JOB
+  Building rooms, NPCs, or gear (Coding wizard)
+  Creating /domains/ directories (Domain wizard)
+  Promoting staff or wiping players (Admin)
+  Using build, update, or QCS commands
+
+Domain wizards may also use RP tools for oversight when holding the tool.
+
+SEE ALSO
+  help domain *wizard staff
+  help admin *wizard staff
+  read book (in your workroom)

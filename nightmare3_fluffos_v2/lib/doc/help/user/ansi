@@ -1,0 +1,10 @@
+ANSI COLOR
+
+AetherMUD supports ANSI color codes in terminals that support them.
+
+  colorize            toggle color output (colorize off to turn off)
+  testcolor           view available color tags
+
+Set your terminal or client to UTF-8 and ANSI color for best results.
+
+SEE ALSO: color, colorize, testcolor, terminal

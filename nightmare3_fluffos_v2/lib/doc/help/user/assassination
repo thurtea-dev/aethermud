@@ -1,0 +1,19 @@
+ASSASSINATION
+
+Syntax: assassination <target>
+        assassinate <target>
+
+A stealth killing blow with a wielded knife or blade.
+
+Requirements:
+  - Assassin training (Master Assassin, Sunaj Assassin, thief/spy OCCs,
+    or Prowl 40+ and W.P. Knife 30+)
+  - A knife or blade wielded (vibro-knife counts)
+  - Stealth: sneaking (sneak/hide), shadow meld, invisibility,
+    or a successful Prowl check at the moment of attack
+
+On success you strike for bonus damage and enter combat.
+On failure the target sees you coming and may counterattack.
+Stealth is broken after the attempt.
+
+See also: sneak, kill, backstab, prowl

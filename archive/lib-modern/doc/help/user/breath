@@ -1,0 +1,8 @@
+BREATH (racial command)
+
+Syntax: breath [target]
+
+Dragon and similar races with a breath weapon can use this command.
+30 second cooldown. In combat with no target, hits your current attacker.
+
+Damage scales with racial breath type (fire, ice, acid, lightning).

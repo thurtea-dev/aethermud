@@ -1,0 +1,39 @@
+AETHERMUD APPRENTICE WIZARD
+
+position: apprentice
+wiz_role: apprentice
+who tag: [Apprentice]
+
+Apprentices are temporary wizards created by makewiz. They get a workroom,
+basic ambassador-level file tools, and an apprentice kit.
+
+TOOL: kit (also: apprentice)
+  1. Choose track: rp / domain / coding
+  2. View task brief
+  3. Draft / edit submission
+  4. Submit to domain queue
+  5. View status (including ready_for_setrole)
+
+TRACK TASKS
+  RP     - Campaign/quest proposal -> domain review -> coding queue
+  Domain - Area outline -> domain approve -> ready for setrole
+  Coding - Realm room+NPC paths -> domain review -> coding check
+
+WHAT YOU CAN DO
+  - workroom, kit
+  - ed / cat / ls (ambassador path)
+  - cre channel
+  - read the reference book in your workroom
+
+WHAT YOU CANNOT DO YET
+  - QCS build (needs coding + staff of creation)
+  - domain dominion tools
+  - RP skill / tattoo tools
+  - admin commands (update, warmboot, setrole, etc.)
+
+PROMOTION
+When domain/coding mark you ready, an admin still runs:
+
+  setrole <you> <admin|domain|coding|rp>
+
+See also: help kit, help makewiz, help setrole, help staff *wizard staff

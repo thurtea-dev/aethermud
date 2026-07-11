@@ -1,0 +1,46 @@
+PALLADIUM ATTRIBUTES (the 8 stats)
+
+Rifts Earth uses the Palladium Books attribute system.  Every character has
+eight core attributes rolled during character creation.
+
+  IQ   Intelligence Quotient
+       Affects skill percentages, number of skills, and some mental checks.
+       Higher IQ gives a skill bonus and more secondary skills.
+
+  ME   Mental Endurance
+       Resistance to psionics, horror factor, and mental attacks.
+       Affects saving throws vs. mind control and insanity.
+
+  MA   Mental Affinity
+       Charisma and force of personality.  Affects NPC reactions and
+       the chance of trust/intimidation in social situations.
+
+  PS   Physical Strength
+       Raw muscle power.  Affects melee damage bonus and carrying capacity.
+       PS 16+ adds a damage bonus; extraordinary PS (from bionics, RCC) uses
+       different damage tables.
+
+  PP   Physical Prowess
+       Agility, coordination, and reflexes.  Affects to-hit bonus, combat
+       initiative, and acrobatic skills.
+
+  PE   Physical Endurance
+       Stamina and constitution.  Affects HP bonus per level, saving throws
+       vs. coma/death, and fatigue resistance.
+
+  PB   Physical Beauty
+       Physical attractiveness.  Affects NPC initial reactions.
+
+  Spd  Speed
+       Running speed in mph / meters per action.  Affects initiative and
+       the ability to flee combat.
+
+SECONDARY STATS (derived from the above)
+
+  HP   Hit Points       (based on PE and level)
+  SDC  Structural Damage Capacity  (based on race/OCC)
+  MDC  Mega-Damage Capacity        (MDC beings only, replaces HP/SDC)
+  PPE  Potential Psychic Energy    (magic pool)
+  ISP  Inner Strength Points       (psionic pool)
+
+See also: combat, score, races, occs

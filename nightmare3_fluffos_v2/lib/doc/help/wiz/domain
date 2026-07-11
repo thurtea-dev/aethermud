@@ -1,0 +1,76 @@
+RIFTSMUD DOMAIN WIZARD HANDBOOK
+
+WHO THIS IS FOR
+The backbone staff role. Domain wizards coordinate world areas, assign
+work to Coding and Roleplay wizards, and manage who builds where.
+
+POSITION AND ROLE
+  position: domain_wiz
+  wiz_role: domain (synced automatically from position)
+
+TOOLS YOU MUST HOLD
+  Staff of Dominion (command: dominate)
+Granted on promotion. You cannot use dominate without this staff.
+
+COMMAND ACCESS
+Domain wizards do NOT get the broad creator or admin command paths.
+You CAN use:
+  Ambassador file tools: ed, cat, ls, cd, more, goto (file navigation)
+  workroom
+  dominate (via staff of dominion only)
+If you hold an RP skill tool, you may also use tool/rptool for oversight
+(domain oversight is allowed by the tool gate).
+
+You CANNOT use by default:
+  update, eval, dest, build/QCS, promote, demote, rid, warmboot
+
+DOMINION STAFF MENU (dominate)
+  1. Create new domain directory (/domains/<name>/rooms, monsters, obj)
+  2. Assign domain to coding wizard (logged)
+  3. List all domains
+  4. Set domain description
+  5. Teleport to domain start room
+  6. Grant building access to player (logged)
+  7. Revoke building access (logged)
+  8. List players in domain
+  9. Reset all loaded rooms in domain
+ 10. Apprentice submissions (list/read/approve/reject/forward/ready)
+
+APPRENTICE PIPELINE
+Apprentices submit track tasks via kit. You review them under dominate 10.
+  RP / Coding approve -> coding queue (creation staff: review)
+  Domain outline approve -> ready_for_setrole
+  Option 8 marks ready_for_setrole without auto-setrole
+Admin still runs setrole when ready.
+
+DIRECTORY ACCESS
+On promotion you receive:
+  /realms/<yourname>/workroom.c
+  /realms/<yourname>/area/ (room, npc, weap, armor subdirs)
+  /domains/wizards/<yourname>/workroom.c (legacy path, optional)
+
+Game world areas live under /domains/<areaname>/ (e.g. /domains/Praxis/).
+Coding wizards usually build in /realms/<name>/area/ unless you assign
+a shared domain path.
+
+IMPORTANT: Options 6 and 7 log the grant but may still need an admin
+to update /realms/ or /domains/ adm/access.c for full write access.
+Contact an admin after granting access.
+
+YOUR RESPONSIBILITIES
+  Create and organize domain directories for Rifts content
+  Assign coding tasks and directories to Coding wizards
+  Coordinate RP wizards on skill fairness and player support
+  Reset or inspect areas under your domains
+  Keep Praxis and assigned world areas coherent
+
+NOT YOUR JOB
+  Promoting or demoting staff (Admin only)
+  Running QCS or build commands without a staff of creation
+  Wiping player files or shutting down the MUD
+  Editing /secure/ or /std/ without admin approval
+
+SEE ALSO
+  help coding *wizard staff
+  help roleplay *wizard staff
+  read book (in your workroom)

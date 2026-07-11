@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Quick Creation System</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #f7f5f0; }
+    h1 { font-size: 1.75rem; font-weight: normal; }
+    h2 { font-size: 1.15rem; font-weight: normal; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    nav a { margin-right: 1rem; color: #1a5c5c; }
+    a { color: #1a5c5c; }
+    code, pre { font-family: Consolas, "Courier New", monospace; font-size: 0.92rem; }
+    pre { background: #efece4; padding: 0.75rem 1rem; overflow-x: auto; }
+    ul { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="index.html">Home</a> <a href="coding.html">Coding</a></nav>
+  <h1>Quick Creation System</h1>
+  <p>Staff of Creation verbs for rooms, NPCs, weapons, and armor. Work in your realm sandbox first.</p>
+
+  <h2>Core verbs</h2>
+  <pre>create room|npc|weapon|armor &lt;id&gt;
+modify &lt;id&gt; &lt;field&gt; &lt;value&gt;
+add exit &lt;dir&gt; &lt;dest&gt;
+delete &lt;id&gt;
+about &lt;id&gt;
+more &lt;id&gt;
+clone &lt;id&gt;
+purge &lt;id&gt;</pre>
+
+  <h2>Where files land</h2>
+  <pre>/realms/&lt;you&gt;/area/room/
+/realms/&lt;you&gt;/area/npc/
+/realms/&lt;you&gt;/area/weap/
+/realms/&lt;you&gt;/area/armor/</pre>
+
+  <h2>Tips</h2>
+  <ul>
+    <li>Use short lowercase ids with underscores</li>
+    <li>Link exits both ways when rooms should be mutual</li>
+    <li>Spawn NPCs from room reset() with present() guards</li>
+    <li>Test with clone before promoting content into /domains/</li>
+  </ul>
+</body>
+</html>

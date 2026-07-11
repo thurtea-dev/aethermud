@@ -1,0 +1,24 @@
+FACE: Turn toward a direction or person
+
+Syntax: face <direction>
+        face <person>
+        face clear
+        face
+
+DESCRIPTION:
+  Sets your visible position string so the room list shows which way
+  you are turned. Example:
+
+    face north
+    (room shows: You faces north.)
+
+    face sal
+    (room shows: You faces Sal.)
+
+  Directions include north, south, east, west, up, down, and the
+  diagonal and in/out variants.
+
+  Type face alone to see your current facing. face clear resets it.
+  Moving to a new room also clears your facing.
+
+SEE ALSO: position, look

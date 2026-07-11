@@ -1,0 +1,24 @@
+DEATH: How death works in the Rifts
+
+When your character is killed in combat, what happens depends on
+your number of lives remaining (shown in score).
+
+NORMAL DEATH:
+  Each death costs one life and 10 percent of your experience.
+  You respawn at the Praxis death area. Your equipment and credits
+  remain on your corpse at the location where you died.
+
+PERMANENT DEATH:
+  When your last life is gone and you are level 4 or above, your
+  character is permanently lost. Attempting to log in with that
+  name will display a gravestone and the connection will be closed.
+  The name remains locked to that character permanently.
+
+  Characters level 3 and below can use the 'suicide' command to
+  cleanly delete a character and free the name for reuse.
+
+RECOVERY:
+  After a normal death, return to where you died to retrieve your
+  corpse. Equipment stored in a dim pocket bag is safe.
+
+SEE ALSO: suicide, score, sbar

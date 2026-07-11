@@ -1,0 +1,87 @@
+RIFTSMUD CODING WIZARD HANDBOOK
+
+WHO THIS IS FOR
+Builders and coders who write rooms, NPCs, weapons, and armor for
+RiftsMUD using QCS and manual LPC editing.
+
+POSITION AND ROLE
+  position: creator (legacy alias: immortal)
+  wiz_role: coding (synced automatically from position)
+
+TOOLS YOU MUST HOLD
+  Staff of Creation, held in inventory
+Granted on promotion. QCS does not work without this staff in inventory.
+
+COMMAND ACCESS
+Coding wizards do NOT get the broad creator command path (no standalone
+update, eval, or qcs on the command line). The QCS builder verbs below
+are the exception: they work directly, without a prefix, for any wizard
+holding the staff of creation.
+
+You CAN also use ambassador file tools for manual editing:
+  ed, cat, ls, cd, pwd, and related file shell commands
+  workroom
+
+QCS BUILDER WORKFLOW
+You must be inside your realm: /realms/<yourname>/
+
+  create room <dir> <file>
+  create npc <file>
+  create weapon <file>
+  create armor <file>
+  modify here <property> <value>
+  modify <file> <property> <value>
+  add exit <direction> <path>
+  add <npcfile> to here
+  delete <object>
+  about <file|here>
+  more <file|here>
+
+Older alternate form, still supported: build <verb> ... (e.g. build create
+room east test1). Prefer the direct verbs above for everyday building.
+
+clone <path> and purge <id> are separate staff-only commands, already
+direct (no prefix), granted by holding the staff of creation.
+
+Files are written under:
+  /realms/<yourname>/area/room/
+  /realms/<yourname>/area/npc/
+  /realms/<yourname>/area/weap/
+  /realms/<yourname>/area/armor/
+
+Each modify auto-recompiles the target file.
+
+DIRECTORY ACCESS
+  Your QCS sandbox: /realms/<yourname>/area/
+  Your workroom: /realms/<yourname>/workroom
+  Shared game areas: only paths assigned by a Domain or Admin wizard
+  Per-realm access control: /realms/<name>/adm/access.c
+
+LPC RULES (FluffOS 2.9)
+  Declare ALL variables at the top of each function block (C89).
+  Use /* */ comments only, not //.
+  Do not describe spawned NPCs in set_long(); use reset() spawns.
+  Smell and listen text only on explicit smell/listen commands.
+
+KEY INHERIT PATHS
+  Rooms: ROOM (from rooms.h)
+  Rifts NPCs: /std/rifts_npc
+  Weapons: /std/weapon
+  Armor: /std/armour
+
+YOUR RESPONSIBILITIES
+  Build and maintain assigned areas in your realm or assigned domain
+  Follow Rifts tone, Palladium accuracy, and lib conventions
+  Test content in your realm before requesting a domain merge
+  Report blockers to your Domain wizard
+
+NOT YOUR JOB
+  Promoting or demoting anyone
+  Granting player skills or tattoos (Roleplay wizard)
+  Managing /domains/ structure (Domain wizard)
+  Editing core std files without admin approval
+
+SEE ALSO
+  help ed *creator general
+  help domain *wizard staff
+  read book (in your workroom)

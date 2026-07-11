@@ -1,0 +1,47 @@
+COMBAT: Palladium Rifts combat system
+
+OVERVIEW:
+  Combat in AetherMUD is based on the Palladium Rifts RPG system.
+  Each character has a set number of Attacks Per Melee (APM) which
+  reset every 15 seconds.
+
+STARTING COMBAT:
+  kill <target>      - Attack a target and enter combat.
+
+APM (Attacks Per Melee):
+  Your APM is based on OCC and Physical Prowess bonus:
+    - Peak fighters (Cyber-Knight, Crazy, Juicer, Tattooed Man): 6
+    - Assassin / Specialist: 5
+    - Military OCC: 4
+    - Magic users: 3
+    - Civilians: 2
+  A high PP stat gives +1 APM (PP 16-19) or +2 APM (PP 20+).
+
+AUTO-PARRY:
+  Free. Always active. Uses your parry bonus against incoming attacks.
+  Type: autoparry to see your current bonus.
+
+AUTO-DODGE:
+  Optional. Costs 1 APM when triggered. Can dodge attacks that parry
+  cannot handle. Disable to conserve APM. Type: autododge to toggle.
+
+MDC vs SDC:
+  MDC (Mega-Damage Capacity) characters take no damage from SDC weapons.
+  MDC weapons drain armor MDC first; damage overflows to body MDC after
+  armor is destroyed.
+  SDC characters use armor AR rolls to block.
+
+DEATH:
+  When HP or MDC falls to 0 you die. A 10-second respawn timer begins.
+  You keep your inventory. A credit chip with 10% of your credits drops
+  at the death site.
+
+ESCAPE:
+  flee    - Run in a random direction. PP-based success, min 30%.
+  stop    - Cease your attacks. Passive enemies may stop too.
+
+TATTOO WEAPONS:
+  Use 'touch <location> tattoo' to summon tattoo weapons.
+  They are MDC and last until their duration expires.
+
+SEE ALSO: flee, stop, autoparry, autododge, touch, equipment

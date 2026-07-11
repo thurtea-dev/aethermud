@@ -1,0 +1,41 @@
+Welcome to RiftsMUD.
+
+This is a text-based roleplaying game set on Rifts Earth, a post-apocalyptic
+world shattered by dimensional rifts.  You are a survivor in a dangerous and
+richly detailed world.
+
+BASIC MOVEMENT
+  Type a direction to move: north, south, east, west (or n, s, e, w).
+  Some rooms have up, down, and other directions as well.
+
+LOOKING AROUND
+  look                  describes your current room
+  look <object>         examines something in the room
+  look at <object>      same as above
+
+YOUR CHARACTER
+  score                 displays your stats, level, and condition
+  inventory (or inv)    lists what you are carrying
+  worn                  shows what you are wearing or wielding
+
+COMMUNICATION
+  say <text>            speak aloud to people in the same room
+  ooc <text>            out-of-character global chat channel
+  tell <name> <text>    private message to another player
+  who                   lists players currently online
+  introduce             introduces yourself to nearby players
+
+HELP SYSTEM
+  help                  opens the help menu
+  help <topic>          looks up a specific topic
+  Useful topics: combat, skills, improve, advance, score, races, occs, weapons, colour
+
+QUESTS
+  quests                lists your active and completed quests
+  Talk to NPCs and explore to find quest givers.
+
+CONTACT STAFF
+  If you have a question, type: ooc <your question here>
+  Wizards (staff) can see the OOC channel and will help when available.
+
+See also: combat, stats, races, occs, skills, quests, score

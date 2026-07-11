@@ -1,0 +1,12 @@
+EJECT: Eject the spent ammo casing from a weapon
+
+Syntax: eject <weapon>
+
+DESCRIPTION:
+  Ejects the empty casing or spent clip from a ranged weapon.
+  Required for some weapon types before reloading a fresh clip.
+
+EXAMPLE:
+  eject cp40 laser
+
+SEE ALSO: reload, unload, weapons

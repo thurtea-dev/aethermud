@@ -1,0 +1,8 @@
+STOP
+
+Syntax: stop
+
+Stops following, auto-attack patterns, or certain ongoing actions depending
+ on context. Also used to halt converse mode (type ** to exit converse).
+
+SEE ALSO: follow, converse, combat

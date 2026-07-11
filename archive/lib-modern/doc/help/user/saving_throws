@@ -1,0 +1,17 @@
+SAVING_THROWS: Display your saving throw bonuses
+
+Syntax: saving_throws
+
+DESCRIPTION:
+  Displays your current bonuses to all Palladium saving throws:
+    - vs. Magic (PE-based)
+    - vs. Poison/Toxin
+    - vs. Psionics (ME-based)
+    - vs. Insanity
+    - vs. Coma/Death (PE-based)
+    - Horror Factor
+    - vs. Possession/Transformation
+
+  Bonuses increase with relevant attributes and OCC.
+
+SEE ALSO: score, combat, stats

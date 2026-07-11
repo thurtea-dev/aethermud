@@ -1,0 +1,14 @@
+EMOTE: Perform a social action
+
+Syntax: emote <action>
+
+DESCRIPTION:
+  Describes an action you perform, visible to everyone in the room.
+  Your name is automatically prepended.
+
+EXAMPLE:
+  emote waves at the crowd.
+
+  Output to others: Thurtea waves at the crowd.
+
+SEE ALSO: say, tell, whisper, ooc

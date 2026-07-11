@@ -1,0 +1,22 @@
+PUERTO ANGEL
+
+A coastal vampire town in southern Mexico, reachable south from the
+Illinois Road south of Chi-Town (long wasteland route).
+
+Key areas:
+  Outskirts, Main Street, Cantina, Residential District,
+  Abandoned Church (silver cross), Beach, Harbor.
+
+Day vs night:
+  The town is sealed and empty by day. After nightfall (server UTC proxy),
+  vampires prowl the streets and harbor. Some may not look like what they are.
+
+Combat notes:
+  Vampires are MDC creatures. Use MDC weapons or magic.
+  The church is a safe rest spot; vampires avoid it.
+  The hunter in the cantina sells advice, not miracles.
+
+Route from Chi-Town:
+  chitown_burbs -> illinois_road -> (south, long) -> pa_outskirts
+
+See also: combat, death

@@ -1,0 +1,14 @@
+GIVE: Give an item to another character
+
+Syntax: give <item> to <target>
+
+DESCRIPTION:
+  Transfers an item from your inventory to another player or NPC in the
+  same room. Some NPCs will react to receiving specific items (e.g., the
+  falconer accepts a leather glove).
+
+EXAMPLES:
+  give leather glove to falconer
+  give credits to thurtea
+
+SEE ALSO: take, drop, inventory

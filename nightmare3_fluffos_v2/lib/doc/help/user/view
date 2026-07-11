@@ -1,0 +1,15 @@
+VIEW: Historical command (not implemented)
+
+The original RiftsMUD website help index listed a "view" topic.
+Recovered player notes and archives do not document a distinct
+server-side view command separate from look, examine, eq, or score.
+
+Use these instead:
+  look / examine   inspect a room or object
+  eq               see worn and wielded gear
+  score            character sheet
+  picture show     see a player's ASCII portrait
+
+No view command is implemented in this recreation.
+
+SEE ALSO: look, examine, eq, score, picture

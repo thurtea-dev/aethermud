@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Roadmap</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #f7f5f0; }
+    h1 { font-size: 1.75rem; font-weight: normal; }
+    h2 { font-size: 1.15rem; font-weight: normal; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    h3 { font-size: 1rem; font-weight: normal; margin-top: 1.25rem; color: #444; }
+    nav a { margin-right: 1rem; color: #1a5c5c; }
+    a { color: #1a5c5c; }
+    code, pre { font-family: Consolas, "Courier New", monospace; font-size: 0.92rem; }
+    pre { background: #efece4; padding: 0.75rem 1rem; overflow-x: auto; }
+    ol, ul { padding-left: 1.2rem; }
+    li { margin: 0.25rem 0; }
+    .meta { color: #555; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="chargen.html">Chargen</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+
+  <h1>Roadmap</h1>
+  <p class="meta">Updated 2026-07-10. Source detail: <code>zone-expansion-plan.md</code>, <code>playtest-checklist.md</code>, <code>CLAUDE.md</code>, <code>report.md</code>.</p>
+  <p>Core game, Fedora transfer package, apprentice kit, warmboot, Tolkeen, Horton wilderness, Chi-Town burbs/city, and flat staff <code>www/</code> pages are in place. What follows is remaining work in suggested order.</p>
+
+  <h2>Now (ops and playtest)</h2>
+  <ol>
+    <li>Copy <code>production-aethermud/</code> to the Fedora Workstation mini PC. Follow <code>install-aethermud.md</code>: verify SHA256, extract, rebuild the FluffOS driver, <code>./mud.sh start</code>.</li>
+    <li>Manual playtest pass from <code>playtest-checklist.md</code> (password <code>playtestaa</code> for <code>pt*</code> chars):
+      <ul>
+        <li>Race eyeballs: dragons, vampires, Atlanteans, Titans</li>
+        <li>Cyber-Knight smoke on <code>ptcknight</code></li>
+        <li>Walk Tolkeen (Moxim <code>rift tolkeen</code>) and Horton wilderness</li>
+      </ul>
+    </li>
+    <li>Promote wizard candidates while each is online:
+      <pre>makewiz ptdacon
+makewiz ptcoder
+makewiz ptrpwiz</pre>
+      They use <code>kit</code> (domain / coding / rp). Domain reviews via <code>dominate</code> option 10; coding via <code>review</code>. Then <code>setrole &lt;name&gt; domain|coding|rp</code>.
+    </li>
+    <li>Optional regression: <code>python3 tools/section8_verify4.py</code> with the MUD up.</li>
+  </ol>
+
+  <h2>Phase A (zone depth, highest ROI)</h2>
+  <p>Deepen hubs players already reach. Exit criteria: a mortal can explore 2 to 3 hours from Praxis without looping the same twenty rooms.</p>
+  <ol>
+    <li><strong>Done.</strong> Chi-Town burbs + fortified city (~51 rooms).</li>
+    <li><strong>Done.</strong> Tolkeen playable city (~29 rooms: core, siege edge, crypt).</li>
+    <li><strong>Done.</strong> Horton wilderness ring (~27 rooms total).</li>
+    <li><strong>Next.</strong> Splynn Market depth + The Preserves (~+30 rooms). Hunting grounds west of Splynn; more market services; combat sink.</li>
+    <li>Optional polish: more Chi-Town / Splynn / NGR interiors if playtest finds thin spots.</li>
+  </ol>
+
+  <h2>Phase B (signature destinations)</h2>
+  <ol>
+    <li>Stormshire / Federation of Magic v1 (~80 to 120 rooms). Hook via Moxim and Americas wilderness.</li>
+    <li>New Camelot / NGR connective tissue (~+20 travel rooms, 1 to 2 side villages).</li>
+    <li>Lone Star expansion (~+20 to 30: labs, kennels, escape routes).</li>
+  </ol>
+  <p>Exit criteria: Chi-Town, New Camelot, Splynn, Stormshire, and Tolkeen each feel worth a mid-level visit.</p>
+
+  <h2>Phase C (later / optional)</h2>
+  <ul>
+    <li>Africa (Phoenix Empire postcard)</li>
+    <li>Japan (tech / mystic contrast)</li>
+    <li>Australia</li>
+    <li>Deeper demon / dimensional planes beyond the current sliver</li>
+  </ul>
+  <p>Start each as 15 to 25 rooms with one vendor, one threat, one unique loot. Do not block soft launch.</p>
+
+  <h2>Systems and parity (parallel track)</h2>
+  <ul>
+    <li>Legacy Praxis gaps: cemetery, inn guest rooms (no files yet)</li>
+    <li>Command: <code>customize</code></li>
+    <li>Content depth: vehicle interiors; more Palladium encyclopedia entries</li>
+    <li>Help: ~25 OCC help gaps</li>
+    <li>CharGen: fuller gamemaster walkthrough NPC</li>
+    <li>Player-run shops</li>
+    <li>Website parity: in-game help browser over HTTP (who gateway already simplified)</li>
+    <li>Modern FluffOS cutover: paused under <code>archive/</code>; not a playtest blocker</li>
+  </ul>
+
+  <h2>Suggested sprint order</h2>
+  <pre>1. Fedora install + playtest checklist + wizard promotions
+2. Splynn Preserves (+30)
+3. Stormshire v1 core (+80)
+4. Europe connectors + Lone Star (+40)
+5. Systems/parity items as they block play
+6. Phase C postcard zones when Phase B feels solid</pre>
+
+  <h2>Build rules (do not skip)</h2>
+  <ul>
+    <li>Spawns in <code>reset()</code> with <code>present()</code> guards; never NPCs in <code>set_long</code></li>
+    <li>One purpose per area: combat, shopping, RP hub, or quest spine</li>
+    <li>Hook every new zone to Moxim and/or a walkable path from an existing hub</li>
+    <li>Preload-compile new rooms; clean <code>log/catch</code> before calling a phase done</li>
+    <li>Full reboot after <code>/std/</code> or simul-efun changes; <code>warmboot</code> for daemons/cmds/domains</li>
+  </ul>
+
+  <h2>Related docs</h2>
+  <ul>
+    <li><code>zone-expansion-plan.md</code> (room targets and sprint notes)</li>
+    <li><code>playtest-checklist.md</code> / <code>playtest-roster.md</code></li>
+    <li><code>install-aethermud.md</code> (Fedora Workstation)</li>
+    <li><code>CLAUDE.md</code> (conventions and open high-level list)</li>
+    <li><code>nightmare3_fluffos_v2/lib/domains/Praxis/adm/master_gap_report.txt</code></li>
+  </ul>
+</body>
+</html>

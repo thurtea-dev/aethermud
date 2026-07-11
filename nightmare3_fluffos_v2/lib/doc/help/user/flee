@@ -1,0 +1,30 @@
+FLEE: Attempt to escape from combat
+
+Syntax: flee
+
+DESCRIPTION:
+  Attempts to flee from combat by moving in a random available direction.
+
+  Success is based on your Physical Prowess (PP) stat:
+    Chance = (PP / 30) * 100%
+    Minimum: 30%
+    Maximum: 95%
+
+  Fleeing costs 1 APM (Attack Per Melee). If you have no APM remaining,
+  you cannot flee this round.
+
+  On success:
+    - You move to a random adjacent room.
+    - Your attackers lose their target (unless they give chase).
+
+  On failure:
+    - You stumble. No movement occurs.
+    - 1 APM is still consumed.
+
+NOTES:
+  - The run command (if available) may function differently.
+  - Aggressive enemies may follow you to the next room.
+  - Stop attacking first with 'stop' if you only want to disengage
+    without running.
+
+SEE ALSO: stop, autoparry, autododge, kill

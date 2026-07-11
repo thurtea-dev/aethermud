@@ -1,0 +1,330 @@
+/secure/std/daemon.c line 17: Warning: Unused local variable 'str'
+  }
+   ^
+/secure/daemon/remotepost.h line 9: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.h line 10: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue()
+                                     ^
+/secure/daemon/remotepost.h line 11: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue()
+                                        ^
+/secure/daemon/remotepost.h line 12: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/remotepost.c line 116: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.c line 129: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue() {
+                                     ^
+/secure/daemon/remotepost.c line 133: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue() {
+                                        ^
+/secure/daemon/remotepost.c line 137: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/localpost.h line 6: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/localpost.c line 162: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/letters.h line 4: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.h line 6: Warning: Illegal to declare nosave function.
+  private nosave void save_letter()
+                                  ^
+/secure/daemon/letters.h line 7: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id)
+                                    ^
+/secure/daemon/letters.c line 51: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.c line 77: Warning: Illegal to declare nosave function.
+  private nosave void save_letter() {
+                                  ^
+/secure/daemon/letters.c line 86: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id) {
+                                    ^
+/secure/daemon/letters.c line 173: Warning: Unknown \ escape.
+  sscanf(__LettersDir[__LetterPtr[0]][__LetterPtr[1]], "%s\.%s", str, ext)
+                                                                ^
+/secure/daemon/letters.c line 214: Warning: Unknown \ escape.
+  sscanf(__PostalDir[__PostalPtr[0]][__PostalPtr[1]], "%s\.%s", pl, ext);
+                                                               ^
+/secure/daemon/folders.h line 4: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.h line 5: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/folders.c line 28: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.c line 46: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/events.c line 191: Warning: Unused local variable 'who'
+  }
+   ^
+/secure/std/daemon.c line 17: Warning: Unused local variable 'str'
+  }
+   ^
+/secure/daemon/remotepost.h line 9: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.h line 10: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue()
+                                     ^
+/secure/daemon/remotepost.h line 11: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue()
+                                        ^
+/secure/daemon/remotepost.h line 12: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/remotepost.c line 116: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.c line 129: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue() {
+                                     ^
+/secure/daemon/remotepost.c line 133: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue() {
+                                        ^
+/secure/daemon/remotepost.c line 137: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/localpost.h line 6: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/localpost.c line 162: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/letters.h line 4: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.h line 6: Warning: Illegal to declare nosave function.
+  private nosave void save_letter()
+                                  ^
+/secure/daemon/letters.h line 7: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id)
+                                    ^
+/secure/daemon/letters.c line 51: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.c line 77: Warning: Illegal to declare nosave function.
+  private nosave void save_letter() {
+                                  ^
+/secure/daemon/letters.c line 86: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id) {
+                                    ^
+/secure/daemon/letters.c line 173: Warning: Unknown \ escape.
+  sscanf(__LettersDir[__LetterPtr[0]][__LetterPtr[1]], "%s\.%s", str, ext)
+                                                                ^
+/secure/daemon/letters.c line 214: Warning: Unknown \ escape.
+  sscanf(__PostalDir[__PostalPtr[0]][__PostalPtr[1]], "%s\.%s", pl, ext);
+                                                               ^
+/secure/daemon/folders.h line 4: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.h line 5: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/folders.c line 28: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.c line 46: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/events.c line 191: Warning: Unused local variable 'who'
+  }
+   ^
+/secure/std/daemon.c line 17: Warning: Unused local variable 'str'
+  }
+   ^
+/secure/daemon/remotepost.h line 9: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.h line 10: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue()
+                                     ^
+/secure/daemon/remotepost.h line 11: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue()
+                                        ^
+/secure/daemon/remotepost.h line 12: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/remotepost.c line 116: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.c line 129: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue() {
+                                     ^
+/secure/daemon/remotepost.c line 133: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue() {
+                                        ^
+/secure/daemon/remotepost.c line 137: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/localpost.h line 6: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/localpost.c line 162: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/letters.h line 4: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.h line 6: Warning: Illegal to declare nosave function.
+  private nosave void save_letter()
+                                  ^
+/secure/daemon/letters.h line 7: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id)
+                                    ^
+/secure/daemon/letters.c line 51: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.c line 77: Warning: Illegal to declare nosave function.
+  private nosave void save_letter() {
+                                  ^
+/secure/daemon/letters.c line 86: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id) {
+                                    ^
+/secure/daemon/letters.c line 173: Warning: Unknown \ escape.
+  sscanf(__LettersDir[__LetterPtr[0]][__LetterPtr[1]], "%s\.%s", str, ext)
+                                                                ^
+/secure/daemon/letters.c line 214: Warning: Unknown \ escape.
+  sscanf(__PostalDir[__PostalPtr[0]][__PostalPtr[1]], "%s\.%s", pl, ext);
+                                                               ^
+/secure/daemon/folders.h line 4: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.h line 5: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/folders.c line 28: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.c line 46: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/events.c line 191: Warning: Unused local variable 'who'
+  }
+   ^
+/secure/std/daemon.c line 17: Warning: Unused local variable 'str'
+  }
+   ^
+/secure/daemon/remotepost.h line 9: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.h line 10: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue()
+                                     ^
+/secure/daemon/remotepost.h line 11: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue()
+                                        ^
+/secure/daemon/remotepost.h line 12: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/remotepost.c line 116: Warning: Illegal to declare nosave function.
+  private nosave string *local_targets(string *str)
+                                       ^
+/secure/daemon/remotepost.c line 129: Warning: Illegal to declare nosave function.
+  private nosave void save_mailqueue() {
+                                     ^
+/secure/daemon/remotepost.c line 133: Warning: Illegal to declare nosave function.
+  private nosave void restore_mailqueue() {
+                                        ^
+/secure/daemon/remotepost.c line 137: Warning: Illegal to declare nosave function.
+  private nosave string *convert_names(string *noms)
+                                       ^
+/secure/daemon/localpost.h line 6: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/localpost.c line 162: Warning: Illegal to declare nosave function.
+  private nosave mixed map_groups(string str, mapping grps, string who, int x)
+                                  ^
+/secure/daemon/letters.h line 4: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.h line 6: Warning: Illegal to declare nosave function.
+  private nosave void save_letter()
+                                  ^
+/secure/daemon/letters.h line 7: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id)
+                                    ^
+/secure/daemon/letters.c line 51: Warning: Illegal to declare nosave function.
+  private nosave int valid_access()
+                                  ^
+/secure/daemon/letters.c line 77: Warning: Illegal to declare nosave function.
+  private nosave void save_letter() {
+                                  ^
+/secure/daemon/letters.c line 86: Warning: Illegal to declare nosave function.
+  private nosave int restore_letter(string id) {
+                                    ^
+/secure/daemon/letters.c line 173: Warning: Unknown \ escape.
+  sscanf(__LettersDir[__LetterPtr[0]][__LetterPtr[1]], "%s\.%s", str, ext)
+                                                                ^
+/secure/daemon/letters.c line 214: Warning: Unknown \ escape.
+  sscanf(__PostalDir[__PostalPtr[0]][__PostalPtr[1]], "%s\.%s", pl, ext);
+                                                               ^
+/secure/daemon/folders.h line 4: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.h line 5: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/folders.c line 28: Warning: Illegal to declare nosave function.
+  private nosave void load_folder(string who, string folder)
+                                  ^
+/secure/daemon/folders.c line 46: Warning: Illegal to declare nosave function.
+  private nosave void save_folder()
+                                  ^
+/secure/daemon/events.c line 191: Warning: Unused local variable 'who'
+  }
+   ^
+/secure/std/login.c line 22: Warning: Illegal to declare nosave function.
+  private nosave int locked_access()
+                                   ^
+/secure/std/login.c line 23: Warning: Illegal to declare nosave function.
+  private nosave int check_password(string str)
+                                    ^
+/secure/std/login.c line 24: Warning: Illegal to declare nosave function.
+  private nosave int valid_site(string ip)
+                                ^
+/secure/std/login.c line 25: Warning: Illegal to declare nosave function.
+  private nosave int boot_copy()
+                               ^
+/secure/std/login.c line 27: Warning: Illegal to declare nosave function.
+  private nosave void exec_user()
+                                ^
+/secure/std/login.c line 38: Warning: Illegal to declare nosave function.
+  private nosave void internal_remove()
+                                      ^
+/secure/std/login.c line 124: Warning: Expression has no side effects, and the value is unused
+  if(__Player && (int)__Player->query_property("permanently_dead"))
+        ^
+/secure/std/login.c line 177: Warning: Illegal to declare nosave function.
+  private nosave int locked_access() {
+                                   ^
+/secure/std/login.c line 186: Warning: Illegal to declare nosave function.
+  private nosave int check_password(string str) {
+                                    ^
+/secure/std/login.c line 193: Warning: Illegal to declare nosave function.
+  private nosave int valid_site(string ip) {
+                                ^
+/secure/std/login.c line 206: Warning: Illegal to declare nosave function.
+  private nosave int boot_copy() {
+                               ^
+/secure/std/login.c line 239: Warning: Illegal to declare nosave function.
+  private nosave void exec_user() {
+                                ^
+/secure/std/login.c line 245: Warning: Unknown \ escape.
+  message("system", "\Problem connecting.\n", this_object());
+                               ^
+/secure/std/login.c line 355: Warning: Illegal to declare nosave function.
+  private nosave void internal_remove()
+                                      ^

@@ -1,0 +1,10 @@
+PSKILLS: Display your psionic skills
+
+Syntax: pskills
+
+DESCRIPTION:
+  Lists all psionic powers your character has, along with their
+  ISP (Inner Strength Points) costs and current percentage ratings.
+  Only characters with psychic abilities will see a pskills list.
+
+SEE ALSO: sskills, skills, psionics, score

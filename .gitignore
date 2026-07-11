@@ -1,0 +1,36 @@
+# Local runtime config (use *.example templates + init-local-config.sh)
+nightmare3_fluffos_v2/bin/mudos.cfg
+nightmare3_fluffos_v2/lib/secure/cfg/groups.cfg
+
+# Player character saves and all secure/daemon runtime save blobs
+nightmare3_fluffos_v2/lib/secure/save/**/*.o
+nightmare3_fluffos_v2/lib/daemon/save/**/*.o
+nightmare3_fluffos_v2/lib/domains/**/data/*.o
+
+# Runtime PID files
+nightmare3_fluffos_v2/bin/mud.pid
+nightmare3_fluffos_v2/bin/addr.pid
+
+# Runtime logs (files and subdirs under lib/log/)
+nightmare3_fluffos_v2/lib/log/*
+!nightmare3_fluffos_v2/lib/log/.gitkeep
+
+# Transient mudlib tmp
+nightmare3_fluffos_v2/lib/tmp/**/*
+!nightmare3_fluffos_v2/lib/tmp/.gitkeep
+
+# Personal wizard realms (keep directory, ignore per-user sandboxes)
+nightmare3_fluffos_v2/lib/realms/*/
+!nightmare3_fluffos_v2/lib/realms/.gitkeep
+
+# FluffOS build tree artifacts (binaries install to ../bin via make install)
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/tmp/
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/obj/
+
+# Prebuilt driver binaries (build locally with make install)
+nightmare3_fluffos_v2/bin/driver
+nightmare3_fluffos_v2/bin/addr_server
+nightmare3_fluffos_v2/bin/portbind
+
+# Local archive bundle (not required to run the MUD)
+zip-files/

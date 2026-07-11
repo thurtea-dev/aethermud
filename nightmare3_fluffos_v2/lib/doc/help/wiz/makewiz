@@ -1,0 +1,23 @@
+makewiz
+=======
+
+Syntax: makewiz <player>
+
+Promotes an online mortal to Apprentice wizard and applies the Godling
+RCC. The player must be online.
+
+Apprentices are temporary staff:
+  - position: apprentice
+  - who tag: [Apprentice]
+  - workroom created under /realms/<name>/
+  - no role staff tools yet
+
+Full staff roles still use setrole after apprenticeship tasks:
+
+  makewiz ptdacon
+  (tasks...)
+  setrole ptdacon domain
+
+Restricted to admin-level wizards. Logged to /log/adm/makewiz.
+
+See also: help setrole, help staff *wizard staff

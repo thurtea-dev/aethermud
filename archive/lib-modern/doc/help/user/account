@@ -1,0 +1,23 @@
+Account management on RiftsMUD covers a few key operations:
+
+PASSWORD CHANGE
+  Type: password
+  Change your login password.  You will be asked for your current password
+  first, then to set and confirm a new one.  Passwords must be 5 characters
+  or longer.
+
+EMAIL
+  Your email address is stored with your account for wizard contact purposes.
+  Contact a wizard to update it.
+
+QUITTING PERMANENTLY
+  If you wish to delete your character permanently, contact a wizard.  There
+  is no self-service character deletion command.  Be certain before asking,
+  as deleted characters cannot be recovered.
+
+NOTE
+  You are responsible for the security of your account.  Do not share your
+  password.  If someone else plays your character and causes trouble, you are
+  held responsible.
+
+See also: password

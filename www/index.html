@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #f7f5f0; }
+    h1 { font-size: 2rem; font-weight: normal; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.15rem; font-weight: normal; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    nav { margin: 1.5rem 0; }
+    nav a { margin-right: 1rem; color: #1a5c5c; }
+    a { color: #1a5c5c; }
+    p, li { color: #333; }
+    code, pre { font-family: Consolas, "Courier New", monospace; font-size: 0.92rem; }
+    pre { background: #efece4; padding: 0.75rem 1rem; overflow-x: auto; }
+    ul { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <h1>AetherMUD</h1>
+  <p>A FluffOS / Nightmare III recreation of early-2000s RiftsMUD. Palladium Rifts on a living mudlib.</p>
+
+  <nav>
+    <a href="#connect">Connect</a>
+    <a href="#install">Install</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="chargen.html">Chargen</a>
+    <a href="qcs.html">QCS</a>
+    <a href="apprentice.html">Apprentice</a>
+    <a href="coding.html">Coding</a>
+    <a href="domain.html">Domain</a>
+    <a href="roleplay.html">Roleplay</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+
+  <h2 id="connect">Connect</h2>
+  <p>Telnet or Mudlet to the host running the game:</p>
+  <pre>telnet localhost 1122</pre>
+  <p>After login, type <code>colorize on</code> if you want ANSI color.</p>
+
+  <h2 id="install">Install on Fedora Workstation</h2>
+  <p>The transfer package <code>production-aethermud/</code> ships with the full archive and a Fedora-specific guide:</p>
+  <ul>
+    <li><code>aethermud-full-YYYYMMDD.tar.gz</code> and its <code>.sha256</code></li>
+    <li><code>install-aethermud.md</code> (HDD copy, verify, dnf deps, rebuild driver, start)</li>
+    <li><code>INSTALL.md</code>, <code>RUNNING.md</code>, <code>README.md</code></li>
+  </ul>
+  <p>Short path: verify the checksum, extract into your home directory, rebuild the FluffOS driver on Fedora, then <code>./mud.sh start</code>. Full steps are in <code>install-aethermud.md</code>.</p>
+
+  <h2>Staff guides</h2>
+  <p>Offline HTML handbooks for wizard staff. In-game: <code>help staff</code>, <code>help kit</code>, <code>help coding</code>, and related topics.</p>
+  <ul>
+    <li><a href="roadmap.html">Roadmap</a> (remaining work and next steps)</li>
+    <li><a href="chargen.html">Character creation</a></li>
+    <li><a href="qcs.html">Quick Creation System</a></li>
+    <li><a href="apprentice.html">Apprentice wizard</a> (kit, tracks, promotion)</li>
+    <li><a href="coding.html">Coding wizard</a></li>
+    <li><a href="domain.html">Domain wizard</a></li>
+    <li><a href="roleplay.html">Roleplay wizard</a></li>
+    <li><a href="admin.html">Admin</a></li>
+  </ul>
+
+  <h2>Promotion path</h2>
+  <pre>makewiz &lt;player&gt;          Apprentice + kit
+kit                       Track task (rp / domain / coding)
+dominate / review         Domain and coding queues
+setrole &lt;player&gt; &lt;role&gt;   Full staff role</pre>
+</body>
+</html>

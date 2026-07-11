@@ -1,0 +1,17 @@
+COMMANDS INDEX
+
+Syntax: commands
+
+Lists all player commands in five columns. Type help to open the
+categorized help menu for topics and policies.
+
+Common commands:
+  Movement: north, south, east, west, up, down, look
+  Character: score, eq, worn, inventory, advance, improve
+  Combat: kill, flee, dodge, parry, stance, rest
+  Social: say, emote, whisper, introduce, greet, ooc
+  Communication: radio, telepathy, tell, mail
+
+Type help <command> for any command that exists in the game.
+
+SEE ALSO: getting-started, syntax, help

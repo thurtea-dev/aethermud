@@ -1,0 +1,31 @@
+TATTOO: Atlantean magical tattoos
+
+Syntax: tattoo
+        tattoo list
+        tattoo activate <number|name|location>
+        tattoo status
+        tattoo help
+
+DESCRIPTION:
+  Manage and activate magical tattoos. Available to Atlanteans, Sunaj
+  Assassins, Tattooed Men, and characters with the tattoo_capable property.
+
+  tattoo list
+      Show all tattoos with list numbers and body locations.
+
+  tattoo activate <number|name|location>
+      Activate one tattoo by list number, display name, or body location.
+
+  tattoo status
+      Show active timed tattoos and time remaining.
+
+  tattoo help
+      Extended in-command help.
+
+NOTES:
+  Weapon tattoos summon magical weapons. Armor tattoos create force fields.
+  Power tattoos have varied effects. Passive tattoos stay active.
+  Duplicate activation of an active timed tattoo is blocked.
+  New tattoos are inscribed by Tattoo Master NPCs in Atlantean cities.
+
+SEE ALSO: psionics, score, abilities

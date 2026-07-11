@@ -1,0 +1,24 @@
+INTRODUCE SYSTEM
+
+On AetherMUD, characters do not automatically know each other's names.
+A stranger appears as their race description until you have been formally
+introduced.
+
+WHY STRANGERS SHOW AS RACE DESCRIPTIONS
+  A human you have not met appears as "a human" or similar.
+  A D-Bee appears as their race type.
+  Their actual name is unknown to your character until introduced.
+
+COMMAND
+  introduce             introduces yourself to people in the room
+
+When you introduce yourself, everyone in the room learns your name (and you
+learn theirs if they are present and interactive).  After introduction,
+the person appears by name in all subsequent interactions.
+
+ROLEPLAY NOTE
+  The introduce system supports immersive roleplay.  It is considered
+  polite to introduce yourself when entering a social situation.
+  Some NPCs may respond differently before and after introduction.
+
+See also: say, ooc

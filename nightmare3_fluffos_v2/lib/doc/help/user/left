@@ -1,0 +1,16 @@
+LEFT: Wield an item in your left hand
+
+Syntax: left <item>
+        left nothing
+
+DESCRIPTION:
+  Wields the specified item in your left hand (off-hand). Useful for
+  holding a pistol, shield, or secondary weapon while your right hand
+  holds a primary weapon.
+
+  left nothing : clears the left hand
+
+EXAMPLE:
+  left cp40 laser
+
+SEE ALSO: right, wield, unwield, weapons

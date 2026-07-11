@@ -1,0 +1,14 @@
+SBAR COMMAND
+
+Syntax: sbar [on|off]
+
+Toggle the status bar shown after each room move.
+
+  sbar       toggle on/off
+  sbar on    enable the status bar
+  sbar off   disable the status bar
+
+The bar shows HP, SDC, MDC, PPE, and ISP as applicable.
+Use 'colorize' for a green bar.
+
+See also: score, status, colorize

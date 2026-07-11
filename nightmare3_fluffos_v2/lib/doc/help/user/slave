@@ -1,0 +1,11 @@
+SLAVE COMMAND
+
+Syntax: slave [list|claim <name>|free <name>]
+
+Manage slave ownership within the Splynn district only.
+
+  slave list          show slaves you own in this area
+  slave claim <name>  claim an unowned slave
+  slave free <name>   release a slave from your ownership
+
+See also: score, who

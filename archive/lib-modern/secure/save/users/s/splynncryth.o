@@ -1,0 +1,81 @@
+#/secure/save/users/s/splynncryth.c
+__AutoLoad ({({"/domains/adm/wiz_tools/staff_of_demotion",({}),}),({"/domains/adm/wiz_tools/staff_of_dominion",({}),}),({"/domains/adm/wiz_tools/staff_of_creation",({}),}),({"/domains/adm/wiz_tools/rp_skill_tool",({}),}),({"/domains/adm/wiz_tools/tattoo_gun",({}),}),})
+__ItemsValue 0
+auto_load 0
+__CurrentWorkingDirectory "/domains/Praxis"
+__Nicknames ([])
+__Aliases (["n":"go north","bio":"biography","nw":"go northwest","l":"look $*","ne":"go northeast","i":"inventory","w":"go west","exa":"look at $*","sw":"go southwest","u":"go up","e":"go east","d":"go down","se":"go southeast","s":"go south",])
+__Xverbs (["'":"say $*",":":"emote $*",])
+__Invis 0
+__Value 0
+__Mass 500
+__Material 0
+__CapName "Splynncryth"
+__VendorType "treasure"
+__Short 0
+__Long 0
+__PreventDrop 0
+__PreventGet 0
+__PreventPut 0
+__Read 0
+deaths 0
+player_data (["general":(["sp":11,"max_hp":200,"max_sp":84,"hp":63,]),])
+magic (["max points":80,"points":2,])
+severed ([])
+healing ([])
+body (["right foot":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":50,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),"right leg":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":66,"weapons":0,"ac":0,"limb_ref":"right foot","armour":({}),]),"head":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":100,"weapons":0,"ac":0,"limb_ref":"FATAL","armour":({}),]),"left foot":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":50,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),"left arm":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":66,"weapons":0,"ac":0,"limb_ref":"left hand","armour":({}),]),"torso":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":200,"weapons":0,"ac":0,"limb_ref":"FATAL","armour":({}),]),"left leg":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":66,"weapons":0,"ac":0,"limb_ref":"left foot","armour":({}),]),"right hand":(["damage":0,"armour_ob":({}),"weapon":0,"max_dam":50,"weapons":0,"wieldable":1,"ac":0,"limb_ref":"","armour":({}),]),"left hand":(["damage":0,"armour_ob":({}),"weapon":0,"max_dam":50,"weapons":0,"wieldable":1,"ac":0,"limb_ref":"","armour":({}),]),"right arm":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":66,"weapons":0,"ac":0,"limb_ref":"right hand","armour":({}),]),"whole_body":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":201,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),])
+limbs ({"left leg","torso","head","right leg","right foot","right hand","left arm","left foot","right arm","left hand","whole_body",})
+all_my_fingers 5
+heal_rate 2
+str_class "headhunter"
+skills (["demolitions":(["max":98,"points":0,"level":36,]),"wp three modern weapons":(["max":98,"points":0,"level":10,]),"tracking":(["max":98,"points":0,"level":30,]),"military etiquette":(["max":98,"points":0,"level":35,]),"navigation":(["max":98,"points":0,"level":40,]),"radio: basic":(["max":98,"points":0,"level":45,]),"wp one ancient":(["max":98,"points":0,"level":10,]),"pilot automobile":(["max":98,"points":0,"level":60,]),"literacy":(["max":98,"points":0,"level":60,]),"pilot two vehicles of choice":(["max":98,"points":0,"level":60,]),"wilderness survival":(["max":98,"points":0,"level":40,]),"first aid":(["max":98,"points":0,"level":45,]),"detect ambush":(["max":98,"points":0,"level":45,]),"mathematics basic":(["max":98,"points":0,"level":45,]),"wp energy pistol":(["max":98,"points":0,"level":60,]),"pilot hovercraft":(["max":98,"points":0,"level":50,]),"wp energy rifle":(["max":98,"points":0,"level":65,]),])
+wimpy 0
+wimpydir "out"
+env_var (["rifts_region":"atlantis","rifts_alignment":"Scrupulous","rifts_hth":"Combat 3","rifts_equipment":"Body armor, two modern ranged weapons, one melee weapon, combat knife, radio communicator, and mercenary ID papers.","tattoos_applied_session":"1783450062","colorize_set":"1","rifts_skills":"Language: Native 98%;Pilot Automobile 80%;Basic Math;Demolitions;First Aid;Military Etiquette;Pilot: Two Vehicles of Choice;Radio: Basic;W.P. One Ancient;W.P. Three Modern Weapons","rifts_occ":"headhunter","wiz_role":"admin","start":"/realms/splynncryth/workroom","TITLE":"","home_region":"atlantis","rifts_occ_flags":"","has_wiz_tools":"1","creation_step":"done","TERM":"ansi","rifts_languages":"American:98","active_language":"American","rifts_flags":"",])
+money (["credits":800,])
+invis 0
+ok_to_heal 31246
+description 0
+gender "male"
+stats (["is_MDC":0,"wisdom":10,"PPE_per_level":0,"IQ":3,"dexterity":12,"max_rifts_hp":19,"MDC":0,"charisma":13,"max_SDC":25,"PE":15,"rifts_hp":19,"PB":13,"SDC":25,"ISP_per_level":0,"Spd":15,"intelligence":3,"strength":12,"ME":10,"constitution":15,"PS":12,"MA":8,"max_MDC":0,"PP":12,])
+languages (["farsi":10,])
+primary_language "farsi"
+__PlayerAge 31237
+__PlayerKiller 0
+language_exp 0
+platinum 0
+gold 0
+electrum 0
+silver 0
+copper 0
+player_age 0
+__NoQuit 0
+level 20
+ghost 0
+rolls 3
+verbose_moves 1
+birth 1782502213
+blocked ([])
+news (["high mortal":47,"class":-1,"general":1254,"immortal":49,])
+char_name "splynncryth"
+real_name "Unknown"
+email "none"
+ip "localhost"
+last_on "Tue Jul  7 15:47:42 2026"
+password "kddniold!eaceflnkiioflhcajkniblnlokimim`f"
+race "human"
+original_site 0
+position "arch"
+primary_start "/realms/splynncryth/workroom"
+__RestrictedChannels ({})
+__WhereBlock 0
+mini_quests 0
+quests ({})
+mysites 0
+guild 0
+message 0
+married 0
+current_marriage 0
+divorced 0
+rp_title 0
+face_list 0

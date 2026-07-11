@@ -1,0 +1,9 @@
+WHO: List players currently online
+
+Syntax: who
+
+DESCRIPTION:
+  Displays a list of all players currently connected to AetherMUD,
+  along with their race, class, and current zone if visible.
+
+SEE ALSO: finger, score

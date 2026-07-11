@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Character Creation</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #f7f5f0; }
+    h1 { font-size: 1.75rem; font-weight: normal; }
+    h2 { font-size: 1.15rem; font-weight: normal; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    nav a { margin-right: 1rem; color: #1a5c5c; }
+    a { color: #1a5c5c; }
+    code, pre { font-family: Consolas, "Courier New", monospace; font-size: 0.92rem; }
+    pre { background: #efece4; padding: 0.75rem 1rem; overflow-x: auto; white-space: pre-wrap; }
+    ol, ul { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="index.html">Home</a></nav>
+  <h1>Character creation</h1>
+  <p>Room: <code>/domains/Praxis/setter.c</code>. Guide NPC: chargen_guide.</p>
+
+  <h2>Steps</h2>
+  <ol>
+    <li>Zone: <code>start americas</code>, <code>start atlantis</code>, or <code>start europe</code></li>
+    <li>Attributes: <code>pick roll</code>, optional <code>pick reroll</code> (up to 4 rerolls)</li>
+    <li>Race: <code>read list</code>, <code>pick &lt;race&gt;</code></li>
+    <li>Alignment: <code>alignment 1</code> through <code>alignment 7</code></li>
+    <li>OCC: <code>list</code>, <code>pick occ &lt;name&gt;</code>, or <code>no occ</code></li>
+    <li>Elective skills: <code>skills &lt;category&gt;</code>, <code>pick skill &lt;name&gt;</code></li>
+    <li>Secondary skills (if granted)</li>
+    <li>Finish: starting package, languages, teleport to welcome room</li>
+  </ol>
+
+  <h2>Example</h2>
+  <pre>&gt; start americas
+&gt; pick roll
+&gt; pick human
+&gt; alignment 2
+&gt; pick occ headhunter
+&gt; skills weapons
+&gt; pick skill tracking</pre>
+
+  <h2>Start rooms</h2>
+  <ul>
+    <li>Americas: /domains/Praxis/rifts_welcome</li>
+    <li>Atlantis: /domains/Praxis/areas/splynn/splynn_entry</li>
+    <li>Europe: /domains/newcamelot/areas/camelot_gate</li>
+  </ul>
+
+  <h2>Notes</h2>
+  <p>Disconnect mid-creation resumes from the saved creation_step. Dog Boy auto-assigns a Coalition soldier package.</p>
+</body>
+</html>

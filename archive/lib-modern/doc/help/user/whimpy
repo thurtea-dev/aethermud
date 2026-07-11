@@ -1,0 +1,20 @@
+WHIMPY: Set automatic flee threshold (also: wimpy)
+
+Syntax: whimpy <percent>
+        whimpy off
+
+DESCRIPTION:
+  Sets an HP percentage below which your character will automatically
+  attempt to flee from combat. When your current HP drops below this
+  threshold, flee is triggered at the start of your next round.
+
+  whimpy 30   : auto-flee when HP drops below 30%
+  whimpy off  : disable auto-flee
+  wimpy       : alternate spelling, works identically
+
+NOTES:
+  - Flee is not guaranteed to succeed.
+  - Auto-flee consumes 1 APM.
+  - Set to 0 or "off" to disable.
+
+SEE ALSO: flee, wimpy, combat

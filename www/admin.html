@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Admin</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #f7f5f0; }
+    h1 { font-size: 1.75rem; font-weight: normal; }
+    h2 { font-size: 1.15rem; font-weight: normal; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    nav a { margin-right: 1rem; color: #1a5c5c; }
+    a { color: #1a5c5c; }
+    code, pre { font-family: Consolas, "Courier New", monospace; font-size: 0.92rem; }
+    pre { background: #efece4; padding: 0.75rem 1rem; overflow-x: auto; }
+    ul { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="index.html">Home</a></nav>
+  <h1>Admin</h1>
+  <p>Position: arch / head arch. Role tag: admin.</p>
+
+  <h2>Tools</h2>
+  <ul>
+    <li>Staff of Demotion: promote, demote</li>
+    <li>Staff of Dominion: dominate (includes apprentice submissions)</li>
+    <li>Staff of Creation: create, modify, add, delete, about, more, clone, purge, review</li>
+    <li>RP Skill Tool and Tattoo Gun</li>
+  </ul>
+
+  <h2>Promotion</h2>
+  <pre>makewiz &lt;player&gt;
+setrole &lt;player&gt; admin|domain|coding|rp</pre>
+  <p>makewiz creates an Apprentice with a kit. setrole assigns the permanent role after their track task is marked ready.</p>
+
+  <h2>Reload</h2>
+  <ul>
+    <li><code>warmboot</code> reloads daemons, cmds, obj, and /domains/adm; notifies online admins</li>
+    <li><code>./mud.sh restart</code> for /std/ or simul-efun changes</li>
+  </ul>
+
+  <h2>Paths</h2>
+  <pre>/secure/save/users/
+/secure/save/apprentice/
+/domains/
+/realms/
+/domains/adm/wiz_tools/
+/log/adm/</pre>
+</body>
+</html>

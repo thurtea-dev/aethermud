@@ -1,0 +1,28 @@
+RADIO COMMUNICATIONS
+
+Radio items allow you to broadcast and receive messages on specific
+frequency channels.  Two players on the same channel and the same radio
+type can hear each other anywhere in the game world.
+
+COMMANDS
+  radio on              turns your radio on (begins receiving)
+  radio off             turns your radio off
+  tune <frequency>      changes to a different channel (1-100)
+  transmit <message>    broadcasts a message on your current channel
+  radio <message>       shorthand for transmit
+
+CHANNELS
+  Channel 14 is the Praxis open frequency (civilians).
+  Channel 1 is the CS military coordination frequency.
+  Other channels may be used by guilds, factions, or arranged groups.
+
+RADIO TYPES
+  Personal radio        short range, civilian grade
+  Military radio        extended range, scan capable, CS-issue
+
+TIPS
+  Anyone on the same channel with a compatible radio will hear your
+  transmission.  This is in-character communication, not OOC chat.
+  For out-of-character communication use the 'ooc' command instead.
+
+See also: ooc

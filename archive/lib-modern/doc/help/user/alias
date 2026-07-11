@@ -1,0 +1,8 @@
+ALIAS
+
+RiftsMUD does not provide a global alias command. Many MUD clients (Mudlet,
+MUSHclient) let you define aliases and triggers locally.
+
+Example Mudlet alias: send score when you type sc.
+
+SEE ALSO: trigger, lineecho, prompt

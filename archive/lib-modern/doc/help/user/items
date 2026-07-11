@@ -1,0 +1,11 @@
+ITEMS
+
+Items are objects in the game world. Common interactions:
+
+  get <item>       pick up from the room
+  drop <item>      leave in the room
+  give <item> to <who>
+  look at <item>   examine
+  wear / wield     equip gear (see help eq)
+
+SEE ALSO: get, drop, give, eq, inventory

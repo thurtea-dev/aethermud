@@ -1,0 +1,81 @@
+#/secure/save/users/t/thurtest.c
+__AutoLoad ({})
+__ItemsValue 0
+auto_load 0
+__CurrentWorkingDirectory 0
+__Nicknames ([])
+__Aliases (["bio":"biography","n":"go north","nw":"go northwest","l":"look $*","ne":"go northeast","i":"inventory","w":"go west","sw":"go southwest","exa":"look at $*","e":"go east","u":"go up","se":"go southeast","d":"go down","s":"go south",])
+__Xverbs (["'":"say $*",":":"emote $*",])
+__Invis 0
+__Value 0
+__Mass 500
+__Material 0
+__CapName "Thurtest"
+__VendorType "treasure"
+__Short 0
+__Long 0
+__PreventDrop 0
+__PreventGet 0
+__PreventPut 0
+__Read 0
+deaths 0
+player_data (["general":(["sp":3,"max_hp":160,"hp":69,"max_sp":63,]),])
+magic (["max points":200,"points":0,])
+severed ([])
+healing ([])
+body (["head":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":80,"weapons":0,"ac":0,"limb_ref":"FATAL","armour":({}),]),"right leg":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":53,"weapons":0,"ac":0,"limb_ref":"right foot","armour":({}),]),"right foot":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":40,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),"left arm":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":53,"weapons":0,"ac":0,"limb_ref":"left hand","armour":({}),]),"left foot":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":40,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),"left leg":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":53,"weapons":0,"ac":0,"limb_ref":"left foot","armour":({}),]),"torso":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":161,"weapons":0,"ac":0,"limb_ref":"FATAL","armour":({}),]),"right hand":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":40,"wieldable":1,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),"right arm":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":53,"weapons":0,"ac":0,"limb_ref":"right hand","armour":({}),]),"left hand":(["damage":0,"weapon":0,"armour_ob":({}),"max_dam":40,"wieldable":1,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),"whole_body":(["damage":0,"armour_ob":({}),"max_dam":161,"weapons":0,"ac":0,"limb_ref":"","armour":({}),]),])
+limbs ({"left leg","torso","head","right leg","right foot","right hand","left arm","left foot","right arm","left hand","whole_body",})
+all_my_fingers 5
+heal_rate 2
+str_class "sunaj assassin"
+skills (["mathematics basic":(["max":98,"points":0,"level":45,]),"wp energy pistol":(["max":98,"points":0,"level":50,]),"wp energy rifle":(["max":98,"points":0,"level":50,]),"literacy":(["max":98,"points":0,"level":60,]),"pilot automobile":(["max":98,"points":0,"level":36,]),])
+wimpy 0
+wimpydir "out"
+env_var (["rifts_region":"atlantis","rifts_alignment":"Miscreant","rifts_hth":"Basic","tattoos_applied_session":"1782726278","tattoo_slots":"20","colorize_set":"1","tattoos":(["right forearm":"flaming sword","back":"dragon",]),"clan":"aerihman","rifts_occ":"Sunaj Assassin","start":"/domains/Praxis/areas/splynn/splynn_entry","TITLE":"","home_region":"atlantis","rifts_occ_flags":"magic_tattoos,assassin_order","nc_gate_visited":"Mon Jun 29","creation_step":"done","TERM":"ansi","rifts_languages":"Atlantean:98,American:60,Dragonese:80","active_language":"American","rifts_flags":"sense_rifts,ley_line_navigation,magic_tattoos,dimension_sense,magic_resistance,magic_tattoos,assassin_order","tattoo_mdc_bonus":"20",])
+money (["credits":500,])
+invis 0
+ok_to_heal 19169
+description 0
+gender "male"
+stats (["wisdom":5,"is_MDC":0,"dexterity":9,"IQ":15,"MDC":20,"max_rifts_hp":14,"charisma":6,"max_SDC":41,"PE":11,"rifts_hp":14,"SDC":41,"PB":6,"Spd":10,"strength":17,"intelligence":15,"ME":5,"PS":17,"constitution":11,"MA":8,"max_MDC":20,"PP":9,])
+languages (["atlanteanish":10,])
+primary_language "atlanteanish"
+__PlayerAge 19169
+__PlayerKiller 0
+language_exp 0
+platinum 0
+gold 0
+electrum 0
+silver 0
+copper 0
+player_age 0
+__NoQuit 0
+level 1
+ghost 0
+rolls 1
+verbose_moves 1
+birth 1782499148
+blocked ([])
+news (["general":1254,"class":-1,])
+char_name "thurtest"
+real_name "Unknown"
+email "info@thurtea.com"
+ip "localhost"
+last_on "Mon Jun 29 06:44:38 2026"
+password "ghagjoff!kkigkdaodkkheifd`mlib`ngamndfach"
+race "atlantean"
+original_site 0
+position "player"
+primary_start "/domains/Praxis/areas/splynn/splynn_entry"
+__RestrictedChannels ({})
+__WhereBlock 0
+mini_quests 0
+quests ({})
+mysites 0
+guild 0
+message 0
+married 0
+current_marriage 0
+divorced 0
+rp_title 0
+face_list 0

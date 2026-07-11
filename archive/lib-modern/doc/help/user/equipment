@@ -1,0 +1,24 @@
+EQUIPMENT: Show currently equipped items and tattoos
+
+Syntax: equipment
+        eq
+
+DESCRIPTION:
+  Displays all items you have equipped on your body, by slot, along with
+  any active Atlantean tattoos.
+
+OUTPUT FORMAT:
+  Right hand:  <weapon or empty>
+  Left hand:   <weapon or empty>
+  <slot>:      <armor piece or shield>
+  ...
+  Tattoos:     <tattoo name> (<location>), ...
+
+NOTES:
+  Tattoo weapons (flaming sword, spear, dagger) appear in the weapon
+  slots once summoned and wielded.
+
+  Temporary tattoo effects (armor fields, power effects) are not shown
+  in the equipment list but can be seen in your score or status.
+
+SEE ALSO: touch, score, wield, wear, remove

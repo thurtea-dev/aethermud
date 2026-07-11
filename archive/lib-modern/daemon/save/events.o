@@ -1,0 +1,3 @@
+#/secure/daemon/events.c
+__RebootInterval 24
+__Events (["/domains/Praxis/hotel":(["time":1783475365,"regular":18000,"args":({}),"function":"check_out",]),"/secure/daemon/events":(["time":1783469962,"regular":0,"args":({}),"function":"change_sky",]),])

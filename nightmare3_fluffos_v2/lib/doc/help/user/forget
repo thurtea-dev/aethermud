@@ -1,0 +1,13 @@
+FORGET: Remove a player from your face list
+
+Syntax: forget <player>
+
+DESCRIPTION:
+  Removes a player from your recognized list. After forgetting them, you
+  see their race description again unless you re-recognize them.
+
+NOTES:
+  The target may be in the room or online anywhere.
+  This only affects your own recognition, not theirs.
+
+SEE ALSO: known, remember, introduce

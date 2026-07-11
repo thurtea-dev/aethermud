@@ -1,0 +1,15 @@
+MEDITATE: Restore PPE or ISP
+
+Syntax: meditate
+
+DESCRIPTION:
+  Enter meditation to recover psychic or magical energy. Psionic OCCs restore
+  ISP. Magic OCCs restore PPE when standing on a ley line.
+
+NOTES:
+  Meditation has a cooldown of about ten minutes.
+  Psionic users restore ISP based on level.
+  Magic users must be on a ley line to draw PPE.
+  ISP also recovers slowly over time and faster while resting.
+
+SEE ALSO: rest, psionics, psi, score

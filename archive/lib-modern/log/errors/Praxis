@@ -1,0 +1,136 @@
+/domains/Praxis/wiz_tools/staff_of_demotion.c line 106: Undefined function do_player_action
+/domains/Praxis/wiz_tools/staff_of_demotion.c line 179: Undefined variable 'USERS_D'
+/domains/Praxis/wiz_tools/staff_of_demotion.c line 195: Undefined variable 'USERS_D'
+/domains/Praxis/wiz_tools/staff_of_demotion.c line 106: Undefined function do_player_action
+/domains/Praxis/wiz_tools/staff_of_demotion.c line 179: Undefined variable 'USERS_D'
+/domains/Praxis/wiz_tools/staff_of_demotion.c line 195: Undefined variable 'USERS_D'
+/domains/Praxis/setter.c line 260: Undefined function do_elective_skill_pick
+/domains/Praxis/setter.c line 608: Undefined function to_string
+/domains/Praxis/npcs/falconer.c line 23: Undefined function set_hp_max
+/domains/Praxis/npcs/falconer.c line 23: Undefined function set_hp_max
+/domains/Praxis/npcs/falconer.c line 23: Undefined function set_hp_max
+/domains/Praxis/wiz_tools/staff_of_dominion.c line 76: Undefined function do_list_domains
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 88: Undefined function do_view_skills
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 89: Undefined function do_grant_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 90: Undefined function do_remove_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 91: Undefined function do_grant_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 92: Undefined function do_remove_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 93: Undefined function do_view_queue
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 88: Undefined function do_view_skills
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 89: Undefined function do_grant_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 90: Undefined function do_remove_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 91: Undefined function do_grant_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 92: Undefined function do_remove_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 93: Undefined function do_view_queue
+/domains/Praxis/wiz_tools/staff_of_creation.c line 98: Undefined function do_list_purge
+/domains/Praxis/wiz_tools/staff_of_creation.c line 99: Undefined function do_list_room
+/domains/Praxis/wiz_tools/staff_of_creation.c line 136: Undefined function write_room_file
+/domains/Praxis/wiz_tools/staff_of_creation.c line 196: Undefined function write_npc_file
+/domains/Praxis/wiz_tools/staff_of_creation.c line 235: Undefined function write_weap_file
+/domains/Praxis/wiz_tools/staff_of_creation.c line 278: Undefined function write_arm_file
+/domains/Praxis/wiz_tools/staff_of_dominion.c line 76: Undefined function do_list_domains
+/domains/Praxis/wiz_tools/tattoo_gun.c line 79: Undefined function do_view_tattoos
+/domains/Praxis/wiz_tools/tattoo_gun.c line 80: Undefined function do_grant_tattoo_entry
+/domains/Praxis/wiz_tools/tattoo_gun.c line 81: Undefined function do_remove_tattoo_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 88: Undefined function do_view_skills
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 89: Undefined function do_grant_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 90: Undefined function do_remove_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 91: Undefined function do_grant_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 92: Undefined function do_remove_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 93: Undefined function do_view_queue
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 88: Undefined function do_view_skills
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 89: Undefined function do_grant_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 90: Undefined function do_remove_skill_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 91: Undefined function do_grant_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 92: Undefined function do_remove_language_entry
+/domains/Praxis/wiz_tools/rp_skill_tool.c line 93: Undefined function do_view_queue
+/domains/Praxis/wiz_tools/staff_of_dominion.c line 76: Undefined function do_list_domains
+/domains/Praxis/wiz_tools/staff_of_creation.c line 98: Undefined function do_list_purge
+/domains/Praxis/wiz_tools/staff_of_creation.c line 99: Undefined function do_list_room
+/domains/Praxis/wiz_tools/staff_of_creation.c line 136: Undefined function write_room_file
+/domains/Praxis/wiz_tools/staff_of_creation.c line 196: Undefined function write_npc_file
+/domains/Praxis/wiz_tools/staff_of_creation.c line 235: Undefined function write_weap_file
+/domains/Praxis/wiz_tools/staff_of_creation.c line 278: Undefined function write_arm_file
+/domains/Praxis/wiz_tools/tattoo_gun.c line 79: Undefined function do_view_tattoos
+/domains/Praxis/wiz_tools/tattoo_gun.c line 80: Undefined function do_grant_tattoo_entry
+/domains/Praxis/wiz_tools/tattoo_gun.c line 81: Undefined function do_remove_tattoo_entry
+/domains/Praxis/areas/splynn/shadow_slave.c line 24: Undefined function set_al
+/domains/Praxis/areas/splynn/shadow_slave.c line 32: Undefined function set_npc
+/domains/Praxis/areas/splynn/shadow_slave.c line 24: Undefined function set_al
+/domains/Praxis/areas/splynn/shadow_slave.c line 32: Undefined function set_npc
+/domains/Praxis/equipment/flame_hilt.c line 22: Undefined function set_damage
+/domains/Praxis/equipment/flame_hilt.c line 22: Undefined function set_damage
+/domains/Praxis/equipment/flame_hilt.c line 22: Undefined function set_damage
+/domains/Praxis/equipment/trained_hawk.c line 215: Undefined function attack
+/domains/Praxis/equipment/trained_hawk.c line 297: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 297: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 332: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 332: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 332: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 332: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 325: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 325: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 318: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 318: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 236: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 236: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 236: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 236: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 203: Undefined function attack
+/domains/Praxis/equipment/trained_hawk.c line 287: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 287: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 236: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 236: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 236: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 236: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 236: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 236: Illegal to use local variable in functional.
+/domains/Praxis/equipment/trained_hawk.c line 226: Left argument of -> is not a class
+/domains/Praxis/equipment/trained_hawk.c line 226: Illegal to use local variable in functional.
+/domains/Praxis/monsters/rocky_barkeep.c line 233: Reserved type name unexpected.
+/domains/Praxis/monsters/rocky_barkeep.c line 233: syntax error
+/domains/Praxis/monsters/rocky_barkeep.c line 234: Illegal LHS
+/domains/Praxis/monsters/rocky_barkeep.c line 235: Undefined variable 'talisman'
+/domains/Praxis/monsters/rocky_barkeep.c line 235: Undefined variable 'giver'
+/domains/Praxis/monsters/rocky_barkeep.c line 240: Undefined variable 'ob'
+/domains/Praxis/monsters/rocky_barkeep.c line 233: Reserved type name unexpected.
+/domains/Praxis/monsters/rocky_barkeep.c line 233: syntax error
+/domains/Praxis/monsters/rocky_barkeep.c line 234: Illegal LHS
+/domains/Praxis/monsters/rocky_barkeep.c line 235: Undefined variable 'talisman'
+/domains/Praxis/monsters/rocky_barkeep.c line 235: Undefined variable 'giver'
+/domains/Praxis/monsters/rocky_barkeep.c line 240: Undefined variable 'ob'
+/domains/Praxis/monsters/rocky_barkeep.c line 244: Undefined function cmd_buy
+/domains/Praxis/monsters/rocky_barkeep.c line 244: Undefined function cmd_buy
+/domains/Praxis/monsters/rocky_barkeep.c line 244: Undefined function cmd_buy

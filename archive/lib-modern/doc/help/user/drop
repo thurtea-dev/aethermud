@@ -1,0 +1,14 @@
+DROP: Drop an item on the floor
+
+Syntax: drop <item>
+        drop all
+
+DESCRIPTION:
+  Drops the specified item from your inventory onto the floor of the
+  current room. Items left on the floor may disappear when the room resets.
+
+EXAMPLES:
+  drop e-clip
+  drop all
+
+SEE ALSO: take, give, inventory

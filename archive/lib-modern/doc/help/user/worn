@@ -1,0 +1,31 @@
+WORN
+
+Syntax: worn
+
+Displays all armor and equipment your character currently has equipped,
+organized by wear slot.
+
+WEAR SLOTS (common)
+  head          helmet, hat, or headgear
+  face          visor, mask, or faceplate
+  body          torso armor or jacket
+  arms          arm guards or gauntlets
+  hands         gloves
+  legs          leg armor
+  feet          boots or greaves
+  back          backpack or cape
+  belt          holsters, pouches
+
+NOTES
+  Each slot can only hold one item at a time (some exceptions apply).
+  Armor protects based on its MDC or AR/SDC rating.
+  MDC armor absorbs MDC weapon damage before it reaches your MDC pool.
+  When armor MDC reaches 0 it is destroyed.
+
+RELATED COMMANDS
+  inventory (inv)    shows items you are carrying
+  wear <item>        puts on a piece of armor or clothing
+  wield <item>       readies a weapon for combat
+  remove <item>      takes off a worn item
+
+See also: inventory, combat, wear, wield

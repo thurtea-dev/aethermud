@@ -1,0 +1,15 @@
+CONCEPT COMMANDS
+
+The original RiftsMUD listed concept, concept1, and concept2 as help topics
+for Palladium RPG mechanics (MDC, PPE, ISP, APM, etc.).
+
+Use these topics instead:
+  help combat       combat and damage types
+  help stats        attributes
+  help score        character sheet
+  help psionics     ISP and psi powers
+  help spells       PPE and magic
+  help bionics      cybernetics
+  help levels       experience and advancement
+
+SEE ALSO: concept1, concept2, combat, stats

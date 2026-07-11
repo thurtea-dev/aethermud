@@ -1,0 +1,8 @@
+ASSIST COMMAND
+
+Syntax: assist <player>
+
+Join combat against whoever is attacking the named ally. You must be in
+the same room and the ally must already be fighting.
+
+See also: kill, party, flee, combat

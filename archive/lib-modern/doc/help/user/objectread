@@ -1,0 +1,17 @@
+OBJECTREAD: Read an object's history
+
+Syntax: objectread [at <target>]
+        psi object read [at <target>]
+
+DESCRIPTION:
+  Sense the history and last user of an object. Costs 6 ISP. Range: touch.
+
+  Examples:
+    objectread at sword
+    psi object read at datapad
+
+NOTES:
+  You must know object read and have enough ISP.
+  In combat, using psionics costs one attack from your APM pool.
+
+SEE ALSO: psi, psionics, examine

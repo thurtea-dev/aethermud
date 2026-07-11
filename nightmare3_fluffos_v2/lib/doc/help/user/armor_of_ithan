@@ -1,0 +1,23 @@
+Armor of Ithan
+==============
+
+Syntax:
+  cast armor of ithan
+  cast armorofithan
+  cast ithan
+
+PPE Cost: 10
+Level:    3
+Duration: 5 minutes (300 seconds)
+Range:    Self
+
+Creates a shimmering magical force field around the caster that absorbs
+up to 30 MDC of damage before dissipating. The field does not stack with
+itself: casting it again while already active has no effect.
+
+When the field is depleted or expires, you receive a message.
+
+Casters who know this spell: Ley Line Walker, Ley Line Rifter, Mystic,
+Techno-Wizard, and most dragon races.
+
+See also: help spells, help cast, help score

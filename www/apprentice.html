@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Apprentice</title>
+  <style>
+    body { font-family: Georgia, "Times New Roman", serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #f7f5f0; }
+    h1 { font-size: 1.75rem; font-weight: normal; }
+    h2 { font-size: 1.15rem; font-weight: normal; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    nav a { margin-right: 1rem; color: #1a5c5c; }
+    a { color: #1a5c5c; }
+    code, pre { font-family: Consolas, "Courier New", monospace; font-size: 0.92rem; }
+    pre { background: #efece4; padding: 0.75rem 1rem; overflow-x: auto; }
+    ul { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="index.html">Home</a></nav>
+  <h1>Apprentice Wizard</h1>
+  <p>Position: apprentice. Role tag: apprentice. Who tag: [Apprentice].</p>
+  <p>Apprentices are temporary wizards created by <code>makewiz</code>. They get a workroom, basic ambassador-level file tools, and an apprentice kit. The kit is the path to a permanent staff role.</p>
+
+  <h2>The kit</h2>
+  <p>Type <code>kit</code> (or <code>apprentice</code>) to open the tool:</p>
+  <pre>1. Choose track (rp / domain / coding)
+2. View task brief
+3. Draft / edit submission
+4. Submit to domain queue
+5. View my submission status</pre>
+
+  <h2>Track tasks</h2>
+  <ul>
+    <li><strong>RP</strong>: campaign/quest proposal, then domain review, then coding queue</li>
+    <li><strong>Domain</strong>: area outline, then domain approve, then ready for setrole</li>
+    <li><strong>Coding</strong>: realm room and NPC paths, then domain review, then coding check</li>
+  </ul>
+
+  <h2>What you can do</h2>
+  <ul>
+    <li><code>workroom</code>, <code>kit</code></li>
+    <li><code>ed</code> / <code>cat</code> / <code>ls</code> (ambassador path)</li>
+    <li><code>cre</code> channel</li>
+    <li>Read the reference book in your workroom</li>
+  </ul>
+
+  <h2>What you cannot do yet</h2>
+  <ul>
+    <li>QCS build (needs coding role and the Staff of Creation)</li>
+    <li>Domain dominion tools</li>
+    <li>RP skill / tattoo tools</li>
+    <li>Admin commands (update, warmboot, setrole, etc.)</li>
+  </ul>
+
+  <h2>Review and promotion</h2>
+  <p>Domain wizards review submissions under <code>dominate</code> option 10; coding wizards review the coding queue with <code>review</code>. Ready for setrole is a flag only; an admin must still run:</p>
+  <pre>setrole &lt;player&gt; admin|domain|coding|rp</pre>
+
+  <h2>Paths</h2>
+  <pre>/secure/save/apprentice/</pre>
+  <p>In-game: <code>help apprentice</code>, <code>help kit</code>, <code>help makewiz</code>, <code>help setrole</code>.</p>
+</body>
+</html>

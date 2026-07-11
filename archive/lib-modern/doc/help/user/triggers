@@ -1,0 +1,8 @@
+TRIGGERS: Client-side automation
+
+See help trigger.
+
+Triggers are a MUD client feature. RiftsMUD does not implement server-
+side trigger scripts. Use your client's trigger or alias system.
+
+SEE ALSO: trigger, lineecho, alias

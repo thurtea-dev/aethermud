@@ -1,0 +1,134 @@
+=== AUDIT: SKILLS ===
+Generated from: /daemon/rifts_skills.c
+Date: 2026-06-22
+
+STATUS KEY:
+  [IMPL]  - Has start%, max%, per_level in query_rifts_skill() AND implementation
+  [DATA]  - Listed in query_skills_by_category all_skills array but query_rifts_skill() returns 0
+  [STUB]  - Referenced in start_d.c or OCC skills but no table entry
+  [SKIP]  - Deliberately excluded (language, literacy, math)
+
+WEAPONS PROFICIENCIES [IMPL] - all implemented:
+  wp energy pistol     start:10  max:98  per_level:5
+  wp energy rifle      start:10  max:98  per_level:5
+  wp heavy weapons     start:8   max:98  per_level:4  (aliases: heavy md, heavy military)
+  wp knife             start:15  max:98  per_level:5
+  wp sword             start:10  max:98  per_level:5  (alias: vibro-blade, vibroblade)
+  wp blunt             start:10  max:98  per_level:5
+  wp chain             start:8   max:98  per_level:4
+  wp paired weapons    start:5   max:98  per_level:5
+  wp rifle             start:15  max:98  per_level:5  (alias: shotgun, rifle or shotgun)
+  wp archery           start:15  max:98  per_level:5
+  wp one ancient       start:10  max:98  per_level:5  (aliases: two ancient, three ancient)
+  wp two modern        start:10  max:98  per_level:5  (aliases: three modern, three modern weapons)
+  H2H basic            melee+2  attack+2  (applied as bonus, not skill)
+  H2H expert           melee+5  attack+5
+  H2H commando         melee+6  attack+6
+  H2H martial arts     melee+7  attack+7
+  H2H cyber-knight     melee+6  attack+6
+  H2H dragon           melee+9  attack+9
+  H2H vampire          melee+8  attack+8
+
+PILOT SKILLS [IMPL] - all implemented:
+  pilot automobile     start:60  max:98  per_level:4
+  pilot hovercraft     start:50  max:98  per_level:4
+  pilot hovercycle     start:55  max:98  per_level:4
+  pilot power armor    start:60  max:98  per_level:4  (alias: power armour)
+  pilot robot          start:60  max:98  per_level:4  (aliases: robot combat elite, glitter boy, samas)
+  pilot jet pack       start:42  max:98  per_level:4
+  pilot boat           start:56  max:98  per_level:4
+  pilot submersible    start:40  max:98  per_level:4
+  pilot two vehicles   start:60  max:98  per_level:4
+  navigation           start:40  max:98  per_level:5
+
+TECHNICAL SKILLS [IMPL] - all implemented:
+  radio basic          start:45  max:98  per_level:5
+  computer operation   start:40  max:98  per_level:5
+  computer programming start:30  max:98  per_level:5
+  basic electronics    start:30  max:98  per_level:5
+  advanced electronics start:25  max:98  per_level:5
+  read sensory equipment start:30 max:98 per_level:5
+  weapon systems       start:40  max:98  per_level:5
+  electronic countermeasures start:30 max:98 per_level:5
+  mechanical engineer  start:25  max:98  per_level:5
+  robot mechanics      start:30  max:98  per_level:5
+  weapons engineer     start:25  max:98  per_level:5
+  chemistry            start:30  max:98  per_level:5
+  research             start:35  max:98  per_level:5
+  demolitions          start:36  max:98  per_level:4
+  tactics              start:30  max:98  per_level:5
+  military etiquette   start:35  max:98  per_level:5
+
+MEDICAL SKILLS [IMPL] - all implemented:
+  first aid            start:45  max:98  per_level:5
+  paramedic            start:40  max:98  per_level:5
+  medical doctor       start:55  max:98  per_level:5
+  holistic medicine    start:35  max:98  per_level:5
+  biology              start:30  max:98  per_level:5
+  pathology            start:30  max:98  per_level:5
+
+SURVIVAL / WILDERNESS SKILLS [IMPL]:
+  wilderness survival  start:40  max:98  per_level:5
+  land navigation      start:36  max:98  per_level:4
+  tracking             start:30  max:98  per_level:5  (alias: track animals)
+  camouflage           start:25  max:98  per_level:5
+  hunting              start:0   max:98  per_level:0  (bonus ability, no % tracked)
+  falconry             start:30  max:98  per_level:5
+  fishing              start:40  max:98  per_level:5
+  swimming             start:50  max:98  per_level:5
+  climbing             start:40  max:98  per_level:5
+  running              start:0   max:98  per_level:0  (bonus ability)
+
+ESPIONAGE SKILLS [IMPL] - all implemented:
+  detect ambush        start:35  max:98  per_level:5
+  detect concealment   start:25  max:98  per_level:5
+  intelligence         start:32  max:98  per_level:4
+  surveillance         start:25  max:98  per_level:5
+  pick locks           start:30  max:98  per_level:5
+  pick pockets         start:25  max:98  per_level:5
+  safe-cracking        start:20  max:98  per_level:5
+  forgery              start:25  max:98  per_level:5
+  disguise             start:25  max:98  per_level:5
+  impersonation        start:21  max:98  per_level:4
+  streetwise           start:20  max:98  per_level:4
+  gambling             start:25  max:98  per_level:4
+  concealment          start:20  max:98  per_level:4
+  prowl                start:25  max:98  per_level:5
+  interrogation        start:30  max:98  per_level:4
+
+PHYSICAL SKILLS [IMPL]:
+  gymnastics           start:50  max:98  per_level:5
+  acrobatics           start:50  max:98  per_level:5
+  meditation           start:30  max:98  per_level:5
+  boxing               start:0   max:98  per_level:0  (bonus ability)
+  body building        start:0   max:98  per_level:0  (attribute bonus)
+
+LORE SKILLS [IMPL]:
+  lore magic           start:25  max:98  per_level:5
+  lore demons and monsters start:25 max:98 per_level:5
+  lore rifts and dimensions start:20 max:98 per_level:5
+  lore psychic         start:25  max:98  per_level:5
+  lore spirits         start:25  max:98  per_level:5
+
+LISTED IN ALL_SKILLS BUT MISSING FROM QUERY_RIFTS_SKILL() [DATA only - returns 0]:
+  salvage       - referenced in start_d.c (operator), no table entry
+  beg           - referenced in start_d.c (vagabond), no table entry
+  athletics     - referenced in OCC skills (juicer, crazy), no table entry
+  horsemanship  - referenced in cyber-knight/knight OCCs, no table entry
+  seduction     - referenced in start_d.c (vampire RCC), no table entry
+  identify plants - referenced in wilderness scout base_skills, no table entry
+  fly           - referenced in start_d.c (dragon RCC), no table entry
+
+MISSING SKILL CATEGORIES (no table entries at all):
+  Science:      geology, astronomy, astrophysics, xenobiology
+  Mechanical:   automotive mechanic, aircraft mechanic, ship's mechanics
+  Electrical:   electrical engineer (referenced but only "basic/advanced electronics" exists)
+  Art/Creative: art, music instrument, performance, photography
+  Trade/Social: barter, business, find contraband, law, seduction (see above)
+  Military:     parachuting, underwater combat, sniping
+  Sensory:      detect psionics (referenced in OCC but no table entry)
+  Lore:         lore faerie, lore sea life, lore disease, lore weather
+
+TOTAL IMPLEMENTED SKILLS: ~70 (with table entries in query_rifts_skill)
+PALLADIUM RIFTS APPROXIMATE TOTAL: ~120-130 skills
+COVERAGE: approximately 54% of full Palladium skill set

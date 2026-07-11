@@ -1,0 +1,12 @@
+WHISPER: Speak quietly to one person in the room
+
+Syntax: whisper <target> <message>
+
+DESCRIPTION:
+  Speaks privately to one person in the same room. Others in the room
+  see that you are whispering but cannot hear the content.
+
+EXAMPLE:
+  whisper moxim Meet me behind the monument at midnight.
+
+SEE ALSO: say, tell, emote

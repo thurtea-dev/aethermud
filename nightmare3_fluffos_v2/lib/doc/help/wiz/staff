@@ -1,0 +1,44 @@
+RIFTSMUD WIZARD STAFF OVERVIEW
+
+AetherMUD uses five wizard ranks. position is canonical; wiz_role is the
+display tag synced from position.
+
+ROLE          POSITION      HELP TOPIC
+Apprentice    apprentice    help apprentice *wizard staff
+Admin         arch          help admin *wizard staff
+Domain        domain_wiz    help domain *wizard staff
+Coding        creator       help coding *wizard staff
+Roleplay      rp_wiz        help roleplay *wizard staff
+
+PROMOTION
+1. makewiz <player>     -> Apprentice + apprentice kit
+2. Apprentice picks a track in kit and submits the track task
+3. Domain reviews (dominate -> Apprentice submissions)
+   RP/Coding approved work goes to the coding queue (review on creation staff)
+4. Domain/coding mark ready_for_setrole
+5. Admin: setrole <player> <admin|domain|coding|rp>
+
+First promotion from mortal creates:
+  /realms/<name>/workroom.c
+  /realms/<name>/area/{room,npc,weap,armor}/
+Apprentices get the kit, not role staff. setrole grants role tools.
+
+COMMAND MODEL
+  Apprentice: kit + ambassador file tools
+  Admin: full admin + creator commands
+  Domain, Coding, RP: ambassador file tools + staff tool verbs only
+  Coding QCS: staff of creation required
+  Manual file editing: ed/cat/ls via ambassador path for all wizards
+
+IN-GAME QUICK REFERENCE
+Type read book in your workroom for a short role summary.
+
+SEE ALSO
+  help apprentice *wizard staff
+  help kit
+  help admin *wizard staff
+  help domain *wizard staff
+  help coding *wizard staff
+  help roleplay *wizard staff
+  help makewiz
+  help setrole

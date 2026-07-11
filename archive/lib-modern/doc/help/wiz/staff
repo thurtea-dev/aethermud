@@ -1,0 +1,41 @@
+RIFTSMUD WIZARD STAFF OVERVIEW
+
+RiftsMUD uses four wizard roles. position is canonical; wiz_role is the
+display tag synced from position.
+
+ROLE          POSITION      HELP TOPIC
+Admin         arch          help admin *wizard staff
+Domain        domain_wiz    help domain *wizard staff
+Coding        creator       help coding *wizard staff
+Roleplay      rp_wiz        help roleplay *wizard staff
+
+PROMOTION
+Admin promotes via Staff of Demotion (promote) or setrole.
+First promotion from mortal creates:
+  /realms/<name>/workroom.c
+  /realms/<name>/area/{room,npc,weap,armor}/
+and grants the role-appropriate staff tools.
+
+COMMAND MODEL
+Wizard workflows are gated by role and held staff tools, not by giving
+every wizard the full creator command set.
+  Admin: full admin + creator commands
+  Domain, Coding, RP: ambassador file tools + staff tool verbs only
+  Coding QCS: staff of creation required, direct verbs create, modify,
+    add, delete, about, more (older build <verb> form still works too)
+  Manual file editing: ed/cat/ls via ambassador path for all wizards
+
+IN-GAME QUICK REFERENCE
+Type read book in your workroom for a short role summary.
+
+LPC BUILD DOCS
+For room/monster tutorials see /doc/build/ (generic NM3 reference).
+For Rifts role rules, read your role handbook above first.
+
+SEE ALSO
+  help admin *wizard staff
+  help domain *wizard staff
+  help coding *wizard staff
+  help roleplay *wizard staff
+  help update *wizard staff (admin only)
+  help warmboot *wizard staff (admin only)

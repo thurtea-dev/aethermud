@@ -1,0 +1,25 @@
+BIONICS
+
+Syntax: bionics
+
+Displays a list of all cybernetic modifications installed in your character,
+along with the bonuses each modification provides.
+
+Bionics are permanent cybernetic or bionic enhancements.  They may increase
+your physical stats (PS, PP, PE, Spd), grant special abilities, or provide
+built-in weaponry.  Bionics are gained through your OCC (Occupational
+Character Class) or through in-game upgrades.
+
+COMMON BIONIC TYPES
+  Bionic limbs         replacement arms or legs with enhanced capabilities
+  Bionic eyes          enhanced vision (nightvision, telescopic, targeting)
+  Subdermal armor      MDC or SDC plating under the skin
+  Internal weapons     built-in weapons (laser, vibro-blade, etc.)
+  Bionic organs        enhanced heart, lungs, or other organs for stat boosts
+
+NOTE
+  Characters with significant bionics may be classified as 'partial borgs'
+  or full 'borgs' depending on the degree of replacement.  Borgs may have
+  MDC instead of SDC for replaced sections.
+
+See also: score, stats

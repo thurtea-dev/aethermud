@@ -1,0 +1,1097 @@
+=== AETHERMUD (RIFTSMUD 2.1 RECREATION) - MASTER GAP REPORT ===
+Generated: 2026-06-22
+Last updated: 2026-07-07 (bug-audit pass: _password/I_NOECHO, GHD armor
+size enforcement, and radio transmit all verified already working on
+disk; their MISSING/PARTIAL entries below were stale and are corrected
+in place with dated notes)
+
+RENAME (2026-07-07): project brand renamed from RiftsMUD to AetherMUD on
+the live lib (nightmare3_fluffos_v2/lib). This lib-modern porting copy
+was NOT re-synced/renamed in the same pass (out of scope for the driver
+port work in progress here) - see the live lib's master_gap_report.txt
+for the full rename note, and re-sync this copy from live before its
+next porting session.
+
+SESSION CHANGES (2026-07-07) - section 5 zone depth pass:
+  DONE: Praxis Refuge Inn guest rooms built: hotelroom101-110 (4 regular,
+        4 deluxe, 2 honeymoon suite) off the hall-hall5 upper hallways.
+        hall.c rewritten (its key-check pre-exit wiring was commented out
+        and it pointed at the hostel); hall2-5 exits repointed from
+        inn103-110 to hotelroom103-110 and their existing room_1XX()
+        key checks are now actually wired via array-form set_exits.
+        hotel.c query_room() repointed from inn%d to hotelroom%d (the
+        inn101-110 files are the Survivors' Hostel off monument_square,
+        a separate free-lodging building; renting previously handed out
+        keys to hostel bunk rooms in the wrong building with no lock).
+        Inn naming unified to "Praxis Refuge Inn" in hotel.c and the
+        receptionist. Compile-verified via temporary preload, clean boot.
+  NOTE: the cemetery flagged here and in report.md as "does not exist"
+        exists on disk (cemetary/grave_yard.c-grave_yard8.c plus
+        mon/ ghosts), is hooked to east_road2 in both directions, and
+        has no dead-end exits. The MISSING entries were stale.
+  DONE: New Camelot full build pass: 20 new rooms tripling the zone
+        (Market Street x2, Blacksmith's Forge vendor, Royal Stables,
+        Chapel of Light, Training Grounds, 9-room Camelot Castle with
+        King Arrr'thuu and Mrrlyn, dragon perch, dungeon, war room,
+        royal armory holding the dragonfire lance, 5-room Royal Academy
+        of Magic). 13 NPCs (Dragon Knight MDC 180, young white dragon
+        MDC 400, lesser fire elemental MDC 90 via set_stats per
+        CLAUDE.md; the rest friendly rifts_npc). New equipment:
+        dragonfire_lance (4d6 MD), camelot_longsword (2d6 MD, sold at
+        the forge), chained spell_tome (readable lore). Hooked at
+        camelot_square northeast, camelot_garden north, wizard tower
+        west. All spawns in reset() with present() guards; no NPCs in
+        set_long. Room naming mined from the aethermud reference
+        (re-added under /home/thurtea/LPC-Resources/). Exit walk clean;
+        compile-verified via temporary preload, clean boot, catch log
+        untouched.
+  DONE: Alvurron build finished: 7 new rooms (Warrens, Blood Pit,
+        Undermarket, High Roost, Overlord's Spire base and crown, Deep
+        Rift), 8 -> 15 rooms. New monsters alvurron_champion (MDC 260),
+        alvurron_overlord_boss (MDC 500), alvurron_rift_wisp (MDC 60,
+        aggressive) and alvurron_dealer (undermarket vendor of Splynn
+        exotics). Fixed pre-existing one-way gate-to-quarter exit with
+        a southeast return.
+  DONE: NGR Germany depth pass finished: 7 new rooms (Civic Plaza,
+        Biergarten, Residential Block, Triax Showroom with triax_rep
+        vendor; Watchtower, Communications Trench, No Man's Land),
+        7 -> 14 rooms. New NPCs ngr_barkeep, ngr_civilian, ngr_sniper,
+        triax_rep, and gargoyle_raider (MDC 150, aggressive, spawns x2
+        in no man's land). All zones exit-walked, preload
+        compile-verified, clean boots, catch log untouched all session.
+  NOTE: reference resources re-added at /home/thurtea/LPC-Resources/
+        (Rifts_LPC_* trees); report.md prompt paths repointed there.
+
+SESSION CHANGES (2026-07-01) - full audit of remaining "MISSING" commands:
+  Audited every command this report still listed as MISSING: customize,
+  echo, email, face, forward, greet, lineecho, palmer, picture, prompt,
+  sentinel, testcolor, trigger, vehicles, view, weapon, withdraw.
+  Findings:
+    DONE: testcolor was genuinely missing and clearly scoped (a color
+      swatch command to complement the existing colorize toggle), so it
+      was implemented: cmds/mortal/_testcolor.c + doc/help/user/testcolor.
+    STALE, already exists: prompt (works today via the generic setenv
+      command plus std/user.c's existing getenv("PROMPT") read, no
+      dedicated command needed) and withdraw (domains/Praxis/bank.c
+      already has an add_action "withdraw" verb via the ATM card and
+      BANK_D, correctly scoped to the bank room rather than a global
+      command).
+    MISCATEGORIZED, not real command gaps: palmer (doc/help/user/palmer
+      is the Palmer OCC help topic, never meant to be a command) and
+      vehicles (doc/help/user/vehicles already gives a full conceptual
+      overview, no evidence a typed command was ever expected on top of
+      it). weapon is also miscategorized: its matching help file
+      (doc/help/user/weapons) is itself stale NM3 content referencing
+      legacy classes and skill categories that do not exist in this
+      Rifts conversion, and the actual functional need (view your
+      wielded weapon) is already covered by 'eq'; the real follow up item
+      here is rewriting that stale help file, not building a new command.
+      DONE 2026-07-01: doc/help/user/weapons rewritten to describe actual
+      current weapon types, wield/unwield/wear/eq/fire/shoot/reload/unload,
+      and W.P. skills from character generation, with no NM3 class content.
+    LOW VALUE: email is functionally covered by the existing mail system
+      already; 'email' would only be a redundant alias.
+    GENUINELY MISSING, deferred: (none as of 2026-07-07 section 6 pass;
+      email remains a low-value alias only).
+
+SESSION CHANGES (2026-07-07) - report.md section 6 deferred commands:
+  DONE: customize (_customize.c menu), echo (_echo.c mortal, /log/echo),
+        face (_face.c), forward (_forward.c + mail_d __forwards),
+        greet (_greet.c), lineecho (_lineecho.c toggle), picture (_picture.c),
+        sentinel/view/trigger (help-only historical or client docs).
+  DONE: chargen_guide.c step-aware walkthrough (status/what next per
+        creation_step). Help files added for all of the above.
+
+SESSION CHANGES (2026-07-01) - stale suicide gap entries corrected:
+  NOTE: this report and its command/help-file gap lists claimed suicide was
+        missing in four places. Checked cmds/mortal/_suicide.c and
+        doc/help/user/suicide: both already exist, are live (this file
+        wins the search-path collision over the older, now-unreachable
+        secure/cmds/mortal/_suicide.c), and match each other. Live
+        behavior is permanent character deletion for level 3 or below,
+        blocked for wizards and in combat, with a typed YES confirmation.
+        Marked EXISTS/DONE in place of MISSING at each of the four spots.
+        A separate death-pipeline self-kill under the same command name
+        was requested this session and explicitly deferred pending a
+        naming/behavior decision; it is not implemented and not a bug in
+        what already exists.
+  NOTE: while correcting the suicide entries, also found and corrected in
+        the same "still open" priority list: pemote (cmds/mortal/_pemote.c
+        already exists and matches doc/help/user/pemote), the Chi-Town and
+        Lone Star NPC load failures (mdc_creature/create_equipment already
+        present on disk, matches the 2026-06-30 note below), and
+        monastery.c/pit.c (already reskinned, matches the 2026-06-30 note
+        below). Also found laugh, thank, and think already covered by the
+        generic social command system (cmds/database/soul.db via SOUL_D),
+        separate from the dedicated command files this report was
+        checking for; corrected those three in the command list too.
+  NOTE: CLAUDE.md's "still open" Commands line also said "suicide, pemote
+        variants"; corrected to reference customize instead, the one
+        remaining unimplemented command candidate actually verified this
+        session.
+  NOTE: the HELP FILE gap list further down (assassination, assist, card,
+        chat, dodge, parry, rest, sbar, slave marked MISSING) was verified
+        file by file on 2026-07-01. All nine help files exist. Six were
+        accurate (assassination, assist, card, chat, sbar, slave). Three
+        were genuinely stale, describing an old one-shot manual dodge or
+        parry system that predates the current mode-toggle combat system:
+        dodge (fixed this session), parry (same problem, not yet fixed),
+        and rest (a smaller inaccuracy, not yet fixed). See the HELP FILE
+        SUMMARY section below for the per-file detail.
+  NOTE: while doing this pass, also noticed the same HELP FILE SUMMARY
+        section still lists wake, testcolor, and withdraw as MISSING.
+        wake was not checked (out of scope, not one of the nine audited
+        this session). testcolor and withdraw are known stale from a
+        prior session (both already exist) but were not corrected here to
+        keep this session to its one assigned list; flagging for whoever
+        does the next gap-report pass.
+
+SESSION CHANGES (2026-06-30) - broken spawn reference fix:
+  DONE: chitown_sewer_run.c reset() pointed at the nonexistent
+        /domains/Praxis/monsters/rat.c (confirmed missing on disk, this
+        spawn was silently failing every reset). Repointed at the existing
+        monsters/chitown_tunnel_rat.c, the same rat NPC already used in
+        chitown_maintenance_tunnel, same sewer/tunnel network, same theme.
+        No new file created; reused an existing, fitting domain object.
+  NOTE: chitown/README.md's stale note about the missing rat.c corrected
+        to describe the actual spawn.
+  NOTE: checked domains/Praxis cemetery and inn guest rooms (still do not
+        exist as files, confirmed again this session) and the missing
+        command list; neither was touched this session, see below.
+
+SESSION CHANGES (2026-06-30) - combat verification + NPC equipment audit:
+  DONE: verified npc_round_active() (daemon/rifts_combat.c) and the
+        std/monster.c heart_beat() guard from the prior session are scoped
+        correctly (player-vs-NPC only, no NPC-vs-NPC change, no infinite
+        recursion, no double-attack path). No further combat fix needed.
+  DONE: cs_dog_boy_guard.c (domains/LoneStar/npcs/) now actually equips the
+        CP-40 rifle and Dead Boy armor its own set_long() already described;
+        it previously spawned unarmed.
+  NOTE: dead_boy_guard.c and cs_patrol.c (domains/chitown/npcs/) were
+        checked against an earlier audit that flagged set_mdc()/missing
+        create_equipment() bugs. Both are already fixed on disk (proper
+        set_property("mdc_creature",1), create_equipment() defined and
+        called). The audit findings were stale; no code change was needed.
+  NOTE: monastery.c and pit.c (domains/Praxis/) were checked against
+        CLAUDE.md's "still open" list, which called them out as legacy
+        NM3 content needing a Rifts reskin. Both are already reskinned
+        (ruined Praxis chapel, rubble-choked pit), no NM3 monk/spider
+        content remains. CLAUDE.md's open-items list updated to remove
+        them and note that cemetery/inn guest rooms do not exist as files
+        yet (not a reskin task, a build-from-scratch task).
+  NOTE: staff-handbook/ch09-combat.md updated with the corrected corpse
+        wording ("Plains wolf corpse." not "the corpse of X"), the
+        corrected plains wolf attack count (1, not 2), and std/monster.c
+        added to the full-reboot-required file list.
+
+SESSION CHANGES (2026-06-30) - Alvurron first pass:
+  NOTE: existing gargoyle city content found under
+        domains/Praxis/areas/splynn/alvurron/ (gate, square, quarter, temple)
+        before any new content was written; built as an extension of that
+        zone rather than a new conflicting zone
+  DONE: alvurron_market.c, alvurron_slave_pens.c, alvurron_inner_district.c,
+        alvurron_rift_chamber.c (4 rooms)
+  DONE: alvurron_watcher.c (non-aggressive), alvurron_trader.c
+        (non-aggressive), alvurron_overseer.c (aggressive),
+        alvurron_enforcer.c (aggressive) (4 monsters, in
+        /domains/Praxis/monsters/)
+  DONE: alvurron_key.c (dimensional key, value 5000), loot in
+        alvurron_inner_district
+  DONE: alvurron_square.c north exit to market (+ gargoyle watcher spawn
+        added alongside existing brodkil spawn), alvurron_quarter.c south
+        exit to slave pens, alvurron_temple.c east exit to inner district
+        (all additive, no existing exits or spawns removed)
+  DONE: backstab combat message no longer names a limb (_backstab.c)
+  NOTE: domains/Praxis/areas/splynn/alvurron/README.md added documenting
+        the zone
+  NOTE: no domain master.c added; this mudlib does not use one for NGR or
+        chitown either
+
+SESSION CHANGES (2026-06-30) - Chi-Town interior expansion:
+  DONE: chitown_lower_market.c, chitown_maintenance_tunnel.c,
+        chitown_black_market.c, chitown_dead_end_junction.c (4 rooms)
+  DONE: chitown_ganger.c (aggressive), chitown_tunnel_rat.c (aggressive),
+        chitown_fence.c (non-aggressive, buys CS dog tags) (3 monsters)
+  DONE: chitown_contraband.c (sealed crate, value 2500), loot in black market
+  DONE: chitown_market.c down exit to chitown_lower_market
+  NOTE: Chi-Town zone status updated PARTIAL -> DONE in this report
+  NOTE: combat message flavor fix in /std/living/combat.c miss() -- replaced
+        baseball-idiom "Strike X for you!" line with Rifts-tone wording
+  NOTE: discovered pre-existing bug, not fixed this session: chitown_sewer_run.c
+        reset() clones /domains/Praxis/monsters/rat.c which does not exist on
+        disk; spawn silently fails
+
+SESSION CHANGES (2026-06-30) - Horton depth pass:
+  DONE: horton_outskirts.c, horton_wilderness_trail.c, horton_abandoned_farmstead.c (3 rooms)
+  DONE: horton_militia_guard.c (non-aggressive), wild_dog_pack.c (aggressive),
+        horton_scavenger.c (aggressive, carries basic_medkit) (3 monsters)
+  DONE: salvaged_armor_plate.c (SDC body armor, AR 10, SDC 50), loot at farmstead
+  DONE: horton_forest_edge.c west exit to horton_outskirts (zone now 10 rooms)
+  NOTE: Horton zone status updated MISSING -> FUNCTIONAL in this report
+
+SESSION CHANGES (2026-06-30) - pass 2:
+  DONE: /doc/help/wiz/call (in-game wizard help file)
+  DONE: /secure/cmds/creator/_wizz.c (teleport to wizard lounge)
+  DONE: staff-handbook/ch04 -- The call Command section added
+  DONE: ngr_checkpoint.c + ngr_patrol_road.c + ngr_underground_bunker.c (3 rooms)
+  DONE: ngr_border_guard.c, ngr_patrol_soldier.c, ngr_elite_soldier.c (3 NPCs)
+  DONE: triax_helmet.c (MDC 40, head slot, loot in bunker)
+  DONE: NGR_gate north exit to checkpoint, NGR_garrison down exit to bunker
+
+SESSION CHANGES (2026-06-30):
+  DONE: ocean_creature.c + ocean_leviathan.c monsters
+  DONE: ocean/ocean_rift_shallows.c (ocean_creature spawn, up/down exits)
+  DONE: ocean/ocean_rift_deep.c (ocean_leviathan spawn, up/down exits)
+  DONE: ocean/ocean_rift_floor.c (Atlantean ruins, up exit only)
+  DONE: ocean_rift.c connected down to ocean_rift_shallows
+  NOTE: sword_of_atlantis.c and ocean_rift.c already existed (gap report was stale)
+
+BATCH 7 CHANGES (2026-06-29):
+  DONE: Puerto Angel dockmaster NPC + harbor spawn + help puerto_angel
+  DONE: Legacy guild retirement (monk/mage/rogue join/hall/vote + roots/trunk)
+  DONE: west_road3 + stairs Rifts reskin (no NM class join)
+  DONE: +5 spells (repel animals, cleanse, luck curse, wall of light,
+        wisps of confusion) -> ~113 spells total
+  DONE: +5 psionics (expand senses, summon inner strength, telekinetic force
+        field, mind wipe, pyrokinetic aura) -> 50 psionics total (confirmed)
+  DONE: +3 skills (boat building, rope making, vampiric lore) -> ~102 skills
+
+BATCH 6 CHANGES (2026-06-29):
+  DONE: _assassination.c + _assassinate.c alias (prowl/sneak ambush, Rifts damage)
+  DONE: help assassination
+  DONE: Lone Star containment wing (lone_star_containment.c)
+  DONE: ls_mutant_subject.c monster (lab, containment, perimeter spawns)
+  DONE: Lab/perimeter exit wiring for containment
+  DONE: Legacy reskin: hall2-5 (Refuge Inn), wild1, jungle, forest1
+
+BATCH 5 CHANGES (2026-06-29):
+  DONE: _card.c business card command + help
+  DONE: _chat.c global IC chat channel + help
+  DONE: _assist.c combat assist command + help
+  DONE: Help files: sbar, slave (were coded, docs missing)
+  DONE: +5 spells (death trance, globe of silence, burn, cure disorders,
+        charismatic aura) -> ~108 spells total
+  DONE: +5 psionics (presence sense, psychic locator, mental stun,
+        sense magic, total recall) -> ~50 psionics total
+  DONE: +3 skills (law enforcement, cryptology, detect forgery) + wp revolver
+        -> ~99 skills total
+  DONE: Alvurron gargoyle quarter room (alvurron_quarter.c)
+  DONE: splynn_slave.c NPCs in slave_pens (claim via slave command)
+  DONE: hall.c reskin to Praxis Refuge Inn corridor
+
+BATCH 4 CHANGES (2026-06-29):
+  DONE: remoteview <name> command + psi remote viewing on known online players
+  DONE: find_psi_remote_target() in rifts_psionics_d.c
+  DONE: +5 spells (mend wounds, sense danger, mystic alarm, slow movement,
+        detect poison) -> ~103 spells total
+  DONE: +5 psionics (electrokinesis, hypnotic suggestion, sense time,
+        empathic transmission, bio-feedback) -> ~45 psionics total
+  DONE: +3 skills (forgery, pick locks, computer hacking) -> ~96 skills
+  DONE: cyber-doc NPC at Praxis Field Hospital (install <cybernetic>)
+  DONE: mailbox welcome letter (look in mailbox) + storage inherit
+  DONE: sea serpent, atlantean guardian, kittani overseer monsters
+  DONE: ocean_rift + splynn_docks spawn updates
+  DONE: Staff HTML guides at /home/thurtea/nm3/www/ (qcs, coding, domain,
+        roleplay, admin, chargen)
+
+BATCH 3 CHANGES (2026-06-29):
+  DONE: store / retrieve commands for dimensional pocket spell
+  DONE: dim_pocket_bag.c extradimensional container
+  DONE: racial telemechanics command (_telemechanics.c)
+  DONE: impervious fire/cold hooked in combat + direct fire/freeze spells
+  DONE: +5 spells (see invisible, animate dead, constrain being,
+        astral projection, detect concealment) -> ~98 spells total
+  DONE: +5 psionics (remote viewing, accelerate healing, group mind block,
+        psychic purification, ectoplasm) -> ~40 psionics total
+  DONE: +3 skills (trap detection, recognize gems, radio basic) -> ~93 skills
+  DONE: +4 cybernetics (cyber_arm_left, cyber_legs, cyber_lung, neural_net)
+  DONE: bionic_d lung + neural net install stats
+  DONE: CS quartermaster stocks C-12, boom gun, Terror Trooper PA
+  DONE: cs_secure_wing interior room (up from barracks)
+
+BATCH 2 CHANGES (2026-06-28):
+  DONE: +6 spells (impervious fire/cold, breath of life, exorcism,
+        heavy darkness, words of truth)
+  DONE: familiar spawns rifts_familiar.c; pocket mentions store/retrieve
+  DONE: +5 psionics, +3 skills, CS Terror Trooper PA, boom gun
+  DONE: library/town_hall/sheriff Praxis reskins
+
+SESSION 2 CHANGES (2026-06-23):
+  DONE: OCC help files -- atlantean_nomad, atlantean_slave, delphi_juicer,
+        hyperion_juicer, ntset_protector, tattooed_man, psionics help file
+  DONE: faction_d.c extended with full membership sub-system (9 factions seeded)
+  DONE: /cmds/adm/_setfaction.c -- admin faction assignment command
+  DONE: _tattoo.c polished -- numbered list, numeric/name/partial activation
+  DONE: tattoo_master.c NPC -- placed in catacomb_entrance.c reset()
+  DONE: _score.c -- blue/cyan status effects (thirst, drugs, psi-sword, tattoo)
+  DONE: _combat.c -- combat stats display (H2H, APM, bonuses, autododge mode)
+  DONE: _dodge.c -- dodge command (enables autododge mode, discoverability alias)
+  DONE: _parry.c -- parry command (enables autoparry mode, discoverability alias)
+
+Source files checked:
+  Reference: RiftsMUD Memories.txt, RiftsMUD-AetherMUD Helpfiles.txt,
+             RiftsMUD-AetherMUD RCC's OCC's List.txt
+  Code:      /daemon/rifts.c, /daemon/occ.c, /daemon/rifts_spells_d.c,
+             /domains/Praxis/areas/*, /cmds/mortal/*, /doc/help/user/*
+
+---
+
+--- SECTION 1: RACES (RCCs) ---
+
+51 races in the reference target list.  All 51 are DONE in /daemon/rifts.c.
+6 mutant animal RCCs (mutant rat/dog/bear/cat/hawk/wolf) are also DONE.
+
+Full race list status (all from /daemon/rifts.c via rifts_races_list and is_mdc_race()):
+
+  Algor Frost Giant        DONE
+  Atlantean                DONE
+  Basilisk                 DONE
+  Bearman                  DONE
+  Bogie                    DONE
+  Brownie                  DONE
+  Burster                  DONE
+  Changeling               DONE
+  Common Faerie            DONE
+  Common Pixie             DONE
+  Conservator              DONE
+  Coyle                    DONE
+  Dog Boy                  DONE
+  Dwarf                    DONE
+  Elf                      DONE
+  Equinoid                 DONE
+  Fire Dragon              DONE
+  Frost Pixie              DONE
+  Gargoyle                 DONE
+  Goblin                   DONE
+  Great Horned Dragon      PARTIAL  (see note below)
+  Green Wood Faerie        DONE
+  Gurgoyle                 DONE
+  Hawrke Duhk              DONE     (stored as "hawrk-duhk")
+  Hawrk-ka                 DONE
+  Human                    DONE
+  Ice Dragon               DONE
+  Jotan                    DONE
+  Kankoran                 DONE
+  Mind Melter              DONE
+  Night-Elves Faerie       DONE
+  Nimro Fire Giant         DONE
+  Ogre                     DONE
+  Orc                      DONE
+  Pogtal Dragon Slayer     DONE     (stored as "pogtal")
+  CS Psi-stalker           DONE
+  Rahu-man                 DONE
+  Ratling                  DONE
+  Secondary Vampire        DONE
+  Silver Bells Faerie      DONE
+  Thunder Lizard Dragon    DONE
+  Titan                    DONE
+  Tree Sprite              DONE
+  Troll                    DONE
+  Water Sprite             DONE
+  Werebear                 DONE
+  Weretiger                DONE
+  Werewolf                 DONE
+  Wild Psi-stalker         DONE
+  Wild Vampire             DONE
+
+  Mutant Rat               DONE     (bonus race)
+  Mutant Dog               DONE     (bonus race)
+  Mutant Bear              DONE     (bonus race)
+  Mutant Cat               DONE     (bonus race)
+  Mutant Hawk              DONE     (bonus race)
+  Mutant Wolf              DONE     (bonus race)
+
+NOTE - Great Horned Dragon:
+  - is_mdc_race() returns 1: MDC-only body DONE
+  - init_sdc() returns 0 for GHD: no HP+SDC pool DONE
+  - init_mdc() returns (6d6*10)+100: MDC as primary pool DONE
+  - metamorph command (/cmds/mortal/_metamorph.c) exists: DONE
+    Syntax: metamorph human, metamorph <race>, metamorph dragon
+    Help text states armor fits in human form after metamorph.
+  - DONE (verified 2026-07-07): std/armour.c armour_fits_wearer() now
+    enforces both directions in wear(): a dragon-form GHD cannot wear
+    non-dragon_sized armor, and a metamorphed (human-form) GHD cannot
+    wear dragon_sized armor.  _metamorph.c sets the metamorphed and
+    dragon_sized properties this check reads, and strips non-dragon
+    armor when returning to dragon form.  Compile-verified via preload.
+
+RACE TOTAL: 51/51 target races DONE.  GHD is DONE (metamorph works,
+armor size enforcement verified in std/armour.c).
+
+---
+
+--- SECTION 2: OCCs ---
+
+37 OCCs in the main reference target list.  All 37 are DONE in /daemon/occ.c.
+
+Main list status:
+
+  Atlantean Nomad          DONE
+  Atlantean Slave          DONE
+  Body Fixer               DONE
+  Bounty Hunter            DONE
+  City Rat                 DONE
+  CS Grunt                 DONE
+  CS Ranger                DONE
+  CS Military Specialist   DONE
+  CS SAMAS RPA Pilot       DONE
+  CS Technical Officer     DONE
+  Cyber-Doc                DONE
+  Cyber-Knight             DONE
+  Forger                   DONE
+  Freelance Spy            DONE
+  Glitter Boy Pilot        DONE
+  Gifted Gypsy             DONE
+  Headhunter               DONE
+  ISS Peacekeeper          DONE
+  ISS Specter              DONE
+  Juicer                   DONE
+  Knight (Europe)          DONE
+  Master Assassin          DONE
+  Ninja Juicer             DONE
+  NTSET Protector          DONE
+  Operator                 DONE
+  Pirate (S.A.)            DONE
+  Professional Thief       DONE
+  Rogue Scholar            DONE
+  Royal Knight             DONE
+  Sailor (S.A.)            DONE
+  Smuggler                 DONE
+  Special Forces (Merc)    DONE
+  Vagabond                 DONE
+  Wilderness Scout         DONE
+  Ley Line Walker          DONE
+  Maxi-Man                 DONE
+  Sunaj Assassin           DONE     (Atlantean race + 10 kills + faction 200 unlock)
+
+Helpfile extras (referenced in original helpfiles, not in main target list):
+
+  Air Warlock              DONE
+  Crazy                    DONE
+  Delphi Juicer            DONE
+  Hyperion Juicer          DONE
+  Nega-Psychic             DONE
+  Tattooed Man             DONE
+  Ninja Juicer             DONE     (already in main list)
+  NGR Mechanic             MISSING
+  NGR Soldier              MISSING
+  Kittani Field Mechanic   MISSING
+  Kittani Warrior          MISSING
+  Palmer                   MISSING
+  Palmer2                  MISSING
+
+Bonus OCCs added (not in original but present):
+  Mystic, Shifter, Shaman, Borg, Robot Pilot, Merc Soldier, Tribal Warrior,
+  Ley Line Rifter, Necromancer, CS Dead Boy, Rogue Scientist
+
+OCC TOTAL: 37/37 main targets DONE.  All 66 occ_list entries have help
+files or aliases as of 2026-07-07.  Palmer/palmer2 remain source-only.
+
+---
+
+--- SECTION 3: COMMANDS ---
+
+Checked against /cmds/mortal/ and cross-referenced with /std/weapon.c,
+/std/room/exits.c, and /cmds/skills/.
+
+FORMAT: command -- EXISTS / MISSING / STUB
+
+  abilities      EXISTS   (_abilities.c)
+  advance        EXISTS   (_advance.c)
+  assassination  EXISTS   (_assassination.c + _assassinate.c alias)
+  assist         EXISTS   (_assist.c)
+  autododge      EXISTS   (_autododge.c)
+  autoparry      EXISTS   (_autoparry.c)
+  bionics        EXISTS   (_bionics.c)
+  brief          EXISTS   (_brief.c)
+  bug            EXISTS   (_bug.c)
+  card           EXISTS   (_card.c)
+  chat           EXISTS   (_chat.c)
+  colorize       EXISTS   (_colorize.c)
+  combat         EXISTS   (_combat.c created 2026-06-23)
+  converse       EXISTS   (_converse.c)
+  customize      DONE     (_customize.c menu editor, 2026-07-07)
+  description    EXISTS   (_describe.c handles 'description' alias)
+  dodge          EXISTS   (_dodge.c created 2026-06-23, aliases autododge)
+  echo           DONE     (_echo.c mortal room echo, logged /log/echo, 2026-07-07)
+  eject          EXISTS   (_eject.c)
+  email          MISSING  (functionally covered by the existing mail
+                          command already, 'email' would just be an
+                          alias; low value, not implemented)
+  emote          EXISTS   (_emote.c)
+  eq             EXISTS   (_equipment.c)
+  face           DONE     (_face.c sets position_str by direction/person, 2026-07-07)
+  forget         EXISTS   (_forget.c)
+  forward        DONE     (_forward.c + mail_d __forwards copy, 2026-07-07)
+  greet          DONE     (_greet.c introduce-lite + greeting, 2026-07-07)
+  idea           EXISTS   (_idea.c)
+  introduce      EXISTS   (_introduce.c)
+  kill           EXISTS   (_kill.c)
+  language       EXISTS   (_language.c)
+  laugh          EXISTS   (generic social, cmds/database/soul.db via SOUL_D)
+  lineecho       DONE     (_lineecho.c harmless setenv toggle + help, 2026-07-07)
+  linerows       EXISTS   (_lines.c)
+  ooc            EXISTS   (_ooc.c)
+  palmer         MISCATEGORIZED (doc/help/user/palmer exists; it is the
+                          Palmer OCC help topic, not a command, no command
+                          was ever needed)
+  parry          EXISTS   (_parry.c mortal version created 2026-06-23, Rifts-native)
+  pemote         EXISTS   (_pemote.c, possessive emote, matches
+                          doc/help/user/pemote)
+  picture        DONE     (_picture.c ASCII portrait env storage, 2026-07-07)
+  position       EXISTS   (_position.c)
+  post           EXISTS   (_posting.c)
+  prompt         EXISTS   (already fully functional: cmds/mortal/_setenv.c
+                          plus std/user.c reading getenv("PROMPT"); the
+                          doc/help/user/prompt example works today, no
+                          dedicated 'prompt' command needed)
+  radio          EXISTS   (_radio.c)
+  remember       EXISTS   (_remember.c)
+  remoteview     EXISTS   (_remoteview.c)
+  reply          EXISTS   (secure/cmds/mortal/_reply.c, replies to the last
+                          tell, self-documenting via its own help())
+  rest           EXISTS   (_rest.c global command)
+  retrieve       EXISTS   (_retrieve.c)
+  rift           EXISTS   (_rift.c)
+  sbar           EXISTS   (_sbar.c)
+  score          EXISTS   (_score.c)
+  sentinel       DONE     (historical help only, no command, 2026-07-07)
+  sirname        EXISTS   (_sirname.c)
+  skills         EXISTS   (_skills.c)
+  slave          EXISTS   (_slave.c)
+  stop           EXISTS   (_stop.c)
+  store          EXISTS   (_store.c)
+  suicide        EXISTS   (_suicide.c, permanent character deletion for
+                          level 3 or below, see doc/help/user/suicide)
+  telemechanics  EXISTS   (_telemechanics.c)
+  testcolor      DONE     (_testcolor.c added 2026-07-01, prints a swatch
+                          of every named color tag from daemon/terminal.c;
+                          help file doc/help/user/testcolor added)
+  thank          EXISTS   (generic social, cmds/database/soul.db via SOUL_D)
+  think          EXISTS   (generic social, cmds/database/soul.db via SOUL_D)
+  trigger        DONE     (help trigger/triggers: client-side only, 2026-07-07)
+  typo           EXISTS   (_typo.c)
+  unload         EXISTS   (_unload.c)
+  unwield        EXISTS   (in /std/weapon.c via add_action)
+  vehicles       MISCATEGORIZED (doc/help/user/vehicles already gives a
+                          full conceptual overview; no evidence a typed
+                          'vehicles' command is expected on top of that,
+                          not implemented)
+  view           DONE     (historical help only; use look/eq/score, 2026-07-07)
+  wake           EXISTS   (_wake.c)
+  weapon         MISCATEGORIZED (no command was ever missing; the actual
+                          gap was doc/help/user/weapons carrying stale NM3
+                          class content. Rewritten 2026-07-01 to describe
+                          current weapon types, wield/unwield/wear/eq and
+                          fire/shoot/reload/unload, no command needed since
+                          'eq' already covers viewing your wielded weapon)
+  wear           EXISTS   (_worn.c)
+  whimpy         EXISTS   (_wimpy.c handles both wimpy and whimpy)
+  whisper        EXISTS   (_whisper.c)
+  who            EXISTS   (_who.c)
+  wield          EXISTS   (in /std/weapon.c via add_action)
+  wimpy          EXISTS   (_wimpy.c)
+  withdraw       EXISTS   (domains/Praxis/bank.c add_action "withdraw",
+                          works via the ATM card and BANK_D; correctly
+                          scoped to the bank room rather than a global
+                          command)
+
+COMMAND SUMMARY:
+  EXISTS:   abilities, advance, assassination, assist, autododge, autoparry,
+            bionics, brief, bug, card, chat, colorize, combat, converse,
+            description, dodge, eject, emote, eq, forget, idea, introduce,
+            kill, language, linerows, ooc, parry, position, post, radio,
+            remember, remoteview, rest, retrieve, rift, sbar, score, sirname,
+            skills, slave, stop, store, suicide, telemechanics, typo,
+            unload, unwield, wake, wear, whimpy, whisper, who, wield, wimpy,
+            pemote, laugh, thank, think, reply, prompt, withdraw, testcolor
+  MISSING:  email(low value, mail already exists)
+  DONE 2026-07-07: customize, echo, face, forward, greet, lineecho,
+            picture, sentinel (help), trigger (help), view (help)
+  MISCATEGORIZED (not real command gaps): palmer (OCC help topic), vehicles
+            (help topic already covers it), weapon (need already covered
+            by 'eq'; its stale help file, doc/help/user/weapons, was
+            rewritten 2026-07-01)
+
+Highest priority missing commands: none clearly scoped and small; every
+remaining MISSING entry above has zero references anywhere in the
+codebase and no documented expected behavior, so implementing any of them
+requires a design decision first, not just a fix. customize is the most
+requested by name but is exactly as undefined as the rest.
+
+---
+
+--- SECTION 4: SIGNATURE FEATURES ---
+
+MOXIM RIFT TRAVEL:
+  File: /domains/Praxis/areas/monument_square.c (spawns Moxim)
+        /domains/Praxis/monsters/moxim.c (rift command handler)
+  - "rift <destination>" command implemented in moxim.c            DONE
+  - Credits checked and deducted before travel                     DONE
+  - Moxim speaks flavor line on rift open                          DONE
+  - clone_object("/std/rift_portal") placed in room                DONE
+  - Portal has 30-second collapse timer                            DONE
+  - Destinations: Chi-Town, Splynn, New Camelot, Lazlo, Praxis     DONE
+  Status: FULL
+
+FALCONRY/HAWK PET SYSTEM:
+  Files: /domains/Praxis/npcs/falconer.c
+         /domains/Praxis/equipment/trained_hawk.c
+         /std/rifts_pet.c
+  - Falconer NPC in Monument Square                                DONE
+  - Leather glove trade + Falconry skill required                  DONE
+  - Hawk follows player between rooms (follow_owner in heartbeat)  DONE
+  - Skill-based obedience: skill_check() uses Falconry % vs d100   DONE
+    (98% skill = almost always obeys; 65% = may squawk and ignore)
+  - Say commands: attack, stay, come, hunt all implemented         DONE
+  - Hawk attack command: picks random enemy in room                DONE
+  - Hawk hunt: returns with prey if skill >= 60                    DONE
+  - Corpse eating: eat_from_room() EXISTS in /std/rifts_pet.c but  MISSING
+    NOT called in trained_hawk.c heart_beat().  Hawks never auto-eat
+    corpses after kills.
+  Status: PARTIAL (corpse eating not triggered)
+
+HYDRA ROOM:
+  File: /domains/Praxis/areas/hydra_lair.c
+  - hydra_lair.c exists with hydra monster                        DONE
+  - Pushable rock at east wall with push_result=reveal_item       DONE
+  - Push reveals /domains/Praxis/equipment/obsidian_blade.c       DONE
+  - /domains/Praxis/equipment/flame_hilt.c exists (PPE charge)    DONE
+  - windrush spell in rifts_spells_d.c pushes target to random    DONE
+    adjacent room (windrush on hydra -> hydra moves to nexus_approach)
+  Status: FULL
+
+OBSIDIAN BLADE AND FLAME HILT:
+  Files: /domains/Praxis/equipment/obsidian_blade.c
+         /domains/Praxis/equipment/flame_hilt.c
+  - obsidian_blade.c: "ar_bypass_half" property, mdc_weapon, 4d6  DONE
+  - flame_hilt.c: 'charge hilt' command, costs 10 PPE, 5min burn  DONE
+  - flame_hilt.c: charged form does 4d6+4 MDC (unverified vs      PARTIAL
+    reference value; damage set but fire animation may vary)
+  Status: DONE
+
+GHOSTLY KATANA OF SOUL SLAYING:
+  Files: /domains/Praxis/areas/splynn/catacomb_chamber.c
+         /domains/Praxis/equipment/ghostly_katana.c
+  - catacomb_chamber.c is the catacombs area in Splynn             DONE
+  - ghostly_katana.c spawns there on reset                         DONE
+  - "armor_bypass" property set: ignores all AR/armor              DONE
+  - MDC to MDC beings, SDC to SDC beings                           DONE
+    (property "mdc_weapon" = 1; rifts_combat handles this)
+  - "invisible_to_undead" property set                             DONE
+  Status: FULL
+
+SPLYNN BLACK MARKET:
+  Files: /domains/Praxis/areas/splynn/splynn_back_alley.c
+         /domains/Praxis/areas/splynn/splynn_black_market.c
+         /domains/Praxis/npcs/black_market_vendor.c
+  - splynn_back_alley.c has 'knock pillar' command (do_knock)      DONE
+  - Knocking opens a west exit to splynn_black_market              DONE
+  - Black market sells: predator armor (invisible), net guns, etc. DONE
+  - Route: go south from Rocky's, all west, 1 north, knock pillar  DONE
+  Status: FULL
+
+ROCKY'S BAR TALISMAN:
+  Files: /domains/Praxis/areas/splynn/rockys_bar_splynn.c
+         /domains/Praxis/equipment/armor_talisman.c
+  - Talisman spawns in Rocky's bar on reset                        DONE
+  - 100 MDC capacity, rechargeable with 'activate talisman'        DONE
+  - Works from inventory without wearing                           DONE
+  - absorb_damage() called in rifts_combat when bearer is hit      DONE
+  - Race exclusion check: BUG - checks strsrch(race,"hawkduhk")    BUG
+    but actual race name is "hawrk-duhk".  Hawrk-duhk players
+    can currently use the talisman when they should not be able to.
+  Status: PARTIAL (talisman exists and works; hawrk-duhk exclusion broken)
+
+SWORD OF ATLANTIS:
+  - sword_of_atlantis.c exists: 5d6 MD, penetrate_ar, +3 strike    DONE
+  - ocean_rift.c exists as entrance room off splynn_docks           DONE
+  - splynn_docks north exit connected to ocean_rift                 DONE
+  - ocean/ocean_rift_shallows.c (ocean_creature lvl6 spawn)        DONE
+  - ocean/ocean_rift_deep.c (ocean_leviathan lvl12 spawn)          DONE
+  - ocean/ocean_rift_floor.c (Atlantean ruins, atmospheric)         DONE
+  - ocean_rift.c connected down to ocean_rift_shallows             DONE
+  Status: DONE
+
+WINDRUSH SPELL:
+  File: /daemon/rifts_spells_d.c line 39, fx_windrush() line 607
+  - Spell listed in spell list                                      DONE
+  - fx_windrush() picks random adjacent exit, moves target there   DONE
+  Status: FULL
+
+SWIM AS A FISH SPELL:
+  File: /daemon/rifts_spells_d.c line 42, fx_swimasafish() line 635
+  - Spell listed in spell list                                      DONE
+  - Sets "swimasafish" env on player for 600 seconds (10 min)      DONE
+  - call_out to end_swimasafish after duration                      DONE
+  Status: FULL
+
+GREAT HORNED DRAGON METAMORPH:
+  File: /cmds/mortal/_metamorph.c
+  - Restricted to dragon races (strsrch(race,"dragon"))            DONE
+  - metamorph human: sets metamorph_form to "human"                DONE
+  - metamorph <race>: sets metamorph_form to target race           DONE
+  - metamorph dragon: resets to natural dragon form                DONE
+  - Help text says armor fits in human form after metamorph         DONE
+  - DONE (verified 2026-07-07): wear logic checks size in
+    std/armour.c armour_fits_wearer(), both directions (dragon form
+    vs human armor, human form vs dragon armor).  Note there is no
+    /std/clothing.c in this lib; armor wear goes through std/armour.c.
+  Status: FULL (command exists, armor size enforcement in wear path)
+
+RADIO SYSTEM (green colored):
+  File: /std/user.c line 980: case "radio": msg = "%^GREEN%^"+msg;
+  - Radio messages sent in GREEN color                              DONE
+  - _radio.c command file exists (cmds/mortal/_radio.c)             DONE
+    (verified 2026-07-07; also _watchradio.c, and tune/transmit
+    add_actions on the radio item itself)
+  - Players transmit via radio <msg> / transmit <msg>: delegates    DONE
+    to std/rifts_radio.c transmit_message(), broadcasting
+    "[Radio <freq>] Name: msg" to users with a powered radio on the
+    same frequency; freq 77 has a dead_signal quest hook
+  Status: FULL (verified on disk 2026-07-07; earlier MISSING entries
+    were stale, written before the radio batch landed)
+
+THIRST/DRUG STATUS EFFECTS:
+  File: /cmds/mortal/_score.c
+  - Alcohol intoxication levels shown in score (Tipsy/Drunk/etc.)  PARTIAL
+  - "Thirst quenched" in blue: NOT implemented anywhere            MISSING
+  - "Stoned" drug effect in blue: NOT implemented anywhere         MISSING
+  - Score command has no blue-colored status effects               MISSING
+  Status: PARTIAL (alcohol intox only; thirst and drug-stoned missing)
+
+COLOR SCHEME:
+  File: /std/user.c lines 978-984
+  - Exits:   %^BOLD%^%^GREEN%^ -- MATCHES reference (bold green)   DONE
+  - Radio:   %^GREEN%^         -- MATCHES reference (green)        DONE
+  - OOC:     %^RED%^           -- MATCHES reference (red)          DONE
+  - Tells:   %^BLUE%^          -- MATCHES reference (blue)         DONE
+  - Status effects (thirst, drugs): NOT in blue                    MISSING
+  - Everything else: plain text -- MATCHES reference               DONE
+  Status: MOSTLY DONE (missing blue thirst/drug status in score)
+
+---
+
+--- SECTION 5: ZONES/AREAS ---
+
+  Chi-Town         DONE (2026-06-30: interior expansion)
+    Files: /domains/chitown/areas/, /domains/chitown/npcs/,
+           /domains/chitown/monsters/, /domains/chitown/equipment/
+    HAS:   chitown_gate.c, chitown_burbs.c, chitown_boulevard.c,
+           chitown_alley.c, chitown_clinic.c, chitown_market.c,
+           chitown_officer_row.c, chitown_burb_row.c, chitown_burb_shanty.c,
+           cs_command_plaza.c, cs_armory.c, cs_barracks.c, cs_recruitment.c,
+           cs_secure_wing.c, illinois_road.c, bandit_camp.c,
+           sewer system (entrance/run/overflow/hydra_lair/hydra_treasure),
+           underground tunnel network (lower_market/maintenance_tunnel/
+           black_market/dead_end_junction), CS patrols in boulevard/barracks.
+    MISSING: secret entrances referenced on website (flavor only,
+             low priority)
+
+  Lone Star        MISSING
+    No files found.  Mentioned on original website as CS mutant
+    research HQ.
+
+  Horton           FUNCTIONAL
+    Files: /domains/Horton/areas/, /domains/Horton/npcs/,
+           /domains/Horton/monsters/, /domains/Horton/equipment/
+    HAS:   10 rooms (town + hovertrain + outskirts/wilderness trail/
+           abandoned farmstead), 2 NPCs (innkeeper, shopkeeper),
+           3 monsters (militia guard, wild dog pack, scavenger),
+           2 equipment items (basic_medkit, salvaged_armor_plate).
+           Combat content present; functional for low-level players.
+
+  Puerto Angel     MISSING
+    No files found.  Vampire-controlled coastal town in Mexico.
+
+  Splynn/Atlantis  PARTIAL
+    Files: /domains/Praxis/areas/splynn/
+    HAS:   splynn_entry.c, splynn_market.c, splynn_back_alley.c,
+           splynn_black_market.c, splynn_docks.c, splynn_pits.c,
+           splynn_preserves.c, splynn_south_road.c, splynn_west_road.c,
+           splynn_underground.c, rockys_bar_splynn.c, slave_pens.c,
+           shadow_slave.c, catacomb_chamber.c, catacomb_entrance.c,
+           catacomb_hall.c, catacomb_tomb.c
+    MISSING: Alvurron (gargoyle city), Preserves interior populated with monsters
+    DONE (ocean): ocean_rift.c + ocean/ shallows/deep/floor, sword_of_atlantis.c
+
+  NGR Germany      PARTIAL
+    Files: /domains/NGR/areas/
+    HAS:   NGR_gate.c, NGR_market_district.c, NGR_garrison.c,
+           NGR_triax_depot.c, ngr_checkpoint.c, ngr_patrol_road.c,
+           ngr_underground_bunker.c
+    HAS:   ngr_gate_guard.c, ngr_border_guard.c, ngr_patrol_soldier.c,
+           ngr_elite_soldier.c, ngr_arms_dealer.c
+    HAS:   triax_helmet.c loot (bunker spawn)
+    MISSING: City interior depth, gargoyle encounter zone, named NPCs,
+             more patrol routes, Triax R&D facility
+
+  New Camelot/Europe  PARTIAL
+    Files: /domains/newcamelot/areas/
+    HAS:   camelot_gate.c, camelot_armoury.c, camelot_square.c,
+           camelot_tavern.c, camelot_wizard_tower.c, europe_road.c,
+           black_forest.c
+    MISSING: NGR Germany area, fuller city interior
+
+  Lazlo            PARTIAL
+    Files: /domains/Lazlo/areas/
+    HAS:   lazlo_gate.c, lazlo_ley_shrine.c, lazlo_library.c,
+           lazlo_magic_quarter.c, lazlo_market.c, lazlo_square.c
+    MISSING: Lazlo interior depth, notable NPCs
+
+  Praxis           DONE
+    Main starting hub with monument square, market, bar, hydra lair,
+    coalition checkpoint, alley areas, inn, hospital, equipment shops.
+
+ZONE SUMMARY: 1 DONE, 5 PARTIAL, 3 MISSING
+
+---
+
+--- SECTION 6: HELP FILES ---
+
+Reference helpfile list vs /doc/help/user/ contents.
+
+KEY OCC HELP FILES -- status:
+  vagabond              DONE
+  wilderness scout      DONE
+  city rat              DONE
+  rogue scholar         DONE
+  headhunter            DONE
+  bounty hunter         DONE
+  cs grunt              DONE
+  cs ranger             DONE
+  juicer                DONE
+  body fixer            DONE
+  cyber-knight          DONE
+  ley line walker       DONE
+  mind_melter           DONE
+  mystic                DONE
+  shifter               DONE
+  crazy                 DONE
+  operator              DONE
+  techno wizard         DONE
+  merc soldier          DONE
+  robot pilot           DONE
+  rogue scientist       DONE
+  occs (index)          DONE
+  atlantean nomad       DONE    (created 2026-06-23)
+  atlantean slave       DONE    (created 2026-06-23)
+  sunaj assassin        SECRET  (intentionally no help file -- secret OCC)
+  delphi juicer         DONE    (created 2026-06-23)
+  hyperion juicer       DONE    (created 2026-06-23)
+  gifted gypsy          DONE    (file exists)
+  glitter boy pilot     DONE    (file exists)
+  iss peacekeeper       DONE    (file exists)
+  iss specter           DONE    (file exists)
+  knight (europe)       DONE    (doc/help/user/knight_europe exists)
+  master assassin       DONE    (file exists)
+  ninja juicer          DONE    (file exists)
+  ntset protector       DONE    (created 2026-06-23)
+  pirate                DONE    (file exists)
+  professional thief    DONE    (file exists)
+  royal knight          DONE    (file exists)
+  sailor                DONE    (file exists)
+  smuggler              DONE    (file exists)
+  special forces        DONE    (file exists)
+  tattooed-man          DONE    (created 2026-06-23)
+  necromancer           DONE    (file exists)
+  ngr mechanic          DONE    (file exists)
+  ngr soldier           DONE    (file exists)
+  kittani field mechanic DONE   (file exists)
+  kittani warrior       DONE    (file exists)
+  mercenary             DONE    (created 2026-07-07)
+  coalition soldier     DONE    (alias doc/help/user/coalition_soldier, 2026-07-07)
+  cs dead boy           DONE    (doc/help/user/cs_dead_boy, 2026-07-07)
+  shaman                DONE    (created 2026-07-07)
+  tribal warrior        DONE    (created 2026-07-07)
+  ley line rifter       DONE    (doc/help/user/ley_line_rifter, 2026-07-07)
+  special forces (merc) DONE    (alias doc/help/user/special_forces_merc, 2026-07-07)
+  pirate (s.a.)         DONE    (alias doc/help/user/pirate_sa -> pirate, 2026-07-07)
+  sailor (s.a.)         DONE    (doc/help/user/sailor_sa, 2026-07-07)
+  palmer                SOURCE  (help files exist; OCC not in occ.c)
+  palmer2               SOURCE  (help files exist; OCC not in occ.c)
+
+KEY GAMEPLAY HELP FILES -- status:
+  combat                DONE
+  vehicles              DONE
+  radio                 DONE
+  post                  DONE
+  bionics               DONE
+  spells                DONE
+  skills                DONE
+  psionics              DONE     (created 2026-06-23)
+  assassination         DONE     (doc/help/user/assassination matches
+                                  _assassination.c, verified 2026-07-01)
+  assist                DONE     (doc/help/user/assist matches
+                                  _assist.c, verified 2026-07-01)
+  card                  DONE     (doc/help/user/card matches
+                                  _card.c, verified 2026-07-01)
+  chat                  DONE     (doc/help/user/chat matches
+                                  _chat.c, verified 2026-07-01)
+  dodge                 STALE, FIXED 2026-07-01 (described a one-shot
+                                  manual dodge costing 1 APM per attempt
+                                  with a flat "+1 per PP above 10" bonus;
+                                  actual _dodge.c is a persistent mode
+                                  toggle, the same as autododge, with a
+                                  tiered PP + level bonus. Rewritten to
+                                  match)
+  parry                 STALE, NOT YET FIXED (same problem as dodge above:
+                                  describes a one-shot manual parry
+                                  requiring a wielded weapon or shield,
+                                  costing 1 APM, "+1 per PP above 10"
+                                  bonus; actual _parry.c is a free,
+                                  persistent default mode toggle, the same
+                                  as autoparry. Left for a future session,
+                                  one rewrite per session this pass)
+  rest                  STALE, NOT YET FIXED (claims "moving... interrupts
+                                  rest," but nothing in the codebase clears
+                                  the resting env var on room movement;
+                                  also omits that HP/SDC/MDC regen only
+                                  actually ticks in rooms with
+                                  rest_allowed set, otherwise 'rest' just
+                                  sits you down with no regen. Smaller
+                                  than dodge/parry, left for a future
+                                  session)
+  sbar                  DONE     (doc/help/user/sbar matches
+                                  _sbar.c, verified 2026-07-01)
+  slave                 DONE     (doc/help/user/slave matches
+                                  _slave.c, verified 2026-07-01)
+  suicide               DONE     (doc/help/user/suicide exists and matches
+                                  the live command)
+  testcolor             DONE     (doc/help/user/testcolor exists)
+  wake                  DONE     (doc/help/user/wake exists)
+  withdraw              DONE     (doc/help/user/withdraw added 2026-07-07)
+  bug/idea/typo         DONE     (doc/help/user/bug, idea, typo added 2026-07-07)
+  rules                 DONE     (2026-07-07 section 7 policy batch)
+  riftsmud              DONE     (2026-07-07, grounded in RiftsMUD Memories.txt)
+  privacy               DONE     (2026-07-07)
+  privacy-policy        DONE     (alias to privacy, 2026-07-07)
+  three_strikes         DONE     (2026-07-07)
+  harassment            DONE     (2026-07-07)
+  disclaimer            DONE     (2026-07-07)
+  information_sharing   DONE     (2026-07-07)
+  multi-playing         DONE     (2026-07-07)
+  reporting             DONE     (2026-07-07)
+  consent               DONE     (2026-07-07)
+  roleplaying           DONE     (2026-07-07)
+  religion              DONE     (2026-07-07)
+  names                 DONE     (2026-07-07; sirname file pre-existed)
+  staff                 DONE     (2026-07-07)
+  wizardship            DONE     (2026-07-07)
+  wizardship2           DONE     (2026-07-07)
+  faq                   DONE     (2026-07-07)
+  tips                  DONE     (2026-07-07)
+  www                   DONE     (2026-07-07)
+  alias                 DONE     (2026-07-07)
+  ansi                  DONE     (2026-07-07)
+  bot/bots              DONE     (2026-07-07)
+  commands              DONE     (2026-07-07)
+  concept/concept1/2    DONE     (2026-07-07)
+  description           DONE     (alias to describe, 2026-07-07)
+  disposition           DONE     (2026-07-07)
+  experience            DONE     (2026-07-07)
+  goal                  DONE     (2026-07-07)
+  history               DONE     (2026-07-07)
+  horror                DONE     (2026-07-07)
+  index                 DONE     (2026-07-07)
+  items                 DONE     (2026-07-07)
+  knight                DONE     (alias index, 2026-07-07)
+  laugh                 DONE     (2026-07-07)
+  linerows              DONE     (2026-07-07)
+  map                   DONE     (2026-07-07)
+  mercs                 DONE     (2026-07-07)
+  misc                  DONE     (2026-07-07)
+  movement              DONE     (2026-07-07)
+  news                  DONE     (2026-07-07)
+  nomad                 DONE     (alias atlantean_nomad, 2026-07-07)
+  quit                  DONE     (2026-07-07)
+  remove                DONE     (2026-07-07)
+  reply                 DONE     (2026-07-07)
+  save                  DONE     (2026-07-07)
+  sentiment             DONE     (2026-07-07)
+  starting_equipment    DONE     (2026-07-07)
+  stop                  DONE     (2026-07-07)
+  tell                  DONE     (2026-07-07)
+  thank                 DONE     (2026-07-07)
+  think                 DONE     (2026-07-07)
+  weapon                DONE     (alias to weapons, 2026-07-07)
+  coalition_grunt       DONE     (alias cs_grunt, 2026-07-07)
+  line_walker           DONE     (alias ley_line_walker, 2026-07-07)
+  cyberknight           DONE     (alias cyber_knight, 2026-07-07)
+  multiplaying          DONE     (alias multi-playing, 2026-07-07)
+  getting-started       DONE
+  levels                DONE
+  stats                 DONE
+  faction               DONE
+  reputation            DONE
+
+HELP FILE SUMMARY: 352 user help files as of 2026-07-07 section 7 pass.
+All 66 OCCs in occ_list have a resolvable help topic (file or alias).
+Website-index policy and command gaps from report.md section 7 closed.
+Remaining intentional gaps: palmer/palmer2 (not in occ.c), sunaj assassin
+(secret OCC, no help file). parry/rest help still stale (see above).
+
+---
+
+--- SECTION 7: PRIORITY BUILD ORDER ---
+
+PRIORITY (as of 2026-06-29 batch 7+fixes)
+1. NPC load failures in Chi-Town (dead_boy_guard, cs_patrol) - ALREADY FIXED
+   (mdc_creature property and create_equipment() confirmed present on disk
+   this session, matches the 2026-06-30 session note above)
+2. NPC load failures in Lone Star (cs_dog_boy_guard, ls_mutant_subject) -
+   ALREADY FIXED (same confirmation as above; ls_mutant_subject.c lives
+   under domains/LoneStar/monsters/, not npcs/, but exists and is intact)
+3. _password.c include path (I_NOECHO broken for all players) - RESOLVED
+   (verified 2026-07-07: cmds/mortal/_password.c includes
+   /secure/include/flags.h and compiles clean; live test confirmed the
+   driver sends IAC WILL ECHO at the login password prompt, so echo
+   suppression works.  Entry was stale.)
+4. monastery.c NM3 reskin - ALREADY FIXED (confirmed on disk this session:
+   "a ruined Praxis chapel," no monk/spider content remains)
+5. pit.c NM3 reskin - ALREADY FIXED (confirmed already reskinned per the
+   2026-06-30 session note above)
+6. Psionics count discrepancy - RESOLVED (actual 50; batch 7 note was off by 5)
+7. _suicide.c command - ALREADY EXISTS (permanent character deletion for
+   level 3 or below, help file matches; a death-pipeline self-kill under
+   the same name was considered and explicitly deferred, not a bug)
+8. _pemote.c command - ALREADY EXISTS (_pemote.c, possessive emote, help
+   file matches, confirmed on disk this session)
+9. Legacy guild halls NM3 join/vote reskin (cleric_hall, fighter_hall, kataan_hall) - DONE
+10. Ocean rift area + sword_of_atlantis.c - DONE (2026-06-30)
+11. NGR Germany depth pass - PARTIAL (2026-06-30: 3 rooms, 3 NPCs, helmet loot added)
+12. Horton depth pass - DONE (2026-06-30: 3 rooms, 3 monsters, 1 loot item added)
+13. Chi-Town interior depth pass - DONE (2026-06-30: 4 rooms, 3 mobs, 1 loot item added)
+14. Alvurron full city build - IN PROGRESS (2026-06-30: first pass, 4 rooms added to
+    existing gate/square/quarter/temple cluster, 4 monsters, 1 loot item)
+15. CharGen live walkthrough test on fresh alt - VERIFY
+
+COMMUNICATION / CHANNELS (2026-07-07 follow-up):
+  DONE: Legacy NM3 chat lines (newbie, hm, fighter/mage/monk/rogue/cleric/
+        kataan, cre, gossip, admin, council) restricted to wizard staff.
+        Mortals receive no channel lines; player comms are radio, telepathy
+        (intro-gated), tell-to-staff, say/whisper, ooc. register_channels()
+        in std/user.c no longer assigns class/guild/newbie lines to mortals.
+        daemon/chat.c pre-initializes staff channel keys and enforces
+        channel_allowed(). refresh_channels() re-registers on set_position
+        so admin line works immediately after setrole/makewiz. Global chat
+        command (_chat.c) wizard-only. Wizard lounge duplicate Moxim removed
+        (rift_opener expanded). Help: channels, communication updated.
+
+PLAYTEST BUGS (2026-07-07, report.md section 11):
+  DONE: tanstaafl_base.c clone_to_wizard MOVE_OK + living-to-room placement.
+  DONE: tanstaafl_base.c cmd_clone_ob relative path resolution.
+  DONE: wiz_tools set_short lowercase articles (6 files audited).
+
+SECTION 9 PARITY EXTRAS (2026-07-07):
+  DONE: Demon-plane sliver off-world zone (10 rooms under domains/demon_plane/,
+        MDC stalker/hunter/alpha in reset(), rift_shard_amulet loot at shrine).
+        Connector: nexus_approach down -> nexus_dimensional_tear -> demon_sliver_gate.
+  DONE: Three quest_d quests with NPC hooks: demon_sliver_shard (ley_researcher),
+        praxis_bounty_bandit (bounty board), chi_town_rift_report (cs_rift_liaison).
+  DONE: Praxis bounty board in Monument Square (accept/claim bandit patch, wanted_d
+        infamy reward on completion).
+  DONE: Tolkeen domain stub (6 rooms: gate, square, market, barracks, wall_n, wall_s).
+  REMAINING section 9: Atlantis/Wormwood zones, player shops depth, website parity.
+
+---

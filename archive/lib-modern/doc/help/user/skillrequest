@@ -1,0 +1,24 @@
+SKILLREQUEST: Request a secondary OCC skill
+
+Syntax: skillrequest
+        skillrequest <number>
+        skillrequest cancel
+
+DESCRIPTION:
+  Request an additional skill from your OCC skill categories. A wizard must
+  approve the request before the skill is granted.
+
+  skillrequest
+      Show a numbered list of skills you do not yet have.
+
+  skillrequest <number>
+      Submit a request for the numbered skill from the latest list.
+
+  skillrequest cancel
+      Cancel your pending request.
+
+NOTES:
+  You must have an OCC set. Only skills valid for your OCC categories appear.
+  Online wizards are notified when you submit or cancel a request.
+
+SEE ALSO: skills, abilities, score

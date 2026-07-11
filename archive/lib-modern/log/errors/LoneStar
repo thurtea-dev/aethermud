@@ -1,0 +1,4 @@
+/domains/LoneStar/npcs/cs_dog_boy_guard.c line 33: Undefined function set_mdc
+/domains/LoneStar/monsters/ls_mutant_subject.c line 31: Undefined function set_mdc
+/domains/LoneStar/npcs/cs_dog_boy_guard.c line 33: Undefined function set_mdc
+/domains/LoneStar/areas/lone_star_perimeter.c line 60: Undefined variable 'MON_PATH'

@@ -1,0 +1,55 @@
+WARMBOOT
+
+Syntax: warmboot
+        warmboot loaded
+        warmboot std
+        warmboot <domain>
+        warmboot all
+
+Reloads LPC source from disk without restarting the driver or
+dropping connections. Online admins are notified when a warmboot
+starts and finishes. Logged to /log/adm/warmboot.
+
+FORMS
+
+  warmboot
+    Ensures runtime save/log directories exist (including apprentice
+    submission dirs), reloads every .c under /daemon/,
+    /secure/daemon/, /cmds/, /secure/cmds/, /obj/, and
+    /domains/adm/, then rehashes the command daemon.
+
+  warmboot loaded
+    Walks all objects currently in memory (via objects()) and
+    recompiles each unique non-player program once.  Useful for
+    refreshing cloned NPCs and rooms already instantiated.
+
+  warmboot std
+    Prompts for confirmation, then reloads all /std/ blueprints.
+    Online players keep old inherited behavior until relog.
+
+  warmboot <domain>
+    Reloads all .c files under /domains/<domain>/ recursively.
+    Tries exact, capitalized, and lower-case directory names.
+    Example: warmboot tolkeen
+
+  warmboot all
+    Prompts for confirmation, then reloads all domains plus
+    daemon, cmd, std, and obj trees.
+
+MECHANISM
+
+  Same as update: destruct existing blueprint (if any), then
+  call_other(file, "???") to recompile from disk.
+
+LIMITS (standard for LPC muds)
+
+  - Player save files (/secure/save/users/) are never reloaded.
+  - Connected player bodies do not pick up /std/ inheritance
+    changes until relog or driver restart.
+  - master.c and simul-efun changes require ./mud.sh stop/start.
+  - For a single file: update /path/to/file
+  Available to Admin wizards (position arch or head arch).
+
+SEE ALSO
+
+  update, uptime, shutdown, help admin *wizard staff

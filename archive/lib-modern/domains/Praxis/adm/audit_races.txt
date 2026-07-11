@@ -1,0 +1,97 @@
+=== AUDIT: RCC RACES ===
+Generated from: /daemon/rifts.c
+Date: 2026-06-22
+
+ADMIN RACE (not shown to players):
+  godling    MDC  All stats fixed at 30.  5000 MDC, 1000 HP, 2000 PPE, 2000 ISP.
+             Master psionic + full magic.  Immortal.  Not OCC eligible.
+
+PLAYABLE RACES (55 total):
+
+--- SDC Races (OCC Eligible = can choose an OCC) ---
+  algor frost giant   SDC (4d6*10)    PS 4d6+10, PE 4d6+6.  Giant size.
+  atlantean           SDC (1d6*10+PE) Sense rifts, magic tattoos, magic resistance.
+  bearman             SDC (3d6*10)    Supernatural PS/PE, enhanced smell.
+  changeling          SDC (1d6*10+PE) Shapeshifter.
+  coyle               SDC (2d6*10)    Supernatural PS/PE, enhanced senses.
+  dwarf               SDC (2d6*10)    Tough, PS 4d6.
+  elf                 SDC (2d6*10)    Graceful, PP 3d6+3, PB 3d6+6.
+  goblin              SDC (2d6*10)    Small, cunning.
+  human               SDC (1d4*10+PE) Adaptable.
+  jotan               SDC (4d6*10)    Norse giant, PS 5d6+8, PE 4d6+8.
+  kankoran            SDC (3d6*10)    Supernatural PS/PE, enhanced senses.
+  nimro fire giant    SDC (4d6*10)    Giant, fire affinity.
+  ogre                SDC (3d6*10)    PS 4d6+8, brutish.
+  orc                 SDC (2d6*10)    Tough, PS 3d6+6, PE 3d6+6.
+  rahu-man            SDC (4d6*10)    Supernatural PS/PE, enhanced vision.
+  ratling             SDC (2d6*10)    Agile, PP 3d6+4.
+  titan               SDC (4d6*10)    Giant, PS 5d6+10.
+  troll               SDC (3d6*10)    PS 4d6+10, PE 4d6+6.
+
+--- SDC Races (NOT OCC Eligible - racial powers define role) ---
+  basilisk            SDC (3d6*10)    Reptilian predator.  Not OCC eligible.
+  bogie               SDC (2d6*10)    Minor faerie trickster.
+  brownie             SDC (1d6*10)    Tiny helpful faerie.
+  burster             SDC (1d4*10+PE) Psionic pyrokinesis human.  ME 3d6+2.
+  common faerie       SDC (1d4*10)    Winged faerie, flight, faerie magic.
+  common pixie        SDC (1d4*10)    Tiny winged, flight, faerie magic.
+  conservator         SDC (2d6*10)    Eco-mage humanoid.
+  cs psi-stalker      SDC (1d4*10+PE) Psionic bloodhound.  Supernatural PS/PE.
+  dog boy             SDC (2d6*10)    Coalition gen-created.  Supernatural PS/PE.
+  equinoid            SDC (3d6*10)    Horse-like, Spd 5d6+10, Supernatural PS/PE.
+  frost pixie         SDC (1d4*10)    Cold-dwelling pixie.
+  green wood faerie   SDC (1d4*10)    Nature faerie.
+  lyn-srial           SDC (2d6*10)    Winged felinoid, flight.
+  mind melter         SDC (1d4*10+PE) Master psionic human.  IQ 3d6+2, ME 3d6+4.
+  night-elves faerie  SDC (1d4*10)    Dark faerie.
+  pogtal              SDC (3d6*10)    Ape-like humanoid.
+  silver bells faerie SDC (1d4*10)    Musical faerie.
+  simvan              SDC (2d6*10)    Monster-rider nomad.
+  tree sprite         SDC (1d4*10)    Tiny nature spirit.
+  water sprite        SDC (1d4*10)    Aquatic faerie.
+  wild psi-stalker    SDC (1d4*10+PE) Unaffiliated psionic hunter.
+  wolfen              SDC (2d6*10)    Wolf-man humanoid.
+
+--- MDC Races (NOT OCC Eligible) ---
+  brodkil             MDC (4d6*10+100)  Demonic bionic being, PS 5d6+10.
+  dragon hatchling    MDC (3d6*10)      Young dragon, flight, fire breath.
+  fire dragon         MDC (4d6*10+60)   Young fire dragon.  IQ 3d6+12.
+  gargoyle            MDC (3d6*10)      Winged predator, PS 5d6+10.
+  great horned dragon MDC (6d6*10+100)  Most powerful common dragon.  IQ 3d6+15.
+  gurgoyle            MDC (4d6*10)      Elite gargoyle.  PS 5d6+15.
+  hawrk-duhk          MDC (3d6*10+PE)   Large avian D-Bee.  Flight, MDC body.
+  hawrk-ka            MDC (2d6*10+PE)   Smaller agile avian D-Bee.  Flight.
+  ice dragon          MDC (4d6*10+60)   Young ice dragon.  IQ 3d6+12.
+  secondary vampire   MDC (3d6*10+40)   Undead, sunlight/fire vulnerability.
+  thunder lizard dragon MDC (5d6*10+80) Massive, lightning breath.
+  werebear            MDC (3d6*10+50)   Lycanthrope, silver vulnerability.
+  weretiger           MDC (3d6*10+40)   Lycanthrope, silver vulnerability.
+  werewolf            MDC (3d6*10+30)   Lycanthrope, silver vulnerability.
+  wild vampire        MDC (4d6*10+60)   Feral undead, most powerful vampire.
+
+DATA STATUS:
+  All 56 races (55 playable + godling) have:
+    - Attribute rolls in do_rifts_rolls()
+    - SDC or MDC init values
+    - HP init values
+    - Race ability flags in query_race_flags()
+    - Full descriptions in query_race_description()
+    - Race data blocks in query_race_data() (detailed for major races; fallback for others)
+
+MISSING FROM PALLADIUM RIFTS (priority gaps):
+  High priority:
+    - Mutant animals (After the Bomb crossover)
+    - Grackletooth (Phase World)
+    - Kydian (Atlantis/Phase World)
+    - Vrill
+    - Seljuk (WB9 South America)
+    - True Ogre (not to be confused with Ogre)
+  Lower priority:
+    - Various Phase World alien races
+    - Splugorth minions as playable races
+    - Naut'Yll
+    - Xiticix (hostile insectoid NPC race; playable is rare)
+
+NOTE: Race mechanical implementations (flight, fire breath, regeneration) are
+defined as flags only; actual effect code must be checked separately in
+living.c, combat.c, and the relevant command files.
