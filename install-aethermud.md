@@ -11,11 +11,11 @@ Run commands as your normal user unless sudo is shown.
 
 | Item | Value |
 |------|-------|
-| File | `aethermud-full-20260711.tar.gz` |
-| Size | 193.5M compressed |
-| Contents | ~18,692 files: full project including `archive/` and `zip-files/` |
+| File | `aethermud-full-20260711.tar.gz` (rebuilt 2026-07-11 13:35, includes www/apprentice.html) |
+| Size | 199M compressed (208,241,825 bytes), 438M uncompressed |
+| Contents | 18,719 entries (16,856 files): full project including `archive/` and `zip-files/` |
 | Checksum file | `aethermud-full-20260711.tar.gz.sha256` |
-| SHA256 | `96d79eb26e31293c4c0e5d385473c245feed323f82b118051662bc4a6fded083` |
+| SHA256 | `0932a0a893197b6f20f5b65fbedafb44c2818456b0117ea3bf497aa91caad58c` |
 
 The archive includes the live mudlib, the FluffOS 2.9 driver source, all
 player saves (`lib/secure/save/users/`), mud.sh, scripts, tools, docs, and
