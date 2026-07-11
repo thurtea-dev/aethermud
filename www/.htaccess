@@ -1,0 +1,4 @@
+# Legacy page redirects (old-generation site, retired 2026-07-11)
+Redirect 301 /info.html /index.html
+Redirect 301 /staff.html /admin.html
+Redirect 301 /server.html /index.html
