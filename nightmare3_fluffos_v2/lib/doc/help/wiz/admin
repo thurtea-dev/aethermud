@@ -11,7 +11,7 @@ POSITION AND ROLE
 TOOLS YOU MUST HOLD
 All five staff objects are granted on promotion and relog if missing:
   Staff of Demotion   promote, demote
-  Staff of Dominion   dominate
+  Staff of Domains    domain
   Staff of Creation   create, modify, add, delete, about, more (QCS),
                       plus clone, purge
   RP Skill Tool       tool, rptool
@@ -55,7 +55,7 @@ YOUR RESPONSIBILITIES
   Final staff decisions: promote, demote, boot, wipe (rid)
   Server maintenance: warmboot, shutdown, daemon reload via staff menu
   Resolve escalations from Domain, Coding, and RP wizards
-  Grant domain access when dominion staff grant/revoke needs backing
+  Grant domain access when domain staff grant/revoke needs backing
 
 NOT YOUR JOB ALONE
   Day-to-day area building (assign to Coding wizards)

@@ -13,7 +13,7 @@ Roleplay      rp_wiz        help roleplay *wizard staff
 PROMOTION
 1. makewiz <player>     -> Apprentice + apprentice kit
 2. Apprentice picks a track in kit and submits the track task
-3. Domain reviews (dominate -> Apprentice submissions)
+3. Domain reviews (domain -> Apprentice submissions)
    RP/Coding approved work goes to the coding queue (review on creation staff)
 4. Domain/coding mark ready_for_setrole
 5. Admin: setrole <player> <admin|domain|coding|rp>

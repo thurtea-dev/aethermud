@@ -7,7 +7,7 @@ the wrong tool from a chest will refuse to work for your role.
 | Tool | Command(s) | Who can use it |
 |---|---|---|
 | Staff of Demotion | `promote`, `demote` | admin only |
-| Staff of Dominion | `dominate` | admin, domain |
+| Staff of Domains | `domain` | admin, domain |
 | Staff of Creation | `create`, `modify`, `add`, `delete`, `about`, `more`, `clone`, `purge` | admin, coding |
 | RP Skill Tool | `tool`, `rptool` | admin, domain, rp |
 | Tattoo Gun | `inscribe` | admin, domain, rp |
@@ -22,9 +22,9 @@ player, force-quit (boot) a player, purge a player file, shut down the MUD
 with a reason, and reload a daemon (rifts, occ, rifts_skills, or
 rifts_combat).
 
-## Staff of Dominion
+## Staff of Domains
 
-Menu driven: type `dominate`. Options: create a domain directory, assign a
+Menu driven: type `domain`. Options: create a domain directory, assign a
 domain to a coding wizard, list domains, set a domain description, go to a
 domain's start room, grant building access (logged), revoke building
 access (logged), list players, and reset loaded rooms.

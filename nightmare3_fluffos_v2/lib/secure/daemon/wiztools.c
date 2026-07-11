@@ -83,7 +83,7 @@ void give_tools(object player, string position) {
         if(ob) {
             ob->move(player);
             tell_object(player,
-                "The powers of dominion place a staff of dominion in your hands.");
+                "The powers of the domains place a staff of domains in your hands.");
         }
         break;
 

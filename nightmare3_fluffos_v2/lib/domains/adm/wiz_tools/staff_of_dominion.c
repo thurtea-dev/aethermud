@@ -1,5 +1,5 @@
 // /domains/adm/wiz_tools/staff_of_dominion.c
-// Staff of Dominion -- Domain Wizard tool for AetherMUD
+// Staff of Domains -- Domain Wizard tool for AetherMUD
 // Menu-driven domain management for domain-level staff.
 
 #include <std.h>
@@ -24,13 +24,13 @@ void get_apprentice_player(string pname);
 
 void create() {
     ::create();
-    set_name("staff of dominion");
-    set_id( ({ "staff", "staff of dominion", "dominion staff" }) );
-    set_short("a staff of dominion");
+    set_name("staff of domains");
+    set_id( ({ "staff", "staff of domains", "domains staff", "domain staff" }) );
+    set_short("a staff of domains");
     set_long(
         "A gleaming crystalline staff pulsing with territorial authority.\n"
         "It grants its wielder power over the domains of the world.\n"
-        "For Domain and Admin wizards. Type: dominate");
+        "For Domain and Admin wizards. Type: domain");
     set_mass(500);
     set_value(0);
     set_property("no_drop", 1);
@@ -45,11 +45,11 @@ mixed *query_auto_load() {
 void init() {
     ::init();
     if(environment(this_object()) != this_player()) return;
-    add_action("cmd_use_staff", "dominate");
+    add_action("cmd_use_staff", "domain");
 }
 
 private void show_menu() {
-    write("\n=== Staff of Dominion ===");
+    write("\n=== Domain Menu ===");
     write(" 1. Create new domain directory");
     write(" 2. Assign domain to coding wizard");
     write(" 3. List all domains");
@@ -81,7 +81,7 @@ void handle_choice(string str) {
     if(!str || !sizeof(str)) { write("Invalid choice.\n"); show_menu(); input_to("handle_choice"); return; }
     choice = to_int(str);
     switch(choice) {
-    case 0: write("Staff of Dominion closed."); return;
+    case 0: write("Domain menu closed."); return;
     case 1: pending_action = "mkdomain"; write("Domain name: "); input_to("get_domain"); return;
     case 2: pending_action = "assign"; write("Domain name: "); input_to("get_domain"); return;
     case 3: do_list_domains(); return;

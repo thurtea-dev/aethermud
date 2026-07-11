@@ -9,22 +9,22 @@ POSITION AND ROLE
   wiz_role: domain (synced automatically from position)
 
 TOOLS YOU MUST HOLD
-  Staff of Dominion (command: dominate)
-Granted on promotion. You cannot use dominate without this staff.
+  Staff of Domains (command: domain)
+Granted on promotion. You cannot use domain without this staff.
 
 COMMAND ACCESS
 Domain wizards do NOT get the broad creator or admin command paths.
 You CAN use:
   Ambassador file tools: ed, cat, ls, cd, more, goto (file navigation)
   workroom
-  dominate (via staff of dominion only)
+  domain (via staff of domains only)
 If you hold an RP skill tool, you may also use tool/rptool for oversight
 (domain oversight is allowed by the tool gate).
 
 You CANNOT use by default:
   update, eval, dest, build/QCS, promote, demote, rid, warmboot
 
-DOMINION STAFF MENU (dominate)
+DOMAIN MENU (domain)
   1. Create new domain directory (/domains/<name>/rooms, monsters, obj)
   2. Assign domain to coding wizard (logged)
   3. List all domains
@@ -37,7 +37,7 @@ DOMINION STAFF MENU (dominate)
  10. Apprentice submissions (list/read/approve/reject/forward/ready)
 
 APPRENTICE PIPELINE
-Apprentices submit track tasks via kit. You review them under dominate 10.
+Apprentices submit track tasks via kit. You review them under domain option 10.
   RP / Coding approve -> coding queue (creation staff: review)
   Domain outline approve -> ready_for_setrole
   Option 8 marks ready_for_setrole without auto-setrole
