@@ -1,0 +1,420 @@
+/* AetherMUD staff portal - shared styles */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #0c0e0e;
+  --bg-raised: #141818;
+  --bg-code: #1a1e1e;
+  --border: #2a3232;
+  --border-light: #3a4444;
+  --text: #c4c8c8;
+  --text-muted: #8a9292;
+  --text-heading: #e4e8e8;
+  --link: #4fa3a3;
+  --link-hover: #7fcfcf;
+  --accent: #5a8a7a;
+  --max-width: 52rem;
+}
+
+html { font-size: 100%; }
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+
+h1, h2, h3, h4 {
+  color: var(--text-heading);
+  line-height: 1.25;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--border);
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+p { margin: 0 0 1rem; }
+
+ul, ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+li { margin-bottom: 0.35rem; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* Header and navigation */
+
+.site-header {
+  margin: 0 -1.25rem 2rem;
+  padding: 1rem 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-raised);
+}
+
+.site-brand {
+  margin-bottom: 0.75rem;
+}
+
+.site-brand a {
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  text-decoration: none;
+}
+
+.site-brand a:hover { color: var(--link); }
+
+.site-tag {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  padding: 0.6rem 0;
+  font-size: 0.92rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+  padding: 0.15rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover {
+  text-decoration: none;
+  color: var(--link-hover);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--text-heading);
+  border-bottom-color: var(--accent);
+}
+
+.site-nav--roles {
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.site-nav--roles::before {
+  content: "QCS roles:";
+  margin-right: 0.25rem;
+  color: var(--text-muted);
+}
+
+.site-nav--staff {
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.site-nav--staff::before {
+  content: "Staff refs:";
+  margin-right: 0.25rem;
+  color: var(--text-muted);
+}
+
+.callout--cta table {
+  margin: 0.75rem 0 0;
+}
+
+.cta-link {
+  margin: 0.75rem 0 0;
+  margin-bottom: 0;
+}
+
+/* Content blocks */
+
+.lead {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.meta-line {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.meta-line strong { color: var(--text); font-weight: normal; }
+
+.route-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--border);
+}
+
+@media (min-width: 36rem) {
+  .route-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.route-item {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.route-grid .route-item:nth-last-child(-n+2) { border-bottom: none; }
+
+@media (min-width: 36rem) {
+  .route-item:nth-child(odd) { border-right: 1px solid var(--border); }
+  .route-item:nth-last-child(-n+2) { border-bottom: none; }
+  .route-item:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--border); }
+}
+
+.route-item h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.route-item h3 a { color: var(--text-heading); text-decoration: none; }
+.route-item h3 a:hover { color: var(--link); }
+
+.route-item p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.callout {
+  padding: 0.85rem 1rem;
+  margin: 1.25rem 0;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-raised);
+  font-size: 0.92rem;
+}
+
+.role-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 1.25rem 0;
+  border: 1px solid var(--border);
+}
+
+@media (min-width: 36rem) {
+  .role-cards { grid-template-columns: 1fr 1fr; }
+}
+
+.role-card {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.role-card:nth-child(odd) { border-right: none; }
+
+@media (min-width: 36rem) {
+  .role-card:nth-child(odd) { border-right: 1px solid var(--border); }
+  .role-card:nth-last-child(-n+2) { border-bottom: none; }
+}
+
+.role-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+.role-card h3 a { color: var(--text-heading); text-decoration: none; }
+.role-card h3 a:hover { color: var(--link); }
+
+.role-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.toc {
+  margin: 1rem 0 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+
+.toc ul {
+  margin: 0.5rem 0 0;
+  columns: 1;
+}
+
+@media (min-width: 30rem) {
+  .toc ul { columns: 2; }
+}
+
+.toc li { break-inside: avoid; }
+
+/* Code and tables */
+
+code, pre {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.88rem;
+}
+
+code {
+  background: var(--bg-code);
+  color: #c8cccc;
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+}
+
+pre {
+  background: var(--bg-code);
+  color: #c8cccc;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0 0 1rem;
+}
+
+.cmd { color: var(--link); font-weight: bold; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--bg-code);
+  color: var(--text-heading);
+  font-weight: normal;
+}
+
+tr:nth-child(even) td { background: var(--bg-raised); }
+
+/* Web client */
+
+.webclient-status {
+  display: inline-block;
+  font-size: 0.88rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border);
+  background: var(--bg-code);
+  color: var(--text-muted);
+}
+
+.webclient-status--connecting { color: var(--link); border-color: var(--link); }
+.webclient-status--connected { color: #8fcf8f; border-color: #4a7a4a; }
+.webclient-status--disconnected { color: var(--text-muted); }
+
+.webclient-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 1rem 0 0.75rem;
+}
+
+.webclient-toolbar button {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.92rem;
+  padding: 0.35rem 0.85rem;
+  color: var(--text-heading);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+}
+
+.webclient-toolbar button:hover:not(:disabled) {
+  border-color: var(--link);
+  color: var(--link-hover);
+}
+
+.webclient-toolbar button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.webclient-output {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #c8cccc;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  height: 22rem;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0 0 0.75rem;
+}
+
+.webclient-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.webclient-input-row input {
+  flex: 1;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.88rem;
+  padding: 0.45rem 0.65rem;
+  color: #c8cccc;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+}
+
+.webclient-input-row input:focus {
+  outline: none;
+  border-color: var(--link);
+}
+
+.webclient-input-row input:disabled {
+  opacity: 0.5;
+}
+
+/* Footer */
+
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.site-footer p { margin: 0 0 0.35rem; }
