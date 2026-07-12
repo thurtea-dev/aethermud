@@ -28,7 +28,8 @@ void create() {
         "Movement in the undergrowth suggests you are not alone.");
     set_exits( ([
         "north" : "/domains/Praxis/areas/splynn/splynn_south_road",
-        "east"  : "/domains/Praxis/areas/splynn/splynn_forest_edge"
+        "east"  : "/domains/Praxis/areas/splynn/splynn_forest_edge",
+        "west"  : "/domains/Praxis/areas/splynn/preserve_trail"
     ]) );
     set_listen("default",
         "Something large moving through undergrowth to the east. Birds,\n"

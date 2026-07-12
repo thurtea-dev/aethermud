@@ -29,9 +29,10 @@ void create() {
         "close the floor seems to flex under your feet, hollow below.\n\n"
         "A military entrenching shovel is stuck in the ground near the edge.\n"
         "Someone left it here and never came back for it.\n\n"
-        "Exits: west into the Preserves.");
+        "Exits: west into the Preserves, south along the old snare line.");
     set_exits( ([
-        "west" : "/domains/Praxis/areas/splynn/splynn_preserves"
+        "west"  : "/domains/Praxis/areas/splynn/splynn_preserves",
+        "south" : "/domains/Praxis/areas/splynn/preserve_snareline"
     ]) );
     set_listen("default",
         "The alien bird-calls of the Preserves, and a faint metallic\n"
