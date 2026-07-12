@@ -243,6 +243,10 @@ nomask string write_prompt() {
     int x;
  
     if((ret = __Prompt) == DEFAULT_PROMPT) {
+        if(function_exists("query_rifts_prompt", this_object())) {
+            tmp = (string)this_object()->query_rifts_prompt();
+            if(stringp(tmp) && tmp != "") ret = tmp;
+        }
         message("prompt", ret, this_object());
         return ret;
     }
@@ -286,10 +290,42 @@ nomask string write_prompt() {
                 ret = replace_string(ret, "$g", sprintf("%d", query_mp())); 
                 break;
             case 'I':
-                ret = replace_string(ret, "$I", sprintf("%d", query_max_sp())); 
+                ret = replace_string(ret, "$I", sprintf("%d", query_max_sp()));
                 break;
            case 'i':
-                ret = replace_string(ret, "$i", sprintf("%d", query_sp())); 
+                ret = replace_string(ret, "$i", sprintf("%d", query_sp()));
+                break;
+            case 'S':
+                ret = replace_string(ret, "$S", sprintf("%d",
+                  (int)this_object()->query_stats("max_SDC")));
+                break;
+            case 's':
+                ret = replace_string(ret, "$s", sprintf("%d",
+                  (int)this_object()->query_stats("SDC")));
+                break;
+            case 'P':
+                ret = replace_string(ret, "$P", sprintf("%d",
+                  (int)this_object()->query_stats("max_PPE")));
+                break;
+            case 'p':
+                ret = replace_string(ret, "$p", sprintf("%d",
+                  (int)this_object()->query_stats("PPE")));
+                break;
+            case 'J':
+                ret = replace_string(ret, "$J", sprintf("%d",
+                  (int)this_object()->query_stats("max_ISP")));
+                break;
+            case 'j':
+                ret = replace_string(ret, "$j", sprintf("%d",
+                  (int)this_object()->query_stats("ISP")));
+                break;
+            case 'K':
+                ret = replace_string(ret, "$K", sprintf("%d",
+                  (int)this_object()->query_stats("max_MDC")));
+                break;
+            case 'k':
+                ret = replace_string(ret, "$k", sprintf("%d",
+                  (int)this_object()->query_stats("MDC")));
                 break;
             default:
                 ret = replace_string(ret, ret[x..x+1], "");

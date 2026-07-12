@@ -7,7 +7,7 @@
 #include <std.h>
 
 inherit DAEMON;
-inherit "/adm/daemon/refs_d";
+inherit REFS_D;
 
 #define SYNTAX "Syntax: ss [<object>]\n"
 

@@ -281,6 +281,21 @@ varargs void move_player(mixed dest, string msg) {
     show_sbar();
 }
 
+/* Single source of truth for MDC-being detection, mirroring the
+   four-check logic in _score.c: stat, property, env, race table.
+   Admin grant paths have historically set only some of these. */
+int query_is_mdc_being() {
+    string env_mdc, my_race;
+
+    if((int)query_stats("is_MDC") == 1) return 1;
+    if((int)query_property("rifts_mdc_race") == 1) return 1;
+    env_mdc = (string)getenv("rifts_mdc_race");
+    if(env_mdc && env_mdc != "" && to_int(env_mdc) == 1) return 1;
+    my_race = (string)query_race();
+    if(my_race && (int)RIFTS_D->is_mdc_race(my_race)) return 1;
+    return 0;
+}
+
 void show_sbar() {
     int sbar_on;
     int is_mdc;
@@ -293,8 +308,7 @@ void show_sbar() {
     if(!sbar_on) return;
     if(!interactive(this_object())) return;
 
-    is_mdc = ((int)query_property("rifts_mdc_race") == 1) ||
-             (to_int((string)getenv("rifts_mdc_race")) == 1);
+    is_mdc = query_is_mdc_being();
     mdc     = (int)query_stats("MDC");
     max_mdc = (int)query_stats("max_MDC");
     hp      = (int)query_stats("rifts_hp");
@@ -315,6 +329,11 @@ void show_sbar() {
     }
 
     if(is_mdc) {
+        /* Pre-fix MDC characters may have their pool stored in SDC. */
+        if(max_mdc == 0 && max_sdc > 0) {
+            mdc     = sdc;
+            max_mdc = max_sdc;
+        }
         line = sprintf("[MDC: %d/%d", mdc, max_mdc);
     } else {
         line = sprintf("[HP: %d/%d | SDC: %d/%d", hp, max_hp, sdc, max_sdc);
@@ -326,6 +345,43 @@ void show_sbar() {
     line += "]";
 
     message("status", color_on + line + color_off, this_object());
+}
+
+/* Default prompt showing the pools that apply to this character's
+   race/OCC, using the same selection logic as show_sbar(). Returns
+   "" for characters with no Rifts stats (nmsh falls back to "> "). */
+string query_rifts_prompt() {
+    int is_mdc;
+    int mdc, max_mdc;
+    int max_ppe, max_isp;
+    string line;
+
+    is_mdc = query_is_mdc_being();
+    max_ppe = (int)query_stats("max_PPE");
+    max_isp = (int)query_stats("max_ISP");
+
+    if(is_mdc) {
+        mdc     = (int)query_stats("MDC");
+        max_mdc = (int)query_stats("max_MDC");
+        /* Pre-fix MDC characters may have their pool stored in SDC. */
+        if(max_mdc == 0 && (int)query_stats("max_SDC") > 0) {
+            mdc     = (int)query_stats("SDC");
+            max_mdc = (int)query_stats("max_SDC");
+        }
+    }
+    if(is_mdc && max_mdc > 0)
+        line = sprintf("MDC:%d/%d", mdc, max_mdc);
+    else if((int)query_stats("max_rifts_hp") > 0)
+        line = sprintf("HP:%d/%d SDC:%d/%d",
+            (int)query_stats("rifts_hp"), (int)query_stats("max_rifts_hp"),
+            (int)query_stats("SDC"), (int)query_stats("max_SDC"));
+    else return "";
+
+    if(max_ppe > 0)
+        line += sprintf(" PPE:%d/%d", (int)query_stats("PPE"), max_ppe);
+    if(max_isp > 0)
+        line += sprintf(" ISP:%d/%d", (int)query_stats("ISP"), max_isp);
+    return line + "> ";
 }
 
 void create() {
@@ -363,7 +419,9 @@ int quit(string str) {
       "Reality suspended.  See you another time!", this_object());
     save_logout_start();
     save_player( query_name() );
-    say(query_cap_name() + " is gone from our reality.");
+    if(environment(this_object()))
+        tell_room_living(environment(this_object()), this_object(), 0,
+            " goes to sleep.\n");
     log_file("enter", query_name()+" (quit): "+ctime(time())+"\n");
     PLAYER_D->add_player_info();
     remove();

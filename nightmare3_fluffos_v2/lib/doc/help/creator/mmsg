@@ -1,0 +1,29 @@
+MMSG: Customize your goto/home movement messages
+
+Syntax: set MMIN <text with $N>
+        set MMOUT <text with $N>
+        set MHOME <text with $N>
+        unset MMIN | MMOUT | MHOME
+
+DESCRIPTION:
+  Wizard teleport commands announce your arrival and departure using
+  three environment variables. Each must contain the token $N, which
+  is replaced with your name (or your race, for players who do not
+  know you). If $N is missing, the default message is used instead.
+
+    MMIN   - shown at your DESTINATION when you goto or home there.
+             Default: $N appears from the shadows.
+    MMOUT  - shown at the room you LEAVE when you goto away.
+             Default: $N fades into the shadows.
+    MHOME  - shown at the room you LEAVE when you type home.
+             Default: $N heads home.
+
+  Use 'set' with no arguments to list your current variables, and
+  'unset <VAR>' to return to the default message.
+
+EXAMPLE:
+  set MMIN $N steps out of a shimmering rift.
+  set MMOUT A rift tears open and swallows $N.
+  set MHOME $N vanishes in a crack of thunder.
+
+SEE ALSO: set, unset, goto, home, review

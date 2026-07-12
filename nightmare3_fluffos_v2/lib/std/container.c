@@ -76,8 +76,6 @@ varargs int receive_objects(object ob) {
         return 0;
     }
     if(!ob) ob = previous_object();
-    if((int)ob->query_mass() + query_encumbrance() > query_max_encumbrance())
-      return 0;
     return 1;
 }
 
@@ -205,7 +203,6 @@ string describe_item_contents(object *exclude) {
 }
 
 void add_encumbrance(int x) {
-    if(x + query_encumbrance() > query_max_encumbrance()) return;
     if((__Encumbrance += x) < 0) __Encumbrance = 0;
 }
 

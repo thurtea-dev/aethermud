@@ -10,7 +10,6 @@ inherit ROOM;
 
 void create() {
     ::create();
-    set_domain_name("Administration");
     set_property("light", 3);
     set_property("indoors", 1);
     set_short("Administration Domain");

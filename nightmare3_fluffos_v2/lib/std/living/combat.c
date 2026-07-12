@@ -283,8 +283,7 @@ void execute_attack() {
         to_hit = (int)attackers[0]->mobility(casting);
         if(casting) to_hit+=3*((int)this_object()->query_stats("intelligence"));
         else {
-            to_hit += 35-to_int(percent(query_encumbrance(),
-              query_max_encumbrance())/4);
+            to_hit += 35;
             to_hit += (int)this_object()->query_stats("dexterity");
         }
         if(to_hit < random(110)) {
@@ -657,8 +656,7 @@ int mobility(int magic) {
 
     if(magic) ret = 70 - (int)this_object()->query_stats("wisdom");
     else {
-        ret = to_int(percent(query_encumbrance(),query_max_encumbrance()))/4;
-        ret += 35-(int)this_object()->query_stats("dexterity");
+        ret = 35-(int)this_object()->query_stats("dexterity");
     }
     if(ret > 50) ret = 50;
     if(ret < 0) ret = 0;

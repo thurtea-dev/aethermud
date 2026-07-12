@@ -15,6 +15,8 @@
 
 inherit DAEMON;
 
+private void do_cancel(string a_name, string b_name, int notify);
+
 /* Trade sessions: player_name -> mapping */
 private mapping __trades;
 

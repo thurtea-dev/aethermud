@@ -24,7 +24,7 @@ int cmd_grant(string str) {
     file = absolute_path((string)this_player()->query_cwd(), file);
     if(!file_exists(path+"adm/access.c"))
       write_file(path+"adm/access.c", "#include <std.h>\n\ninherit ACCESS;\n");
-    if(file_size(file) == -2 && file[strlen(file)-1] != "/") file = file + "/";
+    if(file_size(file) == -2 && file[strlen(file)-1] != '/') file = file + "/";
     if(type == "read" || type == "all") {
         if(!((int)call_other(path+"adm/access","grant_access","read",file,who)))
           return notify_fail("Read access grant failed!\n");

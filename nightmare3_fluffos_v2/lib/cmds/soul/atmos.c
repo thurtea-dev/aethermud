@@ -12,7 +12,6 @@ void create() {
     seteuid(getuid());
     atmos = allocate_mapping(250);
     line = 1;
-    message("broadcast", "Atmos shouts: A new reality has begun!", users());
     set_heart_beat(1);
 }
 
@@ -306,8 +305,6 @@ heart_beat()
 	if( i < 10 )
 	{
 		set_heart_beat( 0 );
-                message("broadcast", "Atmos shouts: Our souls are "
-                  "now complete.", users());
 		line = -1;
 	}
 }

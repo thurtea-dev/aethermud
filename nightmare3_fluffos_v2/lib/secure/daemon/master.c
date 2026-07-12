@@ -317,8 +317,8 @@ object compile_object(string str) {
 static void crash(string err) {
     write_file(DIR_LOGS+"/crashes", mud_name()+" crashed "+ctime(time())+" with error "+
       err+".\n");
-    shout("Atmos tells you think "+mud_name()+" is crashing!\n");
-    shout("Atmos forced you to: quit\n");
+    shout("Driver: "+mud_name()+" has crashed. Saving and disconnecting "
+      "all players.\n");
     users()->force_me("quit");
 }
 

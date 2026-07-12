@@ -55,6 +55,8 @@ int cmd_setrcc(string str) {
         target->set_stats("SDC",     0);
         target->set_stats("max_SDC", 0);
         target->set_stats("is_MDC",  1);
+        target->set_property("rifts_mdc_race", 1);
+        target->setenv("rifts_mdc_race", "1");
     } else {
         sdc = (int)RIFTS_D->init_sdc(race, rolls["PE"]);
         target->set_stats("SDC",     sdc);
@@ -62,6 +64,8 @@ int cmd_setrcc(string str) {
         target->set_stats("MDC",     0);
         target->set_stats("max_MDC", 0);
         target->set_stats("is_MDC",  0);
+        target->remove_property("rifts_mdc_race");
+        target->remove_env("rifts_mdc_race");
     }
     hp = (int)RIFTS_D->init_hp(race, rolls["PE"]);
     target->set_stats("rifts_hp",     hp);

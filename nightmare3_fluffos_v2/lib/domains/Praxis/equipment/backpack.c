@@ -43,7 +43,6 @@ void init() {
 int receive_objects(object ob) {
     if(!ob) return 0;
     if(living(ob)) return 0;
-    if(__Load + (int)ob->query_mass() > MAX_LOAD) return 0;
     return 1;
 }
 

@@ -25,25 +25,22 @@ void reboot_mud(int x) {
       CMD_END) return;
     catch(new(OB_SHUT)->move(ROOM_START));
     call_out("countdown", 60, x-1);
-    message("broadcast", "Armageddon shouts: I am annoyed! "
-      "Reboot in "+x+" minutes!", users());
+    message("broadcast", "Driver: server going down for reboot in "+
+      x+" minutes.", users());
 }
 
 static void countdown(int x) {
     if(x == 1) call_out("final_warning", 50);
     else call_out("countdown", 60, x-1);
-    message("broadcast", "Armageddon shouts: Reboot in "+
-      consolidate(x, "a minute")+"!", users());
-    if(x == 3) 
-      message("broadcast", "Tell me if you need a trip to the shop!",
-        this_player());
+    message("broadcast", "Driver: server going down for reboot in "+
+      consolidate(x, "a minute")+".", users());
     notify_listeners(x);
 }
 
 static void final_warning() {
     call_out("reboot", 10);
-    message("broadcast", "Armageddon shouts: Final warning!  Reboot "
-      "in 10 seconds!", users());
+    message("broadcast", "Driver: final warning, reboot in 10 seconds.",
+      users());
     notify_listeners(0);
 }
 

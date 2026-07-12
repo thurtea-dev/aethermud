@@ -9,7 +9,7 @@ inherit DAEMON;
 int cmd_wanted(string str) {
     string name;
     int infamy;
-    string status;
+    string wstatus;
     mixed *log_arr;
     int i;
     int log_size;
@@ -17,12 +17,12 @@ int cmd_wanted(string str) {
 
     name   = (string)this_player()->query_name();
     infamy = (int)WANTED_D->query_infamy(name);
-    status = (string)WANTED_D->query_wanted_status(name);
+    wstatus = (string)WANTED_D->query_wanted_status(name);
 
     write("=== WANTED STATUS ===\n");
     write("Name:   " + (string)this_player()->query_cap_name() + "\n");
     write("Infamy: " + infamy + "\n");
-    write("Status: " + capitalize(status) + "\n");
+    write("Status: " + capitalize(wstatus) + "\n");
 
     if((int)WANTED_D->is_cs_enemy(this_player()))
         write("CS Threat: The Coalition States consider you an enemy.\n");

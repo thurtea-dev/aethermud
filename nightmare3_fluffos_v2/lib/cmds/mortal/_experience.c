@@ -3,6 +3,7 @@
 // Aliases: xp, exp
 
 #include <std.h>
+#include <daemons.h>
 
 inherit DAEMON;
 
@@ -11,6 +12,7 @@ int cmd_experience(string str) {
     int level, exp, next_exp, needed;
     mapping occ_data;
     int *xp_table;
+    int *def;
 
     if(this_player()->query_ghost()) {
         notify_fail("The dead have no experience worth counting.\n");
@@ -48,7 +50,6 @@ int cmd_experience(string str) {
         }
     } else {
         // Default table for no-OCC or unknown OCC /* approx */
-        int *def;
         def = ({ 0, 2000, 4000, 8000, 16000, 24000, 48000, 80000,
                  120000, 160000, 230000, 330000, 430000, 530000, 630000 });
         next_exp = (level < sizeof(def)) ? def[level] : -1;
