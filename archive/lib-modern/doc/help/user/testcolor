@@ -1,8 +1,0 @@
-Topic: testcolor
-Syntax: testcolor
-Prints a sample of every named color so you can check what your terminal
-actually displays. Useful right after toggling colorize on or off.
-
-If colors do not show up, type: colorize on
-
-See also: colorize, terminal

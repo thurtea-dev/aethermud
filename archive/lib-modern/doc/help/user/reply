@@ -1,7 +1,0 @@
-REPLY
-
-Syntax: reply <message>
-
-Replies to the last tell you received.
-
-SEE ALSO: tell, telepathy, communication

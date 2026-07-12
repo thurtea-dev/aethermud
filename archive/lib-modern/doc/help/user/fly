@@ -1,9 +1,0 @@
-FLY (racial command)
-
-Syntax: fly [off|land]
-
-Winged races (gargoyles, dragons in dragon form, faeries, etc.) can take flight.
-Does not auto-move rooms; use normal exits while airborne.
-Type 'fly off' or 'fly land' to return to the ground.
-
-Distinct from the Fly spell (cast fly).

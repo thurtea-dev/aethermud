@@ -128,6 +128,7 @@ static void finish_report(string mode, int reloaded, int errors) {
     string summary;
 
     who = (string)this_player()->query_cap_name();
+    if(!who || who == "") who = "(unknown)";
     summary = who + " finished warmboot " + mode + ": " + reloaded +
               " reloaded" +
               (errors ? (", " + errors + " error" + (errors == 1 ? "" : "s")) : "") +
@@ -142,6 +143,7 @@ static void finish_report(string mode, int reloaded, int errors) {
 static int skip_reload(string file) {
     if(!file || file == "") return 1;
     if(file == "/secure/daemon/master") return 1;
+    if(file == "/cmds/adm/_warmboot") return 1;
     if(strlen(file) > 18 && file[0..17] == "/secure/save/users") return 1;
     return 0;
 }

@@ -1,9 +1,0 @@
-Syntax: remoteview <name>
-
-Psychically view the location of a player you know. They must be
-online. You must have met them (introduce) or remembered them.
-
-Costs ISP (remote viewing power). Same effect as:
-  psi remote viewing at <name>
-
-See also: psi, psionics, introduce, remember, known

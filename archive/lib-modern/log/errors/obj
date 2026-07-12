@@ -1,6 +1,0 @@
-/obj/credcard.c line 95: Undefined variable 'MOVE_OK'
-/obj/tattoo_weapons/flaming_sword.c line 28: Undefined function set_weapon_class
-/obj/tattoo_weapons/flaming_sword.c line 29: Undefined function set_weapon_type
-/obj/tattoo_weapons/flaming_sword.c line 30: Undefined function set_damage_type
-/obj/tattoo_weapons/flaming_sword.c line 31: Undefined function set_wield_message
-/obj/tattoo_weapons/flaming_sword.c line 32: Undefined function set_unwield_message

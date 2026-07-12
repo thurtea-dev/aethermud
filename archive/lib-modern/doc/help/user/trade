@@ -1,9 +1,0 @@
-TRADE: Initiate a trade with another player
-
-Syntax: trade <player>
-
-DESCRIPTION:
-  Opens a secure trade window with another player in the same room.
-  Both parties must agree before items are exchanged.
-
-SEE ALSO: give, buy, sell

@@ -180,7 +180,7 @@ void change_sky() {
             msg = "Night darkens the whole of our reality.";
             break;
     }
-    message("environment", msg, users());
+    message("environment", msg, filter(users(), (: $1 && environment($1) :)));
     if(__TimeOfDay == "night") __Almanac = almanac_data();
     ASTRONOMY_D->set_moon_light();
     next_change();

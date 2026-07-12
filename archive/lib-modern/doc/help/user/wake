@@ -1,9 +1,0 @@
-WAKE: Wake up or stop resting
-
-Syntax: wake
-
-DESCRIPTION:
-  Wakes your character from sleep or ends a resting state, returning
-  you to a normal standing position.
-
-SEE ALSO: rest, score
