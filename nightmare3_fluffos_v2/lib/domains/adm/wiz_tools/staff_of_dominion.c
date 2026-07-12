@@ -21,6 +21,48 @@ void after_apprentice_action();
 void get_apprentice_id(string id);
 void get_reject_reason(string reason);
 void get_apprentice_player(string pname);
+private int valid_domain_name(string name);
+private string resolve_domain(string name);
+
+// Resolve a typed domain name to the real directory name on disk,
+// case-insensitively -- existing domains (Praxis, Lazlo, NGR, ...) are
+// capitalized and the filesystem is case-sensitive, so an exact-case match
+// cannot be assumed. Returns the on-disk name, or 0 if no domain matches.
+private string resolve_domain(string name) {
+    string *doms;
+    int i;
+
+    if(!name || !sizeof(name)) return 0;
+    if(file_size("/domains/" + name) == -2) return name;
+    doms = get_dir("/domains/");
+    if(!doms) return 0;
+    for(i = 0; i < sizeof(doms); i++)
+        if(lower_case(doms[i]) == lower_case(name)) return doms[i];
+    return 0;
+}
+
+// A domain name must be a single path component: a letter followed by
+// letters, digits, or underscores. This blocks path escapes (slashes, "..",
+// leading dots, "#") the driver's legal_path() would reject anyway, and also
+// stops benign-but-junk names (spaces, punctuation) that legal_path() allows
+// and that would otherwise create stray directories inside /domains/.
+private int valid_domain_name(string name) {
+    int i, c;
+
+    if(!name || !sizeof(name)) return 0;
+    if(sizeof(name) > 32)      return 0;
+    c = name[0];
+    if(!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) return 0;
+    for(i = 0; i < sizeof(name); i++) {
+        c = name[i];
+        if(c >= 'a' && c <= 'z') continue;
+        if(c >= 'A' && c <= 'Z') continue;
+        if(c >= '0' && c <= '9') continue;
+        if(c == '_') continue;
+        return 0;
+    }
+    return 1;
+}
 
 void create() {
     ::create();
@@ -104,17 +146,45 @@ void handle_choice(string str) {
 
 void get_domain(string name) {
     if(!name || !sizeof(name)) { write("Cancelled.\n"); return; }
-    pending_sub = lower_case(name);
+    if(!valid_domain_name(name)) {
+        write("Invalid domain name. Use letters, digits, and underscores only, "
+              "starting with a letter (no slashes, dots, or spaces).\n");
+        return;
+    }
+    pending_sub = name;
     switch(pending_action) {
     case "mkdomain":
-        if(file_size("/domains/" + pending_sub) == -2) {
-            write("Domain already exists.\n"); return;
+        {
+            string dpath;
+
+            if(resolve_domain(pending_sub)) {
+                write("Domain already exists.\n"); return;
+            }
+            dpath = "/domains/" + pending_sub;
+            mkdir(dpath);
+            mkdir(dpath + "/areas");
+            mkdir(dpath + "/monsters");
+            mkdir(dpath + "/obj");
+            // Seed a minimal start room so option 5 (goto) works immediately
+            // and the domain matches the areas/ layout every live domain uses.
+            if(file_size(dpath + "/areas/start.c") < 0)
+                write_file(dpath + "/areas/start.c",
+                    "// /domains/" + pending_sub + "/areas/start.c\n"
+                    "// Auto-generated domain start room. Edit or replace.\n\n"
+                    "#include <std.h>\n\n"
+                    "inherit ROOM;\n\n"
+                    "void create() {\n"
+                    "    ::create();\n"
+                    "    set_property(\"light\", 3);\n"
+                    "    set_property(\"indoors\", 1);\n"
+                    "    set_short(\"" + capitalize(pending_sub) + " start room\");\n"
+                    "    set_long(\n"
+                    "        \"A newly created domain awaiting development. Build outward\\n\"\n"
+                    "        \"from here.\\n\");\n"
+                    "}\n");
+            write("Domain /domains/" + pending_sub +
+                  "/ created with areas/, monsters/, obj/ and a start room.");
         }
-        mkdir("/domains/" + pending_sub);
-        mkdir("/domains/" + pending_sub + "/rooms");
-        mkdir("/domains/" + pending_sub + "/monsters");
-        mkdir("/domains/" + pending_sub + "/obj");
-        write("Domain /domains/" + pending_sub + "/ created with rooms/, monsters/, obj/.");
         break;
     case "assign":
         write("Wizard to assign as owner: ");
@@ -126,9 +196,23 @@ void get_domain(string name) {
         return;
     case "goto":
         {
-            string start = "/domains/" + pending_sub + "/room/start";
-            if(file_size(start + ".c") > 0) this_player()->move_player(start);
-            else { write("No start room found for that domain."); }
+            string real;
+            string *candidates;
+            string found;
+            int i;
+
+            real = resolve_domain(pending_sub);
+            if(!real) { write("No such domain."); break; }
+            candidates = ({
+                "/domains/" + real + "/areas/start",
+                "/domains/" + real + "/room/start",
+                "/domains/" + real + "/rooms/start"
+            });
+            found = 0;
+            for(i = 0; i < sizeof(candidates); i++)
+                if(file_size(candidates[i] + ".c") > 0) { found = candidates[i]; break; }
+            if(found) this_player()->move_player(found);
+            else write("No start room found for domain " + real + ".");
         }
         break;
     case "listplay":
@@ -136,7 +220,10 @@ void get_domain(string name) {
             object *all, *here;
             int i;
             string dom_path;
-            dom_path = "/domains/" + pending_sub;
+            string real;
+            real = resolve_domain(pending_sub);
+            if(!real) { write("No such domain."); break; }
+            dom_path = "/domains/" + real;
             all = users();
             here = ({});
             for(i = 0; i < sizeof(all); i++) {
@@ -144,9 +231,9 @@ void get_domain(string name) {
                 env = file_name(environment(all[i]));
                 if(env && strsrch(env, dom_path) != -1) here += ({ all[i] });
             }
-            if(!sizeof(here)) write("No players in domain " + pending_sub + ".");
+            if(!sizeof(here)) write("No players in domain " + real + ".");
             else {
-                write("Players in " + pending_sub + ":");
+                write("Players in " + real + ":");
                 for(i = 0; i < sizeof(here); i++)
                     write(" " + (string)here[i]->query_cap_name());
             }
@@ -159,14 +246,17 @@ void get_domain(string name) {
             string rdir;
             string base;
             object ob;
+            string real;
             int i;
             int j;
             int cnt;
 
+            real = resolve_domain(pending_sub);
+            if(!real) { write("No such domain."); break; }
             try_dirs = ({
-                "/domains/" + pending_sub + "/rooms",
-                "/domains/" + pending_sub + "/room",
-                "/domains/" + pending_sub + "/areas"
+                "/domains/" + real + "/rooms",
+                "/domains/" + real + "/room",
+                "/domains/" + real + "/areas"
             });
             cnt = 0;
             for(i = 0; i < sizeof(try_dirs); i++) {
@@ -182,7 +272,7 @@ void get_domain(string name) {
                     if(ob) { ob->reset(); cnt++; }
                 }
             }
-            write("Reset " + cnt + " loaded room(s) in " + pending_sub + ".");
+            write("Reset " + cnt + " loaded room(s) in " + real + ".");
         }
         break;
     }
@@ -208,22 +298,33 @@ void get_player(string pname) {
 void do_assign(string wiz) {
     if(!wiz || !sizeof(wiz)) { write("Cancelled.\n"); return; }
     write("Domain " + pending_sub + " assigned to " + capitalize(wiz) + ".");
-    write("(Note: update /secure/daemon/master.c domain list manually.)");
+    write("(Ownership is logged only. To give " + capitalize(wiz) +
+          " write access, run:\n"
+          "   grant write to " + lower_case(wiz) +
+          " on /domains/" + pending_sub + "/)");
     catch(log_file("/log/adm/domain_log", this_player()->query_name() +
         " assigned domain " + pending_sub + " to " + wiz + ": " +
         ctime(time()) + "\n"));
 }
 
 void do_setdesc(string desc) {
+    string real;
     if(!desc || !sizeof(desc)) { write("Cancelled.\n"); return; }
-    write_file("/domains/" + pending_sub + "/.desc", desc + "\n");
-    write("Description set for domain " + pending_sub + ".");
+    real = resolve_domain(pending_sub);
+    if(!real) { write("No such domain.\n"); return; }
+    write_file("/domains/" + real + "/.desc", desc + "\n");
+    write("Description set for domain " + real + ".");
 }
 
 void do_grant(string domain) {
     if(!domain || !sizeof(domain)) { write("Cancelled.\n"); return; }
-    write("Access granted: " + capitalize(pending_sub) + " -> /domains/" + lower_case(domain) + "/");
-    write("(Manually update master.c valid_write for full effect.)");
+    if(!valid_domain_name(domain)) { write("Invalid domain name.\n"); return; }
+    write("Access request logged: " + capitalize(pending_sub) +
+          " -> /domains/" + domain + "/");
+    write("(Logged only. To make it effective, an admin runs:\n"
+          "   grant write to " + lower_case(pending_sub) +
+          " on /domains/" + domain + "/\n"
+          " which records it in /domains/" + domain + "/adm/access.c.)");
     catch(log_file("/log/adm/domain_log", this_player()->query_name() +
         " granted " + pending_sub + " access to " + domain + ": " +
         ctime(time()) + "\n"));
@@ -231,7 +332,12 @@ void do_grant(string domain) {
 
 void do_revoke(string domain) {
     if(!domain || !sizeof(domain)) { write("Cancelled.\n"); return; }
-    write("Access revoked: " + capitalize(pending_sub) + " from /domains/" + lower_case(domain) + "/");
+    if(!valid_domain_name(domain)) { write("Invalid domain name.\n"); return; }
+    write("Revocation request logged: " + capitalize(pending_sub) +
+          " from /domains/" + domain + "/");
+    write("(Logged only. To make it effective, an admin must remove the\n"
+          " grant from /domains/" + domain + "/adm/access.c -- there is no\n"
+          " revoke command; edit the file or call its remove_access().)");
     catch(log_file("/log/adm/domain_log", this_player()->query_name() +
         " revoked " + pending_sub + " from " + domain + ": " +
         ctime(time()) + "\n"));

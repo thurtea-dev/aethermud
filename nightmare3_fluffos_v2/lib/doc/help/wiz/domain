@@ -25,7 +25,7 @@ You CANNOT use by default:
   update, eval, dest, build/QCS, promote, demote, rid, warmboot
 
 DOMAIN MENU (domain)
-  1. Create new domain directory (/domains/<name>/rooms, monsters, obj)
+  1. Create new domain directory (/domains/<name>/areas, monsters, obj + start room)
   2. Assign domain to coding wizard (logged)
   3. List all domains
   4. Set domain description
@@ -53,9 +53,12 @@ Game world areas live under /domains/<areaname>/ (e.g. /domains/Praxis/).
 Coding wizards usually build in /realms/<name>/area/ unless you assign
 a shared domain path.
 
-IMPORTANT: Options 6 and 7 log the grant but may still need an admin
-to update /realms/ or /domains/ adm/access.c for full write access.
-Contact an admin after granting access.
+IMPORTANT: Options 6 and 7 log the grant only. They do NOT change write
+access by themselves. To make a grant effective, an admin runs:
+  grant write to <player> on /domains/<domain>/
+which records it in /domains/<domain>/adm/access.c (consulted by the
+master on every write). There is no revoke command; to revoke, an admin
+edits that access.c file. Contact an admin after granting access.
 
 YOUR RESPONSIBILITIES
   Create and organize domain directories for Rifts content
