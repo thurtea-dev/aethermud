@@ -1,11 +1,12 @@
-MMSG: Customize your goto/home movement messages
+AETHERMUD STAFF COMMAND: MMSG
 
-Syntax: set MMIN <text with $N>
-        set MMOUT <text with $N>
-        set MHOME <text with $N>
-        unset MMIN | MMOUT | MHOME
+SYNTAX
+  set MMIN <text with $N>
+  set MMOUT <text with $N>
+  set MHOME <text with $N>
+  unset MMIN | MMOUT | MHOME
 
-DESCRIPTION:
+DESCRIPTION
   Wizard teleport commands announce your arrival and departure using
   three environment variables. Each must contain the token $N, which
   is replaced with your name (or your race, for players who do not
@@ -21,9 +22,14 @@ DESCRIPTION:
   Use 'set' with no arguments to list your current variables, and
   'unset <VAR>' to return to the default message.
 
-EXAMPLE:
+EXAMPLE
   set MMIN $N steps out of a shimmering rift.
   set MMOUT A rift tears open and swallows $N.
   set MHOME $N vanishes in a crack of thunder.
 
-SEE ALSO: set, unset, goto, home, review
+SEE ALSO
+  help set
+  help unset
+  help goto
+  help home
+  help review

@@ -7,7 +7,7 @@ who tag: [Apprentice]
 Apprentices are temporary wizards created by makewiz. They get a workroom,
 basic ambassador-level file tools, and an apprentice kit.
 
-TOOL: kit (also: apprentice)
+TOOL: KIT (ALSO: APPRENTICE)
   1. Choose track: rp / domain / coding
   2. View task brief
   3. Draft / edit submission
@@ -32,8 +32,12 @@ WHAT YOU CANNOT DO YET
   - admin commands (update, warmboot, setrole, etc.)
 
 PROMOTION
-When domain/coding mark you ready, an admin still runs:
+  When domain/coding mark you ready, an admin still runs:
 
-  setrole <you> <admin|domain|coding|rp>
+    setrole <you> <admin|domain|coding|rp>
 
-See also: help kit, help makewiz, help setrole, help staff *wizard staff
+SEE ALSO
+  help kit *wizard staff
+  help makewiz *wizard staff
+  help setrole *wizard staff
+  help staff *wizard staff

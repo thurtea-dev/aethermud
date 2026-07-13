@@ -1,11 +1,9 @@
-Cast
-====
+CAST: Cast a Rifts spell using PPE
 
-Syntax:
-  cast <spellname> [at <target>]
+Syntax: cast <spellname> [at <target>]
 
-Casts a Rifts spell using PPE (Potential Psychic Energy). You must know the
-spell and have enough PPE to pay its cost.
+Casts a Rifts spell using PPE (Potential Psychic Energy). You must know
+the spell and have enough PPE to pay its cost.
 
 Examples:
   cast fire bolt at brodkil
@@ -17,4 +15,4 @@ In combat, casting uses one attack per melee (APM) for that round.
 Type help spells for the Rifts L1-L5 spell list. Which spells you know
 depends on your O.C.C.
 
-See also: help spells, score, rest
+SEE ALSO: spells, score, rest

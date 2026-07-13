@@ -1,8 +1,7 @@
+AETHERMUD CREATOR GUIDE: THE ED LINE EDITOR
 
-
-			     The Ed Primer
-				 --or--
-	Your Introduction To The Wonderful World Of Programming With Ed!
+The Ed Primer, or: Your Introduction To The Wonderful World Of
+Programming With Ed!
 
 0. A Prelude:
    (How to read the author's peculiar notation)
@@ -370,3 +369,8 @@ There are more than two lines.
 --Mishael, author/editor.
 David "Mishael" Green
 dgreen@jarthur.claremont.edu
+
+SEE ALSO
+  help start *creator general
+  help debug_hints *creator general
+  help debug_macro *creator general

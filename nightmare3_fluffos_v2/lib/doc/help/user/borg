@@ -1,13 +1,20 @@
-Borg
-The Borg (Full Conversion Cyborg) has replaced most of their biological body
-with a powerful mechanical chassis. What remains is a human mind encased in
-Mega-Damage armour with built-in weapons and superhuman strength.
+BORG: Full conversion cyborg, human mind in a war machine
 
-Borgs are among the toughest characters in the game. They cannot be Juiced or
-take most bionic additions (no room), and they require maintenance instead of
-food. Their advancement is slower than most OCCs to reflect their inherent power.
+The Borg (Full Conversion Cyborg) has replaced most of their biological
+body with a powerful mechanical chassis. What remains is a human mind
+encased in Mega-Damage armor with built-in weapons and superhuman
+strength.
 
-Attribute requirements: PS 14, PE 12.
-Flags: [Full Conversion Borg] [Cybernetic]
-Starting equipment: Full conversion cyborg body (military or civilian chassis),
-two integrated ranged weapons, vibro-blade, and maintenance toolkit.
+Borgs are among the toughest characters in the game. They cannot be
+Juiced or take most bionic additions (no room), and they require
+maintenance instead of food. Their advancement is slower than most OCCs
+to reflect their inherent power.
+
+STARTING PACKAGE
+  Attribute requirements: PS 14, PE 12.
+  Flags: [Full Conversion Borg] [Cybernetic]
+  Equipment: Full conversion cyborg body (military or civilian
+    chassis), two integrated ranged weapons, vibro-blade, and
+    maintenance toolkit.
+
+SEE ALSO: occs, classes, bionics

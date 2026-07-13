@@ -1,33 +1,36 @@
-setrole
-=======
+AETHERMUD STAFF COMMAND: SETROLE
 
-Syntax: setrole <player> <admin|domain|coding|rp>
+SYNTAX
+  setrole <player> <admin|domain|coding|rp>
 
-Sets a wizard's position and synced role tag. The target must be online
-and must already be a wizard (including Apprentice).
+DESCRIPTION
+  Sets a wizard's position and synced role tag. The target must be
+  online and must already be a wizard (including Apprentice).
 
-  admin   -> arch         [Admin-Wiz]
-  domain  -> domain_wiz   [Domain-Wiz]
-  coding  -> creator      [Coding-Wiz]
-  rp      -> rp_wiz       [RP-Wiz]
+    admin   -> arch         [Admin-Wiz]
+    domain  -> domain_wiz   [Domain-Wiz]
+    coding  -> creator      [Coding-Wiz]
+    rp      -> rp_wiz       [RP-Wiz]
 
-Restricted to admin-level wizards. Position and role are saved immediately.
+  Restricted to admin-level wizards. Position and role are saved
+  immediately.
 
 PROMOTING A MORTAL FIRST
+  If the player is still a mortal, use makewiz first. That creates an
+  Apprentice. After apprenticeship tasks, assign the full role:
 
-If the player is still a mortal, use makewiz first. That creates an
-Apprentice. After apprenticeship tasks, assign the full role:
+    makewiz splynncryth
+    setrole splynncryth admin
 
-  makewiz splynncryth
-  setrole splynncryth admin
-
-Or use the Staff of Demotion (type: promote) for a menu-driven approach
-to full roles (not Apprentice).
+  Or use the Staff of Demotion (type: promote) for a menu-driven
+  approach to full roles (not Apprentice).
 
 NOTES
-
   - setrole only works on online players.
   - Use xmote for offline position changes (admin only).
   - All role changes are logged to /log/adm/setrole.
 
-See also: help makewiz, help apprentice *wizard staff, help staff
+SEE ALSO
+  help makewiz *wizard staff
+  help apprentice *wizard staff
+  help staff *wizard staff

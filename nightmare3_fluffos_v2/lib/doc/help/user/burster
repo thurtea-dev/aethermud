@@ -1,31 +1,33 @@
-BURSTER
+BURSTER: Psionic pyrokinetic mutant human
 
-Bursters are psionic mutant humans who manifest pyrokinesis: the power to
-create, project, and control fire using only the power of the mind.  They
-are not trained mages, they were born this way, and their power emerged
-in childhood, usually with traumatic results.  On Rifts Earth, a Burster who
-learns to control their gift is a formidable ally and a terrifying enemy.
+Bursters are psionic mutant humans who manifest pyrokinesis: the power
+to create, project, and control fire using only the power of the mind.
+They are not trained mages, they were born this way, and their power
+emerged in childhood, usually with traumatic results.  On Rifts Earth,
+a Burster who learns to control their gift is a formidable ally and a
+terrifying enemy.
 
-ATTRIBUTES (approximate ranges):
+ATTRIBUTES (APPROXIMATE RANGES)
   IQ: 3-18   ME: 5-20   MA: 3-18   PS: 3-18
   PP: 3-18   PE: 3-18   PB: 3-18   Spd: 3-18
 
-DAMAGE POOL:
+DAMAGE POOL
   SDC: 1d4 x10 + PE (approx 10-40 + PE)
 
-SPECIAL ABILITIES:
+SPECIAL ABILITIES
   - Pyrokinesis: project fire bolts, create flame walls, ignite objects
   - Control existing fire: reshape, suppress, or amplify fires
   - Immunity to fire and heat from psionic origin
   - Enhanced ME attribute
 
-PENALTIES:
+PENALTIES
   - Not OCC eligible, pyrokinetic power defines the character
-  - Emotional instability: fire powers may activate involuntarily under stress
+  - Emotional instability: fire powers may activate involuntarily under
+    stress
   - Hunted by Coalition as a psionic threat
   - Normal fire (non-psionic) does still affect the Burster
 
 OCC ELIGIBLE: No.
 ALIGNMENT: Any.
 
-See also: mind_melter, cs_psi-stalker, races
+SEE ALSO: mind_melter, cs_psi-stalker, races

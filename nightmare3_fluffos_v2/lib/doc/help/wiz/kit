@@ -1,21 +1,24 @@
-kit
-===
+AETHERMUD STAFF COMMAND: KIT
 
-Syntax: kit
-        apprentice
+SYNTAX
+  kit
+  apprentice
 
-Apprentice-only tool. Pick a staff track, draft the small task for that
-track, and submit it for domain review.
+DESCRIPTION
+  Apprentice-only tool. Pick a staff track, draft the small task for
+  that track, and submit it for domain review.
 
-  1. Choose track (rp / domain / coding)
-  2. View task brief
-  3. Draft / edit submission
-  4. Submit to domain queue
-  5. View my submission status
+    1. Choose track (rp / domain / coding)
+    2. View task brief
+    3. Draft / edit submission
+    4. Submit to domain queue
+    5. View my submission status
 
-Domain wizards review via domain option 10.
-Coding wizards review the coding queue via: review
+  Domain wizards review via domain option 10.
+  Coding wizards review the coding queue via: review
 
-Ready for setrole is a flag only. An admin must still run setrole.
+  Ready for setrole is a flag only. An admin must still run setrole.
 
-See also: help apprentice *wizard staff, help setrole
+SEE ALSO
+  help apprentice *wizard staff
+  help setrole *wizard staff

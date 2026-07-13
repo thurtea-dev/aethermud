@@ -1,9 +1,7 @@
-Advance
-=======
+ADVANCE: Raise your character level
 
-Syntax:
-  advance
-  advance pick <stat>
+Syntax: advance
+        advance pick <stat>
 
 When you have enough experience for the next level, advance raises your
 character level manually. You are notified automatically when you cross
@@ -24,4 +22,4 @@ At even levels you may also pick a stat bonus:
 
 XP thresholds depend on your O.C.C. Check score for your current XP.
 
-See also: help improve, help levels, score
+SEE ALSO: improve, levels, score

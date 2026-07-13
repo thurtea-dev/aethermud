@@ -1,8 +1,9 @@
-CARD COMMAND
+CARD: Roleplay business card
 
 Syntax: card [set <text>|show <player>|clear]
 
-Store a short business card on your character for roleplay introductions.
+Store a short business card on your character for roleplay
+introductions.
 
   card              show your card to everyone in the room
   card set <text>   set or replace your card (240 char max)
@@ -11,4 +12,4 @@ Store a short business card on your character for roleplay introductions.
 
 Cards are saved on your character file.
 
-See also: introduce, biography, who
+SEE ALSO: introduce, biography, who

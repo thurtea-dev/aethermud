@@ -1,15 +1,20 @@
-Atlantean Slave
-A True Atlantean who escaped Splugorth captivity. Psychically scarred but
-resourceful, with hard-won insider knowledge of Splugorth forces and slave
-markets. Atlantean Slaves are survivors who have seen the worst the megaverse
-offers and kept going.
+ATLANTEAN SLAVE: Escaped survivor of Splugorth captivity
 
-Slaves know Splugorthian language and are trained in escape artistry, streetwise
-tactics, and survival. They carry magical tattoos and a modest PPE pool. Skill
-picks come from Physical, Rogue, and Technical categories.
+A True Atlantean who escaped Splugorth captivity. Psychically scarred
+but resourceful, with hard-won insider knowledge of Splugorth forces
+and slave markets. Atlantean Slaves are survivors who have seen the
+worst the megaverse offers and kept going.
 
-Race restriction: Atlantean only.
-Attribute requirements: None.
-PPE: Starting pool (ppe_base + ME bonus) grows each level.
-Starting equipment: Salvaged clothing, one weapon of choice, a concealed blade,
-and detailed knowledge of Splugorth slave markets.
+Slaves know Splugorthian language and are trained in escape artistry,
+streetwise tactics, and survival. They carry magical tattoos and a
+modest PPE pool. Skill picks come from Physical, Rogue, and Technical
+categories.
+
+STARTING PACKAGE
+  Race restriction: Atlantean only.
+  Attribute requirements: None.
+  PPE: Starting pool (ppe_base + ME bonus) grows each level.
+  Equipment: Salvaged clothing, one weapon of choice, a concealed
+    blade, and detailed knowledge of Splugorth slave markets.
+
+SEE ALSO: occs, classes, atlantean_nomad
