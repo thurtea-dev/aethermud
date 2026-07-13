@@ -13,8 +13,8 @@ categories.
 STARTING PACKAGE
   Race restriction: Atlantean only.
   Attribute requirements: None.
-  PPE: Starting pool (ppe_base + ME bonus) grows each level.
+  PPE: Starting pool (base PPE + ME bonus) grows each level.
   Equipment: Salvaged clothing, one weapon of choice, a concealed
     blade, and detailed knowledge of Splugorth slave markets.
 
-SEE ALSO: occs, classes, atlantean_nomad
+SEE ALSO: occs, classes, atlantean nomad

@@ -1,10 +1,13 @@
-Topic: colorize
+COLORIZE: Toggle ANSI color output
+
 Syntax: colorize [off]
+
 Enables or disables ANSI color output. Color is off by default.
 When color is on, room exits appear in bold green.
 Your preference is saved across logins.
 
-Type 'colorize' to turn color on. Type 'colorize off' to turn it off again.
+Type 'colorize' to turn color on. Type 'colorize off' to turn it off
+again.
 Or manually: setenv TERM ansi
 
-See also: color, terminal
+SEE ALSO: color, terminal

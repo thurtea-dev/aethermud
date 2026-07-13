@@ -1,8 +1,10 @@
+GETTING-STARTED: New player basics
+
 Welcome to AetherMUD.
 
-This is a text-based roleplaying game set on Rifts Earth, a post-apocalyptic
-world shattered by dimensional rifts.  You are a survivor in a dangerous and
-richly detailed world.
+This is a text-based roleplaying game set on Rifts Earth, a
+post-apocalyptic world shattered by dimensional rifts.  You are a
+survivor in a dangerous and richly detailed world.
 
 BASIC MOVEMENT
   Type a direction to move: north, south, east, west (or n, s, e, w).
@@ -28,7 +30,8 @@ COMMUNICATION
 HELP SYSTEM
   help                  opens the help menu
   help <topic>          looks up a specific topic
-  Useful topics: combat, skills, improve, advance, score, races, occs, weapons, colour
+  Useful topics: combat, skills, improve, advance, score, races, occs,
+  weapons, color
 
 QUESTS
   quests                lists your active and completed quests
@@ -36,6 +39,7 @@ QUESTS
 
 CONTACT STAFF
   If you have a question, type: ooc <your question here>
-  Wizards (staff) can see the OOC channel and will help when available.
+  Wizards (staff) can see the OOC channel and will help when
+  available.
 
-See also: combat, stats, races, occs, skills, quests, score
+SEE ALSO: combat, stats, races, occs, skills, quests, score

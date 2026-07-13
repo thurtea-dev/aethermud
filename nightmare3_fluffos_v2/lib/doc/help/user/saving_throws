@@ -1,6 +1,7 @@
-SAVING_THROWS: Display your saving throw bonuses
+SAVING THROWS: Display your saving throw bonuses
 
-Syntax: saving_throws
+Syntax: saving throws
+        saves
 
 DESCRIPTION:
   Displays your current bonuses to all Palladium saving throws:

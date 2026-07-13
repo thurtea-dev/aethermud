@@ -1,4 +1,4 @@
-CHAT COMMAND
+CHAT: Global in-character chat channel
 
 Syntax: chat <message>
         chat off
@@ -11,4 +11,4 @@ chat enabled. Distinct from OOC, which is for out-of-character talk.
   chat off          stop receiving chat messages
   chat on           resume receiving chat messages
 
-See also: ooc, say, radio, shout
+SEE ALSO: ooc, say, radio, shout

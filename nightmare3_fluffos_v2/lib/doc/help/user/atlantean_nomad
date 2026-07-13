@@ -13,8 +13,8 @@ Technical, Wilderness, and Rogue categories.
 STARTING PACKAGE
   Race restriction: Atlantean only.
   Attribute requirements: None.
-  PPE: Starting pool (ppe_base + ME bonus) grows each level.
+  PPE: Starting pool (base PPE + ME bonus) grows each level.
   Equipment: Enchanted Atlantean armor, a short sword with at least one
     magic tattoo weapon effect, dimensional compass, and survival gear.
 
-SEE ALSO: occs, classes, atlantean_slave
+SEE ALSO: occs, classes, atlantean slave

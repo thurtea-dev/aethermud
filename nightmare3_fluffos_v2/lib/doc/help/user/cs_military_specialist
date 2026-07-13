@@ -1,12 +1,16 @@
-CS Military Specialist
-A Coalition States soldier with advanced training beyond the standard grunt.
-Military Specialists are the officers and elite infantry of the CS Army,
-trained in tactics, leadership, and advanced weapons systems.
+CS MILITARY SPECIALIST: Coalition officer and elite infantry
 
-They choose from Military, Weapons, Physical, and Technical skill categories.
-Military Specialists receive broader equipment access than standard CS Grunts
-and are trained to lead small unit operations.
+A Coalition States soldier with advanced training beyond the standard
+grunt. Military Specialists are the officers and elite infantry of the
+CS Army, trained in tactics, leadership, and advanced weapons systems.
 
-Attribute requirements: IQ 10, ME 8, PS 10.
-Starting equipment: Coalition grunt armor, CP-40 laser rifle, personal radio,
-standard field kit, and a set of military-issue credentials.
+They choose from Military, Weapons, Physical, and Technical skill
+categories. Military Specialists receive broader equipment access than
+standard CS Grunts and are trained to lead small unit operations.
+
+STARTING PACKAGE
+  Attribute requirements: IQ 10, ME 8, PS 10.
+  Equipment: Coalition grunt armor, CP-40 laser rifle, personal radio,
+    standard field kit, and a set of military-issue credentials.
+
+SEE ALSO: cs grunt, cs technical officer, occs, classes

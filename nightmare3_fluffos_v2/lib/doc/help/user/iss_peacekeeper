@@ -1,13 +1,19 @@
-ISS Peacekeeper
-The Internal Security Specialists Peacekeeper is the Coalition's urban law
-enforcement arm. They maintain order in CS cities, investigate crime, root out
-D-Bee infiltration, and handle civilian security matters the Army does not.
+ISS PEACEKEEPER: Coalition urban law enforcement
 
-ISS Peacekeepers choose from Military, Espionage, Physical, and Technical
-skill categories. They are trained in interrogation, surveillance, arrest
-procedures, and crowd control. They carry Coalition authority within CS
-territory and are feared by non-humans and dissidents alike.
+The Internal Security Specialists Peacekeeper is the Coalition's urban
+law enforcement arm. They maintain order in CS cities, investigate
+crime, root out D-Bee infiltration, and handle civilian security
+matters the Army does not.
 
-Attribute requirements: IQ 10, ME 10, MA 10.
-Starting equipment: ISS body armor, laser sidearm, restraints, personal
-communicator, CS identification credentials, and a field manual.
+ISS Peacekeepers choose from Military, Espionage, Physical, and
+Technical skill categories. They are trained in interrogation,
+surveillance, arrest procedures, and crowd control. They carry
+Coalition authority within CS territory and are feared by non-humans
+and dissidents alike.
+
+STARTING PACKAGE
+  Attribute requirements: IQ 10, ME 10, MA 10.
+  Equipment: ISS body armor, laser sidearm, restraints, personal
+    communicator, CS identification credentials, and a field manual.
+
+SEE ALSO: iss specter, occs, classes

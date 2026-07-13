@@ -1,17 +1,19 @@
-CS Technical Officer
-A Coalition officer specialising in advanced technology, cybernetics, and field
-engineering. Technical Officers are the technical backbone of CS operations,
-keeping power armor, weapons, and communications running in the field.
+CS TECHNICAL OFFICER: Coalition technology and engineering officer
 
-Starting skills: Computer operation, computer programming, basic electronics,
-advanced electronics, military etiquette, radio basic, W.P. energy pistol,
-plus elective picks from Technical, Science, Electrical, Mechanical, and
-Military categories.
+A Coalition officer specializing in advanced technology, cybernetics,
+and field engineering. Technical Officers are the technical backbone of
+CS operations, keeping power armor, weapons, and communications running
+in the field.
 
-Attribute requirements: IQ 14.
-Starting equipment: CS officer uniform, portable tech kit, laptop computer,
-concealed sidearm, CS technical badge, and field engineering tools.
-Starting credits: 500 credits (standard kit).
-PPE / ISP: No starting PPE or ISP.
+STARTING PACKAGE
+  Skills: Computer operation, computer programming, basic electronics,
+    advanced electronics, military etiquette, radio basic, W.P. energy
+    pistol, plus elective picks from Technical, Science, Electrical,
+    Mechanical, and Military categories.
+  Attribute requirements: IQ 14.
+  Equipment: CS officer uniform, portable tech kit, laptop computer,
+    concealed sidearm, CS technical badge, and field engineering tools.
+  Credits: 500 credits (standard kit).
+  PPE / ISP: No starting PPE or ISP.
 
-See also: help occs
+SEE ALSO: occs, classes, cs military specialist

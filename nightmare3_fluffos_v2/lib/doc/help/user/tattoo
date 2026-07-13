@@ -8,7 +8,7 @@ Syntax: tattoo
 
 DESCRIPTION:
   Manage and activate magical tattoos. Available to Atlanteans, Sunaj
-  Assassins, Tattooed Men, and characters with the tattoo_capable property.
+  Assassins, Tattooed Men, and characters flagged as tattoo-capable.
 
   tattoo list
       Show all tattoos with list numbers and body locations.

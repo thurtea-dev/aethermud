@@ -4,4 +4,4 @@ Store a carried item in your dimensional pocket. Requires an active
 dimensional pocket (cast dimensional pocket first). The pocket lasts
 one week. Use retrieve to take items back out.
 
-Items marked no_drop or no_store cannot be stored.
+Items flagged as undroppable or unstorable cannot be stored.

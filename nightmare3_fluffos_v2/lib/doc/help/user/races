@@ -36,25 +36,25 @@ Type 'read list' to see the selection while in the setter room.
 
 The following 46 races are available on AetherMUD.  OCC eligibility is noted.
 Type "help <race>" for details.  Spaces in race names: use underscore.
-Example: help dog_boy
+Example: help dog boy
 
   SDC Races (OCC eligible):
     human          elf            dwarf          goblin
     orc            troll          ogre           kankoran
     coyle          bearman        ratling        changeling
-    algor_frost_giant  jotan      nimro_fire_giant  titan
+    algor frost giant  jotan      nimro fire giant  titan
     rahu-man       equinoid       pogtal         conservator
 
   SDC Races (NOT OCC eligible):
-    burster        mind_melter    cs_psi-stalker  dog_boy
+    burster        mind melter    cs psi-stalker  dog boy
     basilisk       bogie          brownie
-    common_faerie  common_pixie   frost_pixie     green_wood_faerie
-    night-elves_faerie  silver_bells_faerie  tree_sprite  water_sprite
+    common faerie  common pixie   frost pixie     green wood faerie
+    night-elves faerie  silver bells faerie  tree sprite  water sprite
 
   MDC Races (NOT OCC eligible):
     gargoyle       gurgoyle
     werewolf       werebear       weretiger
-    secondary_vampire  wild_vampire
-    fire_dragon    ice_dragon     great_horned_dragon  thunder_lizard_dragon
+    secondary vampire  wild vampire
+    fire dragon    ice dragon     great horned dragon  thunder lizard dragon
 
 See also: occs, help (topic index)

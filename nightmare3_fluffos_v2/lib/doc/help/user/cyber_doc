@@ -1,13 +1,19 @@
-Cyber-Doc
-A Cyber-Doc is a specialist in cybernetic surgery and bionic modification, as
-well as conventional medicine. They are the only characters with the training
-to install cybernetics in the field and are in high demand across the Rifts
-wastelands from mercenary units and wealthy clients alike.
+CYBER-DOC: Cybernetics surgeon and field medic
 
-Cyber-Docs choose from Medical, Technical, and Physical skill categories.
-Their medical knowledge rivals the Body Fixer but their focus is the interface
-of technology and biology.
+A Cyber-Doc is a specialist in cybernetic surgery and bionic
+modification, as well as conventional medicine. They are the only
+characters with the training to install cybernetics in the field and
+are in high demand across the Rifts wastelands from mercenary units and
+wealthy clients alike.
 
-Attribute requirements: IQ 12, ME 8.
-Starting equipment: Full surgical kit, portable cybernetics installation tools,
-medical scanner, drug kit, first aid supplies, and a concealed sidearm.
+Cyber-Docs choose from Medical, Technical, and Physical skill
+categories. Their medical knowledge rivals the Body Fixer but their
+focus is the interface of technology and biology.
+
+STARTING PACKAGE
+  Attribute requirements: IQ 12, ME 8.
+  Equipment: Full surgical kit, portable cybernetics installation
+    tools, medical scanner, drug kit, first aid supplies, and a
+    concealed sidearm.
+
+SEE ALSO: occs, classes, body fixer, bionics

@@ -1,9 +1,9 @@
-DESCRIPTION
-
-See help describe for the description command.
+DESCRIPTION: Set how others see you
 
 Syntax: describe <text>
         describe          (clears your description)
 
 Your description appears when others look at you, after your name.
 Use customize for a menu-driven editor.
+
+SEE ALSO: describe, customize, position, biography

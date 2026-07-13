@@ -1,14 +1,19 @@
-Crazy
-The Crazy is a warrior who has undergone Mind Over Matter (M.O.M.) cybernetic
-implantation: metal spikes driven into the brain that unlock psionic energy
-at the cost of sanity. Crazies are among the most physically dangerous
-characters in the game, but they are unstable and prone to erratic behaviour.
+CRAZY: M.O.M. augmented warrior, power at the cost of sanity
 
-Crazies gain ISP (psionic power) from their implants and combine this with
-the physical enhancements of an elite soldier. They suffer random psychotic
-episodes as a side effect of the procedure.
+The Crazy is a warrior who has undergone Mind Over Matter (M.O.M.)
+cybernetic implantation: metal spikes driven into the brain that unlock
+psionic energy at the cost of sanity. Crazies are among the most
+physically dangerous characters in the game, but they are unstable and
+prone to erratic behavior.
 
-Attribute requirements: IQ 9, PS 10, PE 10.
-ISP: Starting ISP pool from M.O.M. implants.
-Starting equipment: M.O.M. implants (fitted), light body armour, two ranged
-weapons, vibro-knife, and a personal sidearm.
+Crazies gain ISP (psionic power) from their implants and combine this
+with the physical enhancements of an elite soldier. They suffer random
+psychotic episodes as a side effect of the procedure.
+
+STARTING PACKAGE
+  Attribute requirements: IQ 9, PS 10, PE 10.
+  ISP: Starting ISP pool from M.O.M. implants.
+  Equipment: M.O.M. implants (fitted), light body armor, two ranged
+    weapons, vibro-knife, and a personal sidearm.
+
+SEE ALSO: occs, classes, juicer

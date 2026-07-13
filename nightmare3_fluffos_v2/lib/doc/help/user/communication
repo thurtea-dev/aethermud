@@ -1,42 +1,43 @@
-Communication Commands
-======================
+COMMUNICATION: How to talk to other players and staff
 
-In-room:
-    say <message>      : Speak to everyone in the room.
-    whisper <who> <msg>: Private in-room message.
-    emote <action>     : Perform an action (visible to room).
-    converse           : Auto-say mode; everything you type is spoken.
-                           Type ** to exit converse mode.
+IN-ROOM
+  say <message>       Speak to everyone in the room.
+  whisper <who> <msg> Private in-room message.
+  emote <action>      Perform an action (visible to room).
+  converse            Auto-say mode; everything you type is spoken.
+                      Type ** to exit converse mode.
 
-Player-to-player:
-    telepathy <who> <msg> : Psionic mind contact. Both players must be
-                           online. Requires introduction first (see:
-                           introduce). Costs ISP.
-    radio <message>    : Broadcast on your radio frequency (see: radio).
-                           Other players tuned to the same frequency hear
-                           you.
+PLAYER-TO-PLAYER
+  telepathy <who> <msg>  Psionic mind contact. Both players must be
+                         online. Requires introduction first (see:
+                         introduce). Costs ISP.
+  radio <message>        Broadcast on your radio frequency (see:
+                         radio). Other players tuned to the same
+                         frequency hear you.
 
-Staff contact:
-    tell <staff> <msg> : Send a private message to online wizard staff.
-                           Mortals cannot tell other mortals; use
-                           telepathy after introducing yourself.
+STAFF CONTACT
+  tell <staff> <msg>  Send a private message to online wizard staff.
+                      Mortals cannot tell other mortals; use telepathy
+                      after introducing yourself.
+  reply <msg>         Reply to the last tell you received.
 
-    reply <msg>        : Reply to the last tell you received.
+GLOBAL
+  ooc <message>       Out-of-character channel, visible to all online.
 
-Global:
-    ooc <message>      : Out-of-character channel, visible to all online.
+WIZARD STAFF ONLY
+  newbie, cre, admin, gossip, and legacy guild lines (fighter, mage,
+  etc.) are restricted to wizard staff. Mortals do not have these
+  lines. See: channels, wiz.
 
-Wizard staff only (see: channels, wiz):
-    newbie, cre, admin, gossip, and legacy guild lines (fighter, mage,
-    etc.) are restricted to wizard staff. Mortals do not have these lines.
+INTRODUCTION SYSTEM
+  introduce <player>  Introduce yourself to a player in the same room.
+                      Both parties learn each other's names. Required
+                      before telepathy or remote psionics can target
+                      another player.
 
-Introduction system:
-    introduce <player> : Introduce yourself to a player in the same room.
-                           Both parties learn each other's names.
-                           Required before telepathy or remote psionics
-                           can target another player.
+NOTES
+  shout and yell are not available to players.
+  Type 'help <command>' for details on any specific command.
 
-Note:
-    shout and yell are not available to players.
-
-Type 'help <command>' for details on any specific command.
+SEE ALSO: say, whisper, telepathy, radio, tell, ooc, introduce,
+channels
