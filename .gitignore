@@ -10,6 +10,7 @@ nightmare3_fluffos_v2/lib/domains/**/data/*.o
 # Runtime PID files
 nightmare3_fluffos_v2/bin/mud.pid
 nightmare3_fluffos_v2/bin/addr.pid
+nightmare3_fluffos_v2/bin/ws-bridge.pid
 
 # Runtime logs (files and subdirs under lib/log/)
 nightmare3_fluffos_v2/lib/log/*
@@ -34,3 +35,6 @@ nightmare3_fluffos_v2/bin/portbind
 
 # Local archive bundle (not required to run the MUD)
 zip-files/
+
+# Personal note unrelated to the MUD (backup-tooling prompt draft)
+backups-prompt.md

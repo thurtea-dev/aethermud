@@ -184,8 +184,8 @@ players should probably never see.
 
 ## 5. Commands - ~90%
 
-- **173 mortal commands** in `cmds/mortal/` - all classic RiftsMUD verbs the
-  gap report tracked (cast, psi, breath, fly, metamorph, psisword, radio,
+- **173 mortal commands** in `cmds/mortal/` - all classic original-game verbs
+  the gap report tracked (cast, psi, breath, fly, metamorph, psisword, radio,
   store/retrieve, remoteview, assassinate, card/chat/assist, sbar, slave,
   stance, position, customize, suicide, pemote, etc.). The gap report's
   2026-07-07 pass concluded "GENUINELY MISSING, deferred: (none)" with the
@@ -287,3 +287,21 @@ The honest gaps are: world scale (Sprints 4-6 unstarted or 1/3 done, no
 Stormshire), the ritual-magic tail of the spell list, the erroring legacy
 standardOld tree, the casting resource-loss ordering, and documentation that
 has fallen behind a codebase moving faster than its own trackers.
+
+---
+
+## Addendum: fixed after this assessment (2026-07-13, same day)
+
+Do not re-fix these; the sections above describe the pre-fix state:
+
+- **Casting resource-loss ordering (sections 2, 7.4): FIXED.** `_cast.c`
+  and `_psi.c` now validate the target before PPE/ISP/APM deduction,
+  gated per effect via `NEED_TARGET_EFFECTS` lists audited against every
+  `!target` guard in both daemons. Verified live.
+- **Uncommitted `daemon/command.c` rehash fix (section 7.5): COMMITTED**
+  in `affed3b` (2026-07-13 00:28), together with this assessment file.
+- **CLAUDE.md stale counts (section 7.7): UPDATED** to the measured
+  figures; the `dominate` -> `domain` checklist error is also fixed.
+- **Help system:** rewritten to a two-level index (categories, then
+  topics per category) with separator-insensitive topic lookup; the flat
+  list survives as `help index`. Not a finding above, noted for currency.

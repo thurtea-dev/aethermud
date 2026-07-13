@@ -1,23 +1,19 @@
-***
-
-```
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Overview
 
-This is an **AetherMUD recreation** built on the **Nightmare III MUD** base running on **FluffOS 2.9**. The goal is a faithful recreation of the original RiftsMUD 2.1, a Palladium Books Rifts RPG MUD. The lib is in active Rifts conversion. Do NOT treat this as a standard NM3 lib.
+This is **AetherMUD**, a TTRPG-inspired MUD built on the **Nightmare III MUD** base running on **FluffOS 2.9**. The goal is a faithful recreation of the classic early-2000s Palladium Books Rifts RPG MUD this project descends from (see the reference files below). The lib is in active Rifts conversion. Do NOT treat this as a standard NM3 lib.
 
 - `nightmare3_fluffos_v2/fluffos-2.9-ds2.08/` - The C driver source
 - `nightmare3_fluffos_v2/lib/` - The LPC mudlib (Rifts conversion)
 
 Reference files (READ THESE before making content decisions):
-- `RiftsMUD Memories.txt` - Player memories of the original game
-- `RiftsMUD-AetherMUD Helpfiles.txt` - Original help file list
-- `RiftsMUD-AetherMUD RCC's OCC's List.txt` - Target race/class list
+- `nightmare3_fluffos_v2/RiftsMUD Memories.txt` - Player memories of the original game (historical archive; keep its filename and content as-is)
 - `/domains/Praxis/adm/master_gap_report.txt` - Current gap analysis (check header for latest batch notes)
-- `/home/thurtea/nm3/www/index.html` - Offline staff guides (QCS, coding, domain, roleplay, admin, chargen)
+- `www/index.html` (repo root) - Offline staff guides (QCS, coding, domain, roleplay, admin, chargen)
+- GONE (do not cite): `RiftsMUD-AetherMUD Helpfiles.txt` and `RiftsMUD-AetherMUD RCC's OCC's List.txt` no longer exist in the repo; the OCC target list survives only via `reference-chart.md` and `daemon/occ.c` itself.
 
 ## Recent session work (2026-06-29)
 
@@ -44,7 +40,29 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
 
 **Batch 7:** Puerto Angel dockmaster + help, guild retirement (monk/mage/rogue), +5 spells, +5 psionics, +3 skills.
 
-**Approximate content counts:** ~113 spells, 50 psionics, ~102 skills, 51/51 races, 38/38 OCCs.
+**Approximate content counts:** ~116 spells, 50 psionics, ~158 skills, 61 races, 62 OCCs (measured 2026-07-13, see ASSESSMENT.md).
+
+## Recent session work (2026-07-13)
+
+- **Casting resource-loss fix:** `_cast.c` / `_psi.c` validate the target
+  BEFORE spending PPE/ISP/APM. Each file carries a `NEED_TARGET_EFFECTS`
+  macro listing every effect whose `fx_` handler hard-fails without a
+  target (audited against every `!target` guard in the daemons). If you
+  add a spell/psionic whose effect requires a target, add its effect key
+  to that list; if it self-defaults or auto-targets (like magic net in
+  combat), leave it out. Verified live.
+- **Help system is two-level:** `help` lists categories only; `help
+  <category>` (races, classes, skills, combat, communication, systems,
+  commands, alignments, staff) lists that category's topics; `help
+  <topic>` opens a topic; `help index` shows the old flat list; `help
+  <name> overview` opens a topic file shadowed by a category keyword.
+  Topic lookup is separator-insensitive (`armorofithan` == `armor of
+  ithan` == `armor_of_ithan`) via `squash_topic()` in `daemon/help.c`.
+  Function prototypes for help.c live in `daemon/help.h` (rule 17).
+- **`daemon/command.c` rehash fix** (distinct_array, no duplicate path
+  entries) was committed in `affed3b` on 2026-07-13.
+- `standardOld/` remains live and erroring on reset (see ASSESSMENT.md
+  section 7); untouched by design so far.
 
 ## What is still open (high level)
 
@@ -119,7 +137,8 @@ before any code. Never declare variables mid-function.
 This causes compile errors on FluffOS 2.9.
 
 ### 5. Warmboot vs full reboot
-Warmboot (via in-game `reboot` or `warmboot` command) does NOT
+Warmboot (via the in-game `warmboot` command; there is no in-game
+`reboot` command) does NOT
 reload core std files: user.c, living.c, room.c, armour.c, combat.c
 After editing any of these: run `./mud.sh stop && ./mud.sh start`
 from the shell. Never tell the user warmboot is sufficient for these.
@@ -229,7 +248,7 @@ Check preload.cfg when adding new daemon files.
 - MDC weapons required to damage MDC creatures.
 - psi_sword_active property allows unarmed MDC penetration for Cyber-Knights.
 
-### Color conventions (match original RiftsMUD)
+### Color conventions (match the original game)
 - Exits line: bold green
 - Radio transmissions: green [Radio] prefix
 - OOC channel: red/white
@@ -256,7 +275,7 @@ lib/
   daemon/                <- game daemons (rifts, occ, skills, spells, etc.)
 ```
 
-Staff HTML guides: `/home/thurtea/nm3/www/` (project root, not under lib/)
+Staff HTML guides: `www/` at the repo root (not under lib/)
 
 ## Building / Testing
 
@@ -314,6 +333,3 @@ Never allow player-accessible commands to:
 - This is display-only and does not change wear/remove internals.
 - `std/living/body.c` remains the source of truth for wear/remove behavior.
 - Cosmetic items should continue using their own slot labels (head, neck, shirt, back, belt, legs, hands, feet, etc).
-```
-
-***

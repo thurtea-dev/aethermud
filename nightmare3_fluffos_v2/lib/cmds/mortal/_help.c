@@ -30,10 +30,16 @@ int cmd_help(string str) {
   }
 
 void help() {
-    message("help", "Syntax: help [topic]\n\n"
-      "With no arguments, shows all available help topics grouped by "
-      "section. Type help <topic> to read help on a specific topic.\n\n"
-      "Examples:\n\"help\"\n\"help score\"\n\"help vagabond\"\n\n"
-      "Staff may use: help staff, help wizard, help creator, help admin",
+    message("help", "Syntax: help [category or topic]\n\n"
+      "With no arguments, lists the help categories (races, classes, "
+      "skills, combat, communication, systems, commands, alignments).\n"
+      "Type help <category> to list the topics in that category.\n"
+      "Type help <topic> to read help on a specific topic. Topic names "
+      "match loosely: help armor of ithan, help armor_of_ithan, and "
+      "help armorofithan all work.\n"
+      "Type help index to see every topic in one flat list.\n\n"
+      "Examples:\n\"help\"\n\"help combat\"\n\"help score\"\n"
+      "\"help vagabond\"\n\n"
+      "Staff may use: help staff, help creator, help admin",
       this_player());
   }

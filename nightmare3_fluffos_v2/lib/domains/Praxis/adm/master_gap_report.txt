@@ -1,6 +1,27 @@
-=== AETHERMUD (RIFTSMUD 2.1 RECREATION) - MASTER GAP REPORT ===
+=== AETHERMUD - MASTER GAP REPORT ===
 Generated: 2026-06-22
-Last updated: 2026-07-07 (bug-audit pass: _password/I_NOECHO, GHD armor
+Last updated: 2026-07-13
+
+SESSION CHANGES (2026-07-13) - fixes + docs currency:
+  FIXED: casting resource loss - _cast.c/_psi.c validate target BEFORE
+         PPE/ISP/APM deduction (NEED_TARGET_EFFECTS lists audited against
+         every !target guard in both daemons). Verified live.
+  DONE:  help system now two-level: "help" lists categories, "help
+         <category>" lists topics, "help <topic>" unchanged, "help index"
+         keeps the flat list, "help <name> overview" opens files shadowed
+         by category keywords, separator-insensitive topic lookup.
+  DONE:  daemon/command.c rehash duplicate-path fix committed (affed3b).
+  NOTE:  current measured totals (ASSESSMENT.md): 61 races, 62 OCCs,
+         ~116 spells, 50 psionics, ~158 skills. Older totals below
+         (~113 spells, ~102 skills, "51/51 races") are historical
+         snapshots from their dated sections; do not treat as current.
+  NOTE:  2026-07-12 player wipe deleted all pt* playtest accounts; only
+         thurtea.o survives. playtest-roster.md rosters must be recreated.
+  OPEN:  standardOld/ reset errors, events daemon destructed-callback
+         guard, coalition_grunt_armor message() error (std/armour.c:129
+         via monsters/coalition_grunt.c equip).
+
+Prior update 2026-07-07 (bug-audit pass: _password/I_NOECHO, GHD armor
 size enforcement, and radio transmit all verified already working on
 disk; their MISSING/PARTIAL entries below were stale and are corrected
 in place with dated notes)

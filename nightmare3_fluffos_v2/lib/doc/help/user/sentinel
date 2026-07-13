@@ -1,12 +1,11 @@
 SENTINEL: Historical command (not implemented)
 
-The original RiftsMUD website help index listed a "sentinel" topic.
+The original game's website help index listed a "sentinel" topic.
 No implementation or behavior description survives in the recovered
-RiftsMUD Memories notes or the aethermud archives searched for this
-recreation.
+player notes or archives searched for this recreation.
 
 This recreation does not provide a sentinel command. If you recall
-what it did on live RiftsMUD, report it to staff with the idea or
-bug commands.
+what it did in the original game, report it to staff with the idea
+or bug commands.
 
 SEE ALSO: position, stance, watch

@@ -6,6 +6,24 @@
 
 inherit DAEMON;
 
+/* Spell effects whose fx_ handler in rifts_spells_d.c requires a resolved
+   target and fails without one. Checked before PPE and APM are spent so a
+   failed cast costs nothing. Keep in sync with the !target guards there.
+   Deliberately absent: "net" (auto-targets a combat opponent) and the
+   self-defaulting effects (heal, swimasafish, tongues, restoration_spell,
+   fly_eagle). */
+#define NEED_TARGET_EFFECTS ({ \
+    "damage", "mark", "windrush", "blind", "fear", "burn", "exorcism", \
+    "fireball", "firebolt", "horrific_illusion", "shadow_bolt", \
+    "time_hole", "rift_to_oblivion", "constrain_being", "mend_wounds", \
+    "cure_disorders", "cleanse", "luck_curse", "wisps_confusion", \
+    "slow_movement", "breath_of_life", "words_truth", "detect_poison", \
+    "spell_tk", "domination", "call_lightning", "freeze_spell", \
+    "negate_mechanics", "energy_drain", "locate_spell", "negate_magic", \
+    "amulet_spell", "life_drain", "create_scroll", "dim_envelope", \
+    "soul_drain", "animate_object", "resurrection_spell", \
+    "power_word_kill", "create_magic_weapon", "time_warp_age" })
+
 int cmd_cast(string str) {
     string spell_name;
     string target_str;
@@ -73,6 +91,18 @@ int cmd_cast(string str) {
             target = this_player();
         else
             target = present(target_str, environment(this_player()));
+    }
+
+    /* Target and range validation happens before any resources are
+       spent: a failed cast costs nothing. */
+    if(target_str && !target) {
+        write("You don't see '" + target_str + "' here.\n");
+        return 1;
+    }
+    if(!target &&
+       member_array((string)sdata["effect"], NEED_TARGET_EFFECTS) != -1) {
+        write("Cast at whom?  Syntax: cast " + spell_name + " at <target>\n");
+        return 1;
     }
 
     /* In combat: spend an APM */

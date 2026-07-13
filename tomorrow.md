@@ -1,11 +1,11 @@
 Check CLAUDE.md first and confirm you're following the rules there before doing anything else.
 
-Based on ASSESSMENT.md, do three small, isolated fixes — treat each as a separate scoped change, commit-ready but don't commit:
+Cursor made edits to lib/doc/help/user/riftsmud (help scrub), scripts/ws-bridge.py, and mud.sh (bridge hardening: non-blocking I/O, 256 KiB MAX_FRAME cap, pinned pgrep pattern) while you were mid-task on the same prompt. Review all three files now:
 
-Fix the casting resource-loss ordering: in _cast.c and _psi.c, move target/range validation before PPE/ISP/APM deduction, so a failed cast (no target, out of range) costs nothing. Do not change any spell/psionic effect logic itself.
+Confirm lib/doc/help/user/riftsmud matches CLAUDE.md's tone/formatting conventions for player-facing help files, and confirm no other RiftsMUD brand mentions remain anywhere under lib/doc/help/.
 
-Update CLAUDE.md's stale content counts (races 51→61, OCCs 38→62, spells 113→116, skills 102→158) to match the measured figures from ASSESSMENT.md.
+Confirm your own partial edits (faq, start, staff, roleplay, admin, domain, coding help files) are intact and weren't overwritten or duplicated by Cursor's pass.
 
-Fix playtest-checklist.md's reference to "dominate option 10" — it should say "domain" to match the actual live verb on staff_of_dominion.c.
+Review ws-bridge.py and mud.sh's new changes for correctness and safety, the same way you reviewed the original bridge — confirm the non-blocking retry logic and frame cap don't introduce new bugs, and confirm the pgrep pin works as intended.
 
-Do not touch standardOld/, the pending rehash commit, or anything else outside these three items. Report back what changed in each file, and confirm the pending daemon/command.c rehash fix from earlier tonight is still sitting uncommitted and untouched.
+Report back clean or flag any issues before this is considered done.

@@ -1,3 +1,8 @@
+AETHERMUD NOTE (2026-07-13): legacy upstream Nightmare LPMud text; the
+named staff and mail workflow below do not exist here. This game's
+build/approval workflow is the wiz-tool verbs (kit, build, inscribe,
+approve, deny, review) on /domains/adm/wiz_tools/ - see staff-handbook/.
+
 	Information about the Approval Process
 
 

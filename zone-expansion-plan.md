@@ -1,29 +1,37 @@
-# Zone expansion plan - AetherMUD toward RiftsMUD scale
+# Zone expansion plan - AetherMUD toward original-game scale
 
-Goal: grow from ~800 rooms toward the original medium-world feel
-(3,001–6,000 rooms on Top Mud Sites) without blocking play. Expand in
-layers that players can reach from existing hubs (Praxis, Splynn, Camelot,
-Chi-Town).
+Goal: grow toward the original medium-world feel (3,001-6,000 rooms on
+Top Mud Sites) without blocking play. Expand in layers that players can
+reach from existing hubs (Praxis, Splynn, Camelot, Chi-Town).
 
-## Current footprint (approx rooms with descriptions)
+## Current footprint (measured room files, 2026-07-13)
+
+Earlier versions of this table counted files (rooms + NPCs + items),
+which overstated rooms. These are actual room-inheriting files, per
+ASSESSMENT.md section 4. Total 583 room files, ~430 playable (excluding
+standardOld and admin/example rooms).
 
 | Zone | Rooms | Role today |
 |------|------:|------------|
-| Praxis hub + sub-areas | ~559 | Chargen arrival, bank, shops, Moxim |
-| New Camelot | ~54 | Europe magic capital |
-| Chi-Town | ~51 | CS military / burbs + fortified city |
-| Splynn / Alvurron | ~40 | Atlantis market + gargoyle city |
-| NGR Germany | ~25 | Triax tech pocket |
-| Horton | ~27 | Small town + wilderness ring |
-| Demon plane | ~15 | Off-world sliver |
-| Lazlo | ~14 | Magic city stub |
-| Puerto Angel | ~12 | Vampire coast |
-| Lone Star | ~11 | Mutant research |
-| Tolkeen | ~29 | Free city: mage quarter, siege edge, crypt |
+| Praxis hub (top level) | 143 | Chargen arrival, bank, shops, Moxim |
+| Praxis/areas (CS territory, market, nexus, catacombs) | ~35 | Complete |
+| Praxis sub-areas (cemetery, mountains, orc valley, vehicles) | 37 | Complete, some legacy-flavored |
+| Praxis/standardOld | 133 | Legacy NM3 rooms, erroring; players should never see |
+| Chi-Town | 51 | CS military / burbs + fortified city |
+| Splynn / Alvurron / ocean / Preserves | ~34 | Atlantis market + gargoyle city; Preserves partial |
+| New Camelot | 30 | Europe magic capital |
+| Tolkeen | 29 | Free city: mage quarter, siege edge, crypt |
+| Horton + wilderness ring | 27 | Small town + wilderness ring |
+| NGR Germany | 14 | Triax tech pocket |
+| Demon plane | 9 | Off-world sliver |
+| Lazlo | 8 | Magic city stub |
+| Puerto Angel | 7 | Vampire coast |
+| Lone Star | 7 | Mutant research |
 
 Missing vs original splash / memories: Stormshire / Federation of Magic,
-Africa, Japan, Australia, The Preserves (hunting grounds), continuous
-wilderness between hubs. Chi-Town fortified city + burbs largely done.
+Africa, Japan, Australia, continuous wilderness between hubs. The
+Preserves now has an 11-room hunting-grounds loop (Sprint 4, about 1/3
+of target). Chi-Town fortified city + burbs largely done.
 
 ---
 
@@ -147,9 +155,9 @@ Next Phase A: Splynn Preserves (Horton wilderness ring shipped).
 |--------|------|-------------:|
 | 2 | Tolkeen playable | +25 (done ~29) |
 | 3 | Horton wilderness | +20 (done ~17 new; ~27 total) |
-| 4 | Splynn Preserves | +30 |
-| 5 | Stormshire v1 core | +80 |
-| 6 | Europe connectors + Lone Star | +40 |
+| 4 | Splynn Preserves | +30 (11 done as of 2026-07-13, ~19 to go) |
+| 5 | Stormshire v1 core | +80 (not started) |
+| 6 | Europe connectors + Lone Star | +40 (not started) |
 
 **Horton wilderness ring - shipped (~17 new rooms).**
 

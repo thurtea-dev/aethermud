@@ -52,8 +52,8 @@ Committed files should use `/path/to/nm3` or placeholders only. Local `mudos.cfg
 On a second directory or machine:
 
 ```bash
-git clone <repo-url> riftsmud-test
-cd riftsmud-test
+git clone <repo-url> aethermud-test
+cd aethermud-test
 chmod +x mud.sh scripts/*.sh
 ./mud.sh init-config
 cd nightmare3_fluffos_v2/fluffos-2.9-ds2.08

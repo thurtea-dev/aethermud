@@ -1,5 +1,7 @@
 HELP INDEX
 
-Type help without arguments for the full categorized topic list.
+Type help without arguments to list the help categories.
+Type help <category> to list the topics in one category.
+Type help index for every topic in one flat list.
 
 SEE ALSO: commands, getting-started, faq

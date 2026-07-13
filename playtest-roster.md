@@ -1,5 +1,10 @@
 # Playtest roster (created 2026-07-10)
 
+**STALE (2026-07-12 player wipe): every `pt*` account below was deleted;
+only thurtea.o survives. Recreate characters (see
+`tools/playtest_create_chars.py`) before running any check below. Score
+snapshots remain valid as expected-value references.**
+
 Shared password for all characters below: `playtestaa`
 
 These are **new** accounts. Dragons/vampires were recreated after the racial-dice chargen fix (attrs now race-scale, e.g. GHD PS 50+). Do not use thurtea / splynncryth for this pass.

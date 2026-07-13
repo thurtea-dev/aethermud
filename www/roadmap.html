@@ -14,8 +14,8 @@
   </nav>
 
   <h1>Roadmap</h1>
-  <p class="meta">Updated 2026-07-10. Source detail: <code>zone-expansion-plan.md</code>, <code>playtest-checklist.md</code>, <code>CLAUDE.md</code>, <code>report.md</code>.</p>
-  <p>Core game, Fedora transfer package, apprentice kit, warmboot, Tolkeen, Horton wilderness, Chi-Town burbs/city, and flat staff <code>www/</code> pages are in place. What follows is remaining work in suggested order.</p>
+  <p class="meta">Updated 2026-07-13. Source detail: <code>ASSESSMENT.md</code>, <code>zone-expansion-plan.md</code>, <code>playtest-checklist.md</code>, <code>CLAUDE.md</code>.</p>
+  <p>AetherMUD, a TTRPG-inspired MUD. Core game, Fedora transfer package, apprentice kit, warmboot, Tolkeen, Horton wilderness, Chi-Town burbs/city, two-level help system, and staff <code>www/</code> pages are in place. Live counts: 61 races, 62 OCCs, ~116 spells, ~50 psionics, 158 skills. What follows is remaining work in suggested order.</p>
 
   <h2>Now (ops and playtest)</h2>
   <ol>
@@ -31,7 +31,7 @@
       <pre>makewiz ptdacon
 makewiz ptcoder
 makewiz ptrpwiz</pre>
-      They use <code>kit</code> (domain / coding / rp). Domain reviews via <code>dominate</code> option 10; coding via <code>review</code>. Then <code>setrole &lt;name&gt; domain|coding|rp</code>.
+      They use <code>kit</code> (domain / coding / rp). Domain reviews via <code>domain</code> option 10; coding via <code>review</code>. Then <code>setrole &lt;name&gt; domain|coding|rp</code>.
     </li>
     <li>Optional regression: <code>python3 tools/section8_verify4.py</code> with the MUD up.</li>
   </ol>
@@ -66,9 +66,8 @@ makewiz ptrpwiz</pre>
   <h2>Systems and parity (parallel track)</h2>
   <ul>
     <li>Legacy Praxis gaps: cemetery, inn guest rooms (no files yet)</li>
-    <li>Command: <code>customize</code></li>
     <li>Content depth: vehicle interiors; more Palladium encyclopedia entries</li>
-    <li>Help: ~25 OCC help gaps</li>
+    <li>Help: ~25 OCC help gaps (categories + separator-insensitive lookup already live)</li>
     <li>CharGen: fuller gamemaster walkthrough NPC</li>
     <li>Player-run shops</li>
     <li>Website parity: in-game help browser over HTTP (who gateway already simplified)</li>

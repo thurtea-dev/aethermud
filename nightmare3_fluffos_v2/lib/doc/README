@@ -1,3 +1,9 @@
+AETHERMUD NOTE (2026-07-13): everything below is legacy upstream
+documentation inherited from the Nightmare mudlib distribution. It
+describes Nightmare LPMud, not this game. Current project guidance
+lives in the repo root (CLAUDE.md, DEVELOPMENT.md, staff-handbook/);
+player help lives in /doc/help/user. Kept for LPC/mudlib reference.
+
 This directory contains documentation for MudOS, the Nightmare mudlib,
 and Nightmare LPMud.  The following is a directory of contents for each
 of the directories:

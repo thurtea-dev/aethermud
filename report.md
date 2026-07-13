@@ -1,9 +1,11 @@
 # AetherMUD Recreation - Progress & Remaining Work
 
-Generated: 2026-07-07. Consolidates the prior `report.md` (full section-by-section
-audit) and `report-new.md` (session snapshot) into one authoritative document, now
-that most sections are complete. `report-new.md` has been retired; its content is
-folded in below.
+Generated: 2026-07-07. **Superseded for current state by `ASSESSMENT.md`
+(2026-07-13), which measured counts directly from the code; treat this
+file as a historical snapshot.** Consolidates the prior `report.md` (full
+section-by-section audit) and `report-new.md` (session snapshot) into one
+document from when most sections were completed. `report-new.md` has been
+retired; its content is folded in below.
 
 Current live copy: `/home/thurtea/aethermud` (port 1122, FluffOS 2.9-ds2.08).
 Lib path: `nightmare3_fluffos_v2/lib/`. Master tracker (daemon-level detail):

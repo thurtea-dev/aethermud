@@ -1,5 +1,9 @@
 # Playtest checklist - 2026-07-10
 
+**STALE (2026-07-12 player wipe): the `pt*` accounts this checklist uses
+were all deleted. Recreate them (see `tools/playtest_create_chars.py`)
+before working through the sections below.**
+
 Fresh characters were created for this pass. **Do not** use thurtea,
 splynncryth, or any older account. Roster + password:
 [playtest-roster.md](playtest-roster.md).
@@ -62,7 +66,7 @@ review, then you `setrole` when marked ready.
 | ptrpwiz | RP-Wiz | `makewiz ptrpwiz` -> `kit` (rp track) -> later `setrole ptrpwiz rp` | [ ] |
 
 Confirm `who` shows `[Apprentice]` after makewiz, then the role tag after
-setrole. Domain review: `dominate` option 10. Coding queue: `review`.
+setrole. Domain review: `domain` option 10. Coding queue: `review`.
 
 ---
 

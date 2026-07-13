@@ -23,9 +23,11 @@ inherit DAEMON;
 
 varargs void help(string topic, string category, int menu) {
     string staff_topic;
+    int sec;
+    int len;
 
     if(!topic || topic == "") {
-        flat_help_display();
+        categories_display();
         return;
     }
     if(topic[0] == '*') {
@@ -33,35 +35,68 @@ varargs void help(string topic, string category, int menu) {
         return;
     }
     staff_topic = lower_case(topic);
-    if(!category && staff_topic == "staff") {
-        if(creatorp(this_player()))
-            help_menu("*wizard staff", 0, 0);
-        else
-            message("help", "Staff help is not available to you.", this_player());
-        return;
-    }
-    if(!category && staff_topic == "wizard") {
-        if(creatorp(this_player()))
-            help_menu("*wizard staff", 0, 0);
-        else
-            message("help", "Wizard help is not available to you.", this_player());
-        return;
-    }
-    if(!category && staff_topic == "creator") {
-        if(creatorp(this_player()))
-            help_menu("*creator general", 0, 0);
-        else
-            message("help", "Creator help is not available to you.", this_player());
-        return;
-    }
-    if(!category && staff_topic == "admin") {
-        if(archp(this_player()))
-            help_menu("*admin commands", 0, 0);
-        else
-            message("help", "Admin help is not available to you.", this_player());
-        return;
+    if(!category) {
+        if(staff_topic == "index" || staff_topic == "all") {
+            flat_help_display();
+            return;
+        }
+        if(staff_topic == "creator") {
+            if(creatorp(this_player()))
+                help_menu("*creator general", 0, 0);
+            else
+                message("help", "Creator help is not available to you.",
+                    this_player());
+            return;
+        }
+        if(staff_topic == "admin") {
+            if(archp(this_player()))
+                help_menu("*admin commands", 0, 0);
+            else
+                message("help", "Admin help is not available to you.",
+                    this_player());
+            return;
+        }
+        /* "help <name> overview" opens the topic file directly even when
+         * <name> is claimed by a category listing (combat, occs, ...). */
+        len = strlen(staff_topic);
+        if(len > 9 && staff_topic[len - 9..] == " overview") {
+            cmd_help(staff_topic[0..len - 10], 0, menu);
+            return;
+        }
+        sec = match_category_name(staff_topic);
+        if(sec != -1) {
+            category_display(sec);
+            return;
+        }
     }
     cmd_help(topic, category, menu);
+}
+
+/* Category keyword -> section id, or -1 when the word is not a category. */
+static int match_category_name(string str) {
+    switch(str) {
+    case "races": case "race":
+        return HELP_SEC_RACES;
+    case "classes": case "class": case "occs": case "occ":
+    case "classes/occs":
+        return HELP_SEC_OCCS;
+    case "skills": case "skills & abilities":
+        return HELP_SEC_SKILLS;
+    case "combat": case "combat & movement":
+        return HELP_SEC_COMBAT;
+    case "communication": case "social": case "comm":
+    case "communication & social":
+        return HELP_SEC_COMM;
+    case "systems": case "system":
+        return HELP_SEC_SYSTEMS;
+    case "commands": case "command":
+        return HELP_SEC_COMMANDS;
+    case "alignments": case "alignment":
+        return HELP_SEC_ALIGN;
+    case "staff": case "wizard": case "staff/wizard":
+        return HELP_SEC_STAFF;
+    }
+    return -1;
 }
 
 static string read_first_line(string path) {
@@ -108,7 +143,9 @@ static int help_index_junk(string topic) {
         "foo", "testcolor", "bot", "bots",
         "coalition_grunt", "cs_psi-stalker",
         /* Sub-pages: still available via help <name>, not listed. */
-        "concept1", "concept2"
+        "concept1", "concept2",
+        /* Meta-file shadowed by the "help index" full listing. */
+        "index"
     })) != -1;
 }
 
@@ -137,9 +174,22 @@ static string find_user_help_file(string name) {
     return 0;
 }
 
+/* Strip all separators for loose topic matching: "armor of ithan",
+ * "armor_of_ithan", and "armorofithan" all squash to "armorofithan". */
+static string squash_topic(string s) {
+    s = lower_case(s);
+    s = replace_string(s, " ", "");
+    s = replace_string(s, "_", "");
+    s = replace_string(s, "-", "");
+    return s;
+}
+
 static string normalize_help_topic(string topic) {
     string alt;
     string canon;
+    string sq;
+    string *files;
+    int i;
 
     topic = lower_case(topic);
     canon = help_alias_canonical(topic);
@@ -154,6 +204,16 @@ static string normalize_help_topic(string topic) {
     if(file_exists(DIR_USER_HELP + "/" + alt)) return alt;
     alt = replace_string(topic, "-", "_");
     if(file_exists(DIR_USER_HELP + "/" + alt)) return alt;
+    /* Last resort: separator-insensitive scan of the help directory. */
+    sq = squash_topic(topic);
+    if(sizeof(sq)) {
+        files = get_dir(DIR_USER_HELP + "/");
+        if(files) {
+            for(i = 0; i < sizeof(files); i++) {
+                if(squash_topic(files[i]) == sq) return files[i];
+            }
+        }
+    }
     return topic;
 }
 
@@ -261,7 +321,7 @@ static int is_combat_topic(string topic) {
         "combat", "kill", "dodge", "parry", "flee", "stance", "vehicles",
         "weapons", "eject", "autododge", "autoparry", "saving_throws",
         "death", "reload", "unload", "wimpy", "hide", "search",
-        "position", "rest", "wake"
+        "position", "rest", "wake", "movement"
     })) != -1;
 }
 
@@ -373,15 +433,175 @@ static void print_help_section(string title, string *topics) {
     maxi = sizeof(topics);
     while(i < maxi) {
         line = "";
-        x = i + 4;
+        x = i + 3;
         if(x > maxi) x = maxi;
         while(i < x) {
             line += arrange_string(
-                strlen(topics[i]) > 17 ? topics[i][0..16] : topics[i], 18);
+                replace_string(topics[i], "_", " "), 25);
             i++;
         }
         message("info", " " + line, this_player());
     }
+}
+
+/* Top-level help: only the category names, not every topic. */
+static void categories_display() {
+    int staff;
+
+    staff = creatorp(this_player()) || high_mortalp(this_player()) ||
+        ambassadorp(this_player());
+    message("info", "\n  ===================== " + mud_name() +
+        " Help =====================\n", this_player());
+    message("info", "  races            Playable races and RCCs",
+        this_player());
+    message("info", "  classes          Occupational Character Classes (OCCs)",
+        this_player());
+    message("info", "  skills           Skills, spells, psionics, abilities",
+        this_player());
+    message("info", "  combat           Combat, movement, and survival",
+        this_player());
+    message("info", "  communication    Says, channels, radio, mail, social",
+        this_player());
+    message("info", "  systems          Score, advancement, game systems",
+        this_player());
+    message("info", "  commands         Other player commands",
+        this_player());
+    message("info", "  alignments       The Palladium alignments",
+        this_player());
+    if(staff)
+        message("info", "  staff            Staff and wizard help",
+            this_player());
+    message("info", "\n  Type help <category> to list the topics in a category.",
+        this_player());
+    message("info", "  Type help <topic> for details on a specific topic.",
+        this_player());
+    message("info", "  Type help index to see every topic in one list.",
+        this_player());
+    message("info", "  =====================================================",
+        this_player());
+}
+
+static string category_title(int sec) {
+    switch(sec) {
+    case HELP_SEC_RACES:    return "RACES";
+    case HELP_SEC_OCCS:     return "CLASSES / OCCs";
+    case HELP_SEC_SKILLS:   return "SKILLS & ABILITIES";
+    case HELP_SEC_COMBAT:   return "COMBAT & MOVEMENT";
+    case HELP_SEC_COMM:     return "COMMUNICATION & SOCIAL";
+    case HELP_SEC_SYSTEMS:  return "SYSTEMS";
+    case HELP_SEC_COMMANDS: return "COMMANDS";
+    case HELP_SEC_ALIGN:    return "ALIGNMENTS";
+    case HELP_SEC_STAFF:    return "STAFF / WIZARD";
+    }
+    return "HELP";
+}
+
+/* Category keywords that are also real topic files: the category listing
+ * wins the bare word, so tell the reader how to open the file itself. */
+static string *category_shadowed_files(int sec) {
+    string *kws;
+    string *out;
+    int i;
+
+    switch(sec) {
+    case HELP_SEC_RACES:    kws = ({ "races" });            break;
+    case HELP_SEC_OCCS:     kws = ({ "occs", "classes" });  break;
+    case HELP_SEC_SKILLS:   kws = ({ "skills" });           break;
+    case HELP_SEC_COMBAT:   kws = ({ "combat" });           break;
+    case HELP_SEC_COMM:     kws = ({ "communication" });    break;
+    case HELP_SEC_COMMANDS: kws = ({ "commands" });         break;
+    default:                kws = ({});                     break;
+    }
+    out = ({});
+    for(i = 0; i < sizeof(kws); i++) {
+        if(file_exists(DIR_USER_HELP + "/" + kws[i]))
+            out += ({ kws[i] });
+    }
+    return out;
+}
+
+static void category_footer(int sec) {
+    string *shadow;
+    int i;
+
+    message("info", "\n  Type help <topic> for details on any topic above.",
+        this_player());
+    shadow = category_shadowed_files(sec);
+    for(i = 0; i < sizeof(shadow); i++) {
+        message("info", "  For the '" + shadow[i] +
+            "' overview page itself, type: help " + shadow[i] + " overview",
+            this_player());
+    }
+    message("info", "  Type help with no argument to list the categories.",
+        this_player());
+}
+
+/* List the topics belonging to one category. */
+static void category_display(int sec) {
+    string *topics;
+    string *sec_races;
+    string *sec_occs;
+    string *all;
+    string *staff_topics;
+    string path;
+    string first_line;
+    int i;
+
+    if(sec == HELP_SEC_STAFF) {
+        if(!creatorp(this_player()) && !high_mortalp(this_player()) &&
+           !ambassadorp(this_player())) {
+            message("help", "Staff help is not available to you.",
+                this_player());
+            return;
+        }
+        topics = ({});
+        if(creatorp(this_player())) {
+            staff_topics = get_dir(DIR_WIZ_HELP + "/");
+            if(staff_topics && sizeof(staff_topics)) topics += staff_topics;
+            staff_topics = get_dir(DIR_CREATOR_HELP + "/");
+            if(staff_topics && sizeof(staff_topics)) topics += staff_topics;
+        }
+        if(high_mortalp(this_player()) || creatorp(this_player())) {
+            staff_topics = get_dir(DIR_HM_HELP + "/");
+            if(staff_topics && sizeof(staff_topics)) topics += staff_topics;
+        }
+        if(ambassadorp(this_player()) || creatorp(this_player())) {
+            staff_topics = get_dir(DIR_AMBASSADOR_HELP + "/");
+            if(staff_topics && sizeof(staff_topics)) topics += staff_topics;
+        }
+        print_help_section(category_title(sec), topics);
+        category_footer(sec);
+        return;
+    }
+    if(sec == HELP_SEC_RACES) {
+        print_help_section(category_title(sec), index_race_topics());
+        category_footer(sec);
+        return;
+    }
+    if(sec == HELP_SEC_OCCS) {
+        print_help_section(category_title(sec), index_occ_topics());
+        category_footer(sec);
+        return;
+    }
+    sec_races = index_race_topics();
+    sec_occs = index_occ_topics();
+    topics = ({});
+    all = dedupe_user_topics(get_dir(DIR_USER_HELP + "/"));
+    for(i = 0; i < sizeof(all); i++) {
+        if(member_array(all[i], sec_races) != -1) continue;
+        if(member_array(all[i], sec_occs) != -1) continue;
+        path = DIR_USER_HELP + "/" + all[i];
+        first_line = read_first_line(path);
+        if(classify_topic(all[i], first_line) != sec) continue;
+        topics += ({ all[i] });
+    }
+    if(!sizeof(topics)) {
+        message("help", "No help topics found in that category.",
+            this_player());
+        return;
+    }
+    print_help_section(category_title(sec), topics);
+    category_footer(sec);
 }
 
 static void flat_help_display() {
@@ -707,10 +927,14 @@ static int find_help(string topic, string category, int menu) {
         tmp = ob;
         break;
     case "*creator general":
-        if(!file_exists(tmp = DIR_CREATOR_HELP+"/"+topic)) return 0;
+        if(!file_exists(tmp = DIR_CREATOR_HELP+"/"+topic) &&
+          !file_exists(tmp = DIR_CREATOR_HELP+"/"+
+            replace_string(topic, " ", "_"))) return 0;
         break;
     case "*wizard staff":
-        if(!file_exists(tmp = DIR_WIZ_HELP+"/"+topic)) return 0;
+        if(!file_exists(tmp = DIR_WIZ_HELP+"/"+topic) &&
+          !file_exists(tmp = DIR_WIZ_HELP+"/"+
+            replace_string(topic, " ", "_"))) return 0;
         break;
     case "*creator commands":
         if(file_exists(tmp = DIR_CREATOR_CMDS+"/_"+topic+".c") &&
@@ -740,7 +964,9 @@ static int find_help(string topic, string category, int menu) {
         else return 0;
         break;
     case "*high mortal general":
-        if(!file_exists(tmp = DIR_HM_HELP+"/"+topic)) return 0;
+        if(!file_exists(tmp = DIR_HM_HELP+"/"+topic) &&
+          !file_exists(tmp = DIR_HM_HELP+"/"+
+            replace_string(topic, " ", "_"))) return 0;
         break;
     case "*high mortal commands":  
         if(!file_exists(tmp = DIR_HM_CMDS+"/_"+topic+".c")) return 0;

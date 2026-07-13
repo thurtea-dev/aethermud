@@ -2,3 +2,5 @@
 Redirect 301 /info.html /index.html
 Redirect 301 /staff.html /admin.html
 Redirect 301 /server.html /index.html
+Redirect 301 /client.html /play.html
+Redirect 301 /webclient.html /play.html

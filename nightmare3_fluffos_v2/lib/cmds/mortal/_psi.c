@@ -6,6 +6,18 @@
 
 inherit DAEMON;
 
+/* Psionic effects whose fx_ handler in rifts_psionics_d.c requires a
+   resolved target and fails without one. Checked before ISP and APM are
+   spent so a failed use costs nothing. Keep in sync with the !target
+   guards there. */
+#define NEED_TARGET_EFFECTS ({ \
+    "read_thoughts", "empathy", "obj_read", "tk", "mind_bolt", \
+    "mind_bolt_heavy", "pyro_bolt", "pyro_blast", "psychic_diag", \
+    "psych_surgery", "induce_sleep", "clairvoyance", "remote_viewing", \
+    "bio_manipulation", "tk_punch", "accelerate_healing", \
+    "psychic_purification", "electrokinesis", "hypnotic_suggestion", \
+    "psychic_locator", "mental_stun", "mind_wipe" })
+
 int cmd_psi(string str) {
     string psi_name;
     string target_str;
@@ -68,6 +80,21 @@ int cmd_psi(string str) {
             target = RIFTS_PSIONICS_D->find_psi_remote_target(this_player(), target_str);
         if(!target)
             target = present(target_str, environment(this_player()));
+    }
+
+    /* Target and range validation happens before any resources are
+       spent: a failed use costs nothing. */
+    if(target_str && !target) {
+        if((string)pdata["range"] == "remote")
+            write("You don't sense anyone like that within range.\n");
+        else
+            write("You don't see '" + target_str + "' here.\n");
+        return 1;
+    }
+    if(!target &&
+       member_array((string)pdata["effect"], NEED_TARGET_EFFECTS) != -1) {
+        write("Use on whom?  Syntax: psi " + psi_name + " at <target>\n");
+        return 1;
     }
 
     if(target && userp(target) && target != this_player() &&

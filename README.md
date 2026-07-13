@@ -1,7 +1,7 @@
-# AetherMUD (a RiftsMUD recreation)
+# AetherMUD
 
-FluffOS 2.9 / Nightmare III mudlib recreation of Palladium Rifts MUD.
-Brand is **AetherMUD**; the game system remains Rifts.
+AetherMUD, a TTRPG-inspired MUD on FluffOS 2.9 and the Nightmare III
+mudlib. The game system is Palladium Rifts.
 
 | Doc | Purpose |
 |-----|---------|

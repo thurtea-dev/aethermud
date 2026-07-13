@@ -14,6 +14,9 @@ ADDR_PIDFILE="$BIN_DIR/addr.pid"
 PORT=1122
 ADDR_PORT=1199
 WS_PORT=1129
+WS_BRIDGE="$SCRIPT_DIR/scripts/ws-bridge.py"
+WS_PIDFILE="$BIN_DIR/ws-bridge.pid"
+WS_LOG="$MUD_BASE/lib/log/ws-bridge.log"
 
 get_pid() {
     if [ -f "$PIDFILE" ]; then
@@ -39,6 +42,83 @@ get_addr_pid() {
         rm -f "$ADDR_PIDFILE"
     fi
     pgrep -f "$ADDR_SERVER $ADDR_PORT" 2>/dev/null | head -1
+}
+
+get_ws_pid() {
+    local pid cmdline
+    if [ -f "$WS_PIDFILE" ]; then
+        pid=$(cat "$WS_PIDFILE")
+        if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
+            # Confirm cmdline contains this checkout's exact bridge path.
+            cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null || true)
+            if printf '%s' "$cmdline" | grep -Fq "$WS_BRIDGE"; then
+                echo "$pid"
+                return
+            fi
+        fi
+        rm -f "$WS_PIDFILE"
+    fi
+    # Fallback: only match python running this checkout's $WS_BRIDGE path.
+    for pid in $(pgrep -f "python3 .*ws-bridge\\.py" 2>/dev/null); do
+        cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null || true)
+        if printf '%s' "$cmdline" | grep -Fq "$WS_BRIDGE"; then
+            echo "$pid"
+            return
+        fi
+    done
+}
+
+start_ws_bridge() {
+    local wpid
+    wpid=$(get_ws_pid)
+    if [ -n "$wpid" ]; then
+        echo "[mud] ws-bridge already running (PID $wpid, port $WS_PORT)."
+        return 0
+    fi
+    if [ ! -f "$WS_BRIDGE" ]; then
+        echo "[mud] WARNING: $WS_BRIDGE not found; browser client will not connect."
+        return 1
+    fi
+    echo "[mud] Starting ws-bridge on port $WS_PORT -> telnet $PORT..."
+    mkdir -p "$(dirname "$WS_LOG")"
+    AETHERMUD_WS_PIDFILE="$WS_PIDFILE" \
+        nohup python3 "$WS_BRIDGE" \
+            --listen 0.0.0.0 \
+            --ws-port "$WS_PORT" \
+            --mud-host 127.0.0.1 \
+            --mud-port "$PORT" \
+            --pidfile "$WS_PIDFILE" \
+            >> "$WS_LOG" 2>&1 </dev/null &
+    sleep 1
+    wpid=$(get_ws_pid)
+    if [ -n "$wpid" ]; then
+        echo "[mud] ws-bridge running (PID $wpid)."
+        return 0
+    fi
+    echo "[mud] WARNING: ws-bridge failed to start. Check $WS_LOG"
+    return 1
+}
+
+stop_ws_bridge() {
+    local wpid
+    wpid=$(get_ws_pid)
+    if [ -z "$wpid" ]; then
+        echo "[mud] ws-bridge not running."
+        rm -f "$WS_PIDFILE"
+        return 0
+    fi
+    echo "[mud] Stopping ws-bridge (PID $wpid)..."
+    kill "$wpid" 2>/dev/null
+    local i=0
+    while kill -0 "$wpid" 2>/dev/null && [ $i -lt 10 ]; do
+        sleep 1
+        ((i++))
+    done
+    if kill -0 "$wpid" 2>/dev/null; then
+        kill -9 "$wpid" 2>/dev/null
+    fi
+    rm -f "$WS_PIDFILE"
+    echo "[mud] ws-bridge stopped."
 }
 
 is_running() {
@@ -94,6 +174,7 @@ kill_port_squatters() {
 do_start() {
     if is_running; then
         echo "[mud] Already running (PID $(get_pid))."
+        start_ws_bridge
         return 1
     fi
     echo "[mud] Clearing any processes squatting on port $PORT..."
@@ -132,12 +213,14 @@ do_start() {
         if ss -tlnp 2>/dev/null | grep -q ":$PORT"; then
             echo "[mud] Started (PID $pid). Listening on port $PORT."
             verify_ports "$pid"
+            start_ws_bridge
             return 0
         fi
         sleep 1
         ((i++))
     done
     echo "[mud] WARNING: Driver running (PID $pid) but port $PORT not open after 3 min. Check $LOG"
+    start_ws_bridge
 }
 
 do_stop() {
@@ -168,6 +251,8 @@ do_stop() {
         kill "$apid" 2>/dev/null
         rm -f "$ADDR_PIDFILE"
     fi
+
+    stop_ws_bridge
 }
 
 do_restart() {
@@ -194,6 +279,13 @@ do_status() {
         echo "[mud] addr_server RUNNING (PID $apid, port $ADDR_PORT)"
     else
         echo "[mud] addr_server STOPPED"
+    fi
+    local wpid
+    wpid=$(get_ws_pid)
+    if [ -n "$wpid" ]; then
+        echo "[mud] ws-bridge RUNNING (PID $wpid, port $WS_PORT -> $PORT)"
+    else
+        echo "[mud] ws-bridge STOPPED (browser client needs port $WS_PORT)"
     fi
 }
 

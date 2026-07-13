@@ -28,7 +28,7 @@ lib/
 | Daemon | Role |
 |--------|------|
 | `daemon/rifts.c` | Races, MDC/SDC, stat rolls |
-| `daemon/rifts_occ.c` | OCC definitions |
+| `daemon/occ.c` | OCC definitions |
 | `daemon/rifts_start_d.c` | Starting packages (gear, skills, spells) |
 | `daemon/rifts_skills.c` | Skill grants and checks |
 | `daemon/rifts_spells_d.c` | Spell effects |
@@ -75,7 +75,7 @@ Do not automate login or read player credential saves.
 - Chi-Town: `lib/domains/chitown/`
 - Help files: `lib/doc/help/user/<topic>` (no `.hlp` extension)
 
-## Color conventions (original RiftsMUD)
+## Color conventions (match the original game)
 
 - Exits: bold green
 - Radio: green prefix

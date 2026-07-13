@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-brand">
+      <a href="index.html">AetherMUD</a>
+      <span class="site-tag">A TTRPG-inspired MUD</span>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="play.html" aria-current="page">Play</a>
+      <a href="chargen.html">Chargen</a>
+      <a href="roadmap.html">Roadmap</a>
+    </nav>
+  </header>
+
+  <h1>Play in browser</h1>
+  <p class="lead">
+    Browser client for AetherMUD. It talks WebSocket to a local bridge on port
+    <code>1129</code>, which relays to the MUD telnet port <code>1122</code>.
+    Prefer Mudlet or telnet for the best experience; this client is a convenient fallback.
+  </p>
+
+  <div class="webclient-toolbar">
+    <span id="webclient-status" class="webclient-status webclient-status--disconnected">Disconnected</span>
+    <button type="button" id="webclient-connect">Connect</button>
+    <button type="button" id="webclient-disconnect" disabled>Disconnect</button>
+    <button type="button" id="webclient-clear">Clear</button>
+  </div>
+
+  <div id="webclient-output" class="webclient-output" data-ws-port="1129" role="log" aria-live="polite"></div>
+
+  <div class="webclient-input-row">
+    <input id="webclient-input" type="text" autocomplete="off" spellcheck="false"
+           placeholder="Type a command and press Enter" disabled
+           aria-label="Command input">
+  </div>
+
+  <div class="callout">
+    <p><strong>If connect fails:</strong> the MUD must be running
+    (<code>./mud.sh start</code>) and the WebSocket bridge must be listening on
+    1129 (started automatically by <code>mud.sh</code>). Firewall: allow TCP
+    1122 and 1129. After login, type <code>colorize</code> for ANSI color.</p>
+  </div>
+
+  <footer class="site-footer">
+    <p>AetherMUD, a TTRPG-inspired MUD. Palladium Rifts on FluffOS / Nightmare III.</p>
+  </footer>
+
+  <script src="js/webclient.js"></script>
+</body>
+</html>
