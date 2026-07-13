@@ -4,7 +4,7 @@ Contributors working on the AetherMUD LPC mudlib and zones.
 
 ## Read first
 
-1. [CLAUDE.md](CLAUDE.md) - mandatory rules
+1. [CLAUDE.md](../CLAUDE.md) - mandatory rules
 2. [RUNNING.md](RUNNING.md) - start/stop and reload matrix
 3. [SHARING.md](SHARING.md) - local config and gitignore
 4. `nightmare3_fluffos_v2/lib/domains/Praxis/adm/master_gap_report.txt` - feature gaps

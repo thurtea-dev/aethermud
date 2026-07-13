@@ -2,7 +2,7 @@
 
 Fresh-machine setup for AetherMUD on Linux (Fedora, Ubuntu, or WSL2).
 For copying an existing live tree to a new PC via HDD, prefer
-[install-aethermud.md](install-aethermud.md). Local config details:
+[install-aethermud.md](../internal/install-aethermud.md). Local config details:
 [SHARING.md](SHARING.md).
 
 ## Prerequisites
@@ -157,5 +157,5 @@ preload daemons.
 ## Next
 
 Daily operations: [RUNNING.md](RUNNING.md). Transfer to another PC:
-[install-aethermud.md](install-aethermud.md). Contributor workflow:
+[install-aethermud.md](../internal/install-aethermud.md). Contributor workflow:
 [DEVELOPMENT.md](DEVELOPMENT.md).

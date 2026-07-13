@@ -123,9 +123,37 @@ Liberation Square has its own Moxim. Global `rift` / Moxim both list
 
 ---
 
-## 8. After playtest
+## 8. Apprentice / staff-system pass (merged from the old Playtest-list.md)
+
+Run as an admin character after creating an apprentice-to-be and a second
+admin-wiz character (the original pair was removed in the 2026-07-12 player
+wipe; any two fresh characters work, e.g. the wiz candidates in section 2).
+
+- [ ] Create the apprentice-to-be; confirm RCC/race stats generate correctly
+      and starting room/equipment match expectations
+- [ ] Create the admin-wiz character; confirm wiz-tools, staff supplies
+      chest, and mailbox appear as they did for the first admin
+- [ ] Assign the apprentice to the admin-wiz; test the actual apprentice
+      command/mechanic (kit, track selection, submission)
+- [ ] Confirm apprentice status shows correctly in score/character sheet for
+      both characters (is the mentor/apprentice relationship visible?)
+- [ ] Test the skill-teaching or skill-request flow if apprentices get
+      skills from their mentor (mailbox/request system in the workroom)
+- [ ] Test permission boundaries: can the apprentice access wizard-only
+      commands they should not, and can the admin-wiz manage/demote/promote?
+- [ ] Log out mentor or apprentice mid-session; does the bond persist
+      across relog?
+- [ ] Remove/break the apprentice bond cleanly; confirm no orphaned data in
+      either save file afterward
+- [ ] Cross-check Staff of Dominion interaction: apprentice/mentor roles
+      must not conflict with domain wizard permissions
+- [ ] Log out both test characters; confirm their save files are clean and
+      separate from the admin's (no cross-contamination)
+
+## 9. After playtest
 
 - Note bugs in chat or append to `master_gap_report.txt`
 - Zone growth priorities: [zone-expansion-plan.md](zone-expansion-plan.md)
-- Recreate chars anytime: `python3 tools/playtest_create_chars.py`
-  (refuses if a save already exists - delete saves first if re-running)
+- Recreate chars anytime: `python3 tools/playtest_create_chars.py` (from the
+  repo root; refuses if a save already exists - delete saves first if
+  re-running)

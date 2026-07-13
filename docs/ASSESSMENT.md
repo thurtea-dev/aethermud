@@ -1,8 +1,8 @@
 # AetherMUD State-of-the-Project Assessment
 
 Date: 2026-07-13. Scope: `/home/thurtea/aethermud/nightmare3_fluffos_v2` (lib +
-driver), cross-referenced against `invocations.md`, `zone-expansion-plan.md`,
-`playtest-checklist.md`, `staff-handbook/`, `report.md`, and
+driver), cross-referenced against `docs/reference/invocations.md`, `zone-expansion-plan.md`,
+`playtest-checklist.md`, `staff-handbook/`, `internal/report.md`, and
 `lib/domains/Praxis/adm/master_gap_report.txt`. Read-only audit; no files were
 modified. Counts below were measured directly from the code (grep on case
 labels, data keys, and inherit lines), not taken from prior reports.
@@ -46,7 +46,7 @@ Caveats:
   play, but not yet book-audited.
 - The reference file `RiftsMUD-AetherMUD RCC's OCC's List.txt` cited in
   CLAUDE.md **no longer exists in the repo**, so the original target list can
-  no longer be diffed against. `reference-chart.md` notes full tabletop detail
+  no longer be diffed against. `docs/reference/reference-chart.md` notes full tabletop detail
   exists only for Shifter, Techno-Wizard, and Mind Melter.
 - CLAUDE.md's "51/51 races, 38/38 OCCs" is stale; actual counts are 61 races,
   62 OCCs.
@@ -69,7 +69,7 @@ Measured from `daemon/rifts_spells_d.c` (3,907 lines) and
 - **158 skills** in `daemon/rifts_skills.c` (start/per_level/max/category
   data for each), well past the "~102" noted in CLAUDE.md.
 
-Versus `invocations.md` (146 named invocations extracted from the book text):
+Versus `docs/reference/invocations.md` (146 named invocations extracted from the book text):
 after normalizing punctuation differences, roughly **55-65 book invocations
 have no implementation**, concentrated in ritual/utility magic: summoning
 (Summon and Control Animals/Rain/Storm, Summon Lesser Being, Shadow Beast),

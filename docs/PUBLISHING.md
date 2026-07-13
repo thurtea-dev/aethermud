@@ -80,7 +80,7 @@ Game content completeness (races, OCCs, spells, etc.) is tracked separately in `
 
 Root docs should agree on the bootstrap flow:
 
-- [README.md](README.md) quickstart
+- [README.md](../README.md) quickstart
 - [INSTALL.md](INSTALL.md) full setup
 - [SHARING.md](SHARING.md) local vs shared files
 - [RUNNING.md](RUNNING.md) daily ops

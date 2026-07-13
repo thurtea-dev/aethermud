@@ -407,6 +407,40 @@ tr:nth-child(even) td { background: var(--bg-raised); }
   opacity: 0.5;
 }
 
+/* Zone status badges (world.html) */
+
+.status {
+  display: inline-block;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--border-light);
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.status--live { color: #8fcf8f; border-color: #4a7a4a; }
+.status--progress { color: #cfb87f; border-color: #7a6a3a; }
+.status--planned { color: var(--text-muted); }
+
+/* Compact name lists (races.html, occs.html) */
+
+.name-list {
+  columns: 2;
+  column-gap: 2rem;
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 36rem) {
+  .name-list { columns: 3; }
+}
+
+.name-list li { break-inside: avoid; }
+
 /* Footer */
 
 .site-footer {

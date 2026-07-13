@@ -9,11 +9,17 @@ This is **AetherMUD**, a TTRPG-inspired MUD built on the **Nightmare III MUD** b
 - `nightmare3_fluffos_v2/fluffos-2.9-ds2.08/` - The C driver source
 - `nightmare3_fluffos_v2/lib/` - The LPC mudlib (Rifts conversion)
 
+Repo doc layout (since 2026-07-13): only README.md and CLAUDE.md live at
+the repo root. Setup/ops/planning docs are under `docs/`, bulk reference
+material (information.md, invocations.md, reference-chart.md) under
+`docs/reference/`, and personal/machine-specific working notes under
+`internal/`.
+
 Reference files (READ THESE before making content decisions):
 - `nightmare3_fluffos_v2/RiftsMUD Memories.txt` - Player memories of the original game (historical archive; keep its filename and content as-is)
 - `/domains/Praxis/adm/master_gap_report.txt` - Current gap analysis (check header for latest batch notes)
 - `www/index.html` (repo root) - Offline staff guides (QCS, coding, domain, roleplay, admin, chargen)
-- GONE (do not cite): `RiftsMUD-AetherMUD Helpfiles.txt` and `RiftsMUD-AetherMUD RCC's OCC's List.txt` no longer exist in the repo; the OCC target list survives only via `reference-chart.md` and `daemon/occ.c` itself.
+- GONE (do not cite): `RiftsMUD-AetherMUD Helpfiles.txt` and `RiftsMUD-AetherMUD RCC's OCC's List.txt` no longer exist in the repo; the OCC target list survives only via `docs/reference/reference-chart.md` and `daemon/occ.c` itself.
 
 ## Recent session work (2026-06-29)
 
@@ -40,7 +46,7 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
 
 **Batch 7:** Puerto Angel dockmaster + help, guild retirement (monk/mage/rogue), +5 spells, +5 psionics, +3 skills.
 
-**Approximate content counts:** ~116 spells, 50 psionics, ~158 skills, 61 races, 62 OCCs (measured 2026-07-13, see ASSESSMENT.md).
+**Approximate content counts:** ~116 spells, 50 psionics, ~158 skills, 62 races, 62 OCCs (races remeasured 2026-07-13 evening: 62 entries in rifts_races_list; see docs/ASSESSMENT.md).
 
 ## Recent session work (2026-07-13)
 
@@ -61,7 +67,7 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   Function prototypes for help.c live in `daemon/help.h` (rule 17).
 - **`daemon/command.c` rehash fix** (distinct_array, no duplicate path
   entries) was committed in `affed3b` on 2026-07-13.
-- `standardOld/` remains live and erroring on reset (see ASSESSMENT.md
+- `standardOld/` remains live and erroring on reset (see docs/ASSESSMENT.md
   section 7); untouched by design so far.
 - **Evening playtest fixes (same day):** windrush is now a true room
   spell: `cast windrush` with no target sweeps every living being in

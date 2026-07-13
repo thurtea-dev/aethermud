@@ -15,10 +15,11 @@
     <nav class="site-nav">
       <a href="index.html" aria-current="page">Home</a>
       <a href="play.html">Play</a>
-      <a href="#connect">Connect</a>
-      <a href="#about">About</a>
-      <a href="roadmap.html">Roadmap</a>
+      <a href="world.html">World</a>
+      <a href="races.html">Races</a>
+      <a href="occs.html">OCCs</a>
       <a href="chargen.html">Chargen</a>
+      <a href="roadmap.html">Roadmap</a>
     </nav>
     <nav class="site-nav site-nav--staff">
       <a href="qcs.html">QCS</a>
@@ -33,6 +34,15 @@
   <h1>AetherMUD</h1>
   <p class="lead">AetherMUD, a TTRPG-inspired MUD on FluffOS / Nightmare III. Palladium Rifts on a living mudlib.</p>
 
+  <p>The Great Cataclysm shattered Earth's golden age, and the ley lines
+  erupted with the magic of a dying world. Rifts opened to a thousand alien
+  dimensions, and everything came through. Play a Coalition grunt, a
+  Ley Line Walker, a Juicer burning bright, or a dragon hatchling wearing
+  a borrowed human shape. Explore Chi-Town, Tolkeen, the Splynn
+  Dimensional Market, and New Camelot; ride Moxim's rifts between
+  continents. Start with the <a href="world.html">world guide</a>,
+  <a href="races.html">races</a>, and <a href="occs.html">OCCs</a>.</p>
+
   <p class="cta-link"><a href="play.html">Play in your browser</a> (WebSocket bridge on port 1129)</p>
 
   <h2 id="connect">Connect</h2>
@@ -46,25 +56,24 @@
   <p>After login, type <code>colorize</code> if you want ANSI color.</p>
 
   <h2 id="about">About the game</h2>
-  <p>Measured from the live mudlib (see <code>ASSESSMENT.md</code>, 2026-07-13):</p>
+  <p>Measured from the live mudlib (see <code>docs/ASSESSMENT.md</code>, 2026-07-13):</p>
   <ul>
-    <li><strong>61</strong> playable races, <strong>62</strong> OCCs</li>
+    <li><strong>62</strong> playable <a href="races.html">races</a>, <strong>62</strong> <a href="occs.html">OCCs</a></li>
     <li><strong>~116</strong> spells, <strong>~50</strong> psionic powers, <strong>158</strong> skills</li>
-    <li>~430 playable Rifts rooms across Praxis, Chi-Town, Tolkeen, Horton, Splynn, New Camelot, and more</li>
+    <li>~430 playable Rifts rooms across Praxis, Chi-Town, Tolkeen, Horton, Splynn, New Camelot, and more (<a href="world.html">world guide</a> with honest zone status)</li>
     <li>173 mortal commands; custom prompt with MDC/SDC/PPE/ISP pool tokens (<code>prompt</code>, <code>prompt tokens</code>)</li>
   </ul>
   <p>In-game help is two-level: <code>help</code> lists categories; <code>help &lt;category&gt;</code>
   lists topics; <code>help &lt;topic&gt;</code> opens a topic (separator-insensitive:
   <code>armor of ithan</code> matches <code>armor_of_ithan</code>). Use <code>help index</code> for the flat list.</p>
 
-  <h2 id="install">Install on Fedora Workstation</h2>
-  <p>The transfer package <code>production-aethermud/</code> ships with the full archive and a Fedora-specific guide:</p>
-  <ul>
-    <li><code>aethermud-full-YYYYMMDD.tar.gz</code> and its <code>.sha256</code></li>
-    <li><code>install-aethermud.md</code> (HDD copy, verify, dnf deps, rebuild driver, start)</li>
-    <li><code>INSTALL.md</code>, <code>RUNNING.md</code>, <code>README.md</code></li>
-  </ul>
-  <p>Short path: verify the checksum, extract into your home directory, rebuild the FluffOS driver on Fedora, then <code>./mud.sh start</code>. Full steps are in <code>install-aethermud.md</code>.</p>
+  <h2 id="install">Run your own copy</h2>
+  <p>AetherMUD builds from source on Linux (Fedora, Ubuntu, WSL2). Short
+  path: clone the repo, <code>./mud.sh init-config</code>, build the FluffOS
+  driver (<code>./configure nm3 &amp;&amp; make &amp;&amp; make install</code>),
+  then <code>./mud.sh start</code> and telnet to port 1122. Full steps:
+  <code>docs/INSTALL.md</code> in the repository; daily operations in
+  <code>docs/RUNNING.md</code>.</p>
 
   <h2>Staff guides</h2>
   <p>Offline HTML handbooks for wizard staff. In-game: <code>help staff</code>, <code>help kit</code>, <code>help coding</code>, and related topics.</p>

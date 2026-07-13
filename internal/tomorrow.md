@@ -1,3 +1,7 @@
+> **NOTE 2026-07-13:** personal session prompt for the help-file formatting
+> pass (batch 4). Moved out of the repo root during cleanup. Flagged for
+> deletion once the formatting pass is finished.
+
 Check CLAUDE.md first and confirm you're following the rules there before doing anything else.
 
 Before batch 4, resolve one urgent item from content-fixes-needed.md: getting-started and communication/channels give contradictory instructions about the tell command (one says player-to-player, the others say staff-contact only). Check _tell.c to determine the actual behavior, then fix whichever help file(s) are wrong. This is the first file new players read, so it needs to be correct before playtesting starts. Report what you found and which file was wrong.

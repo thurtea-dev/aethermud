@@ -63,7 +63,7 @@ cd archive/
 ```
 
 Uses `archive/lib-modern/` (porting copy) and `archive/bin-modern/fluffos.cfg`. See
-`archive/driver-upgrade-notes.md` and `report.md` section 10.
+`archive/driver-upgrade-notes.md` and `internal/report.md` section 10.
 
 ## Logs
 

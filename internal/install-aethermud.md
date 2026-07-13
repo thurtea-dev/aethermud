@@ -1,9 +1,9 @@
 # Install AetherMUD on the Fedora Mini PC
 
 Step by step guide for moving AetherMUD from WSL to the Fedora Workstation
-mini PC via HDD. Written 2026-07-10. Companion docs in the project root:
-INSTALL.md (generic fresh-machine setup), RUNNING.md (daily operations),
-SHARING.md (local config details), README.md (overview).
+mini PC via HDD. Written 2026-07-10. Companion docs: docs/INSTALL.md (generic
+fresh-machine setup), docs/RUNNING.md (daily operations), docs/SHARING.md
+(local config details), README.md at the repo root (overview).
 
 Run commands as your normal user unless sudo is shown.
 

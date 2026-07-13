@@ -1,3 +1,8 @@
+> **SUPERSEDED 2026-07-13:** this list was merged into
+> [../docs/playtest-checklist.md](../docs/playtest-checklist.md) section 8
+> (apprentice / staff-system pass). Safe to delete this file once you have
+> reviewed the merge. Kept only pending your confirmation.
+
 Playtest list: apprentice/admin-wiz system
 Run these as Thurtea (admin) after creating Splynncryth (apprentice-to-be) and a second admin-wiz character:
 

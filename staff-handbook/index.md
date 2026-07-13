@@ -52,7 +52,7 @@ them as complete until the status updates to "Ready."
 These are the primary sources used to write this handbook:
 
 - CLAUDE.md - project rules, known mistakes, architecture overview
-- See also: [SHARING.md](../SHARING.md) - local config and gitignore
+- See also: [SHARING.md](../docs/SHARING.md) - local config and gitignore
 - reference-chart.md - developer reference for game mechanics
 - report-new.md - recent session progress (handbook supplements this file)
 - /daemon/rifts.c - race definitions
