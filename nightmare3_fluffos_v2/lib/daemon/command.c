@@ -53,7 +53,8 @@ void rehash(mixed val) {
         j = sizeof(choses = get_dir(val[i]+"/_*.c"));
         while(j--) {
             choses[j] = choses[j][1..strlen(choses[j])-3];
-            if(pointerp(__Cmds[choses[j]])) __Cmds[choses[j]] += ({ val[i] });
+            if(pointerp(__Cmds[choses[j]]))
+              __Cmds[choses[j]] = distinct_array(__Cmds[choses[j]] + ({ val[i] }));
             else __Cmds[choses[j]] = ({ val[i] });
 	  }
         __Paths = distinct_array(__Paths + ({ val[i] }));
