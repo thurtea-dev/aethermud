@@ -375,8 +375,7 @@ private void show_skills(object who) {
     if(!all_skills) all_skills = ({});
 
     active_lang = (string)LANGUAGE_D->query_active(who);
-    if((string)who->query_race() &&
-       lower_case((string)who->query_race()) == "godling")
+    if((int)LANGUAGE_D->understands_all(who))
         active_lang = "All tongues";
     else if(!active_lang || active_lang == "") active_lang = "American";
 

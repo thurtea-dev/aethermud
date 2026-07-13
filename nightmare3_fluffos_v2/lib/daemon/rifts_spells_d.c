@@ -88,13 +88,13 @@ mapping query_spell(string name) {
         return ([ "ppe_cost":4, "duration":0, "range":"room",
                   "effect":"stun", "desc":"Stuns all enemies in the room.  Save negates." ]);
     case "energy bolt":
-        return ([ "ppe_cost":5, "duration":0, "range":"room",
+        return ([ "ppe_cost":5, "duration":0, "range":"single",
                   "effect":"damage", "desc":"Hurls a bolt of magical energy.  1d6 MDC per level." ]);
     case "heal wounds":
         return ([ "ppe_cost":6, "duration":0, "range":"touch",
                   "effect":"heal", "desc":"Heals 1d8 SDC or 2d6 HP." ]);
     case "light target":
-        return ([ "ppe_cost":4, "duration":180, "range":"room",
+        return ([ "ppe_cost":4, "duration":180, "range":"single",
                   "effect":"mark", "desc":"Marks target with magical light.  Cannot hide." ]);
     case "dimensional pocket":
         return ([ "ppe_cost":20, "duration":604800, "range":"self",
@@ -104,7 +104,7 @@ mapping query_spell(string name) {
                   "effect":"familiar", "desc":"Summons a small magical creature companion." ]);
     case "windrush":
         return ([ "ppe_cost":8, "duration":0, "range":"room",
-                  "effect":"windrush", "desc":"A powerful gust blasts one target to a random adjacent room." ]);
+                  "effect":"windrush", "desc":"A gust hurls victims into an adjacent room and scatters their gear. No target sweeps everyone present. Save negates." ]);
     case "swimasafish":
         return ([ "ppe_cost":6, "duration":600, "range":"self",
                   "effect":"swimasafish", "desc":"Allows breathing underwater and movement through water rooms for 10 minutes." ]);
@@ -275,7 +275,7 @@ mapping query_spell(string name) {
                   "effect":"flame_circle",
                   "desc":"Ring of fire around caster. 2d6 MDC per round to anyone entering." ]);
     case "telekinesis":
-        return ([ "ppe_cost":8, "duration":120, "range":"room",
+        return ([ "ppe_cost":8, "duration":120, "range":"single",
                   "effect":"spell_tk",
                   "desc":"Move objects with mind. Lift PS 20 equivalent. 2 minutes." ]);
 
@@ -467,7 +467,7 @@ mapping query_spell(string name) {
                   "effect":"mystic_fulcrum",
                   "desc":"Double all spell ranges and damage. PPE cost for subsequent spells doubled. 4 min/level." ]);
     case "animate object":
-        return ([ "ppe_cost":30, "duration":300, "range":"room",
+        return ([ "ppe_cost":30, "duration":300, "range":"single",
                   "effect":"animate_object",
                   "desc":"Animate one object. PS 20, 50 SDC. Follows simple commands. 5 min/level." ]);
     case "anti magic cloud":
@@ -806,8 +806,34 @@ private void fx_familiar(object target) {
     say((string)this_player()->query_cap_name() + " summons a familiar!");
 }
 
-private void fx_windrush(object target) {
-    object room;
+private void windrush_scatter_items(object target, object room) {
+    object *inv;
+    string tname;
+    int i;
+    int dropped;
+
+    if(!target || !room) return;
+    tname = (string)target->query_cap_name();
+    inv = all_inventory(target);
+    dropped = 0;
+    for(i = 0; i < sizeof(inv); i++) {
+        if(!inv[i]) continue;
+        if(inv[i]->query_worn()) continue;
+        if(inv[i]->query_wielded()) continue;
+        /* each loose item has a 1 in 3 chance of being torn away */
+        if(random(3)) continue;
+        if((int)inv[i]->move(room) != 0) continue;
+        dropped++;
+    }
+    if(dropped > 0) {
+        tell_object(target, "The wind tears " + dropped +
+            " of your belongings from your grasp!\n");
+        tell_room(room, "Some of " + tname +
+            "'s belongings scatter across the ground!\n", ({ target }));
+    }
+}
+
+private void windrush_blow(object target, object room) {
     object dest_room;
     string *exits;
     string dest;
@@ -816,14 +842,9 @@ private void fx_windrush(object target) {
     int pe_save;
     int impact_dmg;
     int cur_sdc;
-    int cur_hp;
 
-    if(!target) {
-        write("Windrush at whom?  Syntax: cast windrush at <target>\n");
-        return;
-    }
+    if(!target || !room) return;
     tname = (string)target->query_cap_name();
-    room  = environment(this_player());
 
     /* PE save vs difficulty 14 to resist */
     pe_save = random(20) + 1;
@@ -832,10 +853,14 @@ private void fx_windrush(object target) {
     /* creatures flagged can_be_windrush are always blown away, no PE save */
     if((int)target->query_property("can_be_windrush")) pe_save = 0;
 
-    write("A blast of magical wind erupts from your hands!\n");
-    say(this_player()->query_cap_name() +
-        " hurls a blast of magical wind at " + tname + "!",
-        ({ this_player(), target }));
+    if(pe_save >= 14) {
+        write(tname + " staggers but resists your wind blast!\n");
+        tell_object(target,
+            "A wall of wind slams into you - you stagger but hold your ground!\n");
+        say(tname + " staggers but resists the wind blast!",
+            ({ this_player(), target }));
+        return;
+    }
 
     exits = (string *)room->query_exits();
     if(!exits || sizeof(exits) < 1) {
@@ -847,22 +872,13 @@ private void fx_windrush(object target) {
             "A wall of wind slams into you! You crash against the wall! " +
             impact_dmg + " SDC!\n");
         say(tname + " slams into the wall from the magical gust!",
-            ({ this_player() }));
+            ({ this_player(), target }));
         cur_sdc = (int)target->query_sdc();
         if(cur_sdc > 0)
             target->add_sdc(-impact_dmg);
-        else {
-            cur_hp = (int)target->query_hp();
+        else
             target->add_hp(-impact_dmg);
-        }
-        return;
-    }
-
-    if(pe_save >= 14) {
-        write(tname + " staggers but resists your wind blast!\n");
-        tell_object(target,
-            "A wall of wind slams into you - you stagger but hold your ground!\n");
-        say(tname + " staggers but resists the wind blast!", ({ this_player() }));
+        windrush_scatter_items(target, room);
         return;
     }
 
@@ -874,12 +890,16 @@ private void fx_windrush(object target) {
     tell_object(target,
         "A wall of wind slams into you and hurls you across the room!\n");
 
+    windrush_scatter_items(target, room);
+
     if(objectp(target) && stringp(dest)) {
         target->cease_all_attacks();
         target->move(dest);
         dest_room = environment(target);
-        if(dest_room) {
-            say(tname + " tumbles in, thrown by magical wind.", ({ target }));
+        if(dest_room && dest_room != room) {
+            tell_room(dest_room,
+                tname + " tumbles in, thrown by magical wind.\n",
+                ({ target }));
         }
     }
 
@@ -890,6 +910,46 @@ private void fx_windrush(object target) {
         target->add_sdc(-impact_dmg);
     else
         target->add_hp(-impact_dmg);
+}
+
+private void fx_windrush(object target) {
+    object room;
+    object *inv;
+    int i;
+    int hit;
+
+    room = environment(this_player());
+    if(!room) return;
+
+    if(target && (!living(target) || environment(target) != room)) {
+        write("The wind can only hurl living beings.\n");
+        return;
+    }
+
+    write("A blast of magical wind erupts from your hands!\n");
+    if(target) {
+        say(this_player()->query_cap_name() +
+            " hurls a blast of magical wind at " +
+            (string)target->query_cap_name() + "!",
+            ({ this_player(), target }));
+        windrush_blow(target, room);
+        return;
+    }
+
+    /* no target: the gust sweeps the whole area, each victim rolls a save */
+    say(this_player()->query_cap_name() +
+        " unleashes a howling blast of wind across the area!",
+        ({ this_player() }));
+    inv = all_inventory(room);
+    hit = 0;
+    for(i = 0; i < sizeof(inv); i++) {
+        if(!inv[i] || !living(inv[i])) continue;
+        if(inv[i] == this_player()) continue;
+        windrush_blow(inv[i], room);
+        hit++;
+    }
+    if(!hit)
+        write("The wind howls through the empty area.\n");
 }
 
 private void fx_swimasafish(object target) {

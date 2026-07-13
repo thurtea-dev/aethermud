@@ -9,11 +9,11 @@ inherit DAEMON;
 /* Spell effects whose fx_ handler in rifts_spells_d.c requires a resolved
    target and fails without one. Checked before PPE and APM are spent so a
    failed cast costs nothing. Keep in sync with the !target guards there.
-   Deliberately absent: "net" (auto-targets a combat opponent) and the
-   self-defaulting effects (heal, swimasafish, tongues, restoration_spell,
-   fly_eagle). */
+   Deliberately absent: "net" (auto-targets a combat opponent), "windrush"
+   (no target sweeps the whole room), and the self-defaulting effects
+   (heal, swimasafish, tongues, restoration_spell, fly_eagle). */
 #define NEED_TARGET_EFFECTS ({ \
-    "damage", "mark", "windrush", "blind", "fear", "burn", "exorcism", \
+    "damage", "mark", "blind", "fear", "burn", "exorcism", \
     "fireball", "firebolt", "horrific_illusion", "shadow_bolt", \
     "time_hole", "rift_to_oblivion", "constrain_being", "mend_wounds", \
     "cure_disorders", "cleanse", "luck_curse", "wisps_confusion", \

@@ -12,6 +12,11 @@ int cmd_languages(string str) {
     string *langs, active, bar;
     int i, pct;
 
+    if((int)LANGUAGE_D->understands_all(this_player())) {
+        write("You understand all languages.\n");
+        return 1;
+    }
+
     known  = (mapping)LANGUAGE_D->query_known(this_player());
     langs  = keys(known);
     active = (string)LANGUAGE_D->query_active(this_player());

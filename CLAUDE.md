@@ -63,6 +63,24 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   entries) was committed in `affed3b` on 2026-07-13.
 - `standardOld/` remains live and erroring on reset (see ASSESSMENT.md
   section 7); untouched by design so far.
+- **Evening playtest fixes (same day):** windrush is now a true room
+  spell: `cast windrush` with no target sweeps every living being in
+  the room (per-victim PE save vs 14, blown out a random exit, 1d6
+  landing damage, each loose non-worn/non-wielded item has a 1-in-3
+  chance to scatter into the origin room); `cast windrush at <target>`
+  still works and requires a living target. Removed windrush from
+  NEED_TARGET_EFFECTS in `_cast.c`. A range audit retagged energy
+  bolt, light target, telekinesis, and animate object from "room" to
+  "single" (data-only fix; those handlers are single-target).
+- `tongues` command no longer prints the legacy NM3 fantasy language
+  table (Eltherian/Tlinghan/etc); it casts the tongues spell when the
+  player knows it, else reports comprehension. New
+  `LANGUAGE_D->understands_all()` (godling race, tongues_active
+  property, or active_language "All tongues") gates `languages` and
+  score, which now say "You understand all languages."
+- Skill help files are a systemic gap: 0 of the 158 skills in
+  `rifts_skills.c` have a help topic under `doc/help/user` (falconry
+  was not a one-off).
 
 ## What is still open (high level)
 

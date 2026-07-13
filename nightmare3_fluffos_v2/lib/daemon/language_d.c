@@ -199,6 +199,22 @@ string query_active(object who) {
     return "";
 }
 
+/* 1 if this being currently understands every language: godlings
+   natively, anyone under an active tongues effect, or an
+   active_language explicitly set to "All tongues". */
+int understands_all(object who) {
+    string race;
+    string active;
+
+    if(!who) return 0;
+    race = (string)who->query_race();
+    if(race && lower_case(race) == "godling") return 1;
+    if((int)who->query_property("tongues_active")) return 1;
+    active = (string)who->getenv("active_language");
+    if(active && active == "All tongues") return 1;
+    return 0;
+}
+
 // Grant a language at a given proficiency (1-100). Does not downgrade.
 void grant_language(object who, string lang, int pct) {
     mapping known;
