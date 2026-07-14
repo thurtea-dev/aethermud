@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3.12
 """Telnet-to-WebSocket bridge for AetherMUD's browser client.
 
 Browsers cannot open raw TCP telnet sockets. This process listens for

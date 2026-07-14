@@ -17,6 +17,10 @@ WS_PORT=1129
 WS_BRIDGE="$SCRIPT_DIR/scripts/ws-bridge.py"
 WS_PIDFILE="$BIN_DIR/ws-bridge.pid"
 WS_LOG="$MUD_BASE/lib/log/ws-bridge.log"
+# Explicit interpreter path: the system python3 on some hosts (e.g. the
+# production VPS) resolves to an ancient 3.6.x that ws-bridge.py cannot
+# run on. Override with WS_PYTHON=/path/to/python3 if 3.12 lives elsewhere.
+WS_PYTHON="${WS_PYTHON:-/usr/bin/python3.12}"
 
 get_pid() {
     if [ -f "$PIDFILE" ]; then
@@ -59,7 +63,7 @@ get_ws_pid() {
         rm -f "$WS_PIDFILE"
     fi
     # Fallback: only match python running this checkout's $WS_BRIDGE path.
-    for pid in $(pgrep -f "python3 .*ws-bridge\\.py" 2>/dev/null); do
+    for pid in $(pgrep -f "ws-bridge\\.py" 2>/dev/null); do
         cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null || true)
         if printf '%s' "$cmdline" | grep -Fq "$WS_BRIDGE"; then
             echo "$pid"
@@ -79,10 +83,15 @@ start_ws_bridge() {
         echo "[mud] WARNING: $WS_BRIDGE not found; browser client will not connect."
         return 1
     fi
+    if [ ! -x "$WS_PYTHON" ]; then
+        echo "[mud] WARNING: WS_PYTHON ($WS_PYTHON) not found or not executable."
+        echo "[mud]   Install python3.12, or set WS_PYTHON=/path/to/python3 to a 3.7+ interpreter."
+        return 1
+    fi
     echo "[mud] Starting ws-bridge on port $WS_PORT -> telnet $PORT..."
     mkdir -p "$(dirname "$WS_LOG")"
     AETHERMUD_WS_PIDFILE="$WS_PIDFILE" \
-        nohup python3 "$WS_BRIDGE" \
+        nohup "$WS_PYTHON" "$WS_BRIDGE" \
             --listen 0.0.0.0 \
             --ws-port "$WS_PORT" \
             --mud-host 127.0.0.1 \
