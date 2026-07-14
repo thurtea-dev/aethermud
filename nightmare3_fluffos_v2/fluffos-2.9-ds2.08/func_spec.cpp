@@ -1,8 +1,8 @@
-# 0 "func_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "func_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "func_spec.c"
 # 1 "spec.h" 1
 
@@ -26,7 +26,7 @@
 
 # 1 "options_incl.h" 1
 # 1 "local_options" 1
-# 2 "options_incl.h" 2
+# 1 "options_incl.h" 2
 # 15 "std.h" 2
 # 1 "configure.h" 1
 # 16 "std.h" 2
@@ -53,7 +53,7 @@
 
 # 1 "debug.h" 1
 # 33 "std.h" 2
-# 6 "spec.h" 2
+# 5 "spec.h" 2
 # 2 "func_spec.c" 2
 
 # 1 "op_spec.c" 1
@@ -477,11 +477,11 @@ void message(mixed, mixed, string | string * | object | object *,
     void request_term_size();
 
     void shutdown(void | int);
-# 0 "packages/math_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/math_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/math_spec.c"
 # 1 "./spec.h" 1
 
@@ -505,7 +505,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -532,7 +532,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/math_spec.c" 2
 
     float cos(float);
@@ -548,11 +548,11 @@ void message(mixed, mixed, string | string * | object | object *,
     float exp(float);
     float floor(float);
     float ceil(float);
-# 0 "packages/develop_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/develop_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/develop_spec.c"
 # 1 "./spec.h" 1
 
@@ -576,7 +576,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -603,7 +603,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/develop_spec.c" 2
 
     mixed debug_info(int, object);
@@ -616,11 +616,11 @@ void message(mixed, mixed, string | string * | object | object *,
 
 
     void dump_prog(object,...);
-# 0 "packages/matrix_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/matrix_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/matrix_spec.c"
 # 1 "./spec.h" 1
 
@@ -644,7 +644,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -671,7 +671,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/matrix_spec.c" 2
 
 
@@ -683,11 +683,11 @@ void message(mixed, mixed, string | string * | object | object *,
     float *rotate_y(float *, float);
     float *rotate_z(float *, float);
     float *lookat_rotate(float *, float, float, float);
-# 0 "packages/parser_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/parser_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/parser_spec.c"
 # 1 "./spec.h" 1
 
@@ -711,7 +711,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -738,7 +738,7 @@ void message(mixed, mixed, string | string * | object | object *,
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/parser_spec.c" 2
 
 void parse_init();
@@ -749,11 +749,11 @@ void parse_remove(string);
 void parse_add_synonym(string, string, void | string);
 string parse_dump();
 mixed parse_my_rules(object, string, void | int);
-# 0 "packages/contrib_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/contrib_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/contrib_spec.c"
 # 1 "./spec.h" 1
 
@@ -777,7 +777,7 @@ mixed parse_my_rules(object, string, void | int);
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -804,7 +804,7 @@ mixed parse_my_rules(object, string, void | int);
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/contrib_spec.c" 2
 
 
@@ -860,11 +860,11 @@ mixed element_of(mixed *);
 mixed max( mixed *, int | void );
 mixed min( mixed *, int | void );
 mixed abs( int | float );
-# 0 "packages/sockets_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/sockets_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/sockets_spec.c"
 # 1 "./spec.h" 1
 
@@ -888,7 +888,7 @@ mixed abs( int | float );
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -915,7 +915,7 @@ mixed abs( int | float );
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/sockets_spec.c" 2
 
 
@@ -934,11 +934,11 @@ mixed abs( int | float );
     string socket_address(int | object, int default: 0);
 # 26 "packages/sockets_spec.c"
     mixed *socket_status(void | int);
-# 0 "packages/mudlib_stats_spec.c"
-# 0 "<built-in>"
-# 0 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3
-# 0 "<command-line>" 2
+# 1 "packages/mudlib_stats_spec.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
 # 1 "packages/mudlib_stats_spec.c"
 # 1 "./spec.h" 1
 
@@ -962,7 +962,7 @@ mixed abs( int | float );
 
 # 1 "./options_incl.h" 1
 # 1 "./local_options" 1
-# 2 "./options_incl.h" 2
+# 1 "./options_incl.h" 2
 # 15 "./std.h" 2
 # 1 "./configure.h" 1
 # 16 "./std.h" 2
@@ -989,7 +989,7 @@ mixed abs( int | float );
 
 # 1 "./debug.h" 1
 # 33 "./std.h" 2
-# 6 "./spec.h" 2
+# 5 "./spec.h" 2
 # 2 "packages/mudlib_stats_spec.c" 2
 
     mapping domain_stats(void | string);
