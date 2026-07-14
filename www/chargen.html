@@ -12,25 +12,27 @@
   <p>Room: <code>/domains/Praxis/setter.c</code>. Guide NPC: chargen_guide. Pool: 62 races, 62 OCCs, 158 skills (electives at chargen).</p>
 
   <h2>Steps</h2>
+  <p>Every answer is typed as a plain word or name, with no command verb.</p>
   <ol>
-    <li>Zone: <code>start americas</code>, <code>start atlantis</code>, or <code>start europe</code></li>
-    <li>Attributes: <code>pick roll</code>, optional <code>pick reroll</code> (up to 4 rerolls)</li>
-    <li>Race: <code>read list</code>, <code>pick &lt;race&gt;</code></li>
-    <li>Alignment: <code>alignment 1</code> through <code>alignment 7</code></li>
-    <li>OCC: <code>list</code>, <code>pick occ &lt;name&gt;</code>, or <code>no occ</code></li>
-    <li>Elective skills: <code>skills &lt;category&gt;</code>, <code>pick skill &lt;name&gt;</code></li>
+    <li>Zone: <code>americas</code>, <code>atlantis</code>, or <code>europe</code></li>
+    <li>Attributes: <code>roll</code>, optional <code>reroll</code> (up to 4 rerolls; reroll stays legal until a race is chosen)</li>
+    <li>Race: <code>list</code>, then the race name, e.g. <code>human</code></li>
+    <li>Alignment: the alignment name, e.g. <code>scrupulous</code></li>
+    <li>OCC: <code>list</code>, then the OCC name, e.g. <code>headhunter</code>, or <code>none</code></li>
+    <li>Elective skills: <code>skills &lt;category&gt;</code>, then the skill name, e.g. <code>tracking</code></li>
     <li>Secondary skills (if granted)</li>
     <li>Finish: starting package, languages, teleport to welcome room</li>
   </ol>
 
   <h2>Example</h2>
-  <pre>&gt; start americas
-&gt; pick roll
-&gt; pick human
-&gt; alignment 2
-&gt; pick occ headhunter
+  <pre>&gt; americas
+&gt; roll
+&gt; reroll
+&gt; human
+&gt; scrupulous
+&gt; headhunter
 &gt; skills weapons
-&gt; pick skill tracking</pre>
+&gt; tracking</pre>
 
   <h2>Start rooms</h2>
   <ul>

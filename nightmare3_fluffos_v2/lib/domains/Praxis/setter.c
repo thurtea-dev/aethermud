@@ -34,6 +34,14 @@ void resume_creation();
 void creation_prompt(string step);
 void apply_race_body_pools(string race);
 void apply_rifts_race_attributes(string race);
+int alignment_cmd(string str);
+int list_occs_cmd(string str);
+int do_occ_pick(string str);
+int roll_cmd(string str);
+int chargen_catch(string str);
+private int do_race_pick(string str);
+private int valid_race_choice(string str);
+private void choose_no_occ();
 private void show_race_list();
 private void show_occ_list(string *available);
 
@@ -56,6 +64,12 @@ void init() {
     string step;
 
     ::init();
+    /* Catch-all for plain string answers (zone, race, alignment, OCC,
+       and skill names typed with no verb). Added first so every named
+       verb below is checked before it; it returns 0 for anything it
+       does not recognize, letting normal commands fall through to the
+       player's command hook. */
+    add_action("chargen_catch", "", 1);
     add_action("read", "read");
     add_action("pick", "pick");
     add_action("list_occs_cmd", "list");
@@ -64,6 +78,8 @@ void init() {
     add_action("region_cmd", "region");
     add_action("start_cmd", "start");
     add_action("elective_list_cmd","skills");
+    add_action("roll_cmd", "roll");
+    add_action("roll_cmd", "reroll");
     if(creatorp(this_player())) return;
     step = (string)this_player()->getenv("creation_step");
     if(this_player()->query_race() && (!step || step == "" || step == "done"))
@@ -91,16 +107,17 @@ void creation_prompt(string step) {
     if(step == "region") {
         write("\n=== STEP 1: CHOOSE YOUR STARTING ZONE ===");
         write("Where does your story begin on Rifts Earth?\n");
-        write(" start americas   The Americas (outskirts of Praxis)");
-        write(" start europe     Europe (New Camelot, if built)");
-        write(" start atlantis   Atlantis (Splynn market shores)\n");
+        write(" americas   The Americas (outskirts of Praxis)");
+        write(" europe     Europe (New Camelot)");
+        write(" atlantis   Atlantis (Splynn market shores)\n");
+        write("Type your choice: americas, europe, or atlantis.\n");
         return;
     }
     if(step == "stats") {
         write("\n=== STEP 2: ROLL ATTRIBUTES ===");
         write("Roll Palladium attributes (3d6 each for IQ, ME, MA, PS, PP, PE, PB, Spd).");
-        write("Type: pick roll");
-        write("You may type: pick reroll   (up to 4 rerolls, 5 total rolls max)\n");
+        write("\nType: roll");
+        write("After rolling you may type: reroll   (up to 4 rerolls, 5 total rolls)\n");
         return;
     }
     if(step == "race") {
@@ -108,7 +125,7 @@ void creation_prompt(string step) {
         if((string)this_player()->getenv("stats_rolled") == "1")
             show_race_list();
         else
-            write("Roll your attributes first. Type: pick roll\n");
+            write("Roll your attributes first. Type: roll\n");
         return;
     }
     if(step == "alignment") {
@@ -163,12 +180,12 @@ void resume_creation() {
     }
     if(step == "elective" || (string)this_player()->getenv("awaiting_elective_skills") == "1") {
         write("\n=== ELECTIVE SKILLS (IN PROGRESS) ===");
-        write("Type skills <category> and pick skill <name> to continue.\n");
+        write("Type skills <category> to browse, then type a skill name to continue.\n");
         return;
     }
     if(step == "secondary" || (string)this_player()->getenv("awaiting_secondary_skills") == "1") {
         write("\n=== SECONDARY SKILLS (IN PROGRESS) ===");
-        write("Type skills <category> and pick skill <name> to continue.\n");
+        write("Type skills <category> to browse, then type a skill name to continue.\n");
         return;
     }
     begin_creation();
@@ -192,7 +209,7 @@ void do_plain_rolls() {
     player = this_player();
     rolls = (int)player->query_rolls();
     if(rolls >= 5) {
-        write("You have used all five rolls. Choose your race from the list below.\n");
+        write("You have used all five rolls. Type a race name from the list below.\n");
         show_race_list();
         return;
     }
@@ -230,9 +247,9 @@ void do_plain_rolls() {
         " PP:%-3d PE:%-3d PB:%-3d Spd:%-3d",
         iq, me, ma, ps, pp, pe, pb, spd));
     if(rolls < 4)
-        write("\nRerolls remaining: " + (4 - rolls) + ". Type pick reroll, or pick your race from the list below.");
+        write("\nRerolls remaining: " + (4 - rolls) + ". Type reroll to roll again, or type a race name from the list below.");
     else
-        write("\nThis is your final roll. Choose your race from the list below.");
+        write("\nThis is your final roll. Type a race name from the list below.");
     show_race_list();
 }
 
@@ -347,14 +364,18 @@ int list_occs_cmd(string str) {
 
     if((string)this_player()->getenv("creation_step") == "race") {
         if((string)this_player()->getenv("stats_rolled") != "1") {
-            write("Roll your attributes first. Type: pick roll\n");
+            write("Roll your attributes first. Type: roll\n");
             return 1;
         }
         show_race_list();
         return 1;
     }
+    /* Bare "list" during OCC selection lists OCCs; "list occs" also works. */
+    if((!str || str == "") &&
+       (string)this_player()->getenv("awaiting_occ") == "1")
+        str = "occs";
     if(!str || lower_case(str) != "occs") {
-        notify_fail("During race selection type: list\nDuring OCC selection type: list occs\n");
+        notify_fail("Type: list\n");
         return 0;
     }
     if((string)this_player()->getenv("awaiting_occ") != "1") {
@@ -371,19 +392,23 @@ int list_occs_cmd(string str) {
     return 1;
 }
 
+private void choose_no_occ() {
+    this_player()->remove_env("awaiting_occ");
+    this_player()->setenv("rifts_occ", "none");
+    write("You choose to walk the world as a racial character with no OCC.");
+    do_elective_skills_start();
+}
+
 int no_occ_cmd(string str) {
     if(!str || lower_case(str) != "occ") {
-        notify_fail("Did you mean <no occ>?\n");
+        notify_fail("Did you mean <none>?\n");
         return 0;
     }
     if((string)this_player()->getenv("awaiting_occ") != "1") {
         notify_fail("You are not at the OCC selection stage.\n");
         return 0;
     }
-    this_player()->remove_env("awaiting_occ");
-    this_player()->setenv("rifts_occ", "none");
-    write("You choose to walk the world as a racial character with no OCC.");
-    do_elective_skills_start();
+    choose_no_occ();
     return 1;
 }
 // str is everything after "pick", e.g. "occ headhunter" or "occ ley line walker".
@@ -395,10 +420,10 @@ int do_occ_pick(string str) {
     string cs_al;
     int i, tmp, val;
 
-    /* Allow "pick reroll" during OCC selection to re-roll stats. */
+    /* Allow "reroll" during OCC selection to re-roll stats. */
     if(str && lower_case(str) == "reroll") {
         if((int)this_player()->query_rolls() >= 5) {
-            write("You have used all five rolls. Type <no occ> or choose an available OCC.");
+            write("You have used all five rolls. Type none or choose an available OCC.");
             return 1;
         }
         do_rolls();
@@ -412,19 +437,19 @@ int do_occ_pick(string str) {
     } else if(str && strlen(str) > 0) {
         occ_name = lower_case(str);
     } else {
-        write("Specify an OCC name. Type <list occs> to see available classes.");
-        write("Type <pick occ NAME> or just <pick NAME>. Type <no occ> to skip.");
+        write("Type an OCC name. Type list to see available classes.");
+        write("Type none to play as a racial character only.");
         return 1;
     }
     if(!strlen(occ_name)) {
-        write("Specify an OCC name. Example: pick occ headhunter");
+        write("Type an OCC name. Example: headhunter");
         return 1;
     }
 
     occ_data = (mapping)OCC_D->query_occ(occ_name);
     if(!occ_data) {
         write("'" + occ_name + "' is not a valid OCC.");
-        write("Type <list occs> to see available classes.");
+        write("Type list to see available classes.");
         return 1;
     }
 
@@ -432,7 +457,7 @@ int do_occ_pick(string str) {
     if(!creatorp(this_player()) &&
        !(int)OCC_D->query_occ_available(occ_name, this_player())) {
         write("That OCC is not available to your race or you do not meet its unlock requirements.");
-        write("Type <list occs> to see what is available to you.");
+        write("Type list to see what is available to you.");
         return 1;
     }
 
@@ -560,10 +585,6 @@ int do_occ_pick(string str) {
 // ── Race selection ──────────────────────────────────────────────────────────
 
 int pick(string str) {
-    string *which;
-    mapping borg;
-    int tmp, i;
-    string Class;
     string step;
 
     if(str) str = lower_case(str);
@@ -574,7 +595,7 @@ int pick(string str) {
             do_plain_rolls();
             return 1;
         }
-        write("Type pick roll to roll attributes, or pick reroll to reroll (up to 4 rerolls).\n");
+        write("Type roll to roll attributes, or reroll to roll again (up to 4 rerolls).\n");
         return 1;
     }
 
@@ -598,7 +619,7 @@ int pick(string str) {
         }
     }
     if((string)this_player()->getenv("awaiting_alignment") == "1") {
-        write("Please choose your alignment first. Type: alignment <1-7>");
+        write("Please choose your alignment first. Type its name, for example: scrupulous");
         return 1;
     }
     if(step != "race") {
@@ -606,15 +627,41 @@ int pick(string str) {
         return 1;
     }
     if((string)this_player()->getenv("stats_rolled") != "1") {
-        write("Roll your attributes first. Type: pick roll\n");
+        write("Roll your attributes first. Type: roll\n");
         return 1;
     }
+    /* "pick reroll" after the first roll used to fall through to race
+       matching and fail with "not a valid race". Reroll stays legal
+       until a race is chosen. */
+    if(str == "roll" || str == "reroll") {
+        do_plain_rolls();
+        return 1;
+    }
+    if(!str) {
+        write("To pick a race, type its name. Example: human");
+        return 1;
+    }
+    return do_race_pick(str);
+}
+
+/* Silent validity check so the catch-all only claims real race names. */
+private int valid_race_choice(string str) {
+    if(!str || !strlen(str)) return 0;
+    if((int)RIFTS_D->is_admin_race(str) && !creatorp(this_player()))
+        return 0;
+    if(member_array(str, RETIRED_LEGACY_RACES) != -1 &&
+       !creatorp(this_player()))
+        return 0;
+    if(member_array(str, (string *)RACE_D->query_races()) == -1 &&
+       !(int)RIFTS_D->is_rifts_race(str))
+        return 0;
+    return 1;
+}
+
+private int do_race_pick(string str) {
+    string Class;
 
     Class = "child";
-    if(!str) {
-        write("To pick a race, type: pick <racename>");
-        return 1;
-    }
     // Legacy gender restrictions for non-Rifts races
     if(str == "satyr" && (string)this_player()->query_gender() != "male") {
         write("You must be male to be a satyr.\nPick again.");
@@ -626,18 +673,18 @@ int pick(string str) {
     }
     // Admin races (godling, etc.) require creator rank
     if((int)RIFTS_D->is_admin_race(str) && !creatorp(this_player())) {
-        write("That is not a valid race.\nType <read list> to see available races.\n");
+        write("That is not a valid race.\nType list to see available races.\n");
         return 1;
     }
     /* Retired legacy NM3 races are creator-only. */
     if(member_array(str, RETIRED_LEGACY_RACES) != -1 &&
        !creatorp(this_player())) {
-        write("That is not a valid race.\nType <read list> to see available races.\n");
+        write("That is not a valid race.\nType list to see available races.\n");
         return 1;
     }
     if(member_array(str, (string *)RACE_D->query_races()) == -1 &&
        !RIFTS_D->is_rifts_race(str)) {
-        write("That is not a valid race.\nType <read list> to see available races.\n");
+        write("That is not a valid race.\nType list to see available races.\n");
         return 1;
     }
     this_player()->set_race(str);
@@ -703,14 +750,14 @@ void offer_occ_or_reroll() {
     if(!sizeof(available) && rolls_left > 0) {
         write("Your current stats do not qualify you for any OCC.");
         write("Rolls remaining: " + rolls_left);
-        write("Type <pick reroll> to re-roll. Type <no occ> to play as racial only.");
+        write("Type reroll to re-roll. Type none to play as racial only.");
     } else if(!sizeof(available)) {
         write("Your stats do not qualify for any OCC. You may play as a racial character.");
-        write("Type: no occ\n");
+        write("Type: none\n");
     } else {
         show_occ_list(available);
         if(rolls_left > 0)
-            write("Type: pick reroll   to re-roll stats (" + rolls_left + " roll(s) remaining).");
+            write("Type reroll to re-roll stats (" + rolls_left + " roll(s) remaining).");
     }
 }
 
@@ -728,19 +775,19 @@ void do_alignment_start() {
     this_player()->setenv("awaiting_alignment", "1");
     this_player()->setenv("creation_step", "alignment");
     write("\n=== STEP 4: CHOOSE YOUR ALIGNMENT ===");
-    write("1. Principled Honest, law-abiding hero");
-    write("2. Scrupulous Good but bends rules for the greater good");
-    write("3. Unprincipled Selfish but not evil, values freedom");
-    write("4. Anarchist No rules, but not necessarily cruel");
-    write("5. Miscreant Self-serving, uses others without remorse");
-    write("6. Aberrant Evil but bound by a personal code of honor");
-    write("7. Diabolic Pure evil, no remorse, no limits");
-    write("\nType: alignment <number> Example: alignment 2");
+    write(" principled     Honest, law-abiding hero");
+    write(" scrupulous     Good but bends rules for the greater good");
+    write(" unprincipled   Selfish but not evil, values freedom");
+    write(" anarchist      No rules, but not necessarily cruel");
+    write(" miscreant      Self-serving, uses others without remorse");
+    write(" aberrant       Evil but bound by a personal code of honor");
+    write(" diabolic       Pure evil, no remorse, no limits");
+    write("\nType your choice. Example: scrupulous");
 }
 
-// alignment_cmd - parses "alignment N" during character creation.
+/* alignment_cmd - parses an alignment name during character creation. */
 int alignment_cmd(string str) {
-    int choice, al_val;
+    int al_val;
     string al_name;
 
     if((string)this_player()->getenv("awaiting_alignment") != "1") {
@@ -748,20 +795,20 @@ int alignment_cmd(string str) {
         return 0;
     }
     if(!str || !strlen(str)) {
-        write("Type: alignment <1-7> Example: alignment 1");
+        write("Type your alignment choice. Example: scrupulous");
         return 1;
     }
-    choice = to_int(str);
-    switch(choice) {
-    case 1: al_name = "Principled"; al_val = 900; break;
-    case 2: al_name = "Scrupulous"; al_val = 600; break;
-    case 3: al_name = "Unprincipled"; al_val = 200; break;
-    case 4: al_name = "Anarchist"; al_val = -100; break;
-    case 5: al_name = "Miscreant"; al_val = -500; break;
-    case 6: al_name = "Aberrant"; al_val = -900; break;
-    case 7: al_name = "Diabolic"; al_val = -1200; break;
-    default:
-        write("Please choose a number from 1 to 7.");
+    str = lower_case(str);
+    if(str == "principled")        { al_name = "Principled";   al_val = 900; }
+    else if(str == "scrupulous")   { al_name = "Scrupulous";   al_val = 600; }
+    else if(str == "unprincipled") { al_name = "Unprincipled"; al_val = 200; }
+    else if(str == "anarchist")    { al_name = "Anarchist";    al_val = -100; }
+    else if(str == "miscreant")    { al_name = "Miscreant";    al_val = -500; }
+    else if(str == "aberrant")     { al_name = "Aberrant";     al_val = -900; }
+    else if(str == "diabolic")     { al_name = "Diabolic";     al_val = -1200; }
+    else {
+        write("Please type one of: principled, scrupulous, unprincipled,");
+        write("anarchist, miscreant, aberrant, diabolic.");
         return 1;
     }
     this_player()->remove_env("awaiting_alignment");
@@ -826,17 +873,97 @@ void do_rolls() {
     this_player()->set_rolls(this_player()->query_rolls() + 1);
 }
 
+/* Plain "roll" / "reroll" typed with no verb prefix. During the OCC
+   step a reroll uses racial dice; before race selection it repeats
+   the plain 3d6 preview. Returns 0 outside chargen so the normal
+   roll command still works. */
+int roll_cmd(string str) {
+    string step;
+
+    if(!this_player()) return 0;
+    step = (string)this_player()->getenv("creation_step");
+    if((string)this_player()->getenv("awaiting_occ") == "1")
+        return do_occ_pick("reroll");
+    if(step == "stats" || step == "race") {
+        do_plain_rolls();
+        return 1;
+    }
+    return 0;
+}
+
+/* Catch-all for plain string answers: zone names, race names,
+   alignment names, OCC names, and skill names typed with no verb.
+   With add_action(fn, "", 1) the driver passes only the text after
+   the first word; the first word arrives via query_verb(), so the
+   full line is rebuilt here. Returns 0 for anything unrecognized so
+   normal commands still reach the player's command hook. */
+int chargen_catch(string str) {
+    string step;
+    string low;
+    string verb;
+
+    if(!this_player()) return 0;
+    verb = query_verb();
+    if(!verb || !strlen(verb)) return 0;
+    step = (string)this_player()->getenv("creation_step");
+    if(!step || step == "" || step == "done") return 0;
+    low = lower_case(verb);
+    if(str && strlen(str)) low += " " + lower_case(str);
+
+    if(step == "region" ||
+       (string)this_player()->getenv("awaiting_region") == "1") {
+        if(low == "americas" || low == "chitown" ||
+           low == "europe" || low == "camelot" ||
+           low == "atlantis" || low == "splynn")
+            return start_cmd(low);
+        return 0;
+    }
+    if((string)this_player()->getenv("awaiting_alignment") == "1") {
+        if(low == "principled" || low == "scrupulous" ||
+           low == "unprincipled" || low == "anarchist" ||
+           low == "miscreant" || low == "aberrant" ||
+           low == "diabolic")
+            return alignment_cmd(low);
+        return 0;
+    }
+    if((string)this_player()->getenv("awaiting_occ") == "1") {
+        if(low == "none" || low == "no occ") {
+            choose_no_occ();
+            return 1;
+        }
+        if(OCC_D->query_occ(low))
+            return do_occ_pick(low);
+        return 0;
+    }
+    if((string)this_player()->getenv("awaiting_elective_skills") == "1") {
+        if(RIFTS_SKILLS_D->query_rifts_skill(low))
+            return do_elective_skill_pick(low);
+        return 0;
+    }
+    if((string)this_player()->getenv("awaiting_secondary_skills") == "1") {
+        if(RIFTS_SKILLS_D->query_rifts_skill(low))
+            return do_secondary_skill_pick(low);
+        return 0;
+    }
+    if(step == "race") {
+        if((string)this_player()->getenv("stats_rolled") != "1") return 0;
+        if(valid_race_choice(low))
+            return do_race_pick(low);
+        return 0;
+    }
+    return 0;
+}
+
 // ── Region selection ────────────────────────────────────────────────────────
 
 void do_region_start() {
     creation_prompt("region");
 }
 
-/* The chargen guide NPC advertises 'region americas|atlantis|europe',
-   so accept it as an alias for 'start'. */
+/* Legacy alias: 'region <zone>' behaves like typing the zone name. */
 int region_cmd(string str) {
     if(str && strlen(str)) return start_cmd(str);
-    notify_fail("Type: start americas, start europe, or start atlantis.\n");
+    notify_fail("Type your choice: americas, europe, or atlantis.\n");
     return 0;
 }
 
@@ -848,7 +975,7 @@ int start_cmd(string str) {
        (string)this_player()->getenv("awaiting_region") != "1")
         return 0;
     if(!str || !strlen(str)) {
-        write("Please type start americas, start europe, or start atlantis.\n");
+        write("Type your choice: americas, europe, or atlantis.\n");
         return 1;
     }
     str = lower_case(str);
@@ -869,7 +996,7 @@ int start_cmd(string str) {
             dest_room = "/domains/Praxis/rifts_welcome";
         write("Europe. New Camelot and the old world's magic await.");
     } else {
-        write("Please type start americas, start europe, or start atlantis.\n");
+        write("Type your choice: americas, europe, or atlantis.\n");
         return 1;
     }
     this_player()->remove_env("awaiting_region");
@@ -970,7 +1097,7 @@ void do_elective_skills_start() {
     else
         write("Allowed categories: " + cats);
     write("\nType 'skills <category>' to list skills. Example: skills weapons");
-    write("Type 'pick skill <name>' to select a skill. Example: pick skill tracking");
+    write("Then type a skill name to select it. Example: tracking");
     write("Available categories: weapons, pilot, military, espionage, technical, survival, physical, lore");
 }
 
@@ -1009,7 +1136,7 @@ int elective_list_cmd(string str) {
     for(i = 0; i < sizeof(skill_list); i++)
         labels += ({ capitalize(skill_list[i]) });
     write(format_page(labels, 4));
-    write("\nType 'pick skill <name>' to select.");
+    write("\nType a skill name to select it.");
     return 1;
 }
 
@@ -1022,7 +1149,7 @@ int do_elective_skill_pick(string str) {
 
     if((string)this_player()->getenv("awaiting_elective_skills") != "1") return 0;
     if(!str || !strlen(str)) {
-        write("Type: pick skill <name> Example: pick skill tracking");
+        write("Type a skill name. Example: tracking");
         return 1;
     }
     skill_name = lower_case(str);
@@ -1075,7 +1202,7 @@ void do_secondary_skills_start() {
     write("You have " + count + " secondary skill pick(s).");
     write("You may pick from any skill category.");
     write("\nType 'skills <category>' to list skills. Example: skills weapons");
-    write("Type 'pick skill <name>' to select a skill. Example: pick skill tracking");
+    write("Then type a skill name to select it. Example: tracking");
     write("Available categories: weapons, pilot, military, espionage, technical, survival, physical, lore");
 }
 
@@ -1086,7 +1213,7 @@ int do_secondary_skill_pick(string str) {
 
     if((string)this_player()->getenv("awaiting_secondary_skills") != "1") return 0;
     if(!str || !strlen(str)) {
-        write("Type: pick skill <name> Example: pick skill tracking");
+        write("Type a skill name. Example: tracking");
         return 1;
     }
     skill_name = lower_case(str);
@@ -1187,7 +1314,7 @@ private void show_race_list() {
         message("Ninfo", format_page(other_races, 4), this_player());
     }
     write("=====================================");
-    write("Type: pick <race>   Example: pick human");
+    write("Type a race name to choose it. Example: human");
 }
 
 private void show_occ_list(string *available) {
@@ -1198,7 +1325,7 @@ private void show_occ_list(string *available) {
     }
     write("\n=== AVAILABLE OCCUPATIONAL CHARACTER CLASSES ===");
     write(format_page(available, 3));
-    write("Type: pick occ <name>   Example: pick occ headhunter");
+    write("Type an OCC name to choose it. Example: headhunter");
     write("Type: no occ   to play as a racial character only.");
 }
 
@@ -1207,7 +1334,7 @@ int read(string str) {
 
     step = (string)this_player()->getenv("creation_step");
     if(step != "race") {
-        notify_fail("Type read list during race selection (after rolling attributes).\n");
+        notify_fail("Type list during race selection (after rolling attributes).\n");
         return 0;
     }
     if(!str) {
@@ -1219,7 +1346,7 @@ int read(string str) {
         return 0;
     }
     if((string)this_player()->getenv("stats_rolled") != "1") {
-        write("Roll your attributes first. Type: pick roll\n");
+        write("Roll your attributes first. Type: roll\n");
         return 1;
     }
 

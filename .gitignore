@@ -1,5 +1,6 @@
 # Local runtime config (use *.example templates + init-local-config.sh)
 nightmare3_fluffos_v2/bin/mudos.cfg
+nightmare3_fluffos_v2/lib/secure/cfg/mudos.cfg
 nightmare3_fluffos_v2/lib/secure/cfg/groups.cfg
 
 # Player character saves and all secure/daemon runtime save blobs
@@ -32,6 +33,14 @@ nightmare3_fluffos_v2/fluffos-2.9-ds2.08/obj/
 nightmare3_fluffos_v2/bin/driver
 nightmare3_fluffos_v2/bin/addr_server
 nightmare3_fluffos_v2/bin/portbind
+
+# Build-tree compiled output (rebuild locally from source; never sync via git)
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/driver
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/addr_server
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/portbind
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/edit_source
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/comptest
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/packages/packages.a
 
 # Local archive bundle (not required to run the MUD)
 zip-files/

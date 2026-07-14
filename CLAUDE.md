@@ -88,6 +88,37 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   `rifts_skills.c` have a help topic under `doc/help/user` (falconry
   was not a one-off).
 
+## Recent session work (2026-07-14)
+
+- **Chargen input model is plain-string only** (`setter.c`,
+  `chargen_guide.c`, `login.c`): every step takes the option name typed
+  bare, with no verb prefix and no numbered menus. Zone: `americas` /
+  `europe` / `atlantis`. Attributes: `roll`, then `reroll`. Race, OCC,
+  alignment, and skill picks: type the name (`human`, `vagabond`,
+  `scrupulous`, `tracking`); `list` lists races or OCCs; `none` skips
+  OCC. Gender at login: `male` / `female` (case-insensitive). Legacy
+  verbs (`pick X`, `start X`, `region X`, `alignment X`, `no occ`,
+  `pick skill X`) still parse but are no longer advertised anywhere.
+- **Reroll bug fixed:** after the first roll `creation_step` becomes
+  "race", and the old `pick()` only accepted roll/reroll during
+  "stats", so `pick reroll` fell through to race matching and failed.
+  Reroll now works until a race is chosen, and each reroll re-displays
+  the new attribute block plus rerolls remaining.
+- **add_action catch-all gotcha (FluffOS 2.9):** flag 1 to add_action
+  is V_SHORT, not V_NOSPACE (see driver simulate.h). With
+  `add_action(fn, "", 1)` the function gets only the text AFTER the
+  first word; the first word must be read via `query_verb()` (this is
+  how living.c's cmd_hook works). `chargen_catch()` in setter.c
+  rebuilds the full line as verb + " " + arg. It returns 0 for
+  unrecognized input so normal commands (say, look, quit) fall through
+  to cmd_hook during chargen.
+- Scripted chargen testing note: the new-player news pager
+  (`daemon/news.c` via `user.c setup()`) runs on an input_to that
+  races the setter room prompts and eats one line of input; automated
+  walkthroughs must answer `Press <return> to continue:` before
+  sending the zone choice.
+- `www/chargen.html` staff guide updated to the new flow.
+
 ## What is still open (high level)
 
 See `master_gap_report.txt` for detail. Major remaining work:

@@ -283,11 +283,11 @@ static void choose_password(string str) {
 static void confirm_password(string str2, string str1) { 
     if(str1 == str2) { 
         __Player->set_password(str2 = crypt(str2, 0)); 
-        message("prompt", "\nPlease choose an interesting gender (male or female): ", 
-          this_object()); 
-        input_to("choose_gender"); 
-        return; 
-      } 
+        message("prompt", "\nChoose your gender: Male, Female\nGender: ",
+          this_object());
+        input_to("choose_gender");
+        return;
+      }
     else { 
         message("password", "\nPassword entries do not match.  Choose a password: ", 
           this_object()); 
@@ -297,15 +297,16 @@ static void confirm_password(string str2, string str1) {
       } 
   } 
  
-static void choose_gender(string str) { 
-    if(str != "male" && str != "female") { 
-        message("system", "\nCute, but pretend to be either male or female instead\n", 
-          this_object()); 
-        message("prompt", "Gender: ", this_object()); 
-        input_to("choose_gender"); 
-        return; 
-      } 
-    __Player->set_gender(str); 
+static void choose_gender(string str) {
+    if(str) str = lower_case(str);
+    if(str != "male" && str != "female") {
+        message("system", "\nPlease type male or female.\n",
+          this_object());
+        message("prompt", "Gender: ", this_object());
+        input_to("choose_gender");
+        return;
+      }
+    __Player->set_gender(str);
     message("system", sprintf("You may format %s to appear however you want "
       "using alternative\ncapitalization, spaces, \"'\", or \"-\".\n", __CapName), 
         this_object());

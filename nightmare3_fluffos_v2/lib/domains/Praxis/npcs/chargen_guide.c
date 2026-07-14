@@ -30,48 +30,47 @@ private void tell_current_step(object tp) {
     switch(step) {
     case "region":
         tell_player(tp,
-            "First, choose your starting zone.\n"
-            "  region americas   (Chi-Town area)\n"
-            "  region atlantis   (Splynn / Atlantis)\n"
-            "  region europe     (New Camelot / NGR)\n");
+            "First, choose your starting zone. Type your choice:\n"
+            "  americas   (outskirts of Praxis)\n"
+            "  europe     (New Camelot)\n"
+            "  atlantis   (Splynn / Atlantis)\n");
         break;
     case "stats":
         tell_player(tp,
-            "Roll your attributes or pick a fixed array.\n"
-            "  roll              random 3d6 per stat\n"
-            "  pick fixed        use a balanced array\n"
-            "  reroll            try again if rolls are allowed\n");
+            "Roll your attributes.\n"
+            "  roll     random 3d6 per stat\n"
+            "  reroll   roll again (up to 4 rerolls, 5 total rolls)\n");
         break;
     case "race":
         tell_player(tp,
-            "Pick a playable race.\n"
-            "  read list         show races\n"
-            "  pick <race>       choose your race\n");
+            "Choose a playable race.\n"
+            "  list          show races\n"
+            "  <race name>   type the race name to choose it\n");
         break;
     case "alignment":
         tell_player(tp,
-            "Choose a Palladium alignment.\n"
-            "  read list         show alignments\n"
-            "  pick <alignment>  or: alignment <name>\n");
+            "Choose a Palladium alignment. Type its name:\n"
+            "  principled, scrupulous, unprincipled, anarchist,\n"
+            "  miscreant, aberrant, or diabolic\n");
         break;
     case "occ":
         tell_player(tp,
             "Choose an Occupational Character Class (OCC).\n"
-            "  read occs         list classes for your race\n"
-            "  pick <occ>        choose your class\n"
-            "  no occ            stay without a class if allowed\n");
+            "  list         show classes for your race\n"
+            "  <occ name>   type the OCC name to choose it\n"
+            "  none         stay without a class if allowed\n");
         break;
     case "elective":
         tell_player(tp,
             "Pick your elective skills from the categories shown.\n"
-            "  skills            list categories\n"
-            "  pick <skill>      choose each skill\n");
+            "  skills <category>   list skills in a category\n"
+            "  <skill name>        type the skill name to choose it\n");
         break;
     case "secondary":
         tell_player(tp,
             "Pick your secondary skills.\n"
-            "  skills            list options\n"
-            "  pick <skill>      choose each skill\n");
+            "  skills <category>   list skills in a category\n"
+            "  <skill name>        type the skill name to choose it\n");
         break;
     case "done":
         tell_player(tp,
@@ -146,41 +145,41 @@ void catch_tell(string str) {
     }
     if(strsrch(low, "help creation") != -1 || strsrch(low, "help chargen") != -1) {
         tell_player(tp,
-            "Full creation sequence:\n"
-            "  1. region americas|atlantis|europe\n"
-            "  2. roll or pick fixed attributes\n"
-            "  3. read list, then pick <race>\n"
-            "  4. read list, then pick <alignment>\n"
-            "  5. read occs, then pick <occ>\n"
-            "  6. pick elective skills (skills command)\n"
-            "  7. pick secondary skills\n"
+            "Full creation sequence. Type each answer as a plain word:\n"
+            "  1. starting zone: americas, europe, or atlantis\n"
+            "  2. roll (then reroll, up to 4 times)\n"
+            "  3. type a race name from the list\n"
+            "  4. type an alignment name\n"
+            "  5. type an OCC name, or none\n"
+            "  6. elective skills (skills <category>, then the name)\n"
+            "  7. secondary skills\n"
             "  8. finish - gear and ID card arrive automatically\n\n"
             "Say 'status' at any time for the step you are on now.\n");
         return;
     }
     if(strsrch(low, "help race") != -1) {
         tell_player(tp,
-            "Type 'read list' to see races, then 'pick <race name>'.\n"
+            "Type 'list' to see races, then type the race name.\n"
             "Some races restrict which OCCs you may take.\n");
         return;
     }
     if(strsrch(low, "help occ") != -1 || strsrch(low, "help class") != -1) {
         tell_player(tp,
-            "Type 'read occs' for classes available to your race.\n"
-            "Then 'pick <occ name>'. Attribute minimums apply.\n");
+            "Type 'list' for classes available to your race.\n"
+            "Then type the OCC name. Attribute minimums apply.\n");
         return;
     }
     if(strsrch(low, "help alignment") != -1) {
         tell_player(tp,
-            "Type 'read list' during the alignment step, then\n"
-            "'pick <alignment>' or 'alignment <name>'.\n");
+            "During the alignment step type the alignment name,\n"
+            "for example: scrupulous\n");
         return;
     }
     if(strsrch(low, "help skills") != -1) {
         tell_player(tp,
             "After OCC selection the game prompts for elective skills,\n"
-            "then secondary skills. Use 'skills' to list categories and\n"
-            "'pick <skill>' for each choice.\n");
+            "then secondary skills. Use 'skills <category>' to list\n"
+            "skills and type the skill name for each choice.\n");
         return;
     }
     if(strsrch(low, "hello") != -1 || strsrch(low, "hi") != -1 ||
