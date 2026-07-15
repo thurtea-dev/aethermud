@@ -119,6 +119,23 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   sending the zone choice.
 - `www/chargen.html` staff guide updated to the new flow.
 
+## Recent session work (2026-07-15)
+
+- **Admin bootstrap verified working on the local Fedora checkout.**
+  Investigated a reported auth bug (thurtea login had no admin/wizard
+  privileges); found no bug. `/secure/cfg/groups.cfg` already has
+  `thurtea` in SECURE and ASSIST, and `secure/save/users/t/thurtea.o`
+  is a level 15 godling with `position "head arch"` and
+  `wiz_role":"admin"`. Live login test confirmed the staff listing
+  shows `[Admin-Wiz] Thurtea` and `score` matches the save file. No
+  fix needed; closed out.
+- **The VPS instance (`aethermud-server` on the aethermud.com box) has
+  been fully deleted** and is no longer in scope. It had a separate,
+  stale setup unrelated to this local checkout; do not reference it,
+  compare against it, or assume any config/state parity with it going
+  forward. This local Fedora checkout under `/home/thurtea/aethermud`
+  is the only environment in scope.
+
 ## What is still open (high level)
 
 See `master_gap_report.txt` for detail. Major remaining work:
