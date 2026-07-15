@@ -1,13 +1,9 @@
-> **NOTE 2026-07-13:** personal session prompt for the help-file formatting
-> pass (batch 4). Moved out of the repo root during cleanup. Flagged for
-> deletion once the formatting pass is finished.
-
 Check CLAUDE.md first and confirm you're following the rules there before doing anything else.
 
-Before batch 4, resolve one urgent item from content-fixes-needed.md: getting-started and communication/channels give contradictory instructions about the tell command (one says player-to-player, the others say staff-contact only). Check _tell.c to determine the actual behavior, then fix whichever help file(s) are wrong. This is the first file new players read, so it needs to be correct before playtesting starts. Report what you found and which file was wrong.
+Cursor restructured the repo (docs/, docs/reference/, internal/ folders) and refreshed the website. Verify their work touched nothing under nightmare3_fluffos_v2/lib, confirm the new race/OCC count of 62/62 matches your own measurement from rifts.c and occ.c (Cursor claims ASSESSMENT.md's 61 races was one behind), and update ASSESSMENT.md and CLAUDE.md if the 62 count is correct.
 
-Then proceed with batch 4 of the formatting pass: the next ~35 user help files alphabetically (kill/levels/ley-line range through the m's), with the underscore rule now enforced by the conformance checker. Same process as prior batches — report clear vs inferred content, append new stale/wrong findings to content-fixes-needed.md rather than fixing them.
+Separately, flag your own opinion: docs/reference/information.md and invocations.md contain verbatim Palladium rulebook text and are currently tracked for a public GitHub repo. Do you see any way the game engine or help system depends on these files being tracked in git (versus just present on disk), before I decide whether to remove them from version control.
 
-Do not touch any .c source files except to read _tell.c for verification. Do not run any git commands.
+Do not run any git commands yourself. Do not touch help file formatting yet — that resumes next session.
 
 End your response with: files changed, whether a reboot is needed (should be no), and the next objective.

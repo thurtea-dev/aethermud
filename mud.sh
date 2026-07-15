@@ -4,6 +4,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MUD_BASE="${MUD_BASE:-$SCRIPT_DIR/nightmare3_fluffos_v2}"
+LIB_DIR="$MUD_BASE/lib"
 BIN_DIR="$MUD_BASE/bin"
 DRIVER="$BIN_DIR/driver"
 ADDR_SERVER="$BIN_DIR/addr_server"
@@ -13,14 +14,6 @@ PIDFILE="$BIN_DIR/mud.pid"
 ADDR_PIDFILE="$BIN_DIR/addr.pid"
 PORT=1122
 ADDR_PORT=1199
-WS_PORT=1129
-WS_BRIDGE="$SCRIPT_DIR/scripts/ws-bridge.py"
-WS_PIDFILE="$BIN_DIR/ws-bridge.pid"
-WS_LOG="$MUD_BASE/lib/log/ws-bridge.log"
-# Explicit interpreter path: the system python3 on some hosts (e.g. the
-# production VPS) resolves to an ancient 3.6.x that ws-bridge.py cannot
-# run on. Override with WS_PYTHON=/path/to/python3 if 3.12 lives elsewhere.
-WS_PYTHON="${WS_PYTHON:-/usr/bin/python3.12}"
 
 get_pid() {
     if [ -f "$PIDFILE" ]; then
@@ -48,90 +41,44 @@ get_addr_pid() {
     pgrep -f "$ADDR_SERVER $ADDR_PORT" 2>/dev/null | head -1
 }
 
-get_ws_pid() {
-    local pid cmdline
-    if [ -f "$WS_PIDFILE" ]; then
-        pid=$(cat "$WS_PIDFILE")
-        if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
-            # Confirm cmdline contains this checkout's exact bridge path.
-            cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null || true)
-            if printf '%s' "$cmdline" | grep -Fq "$WS_BRIDGE"; then
-                echo "$pid"
-                return
-            fi
-        fi
-        rm -f "$WS_PIDFILE"
-    fi
-    # Fallback: only match python running this checkout's $WS_BRIDGE path.
-    for pid in $(pgrep -f "ws-bridge\\.py" 2>/dev/null); do
-        cmdline=$(tr '\0' ' ' < "/proc/$pid/cmdline" 2>/dev/null || true)
-        if printf '%s' "$cmdline" | grep -Fq "$WS_BRIDGE"; then
-            echo "$pid"
-            return
-        fi
-    done
-}
-
-start_ws_bridge() {
-    local wpid
-    wpid=$(get_ws_pid)
-    if [ -n "$wpid" ]; then
-        echo "[mud] ws-bridge already running (PID $wpid, port $WS_PORT)."
-        return 0
-    fi
-    if [ ! -f "$WS_BRIDGE" ]; then
-        echo "[mud] WARNING: $WS_BRIDGE not found; browser client will not connect."
-        return 1
-    fi
-    if [ ! -x "$WS_PYTHON" ]; then
-        echo "[mud] WARNING: WS_PYTHON ($WS_PYTHON) not found or not executable."
-        echo "[mud]   Install python3.12, or set WS_PYTHON=/path/to/python3 to a 3.7+ interpreter."
-        return 1
-    fi
-    echo "[mud] Starting ws-bridge on port $WS_PORT -> telnet $PORT..."
-    mkdir -p "$(dirname "$WS_LOG")"
-    AETHERMUD_WS_PIDFILE="$WS_PIDFILE" \
-        nohup "$WS_PYTHON" "$WS_BRIDGE" \
-            --listen 0.0.0.0 \
-            --ws-port "$WS_PORT" \
-            --mud-host 127.0.0.1 \
-            --mud-port "$PORT" \
-            --pidfile "$WS_PIDFILE" \
-            >> "$WS_LOG" 2>&1 </dev/null &
-    sleep 1
-    wpid=$(get_ws_pid)
-    if [ -n "$wpid" ]; then
-        echo "[mud] ws-bridge running (PID $wpid)."
-        return 0
-    fi
-    echo "[mud] WARNING: ws-bridge failed to start. Check $WS_LOG"
-    return 1
-}
-
-stop_ws_bridge() {
-    local wpid
-    wpid=$(get_ws_pid)
-    if [ -z "$wpid" ]; then
-        echo "[mud] ws-bridge not running."
-        rm -f "$WS_PIDFILE"
-        return 0
-    fi
-    echo "[mud] Stopping ws-bridge (PID $wpid)..."
-    kill "$wpid" 2>/dev/null
-    local i=0
-    while kill -0 "$wpid" 2>/dev/null && [ $i -lt 10 ]; do
-        sleep 1
-        ((i++))
-    done
-    if kill -0 "$wpid" 2>/dev/null; then
-        kill -9 "$wpid" 2>/dev/null
-    fi
-    rm -f "$WS_PIDFILE"
-    echo "[mud] ws-bridge stopped."
-}
-
 is_running() {
     [ -n "$(get_pid)" ]
+}
+
+# Several runtime directories hold only gitignored dynamic content (daemon
+# save blobs, per-category logs) and have no tracked placeholder, so a
+# fresh checkout is missing them entirely. save_object()/write_file() in
+# FluffOS do not create missing parent directories, so the first daemon
+# that tries to persist to one of these fails with "Could not open
+# .../whatever.o.tmp for a save" (or a silent write_file failure for the
+# log side). Recreate the full set every start; mkdir -p on an existing
+# directory is a no-op.
+prepare_runtime_dirs() {
+    local d
+    for d in \
+        "$LIB_DIR/daemon/save" \
+        "$LIB_DIR/daemon/save/accounts" \
+        "$LIB_DIR/daemon/save/projects" \
+        "$LIB_DIR/secure/save/users" \
+        "$LIB_DIR/secure/save/letters" \
+        "$LIB_DIR/secure/save/postal" \
+        "$LIB_DIR/secure/save/daemons" \
+        "$LIB_DIR/secure/save/boards" \
+        "$LIB_DIR/secure/save/votes" \
+        "$LIB_DIR/log/debug" \
+        "$LIB_DIR/log/personal" \
+        "$LIB_DIR/log/errors" \
+        "$LIB_DIR/log/reports" \
+        "$LIB_DIR/log/watch" \
+        "$LIB_DIR/log/adm" \
+        "$LIB_DIR/log/secure" \
+        "$LIB_DIR/log/rp_wizard" \
+        "$LIB_DIR/log/open/adm" \
+        "$LIB_DIR/log/open/rp_wizard" \
+        "$LIB_DIR/tmp" \
+    ; do
+        mkdir -p "$d"
+    done
 }
 
 verify_ports() {
@@ -143,12 +90,12 @@ verify_ports() {
     fi
 
     while IFS= read -r tcp_line; do
-        if echo "$tcp_line" | grep -qE ":($PORT|$WS_PORT)\b"; then
+        if echo "$tcp_line" | grep -qE ":$PORT\b"; then
             continue
         fi
         echo "[mud] ERROR: Driver PID $pid is listening on a forbidden port."
         echo "       $tcp_line"
-        echo "[mud] Allowed TCP ports: $PORT (telnet), $WS_PORT (websocket if needed)."
+        echo "[mud] Allowed TCP ports: $PORT (telnet)."
         echo "[mud] Check /daemon/http.c and /secure/daemon/mcp_d.c - their setup()"
         echo "[mud] must not call socket_bind(). A full restart is required to close"
         echo "[mud] LPC-opened sockets."
@@ -183,11 +130,11 @@ kill_port_squatters() {
 do_start() {
     if is_running; then
         echo "[mud] Already running (PID $(get_pid))."
-        start_ws_bridge
         return 1
     fi
     echo "[mud] Clearing any processes squatting on port $PORT..."
     kill_port_squatters "$PORT"
+    prepare_runtime_dirs
     echo "[mud] Starting Nightmare 3 on port $PORT..."
     cd "$BIN_DIR" || { echo "[mud] ERROR: cannot cd to $BIN_DIR"; exit 1; }
 
@@ -222,14 +169,12 @@ do_start() {
         if ss -tlnp 2>/dev/null | grep -q ":$PORT"; then
             echo "[mud] Started (PID $pid). Listening on port $PORT."
             verify_ports "$pid"
-            start_ws_bridge
             return 0
         fi
         sleep 1
         ((i++))
     done
     echo "[mud] WARNING: Driver running (PID $pid) but port $PORT not open after 3 min. Check $LOG"
-    start_ws_bridge
 }
 
 do_stop() {
@@ -260,8 +205,6 @@ do_stop() {
         kill "$apid" 2>/dev/null
         rm -f "$ADDR_PIDFILE"
     fi
-
-    stop_ws_bridge
 }
 
 do_restart() {
@@ -288,13 +231,6 @@ do_status() {
         echo "[mud] addr_server RUNNING (PID $apid, port $ADDR_PORT)"
     else
         echo "[mud] addr_server STOPPED"
-    fi
-    local wpid
-    wpid=$(get_ws_pid)
-    if [ -n "$wpid" ]; then
-        echo "[mud] ws-bridge RUNNING (PID $wpid, port $WS_PORT -> $PORT)"
-    else
-        echo "[mud] ws-bridge STOPPED (browser client needs port $WS_PORT)"
     fi
 }
 

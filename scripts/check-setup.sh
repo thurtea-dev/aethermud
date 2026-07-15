@@ -102,25 +102,6 @@ else
     [ -f "$ROOT/mud.sh" ] && warn "mud.sh exists but is not executable. Run: chmod +x mud.sh"
 fi
 
-WS_BRIDGE="$ROOT/scripts/ws-bridge.py"
-WS_PYTHON="${WS_PYTHON:-/usr/bin/python3.12}"
-if [ -f "$WS_BRIDGE" ]; then
-    if [ -x "$WS_PYTHON" ]; then
-        ws_py_version=$("$WS_PYTHON" -c 'import sys; print("%d.%d.%d" % sys.version_info[:3])' 2>/dev/null)
-        if [ -z "$ws_py_version" ]; then
-            fail "ws-bridge interpreter $WS_PYTHON exists but would not run (import/exec failure)"
-        elif "$WS_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 7) else 1)' 2>/dev/null; then
-            ok "ws-bridge interpreter $WS_PYTHON is Python $ws_py_version"
-        else
-            fail "ws-bridge interpreter $WS_PYTHON is Python $ws_py_version (need >= 3.7). Set WS_PYTHON to a newer interpreter or install python3.12 at that path."
-        fi
-    else
-        fail "ws-bridge interpreter missing or not executable: $WS_PYTHON (set WS_PYTHON=/path/to/python3.7+ or install python3.12). Browser client will not connect."
-    fi
-else
-    warn "ws-bridge script missing: $WS_BRIDGE (browser client will not connect)"
-fi
-
 echo ""
 if [ "$errors" -gt 0 ]; then
     echo "Result: $errors error(s), $warnings warning(s) - fix errors before ./mud.sh start"

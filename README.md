@@ -56,9 +56,8 @@ cd ../..
 telnet localhost 1122
 ```
 
-Preload takes 1-3 minutes on first boot. In-game, type `colorize` for ANSI
-color. A browser client is available via `www/play.html` (WebSocket bridge
-on port 1129, started by `mud.sh`).
+Preload takes 1-3 minutes on first boot. Connect with Mudlet or any telnet
+client on port 1122. In-game, type `colorize` for ANSI color.
 
 ## Repository layout
 
@@ -69,7 +68,7 @@ docs/                      Setup, operations, contributor, and planning docs
 docs/reference/            Bulk Rifts reference material for developers
 internal/                  Personal / machine-specific working notes
 staff-handbook/            In-depth staff reference (16 chapters)
-www/                       Website: game info, browser client, staff guides
+www/                       Website: game info, staff guides
 scripts/, tools/           Setup helpers and scripted playtest utilities
 CLAUDE.md                  Mandatory coding rules for the mudlib
 ```
