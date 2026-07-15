@@ -63,10 +63,25 @@ static private void load_access(string cfg, mapping ref) {
     maxi = sizeof(lines = explode(file, "\n"));
     for(i=0; i<maxi; i++) {
         if(!lines[i] || lines[i] == "" || lines[i][0] == '#') continue;
-        if(sscanf(lines[i], "(%s) %s", fl, ac) != 2)
-          error("Error in loading config file "+cfg+" at line "+
-            (i+1));
-        ref[fl] = explode(ac, ":");
+        if(sscanf(lines[i], "(%s) %s", fl, ac) == 2) {
+            ref[fl] = explode(ac, ":");
+            continue;
+        }
+        /* A group declared with no member list yet, e.g. "(AMBASSADOR)"
+         * with nobody in it - the trailing " %s" literal has no
+         * character left to match once the member list is absent, so
+         * the sscanf above returns 1, not 2 (same class of FluffOS
+         * sscanf gotcha as CLAUDE.md rule 18: a literal with nothing
+         * to match kills the rest of the match). Treat that as a
+         * valid, empty group instead of a fatal config error - a real
+         * group (e.g. AMBASSADOR) can legitimately have zero current
+         * members until someone is promoted into it. */
+        if(sscanf(lines[i], "(%s)", fl) == 1) {
+            ref[fl] = ({});
+            continue;
+        }
+        error("Error in loading config file "+cfg+" at line "+
+          (i+1));
     }
 }
 

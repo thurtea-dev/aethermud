@@ -291,6 +291,17 @@ formats like "%d black" vs "%d credits" - capture the tail with
 parse_amount_currency and cmds/mortal/_exchange.c, fixed 2026-07-08).
 Literals BEFORE the first specifier are safe.
 
+Related trap, same root cause: a literal that has NOTHING left to match
+(not a mismatch, an absence) stops the match early too. secure/daemon/
+master.c's load_access() parses groups.cfg lines with
+sscanf(line, "(%s) %s", fl, ac); a member-less group line like
+"(AMBASSADOR)" has no trailing space/name for the literal " " to
+consume, so the match returns 1 instead of 2. load_access() now
+tries a bare sscanf(line, "(%s)", fl) as a second pass and treats that
+as a valid empty group by design - do not "fix" that fallback by
+requiring a trailing space in groups.cfg lines again (fixed
+2026-07-15).
+
 ## Rifts-Specific Architecture
 
 ### Race/OCC system
