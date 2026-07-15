@@ -15,6 +15,16 @@ material (information.md, invocations.md, reference-chart.md) under
 `docs/reference/`, and personal/machine-specific working notes under
 `internal/`.
 
+Per-directory docs (since 2026-07-15, landing in batches): every
+directory in the workspace carries a README.md (what the directory is
+for, plain English) and an LLM_BREADCRUMB.md (pointer telling an LLM to
+check CLAUDE.md, then the local README.md, then the parent directory's
+own LLM_BREADCRUMB.md, then relevant docs, plus directory-specific
+gotchas) - except `nightmare3_fluffos_v2/fluffos-2.9-ds2.08/`'s internal
+subdirectories (vendored FluffOS driver source; only its root gets the
+pair). Maintain both files when adding a new directory or materially
+changing what an existing one contains.
+
 Reference files (READ THESE before making content decisions):
 - `nightmare3_fluffos_v2/RiftsMUD Memories.txt` - Player memories of the original game (historical archive; keep its filename and content as-is)
 - `/domains/Praxis/adm/master_gap_report.txt` - Current gap analysis (check header for latest batch notes)

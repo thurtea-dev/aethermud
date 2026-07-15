@@ -1190,13 +1190,63 @@ private void wiz_setup_workroom(string pname, string pos) {
     catch((int)"/cmds/creator/_qcs"->qcs_ensure_realm_dirs(pname));
 }
 
+/* Callable externally (login.c) so it can decide whether to offer the
+ * first-admin prompt. Not private: no sensitive side effects, just a
+ * read-only scan. Authoritative enforcement still happens inside
+ * set_position()'s guard below, which re-checks this itself. */
+int any_admin_exists() {
+    string *letters, *files, *lines;
+    string ldir, data;
+    int i, j, k;
+
+    letters = get_dir(DIR_USERS + "/");
+    for(i = 0; i < sizeof(letters); i++) {
+        if(letters[i] == "." || letters[i] == "..") continue;
+        ldir = DIR_USERS + "/" + letters[i] + "/";
+        if(file_size(ldir) != -2) continue;
+        files = get_dir(ldir);
+        for(j = 0; j < sizeof(files); j++) {
+            if(strlen(files[j]) < 3 || files[j][<2..] != ".o") continue;
+            data = read_file(ldir + files[j]);
+            if(!data) continue;
+            lines = explode(data, "\n");
+            for(k = 0; k < sizeof(lines); k++) {
+                if(lines[k] == "position \"arch\"" ||
+                   lines[k] == "position \"head arch\"") return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 void set_position(string pos) {
     string prev_pos;
     string pname;
     string promoter_name;
     int entering_wiz;
 
-    if(!creatorp(this_object()) && !archp(this_player()) &&
+    /* Bootstrap escape hatch: PRIVS is #undef in options.h, so
+     * master()->valid_apply() below can never return true for anyone,
+     * privileged directory or not (query_privs() is always falsy with
+     * PRIVS off, and check_access()'s first line denies on that).  This
+     * clause does not depend on valid_apply() at all - it authenticates
+     * the caller by file identity (base_name(previous_object()) ==
+     * OB_LOGIN, the same idiom already used by set_cap_name() and
+     * set_client() in this file) and by re-scanning for an existing
+     * admin, so it works whether or not PRIVS is ever enabled.
+     * Known limitation: two simultaneous first-time registrations could
+     * both observe any_admin_exists() == 0 before either set_position()
+     * call lands, granting admin to both. Accepted as a low-likelihood
+     * edge case for a small MUD; not fixed here.
+     * This clause is checked FIRST, not last: it runs during account
+     * registration, before exec_user() has bound the connection to a
+     * player, so this_player() is still 0 here. archp(0) falls back to
+     * previous_object() and calls query_position() on a non-player
+     * object, which crashes lower_case() with a 0 argument. Putting
+     * this clause first lets it short-circuit the && chain before
+     * archp()/creatorp() are ever reached in the bootstrap case. */
+    if(!(base_name(previous_object()) == OB_LOGIN && !any_admin_exists()) &&
+       !creatorp(this_object()) && !archp(this_player()) &&
        !((int)master()->valid_apply(({ query_name()})))) return;
     prev_pos = position;
     if(member_array(position, MORTAL_POSITIONS) != -1)

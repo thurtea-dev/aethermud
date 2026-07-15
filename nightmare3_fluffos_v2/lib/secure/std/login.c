@@ -33,6 +33,8 @@ static void continue_login();
 static void choose_gender(string str);
 static void enter_email(string str);
 static void enter_real_name(string str);
+static void offer_admin_promotion();
+static void confirm_admin_promotion(string str);
 static void idle();
 static void receive_message(string cl, string msg);
 static private void internal_remove();
@@ -336,14 +338,42 @@ static void enter_email(string str) {
     input_to("enter_real_name"); 
   } 
  
-static void enter_real_name(string str) { 
-    if(!str || str == "") str = "Unknown"; 
-    __Player->set_rname(str); 
-    log_file("enter", sprintf("%s (new player): %s\n", __Name, ctime(time()))); 
-    exec_user(); 
-  } 
- 
-static void idle() { 
+static void enter_real_name(string str) {
+    if(!str || str == "") str = "Unknown";
+    __Player->set_rname(str);
+    log_file("enter", sprintf("%s (new player): %s\n", __Name, ctime(time())));
+    offer_admin_promotion();
+  }
+
+/* Only reachable from the brand-new-account path (enter_real_name(),
+ * itself only reached via new_user()). Returning-player logins go
+ * straight from continue_login() to get_password() and never pass
+ * through here, so an established player can never be re-prompted.
+ * Known limitation: two simultaneous first-time registrations could
+ * both see any_admin_exists() == 0 here before either promotion lands;
+ * accepted as a low-likelihood edge case for a small MUD, not fixed. */
+static void offer_admin_promotion() {
+    if((int)__Player->any_admin_exists()) {
+        exec_user();
+        return;
+    }
+    message("system",
+      "\nNo admin exists on this MUD yet.\n", this_object());
+    message("prompt",
+      "Become the admin? (y/n) ", this_object());
+    input_to("confirm_admin_promotion");
+}
+
+static void confirm_admin_promotion(string str) {
+    if(str && strlen(str) && lower_case(str)[0..0] == "y") {
+        __Player->set_position("head arch");
+        message("system",
+          "\nYou have been granted admin rank.\n", this_object());
+    }
+    exec_user();
+}
+
+static void idle() {
     receive("\nLogin timed out.\n");
     internal_remove();
   } 
