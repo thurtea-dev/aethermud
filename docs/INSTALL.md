@@ -111,13 +111,27 @@ Mudlet: new connection, telnet, host `localhost`, port `1122`. Then `colorize on
 
 ## 6. First admin
 
-1. Use the login name you put in `groups.cfg`.
-2. If you edited `groups.cfg` after first boot: `./mud.sh restart`.
-3. SECURE group grants master access on login.
-4. Optional: existing arch runs `makewiz <name>` then later `setrole <name> admin`
-   (makewiz creates Apprentice; setrole assigns the full role).
+The first account to complete normal registration, while no admin exists
+yet on this install, is offered admin rank automatically - no manual
+step required.
 
-No automatic first-player-admin exists in current code.
+1. Connect and register a new character as usual (see step 5).
+2. After you enter your (optional) real name, you'll see:
+   `No admin exists on this MUD yet. Become the admin? (y/n)`
+3. Answer `y` to be granted `head arch` rank immediately, before you
+   even enter the game world.
+4. This only fires once, for whoever registers first. It will not
+   appear again once an admin exists.
+5. Optional, for promoting someone else later: an existing arch runs
+   `makewiz <name>` then `setrole <name> admin` (makewiz creates
+   Apprentice; setrole assigns the full role).
+
+`groups.cfg` SECURE/ASSIST membership does **not** grant in-game admin
+command access by itself - it only grants raw filesystem read/write
+privileges. Every in-game admin check (`archp()`/`creatorp()`, and
+every `setrole`/`makewiz`/wizard-tool command) is gated purely by the
+`position` field on your save file, which is what the prompt above
+sets directly.
 
 ## Environment overrides
 

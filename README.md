@@ -59,6 +59,9 @@ telnet localhost 1122
 Preload takes 1-3 minutes on first boot. Connect with Mudlet or any telnet
 client on port 1122. In-game, type `colorize` for ANSI color.
 
+The first account you register will be offered admin rank automatically,
+since no admin exists yet on a fresh install - answer `y` at the prompt.
+
 ## Repository layout
 
 ```
