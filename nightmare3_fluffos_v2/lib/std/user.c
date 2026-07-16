@@ -455,6 +455,7 @@ void new_body() {
 
 void setup() {
     string tmp, *start_temp;
+    int needs_chargen;
 
     set_living_name(query_name());
     set_heart_beat(1);
@@ -480,11 +481,12 @@ void setup() {
        !getenv("rifts_languages"))
         catch(LANGUAGE_D->grant_native_languages(this_object()));
     // Send to setter if no race, or mid-creation (resume via creation_step)
-    if(!creatorp(this_object()) &&
+    needs_chargen = !creatorp(this_object()) &&
        (!query_race() ||
         (query_exp() == 0 &&
          (string)getenv("creation_step") != "" &&
-         (string)getenv("creation_step") != "done")))
+         (string)getenv("creation_step") != "done"));
+    if(needs_chargen)
         move(ROOM_SETTER);
     else {
 	sight_bonus = (int)RACE_D->query_sight_bonus(query_race());
@@ -525,7 +527,14 @@ void setup() {
       query_money("electrum")+" el, "+
       query_money("silver")+" sl, "+
       query_money("copper")+" cp\n");
-    NEWS_D->read_news();
+    /* Deferred for chargen-bound players: read_news() uses input_to(),
+       which always wins the player's next raw line over setter.c's
+       add_action-based chargen prompts, silently eating the zone/race/
+       etc answer. finish_creation() in setter.c calls read_news() once
+       creation_step reaches "done" instead, when nothing else is
+       waiting on that input. */
+    if(!needs_chargen)
+        NEWS_D->read_news();
     set_max_sp(query_stats("dexterity")*7);
     if((int)RIFTS_D->is_rifts_race(query_race())) {
         call_out("rifts_regen_tick", 60);

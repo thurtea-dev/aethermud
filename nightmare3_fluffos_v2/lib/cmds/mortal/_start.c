@@ -6,6 +6,10 @@
 inherit DAEMON;
 
 int cmd_start(string str) {
+    string step;
+
+    step = (string)this_player()->getenv("creation_step");
+    if(step && step != "" && step != "done") return 0;
     if(!str || str != "here") {
         notify_fail("Syntax: start here\n");
         return 0;

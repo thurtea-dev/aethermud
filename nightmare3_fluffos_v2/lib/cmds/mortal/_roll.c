@@ -12,7 +12,10 @@ int cmd_roll(string str) {
     int skill_val;
     int roll_result;
     int level;
+    string step;
 
+    step = (string)this_player()->getenv("creation_step");
+    if(step && step != "" && step != "done") return 0;
     if(!str || !sizeof(str)) {
         write("Roll which skill?  Syntax: roll <skill name>\n");
         return 1;

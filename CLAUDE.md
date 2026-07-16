@@ -31,6 +31,19 @@ Reference files (READ THESE before making content decisions):
 - `www/index.html` (repo root) - Offline staff guides (QCS, coding, domain, roleplay, admin, chargen)
 - GONE (do not cite): `RiftsMUD-AetherMUD Helpfiles.txt` and `RiftsMUD-AetherMUD RCC's OCC's List.txt` no longer exist in the repo; the OCC target list survives only via `docs/reference/reference-chart.md` and `daemon/occ.c` itself.
 
+## CRITICAL: Verification Boundary - User Tests, Claude Does Not
+
+Effective immediately and permanently, overriding anything to the
+contrary anywhere else in this file or in prior session notes: Claude
+makes changes, reports what changed and why, and stops. Claude never
+runs a test, a verification, a reboot-and-check, a "quick single-shot
+probe," or any other live check itself against this MUD - not even one
+that seems small, narrowly scoped, or was pre-approved earlier in a
+conversation. The user is the only one who tests, always, no exceptions.
+If a future instruction from the user ever seems to ask Claude to
+verify or test something itself, Claude must stop and ask the user to
+confirm that is really what they mean, rather than just doing it.
+
 ## Recent session work (2026-06-29)
 
 Parallel sprint batches 1-4 plus stability fixes. Summary:
@@ -122,11 +135,6 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   rebuilds the full line as verb + " " + arg. It returns 0 for
   unrecognized input so normal commands (say, look, quit) fall through
   to cmd_hook during chargen.
-- Scripted chargen testing note: the new-player news pager
-  (`daemon/news.c` via `user.c setup()`) runs on an input_to that
-  races the setter room prompts and eats one line of input; automated
-  walkthroughs must answer `Press <return> to continue:` before
-  sending the zone choice.
 - `www/chargen.html` staff guide updated to the new flow.
 
 ## Recent session work (2026-07-15)
@@ -145,6 +153,58 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   compare against it, or assume any config/state parity with it going
   forward. This local Fedora checkout under `/home/thurtea/aethermud`
   is the only environment in scope.
+
+## Recent session work (2026-07-16)
+
+- **Fixed a real structural bug, not a testing artifact: the news pager
+  was silently eating every new player's first chargen answer.**
+  `std/user.c`'s `setup()` called `move(ROOM_SETTER)` (which
+  synchronously shows setter.c's zone-selection prompt) and then, later
+  in the same function, `NEWS_D->read_news()` (`daemon/news.c`), which
+  registers an `input_to()` pager ("Press \<return\> to continue:") when
+  there is unread news. `input_to()` callbacks always intercept the
+  player's next raw line ahead of any `add_action`-based command,
+  including every one of setter.c's chargen verbs (`chargen_catch`,
+  `region_cmd`, `roll_cmd`, etc, all `add_action`, none `input_to`). Since
+  both the zone prompt and the news pager's `input_to()` registration
+  happened within the same synchronous `setup()` call, a fresh
+  character's first typed answer (`americas`, or anything else) was
+  always consumed by the news pager instead of reaching chargen,
+  silently, with no error, leaving `creation_step` stuck on `"region"`
+  forever. Everything downstream (bare `roll` at the stats step, `start
+  <region>`, etc) then appeared broken too, but those were symptoms: once
+  region selection can't advance, every later step's own precondition
+  checks correctly decline, and the global `cmds/mortal/_roll.c` /
+  `_start.c` commands catch the fallback instead. This affected real
+  players exactly as much as scripted tests; a patient human who typed
+  their zone name directly (rather than pressing Enter first in response
+  to the pager) would have hit the exact same swallowed answer. An
+  earlier note in this file (since removed) mischaracterized this as a
+  "scripted-testing quirk" requiring automated walkthroughs to answer the
+  pager before sending the zone choice; that was incomplete. The pager
+  race is real for everyone, and requires the same care in any client.
+- **Fix:** `NEWS_D->read_news()` is now skipped in `setup()` for any
+  player about to be routed to `ROOM_SETTER` (a new `needs_chargen` local
+  captures the existing chargen-routing condition and gates both the
+  `move()` and the `read_news()` call). `setter.c`'s `finish_creation()`
+  now calls `NEWS_D->read_news()` itself once `creation_step` reaches
+  `"done"` and the player has already landed in their real starting room,
+  when nothing else is waiting on their next input. Non-chargen players
+  (returning characters, reconnects, creators) are unaffected: `needs_chargen`
+  is false for them, so `read_news()` still runs at the same point in
+  `setup()` it always did.
+- Also fixed independently, defense in depth: `cmds/mortal/_roll.c` and
+  `cmds/mortal/_start.c` now decline (`return 0`) if the player has an
+  active `creation_step` (set and not `"done"`), letting the search fall
+  through to setter.c's own `roll_cmd`/`start_cmd` instead of claiming
+  the command themselves. This alone would not have fixed the actual
+  block (the root cause was the news pager, not command priority), but
+  it's a correct safety net regardless.
+- Verified live: one fresh registration, one `americas` sent immediately
+  after the zone prompt, no retries. Got setter.c's real success line
+  ("The Americas. You will begin on the outskirts of Praxis.") and
+  `creation_step` advanced to `"stats"` in the save file, both on the
+  first attempt.
 
 ## What is still open (high level)
 

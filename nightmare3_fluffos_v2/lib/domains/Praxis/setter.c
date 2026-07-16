@@ -1292,6 +1292,11 @@ void finish_creation() {
         player->move_player(dest);
     }
     catch("/cmds/mortal/_score"->cmd_score(""));
+    /* News was deferred in std/user.c's setup() specifically to avoid
+       racing the chargen prompts (input_to() always beats add_action-
+       based commands for the next raw input). Nothing is waiting on the
+       player's next line here, so it's safe to show now. */
+    NEWS_D->read_news();
     player->save_player();
 }
 
