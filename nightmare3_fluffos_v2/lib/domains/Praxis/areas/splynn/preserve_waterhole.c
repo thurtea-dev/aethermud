@@ -21,11 +21,12 @@ void create() {
         "the Preserves needs water, so every predator in the Preserves knows\n"
         "to wait here.\n\n"
         "Bones show pale at the waterline, gnawed and abandoned. The brake\n"
-        "climbs away north; the ground falls south toward an open field of\n"
-        "them.");
+        "climbs away north, the ground falls south toward an open field of\n"
+        "them, and thick reed cover crowds the bank to the east.");
     set_exits( ([
         "north" : "/domains/Praxis/areas/splynn/preserve_thornbrake",
-        "south" : "/domains/Praxis/areas/splynn/preserve_bonefield"
+        "south" : "/domains/Praxis/areas/splynn/preserve_bonefield",
+        "east"  : "/domains/Praxis/areas/splynn/preserve_reeds"
     ]) );
     set_listen("default",
         "The slow drip of water, the buzz of insects that are too large,\n"

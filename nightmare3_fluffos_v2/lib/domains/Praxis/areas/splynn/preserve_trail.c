@@ -21,11 +21,13 @@ void create() {
         "leans in close on either side, purple and waxy, so that the trail\n"
         "feels like a corridor with a living roof.\n\n"
         "This is a predator road. Prey does not walk it by choice. The\n"
-        "Preserves core lies back to the east; the trail runs west into\n"
-        "deeper hunting ground.");
+        "Preserves core lies back to the east, the trail runs west into\n"
+        "deeper hunting ground, and a narrower track forks north where the\n"
+        "undergrowth has been trampled thin.");
     set_exits( ([
-        "east" : "/domains/Praxis/areas/splynn/splynn_preserves",
-        "west" : "/domains/Praxis/areas/splynn/preserve_thornbrake"
+        "east"  : "/domains/Praxis/areas/splynn/splynn_preserves",
+        "west"  : "/domains/Praxis/areas/splynn/preserve_thornbrake",
+        "north" : "/domains/Praxis/areas/splynn/preserve_switchback"
     ]) );
     set_listen("default",
         "The soft give of mud under something heavy, somewhere just out of\n"

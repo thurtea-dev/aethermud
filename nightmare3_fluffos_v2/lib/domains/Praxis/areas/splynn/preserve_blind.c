@@ -23,10 +23,12 @@ void create() {
         "litter the floorboards.\n\n"
         "From up here the whole clearing spreads out west. The platform\n"
         "connects east along a walkway toward a chittering outcrop of hive\n"
-        "matter.");
+        "matter, and a second plank walkway runs north to another, smaller\n"
+        "blind strung higher in the canopy.");
     set_exits( ([
-        "west" : "/domains/Praxis/areas/splynn/preserve_bonefield",
-        "east" : "/domains/Praxis/areas/splynn/preserve_hive"
+        "west"  : "/domains/Praxis/areas/splynn/preserve_bonefield",
+        "east"  : "/domains/Praxis/areas/splynn/preserve_hive",
+        "north" : "/domains/Praxis/areas/splynn/preserve_catwalk"
     ]) );
     set_listen("default",
         "Boards creaking under a weight that is not yours, and the low\n"

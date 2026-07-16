@@ -22,11 +22,13 @@ void create() {
         "faintly, warm to stand near, and the air hums with wingbeats you\n"
         "cannot see the source of.\n\n"
         "Guardian warriors patrol the chittering galleries. The walkway back\n"
-        "to the blind runs west; a cleft climbs north out of the hive stink\n"
-        "toward higher ground.");
+        "to the blind runs west, a cleft climbs north out of the hive stink\n"
+        "toward higher ground, and the galleries themselves bore on east\n"
+        "into the hive's deeper dark.");
     set_exits( ([
         "west"  : "/domains/Praxis/areas/splynn/preserve_blind",
-        "north" : "/domains/Praxis/areas/splynn/preserve_snag"
+        "north" : "/domains/Praxis/areas/splynn/preserve_snag",
+        "east"  : "/domains/Praxis/areas/splynn/preserve_hivedeep"
     ]) );
     set_listen("default",
         "A layered hum of wings, the wet clicking of mandibles, and the deep\n"

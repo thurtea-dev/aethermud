@@ -22,10 +22,12 @@ void create() {
         "speed.\n\n"
         "Narrow gaps wind through the thorns, and every gap is a place where\n"
         "something could be waiting. The brake opens east back toward the\n"
-        "trail and drops away south into lower, wetter ground.");
+        "trail, drops away south into lower, wetter ground, and thickens\n"
+        "further west into something closer to a wall of thorn.");
     set_exits( ([
         "east"  : "/domains/Praxis/areas/splynn/preserve_trail",
-        "south" : "/domains/Praxis/areas/splynn/preserve_waterhole"
+        "south" : "/domains/Praxis/areas/splynn/preserve_waterhole",
+        "west"  : "/domains/Praxis/areas/splynn/preserve_thicket"
     ]) );
     set_listen("default",
         "The dry rattle of thorns shifting, though there is no wind, and a\n"
