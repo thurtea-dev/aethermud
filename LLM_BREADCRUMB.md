@@ -8,15 +8,19 @@
 4. Related docs: everything under `docs/` (start with `docs/INSTALL.md`
    and `docs/RUNNING.md`), `staff-handbook/` for in-game staff mechanics,
    `internal/` for personal/machine-specific working notes (not
-   authoritative project docs).
+   authoritative project docs). Recent planning/reference additions:
+   `docs/mercenary-groups-plan.md` (mercenary group system, planning
+   only) and `docs/legacy-riftsmud-reference.md` (legacy RiftsMUD design
+   memories).
 
 ## Gotchas specific to this directory
 
-- Only `README.md` and `CLAUDE.md` belong at the repo root as tracked
-  docs (see CLAUDE.md's "Repo doc layout" section). Don't add new
-  top-level `.md` files here - put setup/ops/planning docs under
-  `docs/`, bulk reference material under `docs/reference/`, and
-  personal notes under `internal/`.
+- Tracked docs at the repo root are `README.md`, `CLAUDE.md`, and this
+  `LLM_BREADCRUMB.md` (the per-directory breadcrumb pair required
+  alongside every directory's README). Don't add further top-level
+  `.md` files here - put setup/ops/planning docs under `docs/`, bulk
+  reference material under `docs/reference/`, and personal notes under
+  `internal/` (see CLAUDE.md's "Repo doc layout" section).
 - `zip-files/` exists on disk but is gitignored (reference archives,
   e.g. a Dead Souls mudlib snapshot used for comparison research) - it
   is never pushed and should not be treated as part of the tracked repo.

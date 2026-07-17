@@ -1,6 +1,7 @@
 # AetherMUD State-of-the-Project Assessment
 
-Date: 2026-07-13. Scope: `/home/thurtea/aethermud/nightmare3_fluffos_v2` (lib +
+Date: 2026-07-17 (content counts remeasured; original narrative audit
+2026-07-13). Scope: `/home/thurtea/aethermud/nightmare3_fluffos_v2` (lib +
 driver), cross-referenced against `docs/reference/invocations.md`, `zone-expansion-plan.md`,
 `playtest-checklist.md`, `staff-handbook/`, `internal/report.md`, and
 `lib/domains/Praxis/adm/master_gap_report.txt`. Read-only audit; no files were
@@ -20,11 +21,13 @@ documentation drifting from the code.
 
 Measured from `daemon/occ.c` (2,163 lines) and `daemon/rifts.c` (1,900 lines):
 
-- **62 unique OCC entries** in `occ.c` (case labels, deduplicated). Every
-  entry carries description, XP table, HP/level, base skills, OCC skill
-  categories and pick counts, secondary skill count, attribute requirements,
-  starting equipment text, flags, and PPE/ISP base + per-level.
-- **61 playable races** in `rifts_races_list` in `rifts.c` (plus an
+- **66 unique OCC entries** in `occ.c` (`occ_list` / `query_occ` data
+  blocks; includes a few alias names such as mercenary and coalition
+  soldier). Every entry carries description, XP table, HP/level, base
+  skills, OCC skill categories and pick counts, secondary skill count,
+  attribute requirements, starting equipment text, flags, and PPE/ISP
+  base + per-level.
+- **62 playable races** in `rifts_races_list` in `rifts.c` (plus an
   admin-grantable list). Includes all four dragon subtypes, vampires,
   psi-stalkers, mutant animals, faerie folk, giants, Atlanteans, Kittani.
 - **76 starting-package case labels** in `daemon/rifts_start_d.c`, so OCC
@@ -48,8 +51,8 @@ Caveats:
   CLAUDE.md **no longer exists in the repo**, so the original target list can
   no longer be diffed against. `docs/reference/reference-chart.md` notes full tabletop detail
   exists only for Shifter, Techno-Wizard, and Mind Melter.
-- CLAUDE.md's "51/51 races, 38/38 OCCs" is stale; actual counts are 61 races,
-  62 OCCs.
+- CLAUDE.md's older "51/51 races, 38/38 OCCs" figures are stale; actual
+  counts are 62 races, 66 OCCs.
 - Gap report notes ~25 OCC help-file gaps; `doc/help/user/` has 331 topics
   including per-OCC/per-race entries, so the remaining gaps are narrow.
 
@@ -61,7 +64,7 @@ Caveats:
 Measured from `daemon/rifts_spells_d.c` (3,907 lines) and
 `daemon/rifts_psionics_d.c` (1,726 lines):
 
-- **~116 spells** defined (`ppe_cost` entries) with **114 distinct effect
+- **115 spells** defined (`ppe_cost` entries) with **114 distinct effect
   handlers**, and every effect string in the data has a matching case in the
   `apply_spell_effect()` dispatch - no dangling effects.
 - **~50 psionic powers** (`isp_cost` entries) with a complete
@@ -264,12 +267,13 @@ Ranked by risk:
 6. **Editor droppings in the repo:** `#s_centre2.c#`, `n_centre1.c~`,
    `adv_main.c~`, `wild2.backup`, `daemon/services.old`, several `.c~` under
    `standardOld/` and `obj/mon/`. Harmless at runtime, noise in review.
-7. **Documentation drift:** CLAUDE.md content counts stale (spells 113 -> 116,
-   skills 102 -> 158, races 51 -> 61, OCCs 38 -> 62); the RCC/OCC target list
-   file it cites is gone; zone plan footprint numbers are file counts, not
-   room counts; playtest checklist references the wrong verb (`dominate`);
-   `master_gap_report.txt` body still carries stale MISSING entries (Lone
-   Star, Puerto Angel) that its own header sections supersede.
+7. **Documentation drift:** Public counts were refreshed 2026-07-17 to the
+   measured figures (62 races, 66 OCCs, 115 spells, ~50 psionics, 158
+   skills) in README, www/, and this file. Remaining drift: the RCC/OCC
+   target list file CLAUDE.md once cited is gone; zone plan footprint
+   numbers are file counts, not room counts; `master_gap_report.txt` body
+   may still carry stale MISSING entries that its own header sections
+   supersede.
 8. **CLAUDE.md's "no `//` comments" rule vs reality:** 146 files under
    daemon/cmds/std use `//` comments (including `occ.c` line 1) and compile
    fine on this driver. Either the rule is stale or a latent portability trap
@@ -300,8 +304,10 @@ Do not re-fix these; the sections above describe the pre-fix state:
   `!target` guard in both daemons. Verified live.
 - **Uncommitted `daemon/command.c` rehash fix (section 7.5): COMMITTED**
   in `affed3b` (2026-07-13 00:28), together with this assessment file.
-- **CLAUDE.md stale counts (section 7.7): UPDATED** to the measured
-  figures; the `dominate` -> `domain` checklist error is also fixed.
+- **CLAUDE.md stale counts (section 7.7): UPDATED** on 2026-07-13 to the
+  then-measured figures; remeasured 2026-07-17 to 62 races, 66 OCCs, 115
+  spells, ~50 psionics, 158 skills across README, www/, and this file. The
+  `dominate` -> `domain` checklist error is also fixed.
 - **Help system:** rewritten to a two-level index (categories, then
   topics per category) with separator-insensitive topic lookup; the flat
   list survives as `help index`. Not a finding above, noted for currency.

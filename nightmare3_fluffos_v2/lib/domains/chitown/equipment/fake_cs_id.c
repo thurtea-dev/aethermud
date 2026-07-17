@@ -1,7 +1,7 @@
 // /domains/chitown/equipment/fake_cs_id.c
 // Forged Coalition States identification card.
 
-inherit "/std/object";
+inherit "/std/Object";
 
 void create() {
     ::create();

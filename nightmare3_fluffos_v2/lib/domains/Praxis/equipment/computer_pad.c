@@ -1,7 +1,7 @@
 // /d/Praxis/equipment/computer_pad.c
 // Standard computer pad -- data device, no combat use
 
-inherit "/std/object";
+inherit "/std/Object";
 
 void create() {
     ::create();

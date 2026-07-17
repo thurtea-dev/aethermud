@@ -25,16 +25,19 @@ psionics, techno-wizardry, and rift travel between continents.
 
 ## Features
 
-Measured from the live code (2026-07-13):
+Measured from the live code (2026-07-17):
 
 - **62 playable races**, from human to Great Horned Dragon, secondary
   vampire, psi-stalker, Atlantean, and mutant animals
-- **62 OCCs** (Occupational Character Classes): Coalition military,
+- **66 OCCs** (Occupational Character Classes): Coalition military,
   Juicers, Crazies, Cyber-Knights, Glitter Boy pilots, Ley Line Walkers,
   Techno-Wizards, Mind Melters, and more
-- **158 skills**, **~116 spells**, **~50 psionic powers**
+- **158 skills**, **115 spells**, **~50 psionic powers**
 - **~430 playable rooms** across Praxis, Chi-Town, Tolkeen, Horton,
-  Splynn/Atlantis, New Camelot, NGR Germany, and growing
+  New Camelot, and NGR Germany, plus stub/placeholder zones (Lazlo,
+  Lone Star, Puerto Angel, demon plane). Splynn, Alvurron, and
+  Atlantis content lives under `domains/Praxis/areas/splynn/`, not as
+  separate top-level domains
 - **173 player commands**, MDC/SDC combat with attacks-per-melee,
   rift travel between continents via the NPC Moxim, radios, banking,
   slave markets, black markets, and a two-level in-game help system
@@ -87,6 +90,8 @@ CLAUDE.md                  Mandatory coding rules for the mudlib
 | [docs/PUBLISHING.md](docs/PUBLISHING.md) | Pre-publication checklist |
 | [docs/ASSESSMENT.md](docs/ASSESSMENT.md) | Measured state-of-the-project audit |
 | [docs/zone-expansion-plan.md](docs/zone-expansion-plan.md) | Zone growth priorities |
+| [docs/mercenary-groups-plan.md](docs/mercenary-groups-plan.md) | Mercenary group system design (planning only) |
+| [docs/legacy-riftsmud-reference.md](docs/legacy-riftsmud-reference.md) | Legacy RiftsMUD design memories (reference) |
 | [docs/playtest-checklist.md](docs/playtest-checklist.md) | Playtest passes and roster |
 | [staff-handbook/](staff-handbook/index.md) | Internal staff reference |
 | [CLAUDE.md](CLAUDE.md) | Coding rules for the lib |

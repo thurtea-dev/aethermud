@@ -1,7 +1,7 @@
 // /domains/chitown/equipment/cs_dog_tag.c
 // Coalition States dog tag, salvaged from a dead patrol officer.
 
-inherit "/std/object";
+inherit "/std/Object";
 
 void create() {
     ::create();
