@@ -97,6 +97,15 @@ void remove_user(string *chans) {
     }
 }
 
+/* Try a bare magic shortcut (spell, then psionic) before giving up on
+   unrecognized input. Order doesn't matter in practice: spell and
+   psionic names don't collide. */
+private int try_magic_shortcuts(string full_input) {
+    if((int)"/cmds/mortal/_cast"->try_spell_shortcut(full_input)) return 1;
+    if((int)"/cmds/mortal/_psi"->try_psi_shortcut(full_input)) return 1;
+    return 0;
+}
+
 int do_chat(string verb, string str) {
     string msg;
     int emote;
@@ -106,21 +115,22 @@ int do_chat(string verb, string str) {
     full_input = (str && sizeof(str)) ? (verb + " " + str) : verb;
     if(!channel_allowed(this_player(), verb)) {
         /* Not a channel this player can use.  Before giving up, see if
-           the input is a bare spell-name cast ("windrush grunt").  This
-           is the only fall-through mortals reach; the gate above would
-           otherwise eat the spell shortcut below for everyone. */
-        if((int)"/cmds/mortal/_cast"->try_spell_shortcut(full_input)) return 1;
+           the input is a bare spell or psionic shortcut ("windrush
+           grunt", "mindbolt grunt").  This is the only fall-through
+           mortals reach; the gate above would otherwise eat the
+           shortcuts below for everyone. */
+        if(try_magic_shortcuts(full_input)) return 1;
         return 0;
     }
     if(verb == "list") return list_channel(str);
     if(!channels[verb]) {
         if(sscanf(verb, "%semote", verb)) emote = 1;
         else {
-            if((int)"/cmds/mortal/_cast"->try_spell_shortcut(full_input)) return 1;
+            if(try_magic_shortcuts(full_input)) return 1;
             return 0;
         }
         if(!channels[verb]) {
-            if((int)"/cmds/mortal/_cast"->try_spell_shortcut(full_input)) return 1;
+            if(try_magic_shortcuts(full_input)) return 1;
             return 0;
         }
     }

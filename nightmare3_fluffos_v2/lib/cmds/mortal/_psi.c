@@ -257,6 +257,65 @@ int do_telepathy(string str) {
     return do_telepathy_send(target_str, message);
 }
 
+/* Called from chat.c after all other command paths have failed.
+   Receives the full input string (verb + optional " arg"). Mirrors
+   try_spell_shortcut() in _cast.c: supports bare "<psi name> <target>",
+   "<psi name> at <target>", and "<psi name>" alone (relying on
+   cmd_psi()'s own combat auto-target for effects that need one).
+   Returns 1 and activates the psionic if the player knows the named
+   power; 0 to fall through. */
+int try_psi_shortcut(string str) {
+    string psi_part;
+    string target_part;
+    string psi_name;
+    string *words;
+    mapping pdata;
+    int at_pos;
+    int i;
+    int n;
+
+    if(!str || !sizeof(str)) return 0;
+    if(!this_player()) return 0;
+    if(!(int)RIFTS_D->is_rifts_race((string)this_player()->query_race())) return 0;
+    if(!(int)RIFTS_D->player_has_psi_access(this_player())) return 0;
+
+    at_pos = strsrch(str, " at ");
+    if(at_pos > 0) {
+        psi_part = lower_case(str[0..at_pos-1]);
+        target_part = lower_case(str[at_pos+4..]);
+        if(!sizeof(target_part)) target_part = 0;
+    } else {
+        psi_part = lower_case(str);
+        target_part = 0;
+    }
+
+    psi_name = (string)RIFTS_PSIONICS_D->normalize_psionic_name(psi_part);
+    pdata = (mapping)RIFTS_PSIONICS_D->query_psionic(psi_name);
+
+    /* "mindbolt grunt": no " at " and the whole string is not a known
+       psionic. Try progressively shorter word prefixes as the psionic
+       name and treat the remainder as the target. */
+    if(!pdata && !target_part) {
+        words = explode(psi_part, " ");
+        n = sizeof(words);
+        for(i = n - 1; i >= 1; i--) {
+            psi_name = (string)RIFTS_PSIONICS_D->normalize_psionic_name(
+              implode(words[0..i-1], " "));
+            pdata = (mapping)RIFTS_PSIONICS_D->query_psionic(psi_name);
+            if(pdata) {
+                target_part = implode(words[i..n-1], " ");
+                break;
+            }
+        }
+    }
+
+    if(!pdata) return 0;
+    if(!(int)RIFTS_D->player_knows_psionic(this_player(), psi_name)) return 0;
+    if(target_part)
+        return cmd_psi(psi_name + " at " + target_part);
+    return cmd_psi(psi_name);
+}
+
 void help() {
     write(
         "Syntax: psi <power> [at <target>]\n\n"
