@@ -22,6 +22,11 @@ int cmd_ed(string file) {
     }
    tmp = (string)this_player()->get_path();
    file = absolute_path(tmp, file);
+    /* No extension and it doesn't exist as given -- retry as a .c
+       file, since that's what every real source path in this mudlib
+       actually is. */
+    if(file_size(file) == -1 && strsrch(file, ".") == -1)
+        file = file + ".c";
     if(file_size(file) == -2) {
 	notify_fail("You cannot edit a directory!\n");
 	return 0;

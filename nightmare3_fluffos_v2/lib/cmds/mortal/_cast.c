@@ -24,6 +24,27 @@ inherit DAEMON;
     "soul_drain", "animate_object", "resurrection_spell", \
     "power_word_kill", "create_magic_weapon", "time_warp_age" })
 
+/* Auto-target the caster's current combat opponent when no target was
+   given and the effect requires one. Duplicated from _magicnet.c's
+   find_combat_target() rather than shared, per instruction not to
+   touch that file. */
+private object find_combat_target(object caster) {
+    object *inv;
+    object *atk;
+    int i;
+
+    if(!caster) return 0;
+    atk = (object *)caster->query_attackers();
+    if(atk && sizeof(atk)) return atk[0];
+    inv = all_inventory(environment(caster));
+    for(i = 0; i < sizeof(inv); i++) {
+        if(!inv[i] || !living(inv[i]) || inv[i] == caster) continue;
+        atk = (object *)inv[i]->query_attackers();
+        if(atk && member_array(caster, atk) != -1) return inv[i];
+    }
+    return 0;
+}
+
 int cmd_cast(string str) {
     string spell_name;
     string target_str;
@@ -101,8 +122,11 @@ int cmd_cast(string str) {
     }
     if(!target &&
        member_array((string)sdata["effect"], NEED_TARGET_EFFECTS) != -1) {
-        write("Cast at whom?  Syntax: cast " + spell_name + " at <target>\n");
-        return 1;
+        target = find_combat_target(this_player());
+        if(!target) {
+            write("Cast at whom?  Syntax: cast " + spell_name + " at <target>\n");
+            return 1;
+        }
     }
 
     /* In combat: spend an APM */

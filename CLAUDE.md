@@ -44,6 +44,23 @@ If a future instruction from the user ever seems to ask Claude to
 verify or test something itself, Claude must stop and ask the user to
 confirm that is really what they mean, rather than just doing it.
 
+## Session-end reporting (required)
+
+At the end of every session, before stopping, produce a short
+structured summary containing exactly these four things:
+
+1. **What was changed this session** - files touched, one line each.
+2. **What was found but NOT fixed** - deferred items, with the reason.
+3. **A rough completion percentage** for the specific subsystem being
+   worked on (e.g. "chargen: ~85% functional" or "NPC dialogue system:
+   90% consistent"), stated as an honest estimate based on what was
+   actually inspected this session, not a guess pulled from nowhere.
+4. **The single most impactful next thing to work on**, and why it
+   ranks above other open items.
+
+This applies regardless of whether the session was a fix, an
+investigation, or a documentation-only change.
+
 ## Recent session work (2026-06-29)
 
 Parallel sprint batches 1-4 plus stability fixes. Summary:

@@ -18,6 +18,27 @@ inherit DAEMON;
     "psychic_purification", "electrokinesis", "hypnotic_suggestion", \
     "psychic_locator", "mental_stun", "mind_wipe" })
 
+/* Auto-target the caster's current combat opponent when no target was
+   given and the effect requires one. Duplicated from _magicnet.c's
+   find_combat_target() rather than shared, per instruction not to
+   touch that file. */
+private object find_combat_target(object caster) {
+    object *inv;
+    object *atk;
+    int i;
+
+    if(!caster) return 0;
+    atk = (object *)caster->query_attackers();
+    if(atk && sizeof(atk)) return atk[0];
+    inv = all_inventory(environment(caster));
+    for(i = 0; i < sizeof(inv); i++) {
+        if(!inv[i] || !living(inv[i]) || inv[i] == caster) continue;
+        atk = (object *)inv[i]->query_attackers();
+        if(atk && member_array(caster, atk) != -1) return inv[i];
+    }
+    return 0;
+}
+
 int cmd_psi(string str) {
     string psi_name;
     string target_str;
@@ -93,8 +114,11 @@ int cmd_psi(string str) {
     }
     if(!target &&
        member_array((string)pdata["effect"], NEED_TARGET_EFFECTS) != -1) {
-        write("Use on whom?  Syntax: psi " + psi_name + " at <target>\n");
-        return 1;
+        target = find_combat_target(this_player());
+        if(!target) {
+            write("Use on whom?  Syntax: psi " + psi_name + " at <target>\n");
+            return 1;
+        }
     }
 
     if(target && userp(target) && target != this_player() &&
