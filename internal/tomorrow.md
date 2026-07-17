@@ -1,10 +1,33 @@
-Before doing anything, open CLAUDE.md and confirm you're following its rules (especially the log_file literal-string convention and any rules about not introducing new daemons/files without checking existing mechanisms first).
-Stop asking me conceptual questions you can answer by reading the code. Specifically:
-Grep the codebase for archp(), creatorp(), and wherever position is checked for admin rights, and also grep for every place groups.cfg is actually read (not just written). Tell me definitively: does groups.cfg SECURE/ASSIST membership alone grant in-game admin command access, or is the save file's position field the actual gate, or both? Show me the exact code paths, don't summarize from memory.
-Based on that answer, propose the fix as shell script(s) only — no new .c files. Requirements:
-Must be idempotent (safe to run on every mud.sh start without side effects if an admin already exists).
-Must NOT touch or overwrite an existing valid admin save file (thurtea.o) if one already has correct position/group status.
-If editing a save file directly, first prove the exact save file format via cat on an existing admin save file (e.g. thurtea.o) so any edit matches real syntax exactly — no guessing at LPC save format.
-check-setup.sh should fail (not warn) on a fresh clone with no real admin path available.
-Show me the exact diffs/new script contents before writing anything, and explain in one paragraph why this satisfies the "someone else clones the repo and it just works" requirement.
-Do not create admin_bootstrap.c or any other new LPC file. This is a deploy/bootstrap gap, not a missing game mechanic.
+## Prompt 1, send to Claude Code on Fedora, LOCAL
+
+Fix the highest-impact, hardest-failure gap first (magic race grants), since it's a small, contained fix compared to the skill-invocation gap, and it unblocks 9 races that currently cannot use their signature ability at all.
+
+```
+Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
+
+Propose a fix only. Show me the diff, do not apply it yet.
+
+query_race_spell_grant() in daemon/rifts_start_d.c does not cover the 9 races flagged faerie_magic or nature_magic in daemon/rifts.c query_race_flags() (common faerie, common pixie, frost pixie, green wood faerie, night-elves faerie, silver bells faerie, tree sprite, water sprite, brownie). These races currently get no starting spells and no starting PPE despite being flagged as innately magical.
+
+Research what spell list and PPE amount would be appropriate for each of these two groups under the source material, keep it minimal and small for now since the user plans to expand later, then propose the exact case additions to query_race_spell_grant() needed to grant a small starting spell list and correct PPE for all 9 races. Show the full diff. Do not touch query_race_psionic_grant() or any other function.
+```
+
+## Prompt 2, send to Claude Code on Fedora, LOCAL
+
+Capture the mercenary group design as a planning document, no code yet.
+
+```
+Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
+
+This is a documentation task only. Do not write any code files.
+
+Create a new planning document (check whether docs/zone-expansion-plan.md or a new file under docs/ is the better home, follow existing doc conventions in this repo) capturing this design for a future mercenary group system:
+
+Level 4 players can found a mercenary group. The founder and a co-leader can add new members. Adding a member grants that player a group emblem object. A member leaves the group by dropping or removing the emblem. The first three mercenary groups will have secret faction bases hidden in Chi-Town, Splynn, and New Camelot. As one example, the New Camelot garden fountain has a hidden entrance that only opens for a player carrying a group emblem.
+
+Write this as a design spec: goals, the emblem object's expected properties, the add and remove member flow, how base access should be gated by emblem possession, and open questions that still need answers before implementation (for example, what happens to a group's base access if the founder is removed or goes inactive, whether groups have a size cap, whether there can be more than three groups eventually).
+
+Do not propose any code changes or begin implementation. This is planning only, to be revisited once current foundation gaps are resolved.
+```
+
+Once both come back, we will decide whether to also tackle the psionic shortcut gap and the broader skill-invocation gap before circling back to actually build the mercenary system, and only then update the README files to reflect the real, settled state of the project.

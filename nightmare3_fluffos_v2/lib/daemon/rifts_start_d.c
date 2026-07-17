@@ -1416,6 +1416,21 @@ string *query_race_spell_grant(string race) {
     case "dragon hatchling":
         return explode(";",
             "globe of daylight;blinding flash;cloud of smoke;levitation");
+    /* Minor fae magic: light, smoke, illusion/evasion. Minimal starter
+       package, small on purpose - expand later. */
+    case "common faerie":
+    case "common pixie":
+    case "frost pixie":
+    case "green wood faerie":
+    case "night-elves faerie":
+    case "silver bells faerie":
+        return explode(";", "globe of daylight;cloud of smoke;chameleon;invisibility simple");
+    /* Minor nature magic: light, camouflage, animal/magic awareness.
+       Minimal starter package, small on purpose - expand later. */
+    case "tree sprite":
+    case "water sprite":
+    case "brownie":
+        return explode(";", "globe of daylight;chameleon;sense magic;repel animals");
     default:
         return ({});
     }
@@ -1467,6 +1482,19 @@ private void do_race_spells(object player, string race) {
         break;
     case "dragon hatchling":
         ppe_base = 40;
+        break;
+    case "common faerie":
+    case "common pixie":
+    case "frost pixie":
+    case "green wood faerie":
+    case "night-elves faerie":
+    case "silver bells faerie":
+        ppe_base = 30;
+        break;
+    case "tree sprite":
+    case "water sprite":
+    case "brownie":
+        ppe_base = 20;
         break;
     default:
         break;

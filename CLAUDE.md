@@ -147,12 +147,6 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   `wiz_role":"admin"`. Live login test confirmed the staff listing
   shows `[Admin-Wiz] Thurtea` and `score` matches the save file. No
   fix needed; closed out.
-- **The VPS instance (`aethermud-server` on the aethermud.com box) has
-  been fully deleted** and is no longer in scope. It had a separate,
-  stale setup unrelated to this local checkout; do not reference it,
-  compare against it, or assume any config/state parity with it going
-  forward. This local Fedora checkout under `/home/thurtea/aethermud`
-  is the only environment in scope.
 
 ## Recent session work (2026-07-16)
 
@@ -205,6 +199,22 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   ("The Americas. You will begin on the outskirts of Praxis.") and
   `creation_step` advanced to `"stats"` in the save file, both on the
   first attempt.
+
+## Recent session work (2026-07-17)
+
+- **Correction: the VPS was never deleted.** A 2026-07-15 entry in this
+  file (now removed) incorrectly stated the VPS instance
+  (`aethermud-server` on the `aethermud.com` box) had been fully
+  deleted and was out of scope. That was wrong, confirmed by live
+  testing on 2026-07-17 (Mudlet connection to `aethermud.com:1122`,
+  live chargen, live NPC interaction). **The VPS at `aethermud.com`
+  (SSH host `zeus.cybercitizen.net`, user `thurtea`, working directory
+  `/home/thurtea/aethermud`) is the live production server.** The
+  local Fedora checkout under `/home/thurtea/aethermud` is where all
+  development and testing happens. Changes are committed and pushed
+  from local, then pulled on the VPS via git only after local testing
+  is complete. The VPS should never be edited directly except to pull
+  already-tested commits.
 
 ## What is still open (high level)
 

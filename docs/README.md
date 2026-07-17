@@ -15,6 +15,9 @@ tracked, maintained docs referenced from the repo-root README.md.
 - `ASSESSMENT.md` - measured state-of-the-project audit (content counts,
   known gaps).
 - `zone-expansion-plan.md` - priorities for growing the game world.
+- `mercenary-groups-plan.md` - design plan for a player-founded
+  mercenary group system with emblem-gated secret bases. Planning only,
+  not yet implemented.
 - `playtest-checklist.md` / `playtest-roster.md` - playtest process and
   who's covered what.
 - `reference/` - bulk Rifts reference material for developers (see its
