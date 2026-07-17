@@ -1,6 +1,20 @@
 === AETHERMUD - MASTER GAP REPORT ===
 Generated: 2026-06-22
-Last updated: 2026-07-13
+Last updated: 2026-07-17
+
+SESSION CHANGES (2026-07-17) - chargen/security audit fixes:
+  FIXED: setter.c do_plain_rolls() reroll warning now fires BEFORE the
+         final reroll is committed ("This will be your final reroll.")
+         instead of only after, removing the redundant post-roll message.
+  FIXED: secure/cmds/creator/_call.c do_call() blocks query_email unless
+         caller is archp(), closing an email-leak path any creator-level+
+         account could previously use via call <player>;query_email.
+  OPEN:  sunlight_vulnerability and wild_fire_vulnerability flags exist
+         on secondary vampire and wild vampire races (daemon/rifts.c
+         query_race_flags()) but are not enforced anywhere in code. No
+         safe-start-room system exists for hazard races. Deferred - low
+         player-count impact (2 of 62 races) until core chargen
+         (spell/psionic auto-grant) is fixed.
 
 SESSION CHANGES (2026-07-13) - fixes + docs currency:
   FIXED: casting resource loss - _cast.c/_psi.c validate target BEFORE

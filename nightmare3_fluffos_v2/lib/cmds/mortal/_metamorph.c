@@ -113,6 +113,11 @@ int cmd_metamorph(string str) {
         return 1;
     }
 
+    if(!(int)RIFTS_D->is_rifts_race(target_form)) {
+        write("There is no such race. Type 'metamorph' with no argument to see your current form.\n");
+        return 1;
+    }
+
     /* apply transformation */
     this_player()->set_property("metamorphed",   1);
     this_player()->set_property("current_form",  target_form);

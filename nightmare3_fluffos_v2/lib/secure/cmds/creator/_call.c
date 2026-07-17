@@ -120,6 +120,9 @@ do_call( object ob, string func, mixed args )
   object shad;
   function f;
 
+  if( func == "query_email" && !archp(this_player()) )
+    return ({ 0, "- permission denied" });
+
   if( !function_exists( func, ob ) )
   {
     // This needs #ifdef HAS_SHADOW (MudOS driver 0.9.17.3 onwards)

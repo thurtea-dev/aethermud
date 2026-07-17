@@ -213,6 +213,8 @@ void do_plain_rolls() {
         show_race_list();
         return;
     }
+    if(rolls == 4)
+        write("This will be your final reroll.\n");
     write("\nYou roll your attributes (3d6 each).");
     iq  = roll_d6(3);
     me  = roll_d6(3);
@@ -249,7 +251,7 @@ void do_plain_rolls() {
     if(rolls < 4)
         write("\nRerolls remaining: " + (4 - rolls) + ". Type reroll to roll again, or type a race name from the list below.");
     else
-        write("\nThis is your final roll. Type a race name from the list below.");
+        write("\nType a race name from the list below.");
     show_race_list();
 }
 
