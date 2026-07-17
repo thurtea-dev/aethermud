@@ -51,8 +51,6 @@ void create() {
     set_shop_items( ([
         "trained hawk"  : ({ EQ_PATH+"trained_hawk.c",      5000, "trained hunting hawk" }),
         "hawk"          : ({ EQ_PATH+"trained_hawk.c",      5000, "trained hunting hawk" }),
-        "hunting hawk"  : ({ EQ_PATH+"trained_hawk.c",      5000, "trained hunting hawk" }),
-        "majestic hawk" : ({ EQ_PATH+"new_trained_hawk.c",  3000, "majestic hawk" }),
-        "new hawk"      : ({ EQ_PATH+"new_trained_hawk.c",  3000, "majestic hawk" })
+        "hunting hawk"  : ({ EQ_PATH+"trained_hawk.c",      5000, "trained hunting hawk" })
     ]) );
 }

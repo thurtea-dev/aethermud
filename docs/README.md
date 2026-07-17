@@ -18,6 +18,9 @@ tracked, maintained docs referenced from the repo-root README.md.
 - `mercenary-groups-plan.md` - design plan for a player-founded
   mercenary group system with emblem-gated secret bases. Planning only,
   not yet implemented.
+- `legacy-riftsmud-reference.md` - design memories from the original
+  RiftsMUD (items, Moxim rift travel, falconry pets, UI conventions,
+  future feature brainstorm). Reference material, not a task list.
 - `playtest-checklist.md` / `playtest-roster.md` - playtest process and
   who's covered what.
 - `reference/` - bulk Rifts reference material for developers (see its
