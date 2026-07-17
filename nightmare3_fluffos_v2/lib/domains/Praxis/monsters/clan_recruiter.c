@@ -43,16 +43,16 @@ void create() {
         "  Kittani Serpent Clan, and Brodkil War Council are registered here.\n"
         "  Membership is not open to all races. Ask about each specifically.'");
     add_response("splugorth",
-        "The administrator says: 'Splugorth Empire membership is by invitation\n"
+        "Kittani administrator says: 'Splugorth Empire membership is by invitation\n"
         "  only. Speak with a Splugorth authority. Do not waste their time or yours.'");
     add_response("kittani",
-        "The administrator says: 'Kittani Serpent Clan accepts Kittani by birth\n"
+        "Kittani administrator says: 'Kittani Serpent Clan accepts Kittani by birth\n"
         "  and exceptional non-Kittani by demonstrated service. Service means years.'");
     add_response("brodkil",
-        "The administrator says: 'Brodkil War Council accepts Brodkil and strong\n"
+        "Kittani administrator says: 'Brodkil War Council accepts Brodkil and strong\n"
         "  D-Bees who prove worth in the pits. Pits are east of the market.'");
     add_response("join",
-        "The administrator says: 'Membership applications are handled by Splugorth\n"
+        "Kittani administrator says: 'Membership applications are handled by Splugorth\n"
         "  administration. I record decisions. I do not make them.\n"
         "  Speak with a Splugorth authority about formal acceptance.'");
     add_response("amulet",
@@ -61,7 +61,7 @@ void create() {
         "  sides. Granted on formal acceptance. Not sold. Not transferred.\n"
         "  Wear it at your neck or not at all.'");
     add_response("membership",
-        "The administrator says: 'Membership grants faction access,\n"
+        "Kittani administrator says: 'Membership grants faction access,\n"
         "  standing recognition at faction-aligned vendors, and the amulet.\n"
         "  It also grants enemies of your faction a reason to kill you.'");
     set_default_response(

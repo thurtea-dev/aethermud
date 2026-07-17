@@ -37,20 +37,20 @@ void create() {
     set_property("coalition_type", "cs");
 
     add_response("hello",
-        "The officer says: 'Supply depot. What do you need?'");
+        "supply officer says: 'Supply depot. What do you need?'");
     add_response("hi",
-        "The officer says: 'Depot is open. List for inventory, buy for purchase.'");
+        "supply officer says: 'Depot is open. List for inventory, buy for purchase.'");
     add_response("lone star",
-        "The officer says: 'Lone Star Genetics Complex. Class IV restricted. "
+        "supply officer says: 'Lone Star Genetics Complex. Class IV restricted. "
         "You are already inside. Keep moving.'");
     add_response("research",
-        "The officer says: 'Above your clearance level and mine. "
+        "supply officer says: 'Above your clearance level and mine. "
         "I supply the depot. What goes on in the lab is not my concern.'");
     add_response("dog boy",
-        "The officer says: 'Dog Boys are Coalition personnel. "
+        "supply officer says: 'Dog Boys are Coalition personnel. "
         "Treat them accordingly.'");
     add_response("buy",
-        "The officer says: 'Buy <item> from the list. Credits accepted. "
+        "supply officer says: 'Buy <item> from the list. Credits accepted. "
         "All transactions are logged.'");
     add_response("bye",
         "The officer gives a short nod. 'Move along.'");

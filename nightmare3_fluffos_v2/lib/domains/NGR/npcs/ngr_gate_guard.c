@@ -57,23 +57,23 @@ void create() {
     add_response("hello",
         "The guard gives a single nod. 'Identification and purpose of visit.'");
     add_response("hi",
-        "The guard says, flatly: 'State your business.'");
+        "NGR gate guard says, flatly: 'State your business.'");
     add_response("identification",
-        "The guard says: 'Documents are processed at the checkpoint station. "
+        "NGR gate guard says: 'Documents are processed at the checkpoint station. "
         "All visitors must register. Non-compliance is not an option here.'");
     add_response("papers",
-        "The guard says: 'Documents. Checkpoint. Over there. Move.'");
+        "NGR gate guard says: 'Documents. Checkpoint. Over there. Move.'");
     add_response("ngr",
-        "The guard says: 'New German Republic. You are inside its borders. "
+        "NGR gate guard says: 'New German Republic. You are inside its borders. "
         "Conduct yourself accordingly.'");
     add_response("triax",
-        "The guard says: 'Triax is the NGR's manufacturing partner. "
+        "NGR gate guard says: 'Triax is the NGR's manufacturing partner. "
         "You will find their equipment in the market district.'");
     add_response("danger",
-        "The guard says: 'The NGR manages threats within its borders. "
+        "NGR gate guard says: 'The NGR manages threats within its borders. "
         "You will not find Brodkil, Gargoyles, or Splugorth here.'");
     add_response("market",
-        "The guard says: 'East gate. You are already past it.'");
+        "NGR gate guard says: 'East gate. You are already past it.'");
     add_response("bye",
         "The guard watches you go. Probably.");
     set_default_response(

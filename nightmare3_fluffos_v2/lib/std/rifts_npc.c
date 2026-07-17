@@ -28,8 +28,46 @@ string query_npc_name() {
     return query_cap_name();
 }
 
+/* Some NPC response strings (authoring mistake, ~60 files) already
+   bake in their own "<Name> says: " or "<Name> says, '...'" prefix.
+   say_here() below always adds its own "<npc name> says: " prefix, so
+   an unstripped baked-in prefix doubles up. Strip a redundant leading
+   prefix of that shape before adding ours. Only scans the first
+   PREFIX_SCAN_LIMIT characters so genuine dialogue that happens to
+   contain the word "says" further into the line is left untouched. */
+#define PREFIX_SCAN_LIMIT 40
+
+private string strip_redundant_prefix(string msg) {
+    int colon_pos, comma_pos;
+    int scan_len;
+    string rest;
+
+    if(!msg || !strlen(msg)) return msg;
+
+    scan_len = strlen(msg);
+    if(scan_len > PREFIX_SCAN_LIMIT) scan_len = PREFIX_SCAN_LIMIT;
+
+    colon_pos = strsrch(msg[0..scan_len-1], " says: ");
+    comma_pos = strsrch(msg[0..scan_len-1], " says, ");
+
+    if(comma_pos != -1 && (colon_pos == -1 || comma_pos < colon_pos)) {
+        rest = msg[comma_pos + strlen(" says, ")..];
+        if(strlen(rest) && rest[0] == '\'') {
+            rest = rest[1..];
+            if(strlen(rest) && rest[strlen(rest)-1] == '\'')
+                rest = rest[0..strlen(rest)-2];
+        }
+        return rest;
+    }
+    if(colon_pos != -1)
+        return msg[colon_pos + strlen(" says: ")..];
+
+    return msg;
+}
+
 void say_here(string msg) {
     if(!environment(this_object())) return;
+    msg = strip_redundant_prefix(msg);
     tell_room(environment(this_object()),
         query_npc_name() + " says: " + msg + "\n",
         ({ this_object() }));

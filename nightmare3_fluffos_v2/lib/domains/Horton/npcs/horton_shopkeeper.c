@@ -34,7 +34,7 @@ void create() {
     set_body_type("human");
 
     add_response("hello",
-        "The proprietor says: 'Got most things you need to stay alive. Type list.'");
+        "shopkeeper says: 'Got most things you need to stay alive. Type list.'");
     add_response("hi",
         "The proprietor nods. 'Type list to see what we have.'");
     add_response("stock",   "");
@@ -42,9 +42,9 @@ void create() {
     add_response("price",   "");
     add_response("cost",    "");
     add_response("help",
-        "The proprietor says: 'Type list to see available goods. Buy item name to purchase.'");
+        "shopkeeper says: 'Type list to see available goods. Buy item name to purchase.'");
     add_response("buy",     "");
-    add_response("bye",     "The proprietor says: 'Watch yourself out there.'");
+    add_response("bye",     "shopkeeper says: 'Watch yourself out there.'");
     set_default_response("The proprietor listens and waits.");
 }
 

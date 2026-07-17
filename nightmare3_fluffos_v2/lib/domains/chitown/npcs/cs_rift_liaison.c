@@ -29,11 +29,11 @@ void create() {
     set_body_type("human");
 
     add_response("hello",
-        "The liaison says: Coalition business only. State your purpose.");
+        "the CS rift liaison says: Coalition business only. State your purpose.");
     add_response("praxis",
-        "The liaison says: Our sensors flagged a dimensional anomaly on the Praxis ley nexus.");
+        "the CS rift liaison says: Our sensors flagged a dimensional anomaly on the Praxis ley nexus.");
     add_response("rift",
-        "The liaison says: I need eyes on that tear. Locate it, step through, and report back.");
+        "the CS rift liaison says: I need eyes on that tear. Locate it, step through, and report back.");
     add_response("work", "");
     add_response("job", "");
     add_response("quest", "");

@@ -35,32 +35,32 @@ void create() {
     set_body_type("human");
 
     add_response("hello",
-        "The officer says: 'Welcome to the Triax depot. All purchases are "
+        "Triax sales officer says: 'Welcome to the Triax depot. All purchases are "
         "documented and registered with the NGR Commerce Authority.'");
     add_response("hi",
-        "The officer says: 'Good day. What equipment are you looking for?'");
+        "Triax sales officer says: 'Good day. What equipment are you looking for?'");
     add_response("list",
-        "The officer says: 'Type list to see current inventory. "
+        "Triax sales officer says: 'Type list to see current inventory. "
         "Prices are fixed. NGR Commerce Authority rates.'");
     add_response("buy",
-        "The officer says: 'Type buy <item> to purchase. "
+        "Triax sales officer says: 'Type buy <item> to purchase. "
         "Payment in credits. Weapons require registration.'");
     add_response("triax",
-        "The officer says: 'Triax Industries. Based here in the NGR. "
+        "Triax sales officer says: 'Triax Industries. Based here in the NGR. "
         "Best human-manufactured equipment on the continent. "
         "Everything we sell is documented and under warranty.'");
     add_response("ngr",
-        "The officer says: 'The New German Republic maintains the highest "
+        "Triax sales officer says: 'The New German Republic maintains the highest "
         "manufacturing standards on Rifts Earth. You are purchasing "
         "the product of that discipline.'");
     add_response("price",
-        "The officer says: 'All prices are posted. They are not negotiable. "
+        "Triax sales officer says: 'All prices are posted. They are not negotiable. "
         "The NGR Commerce Authority sets rates.'");
     add_response("registration",
-        "The officer says: 'All energy weapons require registration. "
+        "Triax sales officer says: 'All energy weapons require registration. "
         "A receipt is issued on purchase. Keep it. NGR patrols check documentation.'");
     add_response("bye",
-        "The officer says: 'Thank you for your purchase. Safe travel.'");
+        "Triax sales officer says: 'Thank you for your purchase. Safe travel.'");
     set_default_response(
         "The officer nods once. 'If you have a product question I can answer it. "
         "Otherwise: list, buy <item>.'");

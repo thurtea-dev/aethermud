@@ -64,11 +64,11 @@ void create() {
         "The vampire acknowledges you with the minimum polite gesture and returns "
         "to whatever they were contemplating.");
     add_response("name",
-        "The vampire says, quietly: 'That is not something I share with strangers.'");
+        "secondary vampire says, quietly: 'That is not something I share with strangers.'");
     add_response("vampire",
-        "The vampire says: 'Yes. Is that a problem?'");
+        "secondary vampire says: 'Yes. Is that a problem?'");
     add_response("town",
-        "The vampire says: 'Puerto Angel suits us. We maintain it. "
+        "secondary vampire says: 'Puerto Angel suits us. We maintain it. "
         "You are welcome here as long as you cause no harm.'");
     add_response("bye",
         "The vampire nods once. 'Travel safely.'");

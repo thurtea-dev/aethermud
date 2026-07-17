@@ -52,19 +52,19 @@ void create() {
     setenv("rifts_occ",  "ngr soldier");
 
     add_response("hello",
-        "The guard says: 'Identification and purpose of travel. Documents out.'");
+        "NGR border guard says: 'Identification and purpose of travel. Documents out.'");
     add_response("hi",
-        "The guard says, without looking up: 'Documents.'");
+        "NGR border guard says, without looking up: 'Documents.'");
     add_response("identification",
-        "The guard says: 'Scan the terminal to your left. All visitors. No exceptions.'");
+        "NGR border guard says: 'Scan the terminal to your left. All visitors. No exceptions.'");
     add_response("documents",
-        "The guard says: 'Terminal. Left. Now.'");
+        "NGR border guard says: 'Terminal. Left. Now.'");
     add_response("checkpoint",
-        "The guard says: 'Standard border processing. Five minutes if you cooperate.'");
+        "NGR border guard says: 'Standard border processing. Five minutes if you cooperate.'");
     add_response("ngr",
-        "The guard says: 'You are in NGR territory. Conduct yourself accordingly.'");
+        "NGR border guard says: 'You are in NGR territory. Conduct yourself accordingly.'");
     add_response("triax",
-        "The guard says: 'Triax depot is inside, east of the market. You will\n"
+        "NGR border guard says: 'Triax depot is inside, east of the market. You will\n"
         "need a purchase permit from this station.'");
     add_response("bye",
         "The guard makes a note on the terminal and returns to processing.");

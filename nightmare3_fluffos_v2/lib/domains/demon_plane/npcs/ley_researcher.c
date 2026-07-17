@@ -28,11 +28,11 @@ void create() {
     set_body_type("human");
 
     add_response("hello",
-        "The researcher says: Keep back from the tear unless you know ley physics.");
+        "the ley researcher says: Keep back from the tear unless you know ley physics.");
     add_response("tear",
-        "The researcher says: That wound leads to a demon-plane sliver. I need a shard sample from the far side.");
+        "the ley researcher says: That wound leads to a demon-plane sliver. I need a shard sample from the far side.");
     add_response("rift",
-        "The researcher says: Step through if you must. Bring back a stable rift shard amulet from their shrine.");
+        "the ley researcher says: Step through if you must. Bring back a stable rift shard amulet from their shrine.");
     add_response("work", "");
     add_response("job", "");
     add_response("quest", "");
