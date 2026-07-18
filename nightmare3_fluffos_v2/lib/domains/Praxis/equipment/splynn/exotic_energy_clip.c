@@ -6,7 +6,9 @@ inherit "/std/Object";
 void create() {
     ::create();
     set_name("exotic energy clip");
-    set_id( ({ "exotic energy clip", "exotic clip", "kittani clip", "double clip", "clip" }) );
+    set_id( ({ "exotic energy clip", "exotic clip", "exotic e-clip", "kittani clip",
+        "double clip", "double-capacity clip", "e-clip", "e clip", "eclip",
+        "clip", "ammo" }) );
     set_short("an exotic double-capacity e-clip");
     set_long(
         "A Kittani-manufactured energy clip finished in black anodized metal\n"
