@@ -397,6 +397,7 @@ int list_occs_cmd(string str) {
 private void choose_no_occ() {
     this_player()->remove_env("awaiting_occ");
     this_player()->setenv("rifts_occ", "none");
+    this_player()->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
     write("You choose to walk the world as a racial character with no OCC.");
     do_elective_skills_start();
 }
@@ -833,8 +834,10 @@ int alignment_cmd(string str) {
             do_elective_skills_start();
             return 1;
         }
-        if(race == "cs psi-stalker" || race == "wild psi-stalker")
+        if(race == "cs psi-stalker" || race == "wild psi-stalker") {
             this_player()->setenv("rifts_occ", "none");
+            this_player()->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
+        }
     }
 
     if((int)RIFTS_D->is_rifts_race((string)this_player()->query_race()) &&
@@ -844,6 +847,7 @@ int alignment_cmd(string str) {
         offer_occ_or_reroll();
     } else {
         this_player()->setenv("rifts_occ", "none");
+        this_player()->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
         do_elective_skills_start();
     }
     return 1;

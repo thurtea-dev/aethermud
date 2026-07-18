@@ -90,7 +90,6 @@ int cmd_board_train(string str) {
 
 void reset() {
     ::reset();
-    start_ambient();
     if(!find_object(HOVERTRAIN))
         catch(load_object(HOVERTRAIN));
 }

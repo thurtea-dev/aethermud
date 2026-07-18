@@ -1,24 +1,8 @@
-SIRNAME (surname / title)
+SIRNAME
 
-Syntax: sirname <word>
+The sirname command has been removed.
 
-At level 10 and above, you may request a permanent surname (last name or
-honorific) to be appended to your character name.  This is a one-time
-permanent change.
+Titles are now granted by RP-Wizards through the rp_title system.
+Ask an RP-Wizard if you need a title on your character.
 
-Requirements:
-  - Level 10 or higher
-  - Alphabetic letters only (no numbers, spaces, or punctuation)
-  - Cannot be changed once set
-
-The surname appears after your character name in all places where your
-name is shown to others.  Choose carefully.
-
-Example:
-  sirname Ironhide
-  Your name would then appear as: Thurtea Ironhide
-
-Note: Rifts characters with a sirname skip the standard Nightmare title
-progression.  Your OCC title continues to reflect your level separately.
-
-See also: score
+SEE ALSO: names, score

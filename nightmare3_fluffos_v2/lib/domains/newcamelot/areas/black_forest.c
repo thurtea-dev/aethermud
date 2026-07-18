@@ -55,7 +55,6 @@ void reset() {
     object stone;
 
     ::reset();
-    start_ambient();
     if(!present("nexus stone", this_object())) {
         stone = clone_object("/domains/newcamelot/equipment/nexus_stone");
         if(stone) stone->move(this_object());

@@ -48,7 +48,6 @@ void create() {
 
 void reset() {
     ::reset();
-    start_ambient();
     if(!present("rocky", this_object()))
         clone_object(MONSTER_PATH+"rocky_barkeep.c")->move(this_object());
 }
