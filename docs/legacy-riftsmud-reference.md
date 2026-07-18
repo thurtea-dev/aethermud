@@ -1,6 +1,8 @@
 # Legacy RiftsMUD design memories - reference material
 
-Status: **reference material only, not a task list.** Written 2026-07-17.
+Status: **reference material only, not a task list.** Written 2026-07-17,
+expanded 2026-07-18 with a second round of memories (races and
+abilities, chargen flow, origin history, original website material).
 This document captures design memories from the original RiftsMUD (the
 early-2000s Palladium Books Rifts MUD this project descends from) so
 they can inform future work. Nothing here is a commitment to build
@@ -38,6 +40,10 @@ An NPC named Moxim opened rifts between three areas via a
 `rift <destination>` command. He took universal credits as payment.
 The rift stayed open for a short duration before collapsing, and any
 player in the room could use it while it was open, not just the payer.
+Later detail recovered: the credits were handed over by the command
+itself, not by saying anything to him, and you entered the rift
+manually after it opened ("You had to manually enter the rifts, and
+you handed him credits with a command instead of saying something").
 
 Cross-reference: `domains/Praxis/monsters/moxim.c` already exists and
 the mechanic is **fully implemented**, and goes beyond the memory: the
@@ -60,12 +66,25 @@ for a hawk pet. The hawk:
   obedient at high skill, around 65% at lower skill. On a failed
   check it would just squawk instead of obeying.
 
+## Races and abilities as remembered
+
+- **Dragons were MDC-only:** Great Horned Dragons (and dragons
+  generally) had MDC as their sole damage pool, not HP plus SDC.
+- **Dragon metamorphosis:** dragons could `metamorph human` or
+  `metamorph <race>` to change shape and appearance, and while
+  metamorphed could fit into human-sized armor.
+- **Psionics and spells:** psionics such as telepathy were available,
+  and spells such as swimasafish and windrush; all of these names
+  survive in this codebase's daemons.
+
 ## UI and display conventions from the original game
 
 - Room exits displayed in **bold green**, with minimal other color in
   room descriptions.
-- The `score` command was wrapped in an ASCII border.
-- A separate equipment/worn command existed, distinct from `score`.
+- The `score` command was wrapped in an ASCII border. There used to be
+  **multiple score commands**, not just one.
+- A separate equipment/worn command existed, distinct from `score`,
+  showing what you were wearing and had equipped.
 - Specific status-effect coloring: a thirst-quenched status shown in
   blue, and a drug-intoxication "stoned" status also in blue.
 - HUD elements similar in spirit to Dead Souls but minimal, for
@@ -84,6 +103,86 @@ what you were playing:
 - **Juicers:** healed in minutes.
 - **Dragons:** healed in an hour or two.
 - **Ordinary humans:** much slower than either.
+
+## Chargen and ability granting (wizard-mediated)
+
+How character setup worked in the original game: you picked your race
+and/or class, and everything that automatically came with it (so long
+as it was coded into the game) was immediately added. Beyond that
+automatic grant, you had to wait for a wizard and go through lists
+with them to see what else your character was entitled to take.
+
+Captured alongside the memory (an observation, not a build task): a
+clean skill picker that lists categories and displays only what your
+character can actually have would replicate the useful part of that
+flow without requiring a wizard to be online.
+
+## Origin history
+
+As remembered secondhand from a long-time wizard of the original game:
+Chris (the administrator) did roughly 30-35% of the Rifts conversion,
+mostly working at the level the coding wizards did and following
+existing examples; a head coder modified most of the systems; and
+Macgyver did the vast majority of the difficult work, including the
+OCC and RCC conversions and MDC. Recorded because the original
+website's claim that "the lib is custom coded by the administrator"
+overstates one person's role; the same memory notes a later FluffOS
+driver update took over a month when it should have been a small job,
+consistent with the deeper systems knowledge having belonged to
+others.
+
+## Original website material (RiftsMUD 2.1)
+
+Recovered text from the original website, condensed. Useful as tone
+and scope reference for zone descriptions and the public site.
+
+- **Welcome blurb:** over 50 races, 50 OCCs, 150 skills, and countless
+  spells, psionics, and abilities; locations including Chi-town, New
+  Camelot, Splynn, "and other worlds"; billed as the longest running
+  Rifts MUD on the web. Lore framing: the Third World War's dead pour
+  their energy back into the earth, erupting the ley lines; where the
+  lines cross, nexus points open rifts to unknown lands. Ran on the
+  server Tonster thanks to Arzach.
+- **The Americas:** Federation of Magic vs the Coalition States in
+  North America; vast dangerous wilderness outside their territories;
+  vampires rule most of Mexico; South America is jungle, swamp, and
+  mountains with scattered pockets of civilization and rare 20th
+  century technology worth treasure hunting.
+- **Chi-town:** CS capital; mutant dog boys, psi-stalkers, SAMAS
+  pilots, and grunts patrol heavily; shanty towns with high crime
+  surround the fortified city; dangerous for the unprepared D-bee.
+- **Lone Star:** the Coalition's mutant creation and research
+  headquarters; livable if human; D-bees captured for experiments.
+- **Horton:** small friendly human town surrounded by forest;
+  dangerous wild creatures prey on the weakly defended townsfolk; only
+  practical access is by hovertrain.
+- **Puerto Angel:** once human, now roamed by vampires; tolerant
+  unless attacked; some travel as far north as the Chi-Town burbs;
+  ocean beaches make a wonderful resting spot.
+- **Announced but never seen:** expansions to the Burbs and the
+  fortified city itself (secret entrances, quests, new shops), and
+  Stormshire, a huge city in the magic zone.
+- **Atlantis:** returned to Earth ruled by the Splugorth under Lord
+  Splynncryth. Splynn is the capital, best known for The Market, an
+  inter-dimensional shopping area selling everything from weapons and
+  power armor to slaves. Alvurron is the gargoyle city. **The
+  Preserves** are Splynncryth's great hunting grounds on the west side
+  of the continent, filled with ravenous monsters and nomadic tribes
+  of lesser creatures; "be prepared and pack plenty of e-clips."
+  Highlights: slave trading (buying and owning slaves), The Market's
+  countless services, and "dozens of secrets." Ratings: Services 4/5,
+  Difficulty 5/5, Mob numbers 3/5.
+- **Africa, Australia, Japan:** under construction.
+- **Europe:** New Camelot with the King and his servant Mrrlyn, royal
+  gardens ("some people say the gardens are alive"), and market street
+  shops; NGR Germany with nearly unbeatable weapons technology and
+  some soldiers who share the Coalition's hatred of d-bees.
+
+The same recovered paste also contained the original site's full
+helpfile index and the RCC/OCC availability lists (the repo's copies
+of those files were deleted; see CLAUDE.md's reference-files note).
+They are not reproduced here; if wanted, they belong under
+`docs/reference/` as a separate archival file.
 
 ## Future feature brainstorm (raw ideas, not designed)
 
@@ -164,7 +263,38 @@ Entirely new (no trace found in the codebase):
 - Creation tables for cyborgs/androids and an in-game Juicer
   conversion process.
 - Automated, mob-driven mercenary base construction.
-- Race/class-differentiated realtime natural healing rates (current
-  healing behavior was not audited for this doc; treat the remembered
-  juicer/dragon/human rates as a target to compare against, not a
-  confirmed gap).
+- Race/class-differentiated realtime natural healing rates: **struck
+  from this list 2026-07-18** - see the addendum below; the system
+  exists.
+
+### Addendum: cross-reference for the 2026-07-18 additions
+
+Checked against the codebase on 2026-07-18:
+
+- **Dragon MDC-only pools:** implemented; `is_mdc_race()` in
+  `daemon/rifts.c` lists the dragon races.
+- **Dragon metamorphosis:** implemented in some form;
+  `cmds/mortal/_metamorph.c` exists, with support in the spells daemon
+  and `std/armour.c`. Fidelity to the remembered mechanics (fitting
+  human-sized armor) not verified in play.
+- **Telepathy, swimasafish, windrush:** all implemented (psionics and
+  spells daemons).
+- **Separate equipment command:** exists (`eq`, with the `rifts_slot`
+  display convention).
+- **The Preserves:** exist in some form; `preserve_*.c` room files sit
+  in the Splynn area (`splynn_preserves.c`, `preserve_trail.c`,
+  `preserve_waterhole.c`, `preserve_snag.c`).
+- **Realtime healing rates:** implemented; `std/user.c`'s
+  `rifts_hp_regen_tick()` differentiates by race and OCC (dragons on a
+  600 second cadence, juicers 120, regenerating races 300, others
+  slower), matching the remembered juicers-fast / dragons-medium /
+  humans-slow ordering.
+- **Wizard-mediated ability granting:** the modern equivalent is the
+  admin command chain (`setrcc`, `grantrace`, `grantskills`) plus the
+  player-facing `skillrequest` menu; no wizard-in-the-loop list
+  walkthrough exists, and the captured skill-picker observation covers
+  what would replace it.
+- **Multiple score commands:** the current game has `score` and
+  `sbar`; not audited further.
+- **Origin history and website material:** historical record only;
+  nothing to cross-reference.
