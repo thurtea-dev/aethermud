@@ -157,7 +157,8 @@ private void give_equip(object player, string occ) {
     case "royal knight":
         give_item(player, "short_sword.c");
         give_item_path(player, "/domains/newcamelot/equipment/knight_shield.c");
-        give_item(player, "chain_mail.c");
+        give_item(player, "environmental_body_armor.c");
+        give_item(player, "c18_pistol.c");
         give_item(player, "knife.c");
         give_item(player, "backpack.c");
         give_credits(player, (random(6)+1 + random(6)+1) * 100);
@@ -169,8 +170,12 @@ private void give_equip(object player, string occ) {
     case "delphi juicer":
     case "hyperion juicer":
         give_item(player, "environmental_body_armor.c");
+        give_item(player, "c18_pistol.c");
+        give_item(player, "c12_laser_rifle.c");
         give_item(player, "vibro_sword.c");
-        give_credits(player, (random(6)+1) * 100);
+        give_item(player, "e_clip.c");
+        give_item(player, "e_clip.c");
+        give_credits(player, (random(6)+1 + random(6)+1 + random(6)+1) * 100);
         break;
 
     /* ── Vagabond ───────────────────────────────────────────────────────────── */
@@ -228,9 +233,19 @@ private void give_equip(object player, string occ) {
         give_credits(player, (random(6)+1 + random(6)+1) * 100);
         break;
 
-    /* ── Ley Line Walker / Ley Line Rifter / Shaman ─────────────────────────── */
+    /* ── Ley Line Walker / Ley Line Rifter ──────────────────────────────────── */
     case "ley line walker":
     case "ley line rifter":
+        give_item(player, "knife.c");
+        give_item(player, "leather_jacket.c");
+        give_item(player, "backpack.c");
+        give_item(player, "field_journal.c");
+        give_item(player, "spell_components.c");
+        give_item(player, "c18_pistol.c");
+        give_credits(player, (random(6)+1 + random(6)+1) * 100);
+        break;
+
+    /* ── Shaman / Air Warlock ───────────────────────────────────────────────── */
     case "shaman":
     case "air warlock":
         give_item(player, "knife.c");
@@ -512,7 +527,38 @@ private void give_equip(object player, string occ) {
     default:
         give_item(player, "leather_jacket.c");
         give_item(player, "knife.c");
+        give_item(player, "backpack.c");
+        give_item(player, "rations.c");
+        give_item(player, "rations.c");
         give_credits(player, 500);
+        break;
+    }
+}
+
+/* ── Race equipment for OCC-less races ───────────────────────────────────── */
+/* RCC-style races take no OCC, so give_equip's default package is all
+   they would ever get. Races whose tabletop entry includes issued gear
+   get a case here instead; everyone else falls through to the default
+   package. Add cases as more RCC gear is converted (see
+   docs/starting-equipment-audit.md). */
+
+private void give_race_equip(object player, string race) {
+    string r;
+
+    r = lower_case(race);
+    switch(r) {
+    /* CS-issued Dog Pack gear: body armor, laser pistol, vibro-knife,
+       CS radio. The Coalition supplies everything; cash is minimal. */
+    case "dog boy":
+        give_item(player, "coalition_grunt_armor.c");
+        give_item(player, "cp30_laser.c");
+        give_item(player, "e_clip.c");
+        give_item(player, "vibro_knife.c");
+        give_item(player, "military_radio.c");
+        give_credits(player, (random(6)+1 + random(6)+1) * 10);
+        break;
+    default:
+        give_equip(player, "none");
         break;
     }
 }
@@ -1647,7 +1693,8 @@ void grant_starting_package(object player) {
     if(!race) race = "";
 
     give_item(player, "id_card.c");
-    give_equip(player, occ);
+    if(lower_case(occ) == "none") give_race_equip(player, race);
+    else give_equip(player, occ);
     auto_wear_power_armor(player, occ);
     do_base_skills(player);
     do_occ_skills(player, occ, race);
