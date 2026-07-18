@@ -7,19 +7,56 @@
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-  <nav><a href="index.html">Home</a> <a href="coding.html">Coding</a></nav>
+  <header class="site-header">
+    <div class="site-brand">
+      <a href="index.html">AetherMUD</a>
+      <span class="site-tag">A TTRPG-inspired MUD</span>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="play.html">Play</a>
+      <a href="world.html">World</a>
+      <a href="races.html">Races</a>
+      <a href="occs.html">OCCs</a>
+      <a href="chargen.html">Chargen</a>
+      <a href="commands.html">Commands</a>
+      <a href="roadmap.html">Roadmap</a>
+    </nav>
+    <nav class="site-nav site-nav--staff">
+      <a href="qcs.html" aria-current="page">QCS</a>
+      <a href="apprentice.html">Apprentice</a>
+      <a href="coding.html">Coding</a>
+      <a href="domain.html">Domain</a>
+      <a href="roleplay.html">Roleplay</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
   <h1>Quick Creation System</h1>
-  <p>Staff of Creation verbs for rooms, NPCs, weapons, and armor. Work in your realm sandbox first.</p>
+  <p>Staff of Creation verbs for rooms, NPCs, weapons, and armor. Work in
+  your realm sandbox first. Hold the staff, stand under
+  <code>/realms/&lt;you&gt;/</code>, and use <code>build</code> (or the
+  bare verbs below, or <code>qcs</code>). Full topic in-game:
+  <code>help build</code>.</p>
 
   <h2>Core verbs</h2>
-  <pre>create room|npc|weapon|armor &lt;id&gt;
-modify &lt;id&gt; &lt;field&gt; &lt;value&gt;
-add exit &lt;dir&gt; &lt;dest&gt;
-delete &lt;id&gt;
-about &lt;id&gt;
-more &lt;id&gt;
-clone &lt;id&gt;
-purge &lt;id&gt;</pre>
+  <pre>create room &lt;dir&gt; &lt;filename&gt;
+create npc|weapon|armor &lt;filename&gt;
+modify here|&lt;filename&gt; &lt;property&gt; &lt;value&gt;
+add exit &lt;dir&gt; &lt;path&gt;
+add &lt;npcfile&gt; to here
+add &lt;npcfile&gt; to &lt;roomfile&gt;
+delete &lt;object&gt;
+about &lt;filename|here&gt;
+more &lt;filename|here&gt;
+clone &lt;filename&gt;
+purge &lt;object&gt;</pre>
+
+  <h3>Properties</h3>
+  <pre>Room:   short, long, light, indoors
+NPC:    name, short, long, level, hp, race, occ, align, mdc
+Weapon: name, short, long, wc, type, damage (NdN), mdc (0/1)
+Armor:  name, short, long, ac, ar, sdc, mdc, slot</pre>
 
   <h2>Where files land</h2>
   <pre>/realms/&lt;you&gt;/area/room/
@@ -27,12 +64,205 @@ purge &lt;id&gt;</pre>
 /realms/&lt;you&gt;/area/weap/
 /realms/&lt;you&gt;/area/armor/</pre>
 
+  <h2>Example log</h2>
+  <p>Below is a short building session using AetherMUD's QCS. Commands are
+  shown as you type them; the following blocks are the QCS replies (and,
+  where noted, the file QCS wrote). The wizard name in the paths is
+  <code>coder</code>; substitute your own. Start from your workroom with the
+  Staff of Creation in inventory.</p>
+
+  <h3>Room creation</h3>
+  <p>Create a room north of your workroom. QCS writes the new file, wires
+  the forward exit from your current room, and adds the reverse exit back.</p>
+
+  <pre>create room north practice_room</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/room/practice_room.c
+QCS: wrote and updated /realms/coder/workroom.c
+QCS: room created. Exit 'north' wired to /realms/coder/area/room/practice_room</pre>
+
+  <p>Walk into the new room, then set short and long. <code>modify here</code>
+  always edits the room you are standing in, so move first.</p>
+
+  <pre>north
+modify here short A practice chamber</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/room/practice_room.c</pre>
+
+  <pre>modify here long A bare chamber for learning the builder.</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/room/practice_room.c</pre>
+
+  <p>To link another existing room without creating a new one, use
+  <code>add exit</code> with a full path:</p>
+
+  <pre>add exit east /realms/coder/area/room/armory</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/room/practice_room.c</pre>
+
+  <p>Inspect the file QCS produced:</p>
+
+  <pre>about here</pre>
+  <pre>/* /realms/coder/area/room/practice_room.c */
+/* QCS room by Coder */
+
+#include &lt;std.h&gt;
+#include &lt;rooms.h&gt;
+
+inherit ROOM;
+
+void create() {
+    ::create();
+    set_property("light", 2);
+    set_property("indoors", 0);
+    set_short("A practice chamber");
+    set_long("A bare chamber for learning the builder.");
+    add_exit("south", "/realms/coder/workroom");
+    add_exit("east", "/realms/coder/area/room/armory");
+}</pre>
+
+  <h3>NPC creation</h3>
+  <p>Create an NPC file. The filename becomes the id
+  (<code>set_id(({ "bandit" }))</code>); there is no separate QCS verb for
+  ids or adjectives. Use <code>modify</code> for name, short, long, and the
+  other NPC properties listed above. Hand-edit the file if you need extra
+  ids.</p>
+
+  <pre>create npc bandit</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/npc/bandit.c
+QCS: NPC written to /realms/coder/area/npc/bandit.c</pre>
+
+  <pre>modify bandit name bandit
+modify bandit short a lean bandit
+modify bandit long A lean bandit in scavenged armor watches the exits.
+modify bandit race human
+modify bandit level 5</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/npc/bandit.c
+QCS: wrote and updated /realms/coder/area/npc/bandit.c
+QCS: wrote and updated /realms/coder/area/npc/bandit.c
+QCS: wrote and updated /realms/coder/area/npc/bandit.c
+QCS: wrote and updated /realms/coder/area/npc/bandit.c</pre>
+
+  <p>Check the generated NPC:</p>
+
+  <pre>about bandit</pre>
+  <pre>/* /realms/coder/area/npc/bandit.c */
+/* QCS NPC by Coder */
+
+#include &lt;std.h&gt;
+
+inherit "/std/rifts_npc";
+
+void create() {
+    ::create();
+    set_name("bandit");
+    set_npc_name("Bandit");
+    set_id( ({ "bandit" }) );
+    set_short("a lean bandit");
+    set_long("A lean bandit in scavenged armor watches the exits.");
+    set_level(5);
+    set_max_hp(20);
+    set_hp(20);
+    set_stats("rifts_hp", 20);
+    set_aggressive(0);
+    set_moving(0);
+    set_gender("neuter");
+    set_race("human");
+    setenv("rifts_occ", "mercenary");
+    set_alignment(0);
+    set_body_type("human");
+    set_property("mdc_creature", 0);
+    set_stats("MDC", 0);
+    set_stats("max_MDC", 0);
+    set_default_response("The creature watches silently.");
+}</pre>
+
+  <h3>Weapon creation</h3>
+  <p>Weapons land under <code>area/weap/</code>. Armor is the same pattern
+  with <code>create armor</code> and armor properties (<code>ac</code>,
+  <code>ar</code>, <code>sdc</code>, <code>mdc</code>, <code>slot</code>).</p>
+
+  <pre>create weapon vibro_knife</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: weapon written to /realms/coder/area/weap/vibro_knife.c</pre>
+
+  <pre>modify vibro_knife name vibro knife
+modify vibro_knife short a vibro-knife
+modify vibro_knife long A short blade that hums with ultrasonic vibration.
+modify vibro_knife type blade
+modify vibro_knife damage 2d6
+modify vibro_knife mdc 1</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c
+QCS: wrote and updated /realms/coder/area/weap/vibro_knife.c</pre>
+
+  <p><code>damage</code> writes three properties (<code>damage_num</code>,
+  <code>damage_sides</code>, <code>damage_string</code>); <code>mdc 1</code>
+  also clears the SDC weapon flag. That is why one typed command can print
+  more than one <code>wrote and updated</code> line.</p>
+
+  <pre>about vibro_knife</pre>
+  <pre>/* /realms/coder/area/weap/vibro_knife.c */
+/* QCS weapon by Coder */
+
+#include &lt;std.h&gt;
+
+inherit "/std/weapon";
+
+void create() {
+    ::create();
+    set_name("vibro knife");
+    set_id( ({ "vibro_knife", "weapon" }) );
+    set_short("a vibro-knife");
+    set_long("A short blade that hums with ultrasonic vibration.");
+    set_mass(50);
+    set_value(100);
+    set_wc(5);
+    set_type("blade");
+    set_property("sdc_weapon", 0);
+    set_property("mdc_weapon", 1);
+    set_property("damage_num", 2);
+    set_property("damage_sides", 6);
+    set_property("damage_string", "2d6");
+}</pre>
+
+  <h3>Adding it to a room / cloning it in</h3>
+  <p>Permanent spawn: from inside the room (here, <code>practice_room</code>),
+  add the NPC to a new <code>reset()</code>. QCS refuses if the room already
+  has a <code>reset()</code>; in that case edit the file by hand.</p>
+
+  <pre>add bandit to here</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/room/practice_room.c</pre>
+
+  <p>That appends a guarded spawn like:</p>
+
+  <pre>void reset() {
+ ::reset();
+ if(!present("bandit", this_object()))
+  clone_object("/realms/coder/area/npc/bandit")->move(this_object());
+}</pre>
+
+  <p>Quick test without waiting on reset: clone the weapon into inventory
+  (or clone the NPC via the staff <code>clone</code> verb, which places
+  living objects in the room).</p>
+
+  <pre>clone vibro_knife</pre>
+  <pre>QCS: cloned /realms/coder/area/weap/vibro_knife.c to your inventory.</pre>
+
   <h2>Tips</h2>
   <ul>
-    <li>Use short lowercase ids with underscores</li>
-    <li>Link exits both ways when rooms should be mutual</li>
-    <li>Spawn NPCs from room reset() with present() guards</li>
-    <li>Test with clone before promoting content into /domains/</li>
+    <li>Use short lowercase filenames with underscores; QCS sanitizes them</li>
+    <li><code>create room</code> already links exits both ways when you are in your realm</li>
+    <li>Spawn NPCs from room <code>reset()</code> with <code>present()</code> guards (<code>add &lt;npc&gt; to here</code>)</li>
+    <li>Test with <code>clone</code> before promoting content into <code>/domains/</code></li>
+    <li>Generated files are plain LPC; polish with <code>ed</code>, then <code>update</code></li>
+    <li>In-game: <code>help build</code>, <code>help qcs</code></li>
   </ul>
+
+  <footer class="site-footer">
+    <p>AetherMUD, a TTRPG-inspired MUD. Not affiliated with Palladium Books.</p>
+  </footer>
 </body>
 </html>
