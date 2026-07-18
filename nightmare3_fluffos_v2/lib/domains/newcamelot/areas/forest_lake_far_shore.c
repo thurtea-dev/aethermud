@@ -1,11 +1,18 @@
 // /domains/newcamelot/areas/forest_lake_far_shore.c
 // Far bank of the forest lake. The flame hilt rests here.
+// Respawn: seeded once on first reset, then once per game day (DAY = 24000s)
+// after it leaves the room. Pattern follows hovertrain.c find_call_out guards.
 
 #include <std.h>
 #include <daemons.h>
+#include <clock.h>
 
 inherit ROOM;
 
+private int __hilt_seeded;
+
+void spawn_flame_hilt();
+int hilt_present();
 int do_swim(string str);
 
 void create() {
@@ -35,6 +42,7 @@ void create() {
         "settlement" : "Too far to see clearly. It could be a village or a ruin.",
         "bank"       : "Muddy soil and root tangles. Wet from the lake."
     ]) );
+    __hilt_seeded = 0;
 }
 
 void init() {
@@ -98,25 +106,48 @@ int do_swim(string str) {
     return 1;
 }
 
-void reset() {
-    object hilt;
-    int i;
+int hilt_present() {
     object *inv;
+    int i;
 
-    ::reset();
-
-    /* Spawn the flame hilt if not present */
     inv = all_inventory(this_object());
-    hilt = 0;
     for(i = 0; i < sizeof(inv); i++) {
         if(strsrch(base_name(inv[i]), "flame_hilt") != -1 ||
-           strsrch(base_name(inv[i]), "metal_hilt") != -1) {
-            hilt = inv[i];
-            break;
-        }
+           strsrch(base_name(inv[i]), "metal_hilt") != -1)
+            return 1;
     }
-    if(!hilt) {
-        hilt = clone_object("/domains/Praxis/equipment/flame_hilt");
-        if(hilt) hilt->move(this_object());
+    return 0;
+}
+
+void spawn_flame_hilt() {
+    object hilt;
+
+    if(hilt_present()) {
+        __hilt_seeded = 1;
+        return;
     }
+    hilt = clone_object("/domains/Praxis/equipment/flame_hilt");
+    if(hilt) hilt->move(this_object());
+    __hilt_seeded = 1;
+}
+
+void reset() {
+    ::reset();
+
+    /* Already here: nothing to do. */
+    if(hilt_present()) {
+        __hilt_seeded = 1;
+        return;
+    }
+
+    /* First load after boot: seed once so the shore is not empty. */
+    if(!__hilt_seeded) {
+        spawn_flame_hilt();
+        return;
+    }
+
+    /* Taken: respawn once per game day (DAY from clock.h = 24000s / 6h40m).
+       find_call_out guard matches hovertrain.c so reset() does not stack timers. */
+    if(find_call_out("spawn_flame_hilt") == -1)
+        call_out("spawn_flame_hilt", DAY);
 }

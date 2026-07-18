@@ -50,6 +50,7 @@
     var reconnectBtn = document.getElementById("webclient-reconnect");
     var inputEl = document.getElementById("webclient-input");
     var socket = null;
+    var everConnected = false;
 
     var term = new Terminal({
       convertEol: true,
@@ -85,6 +86,7 @@
       socket = new WebSocket(wsUrl());
       socket.binaryType = "arraybuffer";
       socket.onopen = function () {
+        everConnected = true;
         setStatus("connected", "Connected");
         inputEl.disabled = false;
         inputEl.focus();
@@ -94,10 +96,18 @@
         else term.write(new Uint8Array(ev.data));
       };
       socket.onclose = function () {
-        setStatus("disconnected", "Disconnected");
         reconnectBtn.disabled = false;
         inputEl.disabled = true;
-        term.write("\r\n[Connection closed. Press Reconnect.]\r\n");
+        if (!everConnected) {
+          setStatus("disconnected", "Browser play unavailable");
+          term.write(
+            "\r\nBrowser play is temporarily unavailable on the live site. " +
+            "Connect with Mudlet or telnet: aethermud.com port 1122.\r\n"
+          );
+        } else {
+          setStatus("disconnected", "Disconnected");
+          term.write("\r\n[Connection closed. Press Reconnect.]\r\n");
+        }
       };
       socket.onerror = function () { /* onclose follows */ };
     }

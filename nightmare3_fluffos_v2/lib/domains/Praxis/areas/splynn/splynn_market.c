@@ -61,6 +61,8 @@ void reset() {
     ::reset();
     if(!present("kittani merchant", this_object()))
         clone_object("/domains/Praxis/monsters/kittani_merchant.c")->move(this_object());
+    if(!present("clip vendor", this_object()))
+        clone_object("/domains/Praxis/monsters/splynn_clip_vendor.c")->move(this_object());
     if(!present("moxim", this_object()))
         clone_object("/domains/Praxis/monsters/moxim.c")->move(this_object());
     if(!present("scarred slave", this_object()))
