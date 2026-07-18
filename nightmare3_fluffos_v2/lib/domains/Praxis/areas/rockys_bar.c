@@ -7,16 +7,9 @@
 #define MONSTER_PATH "/domains/Praxis/monsters/"
 
 inherit ROOM;
-inherit "/std/rifts_ambient";
 
 void create() {
     ::create();
-    set_ambient_messages( ({
-        "The bard in the corner plays a slow melancholy tune.",
-        "Someone at the bar laughs loudly and slaps the counter.",
-        "The smell of cheap synth-beer and grilled protein fills the air.",
-        "A rough-looking mercenary eyes the door with practiced suspicion."
-    }) );
     set_property("light", 2);
     set_property("indoors", 1);
     set_property("no attack", 1);

@@ -8,16 +8,9 @@
 #define HOVERTRAIN "/domains/Horton/areas/hovertrain"
 
 inherit ROOM;
-inherit "/std/rifts_ambient";
 
 void create() {
     ::create();
-    set_ambient_messages( ({
-        "A Coalition patrol marches past, eyes scanning the crowd for D-Bees.",
-        "Someone tries to sell you something from under a coat. You ignore them.",
-        "A Dog Boy sniffs the air and looks in your direction.",
-        "Smoke from a barrel fire drifts through the narrow street."
-    }) );
     set_property("light", 3);
     set_property("indoors", 0);
     set_short("Chi-Town, The Burbs");

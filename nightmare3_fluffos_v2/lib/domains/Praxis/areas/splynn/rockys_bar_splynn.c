@@ -9,16 +9,9 @@
 #define EQ_PATH "/domains/Praxis/equipment/"
 
 inherit ROOM;
-inherit "/std/rifts_ambient";
 
 void create() {
     ::create();
-    set_ambient_messages( ({
-        "A Kittani mercenary nurses a drink in the corner, ignoring everyone.",
-        "Something large and tentacled shuffles through the back hallway.",
-        "The barkeep polishes a glass with three of his four hands.",
-        "Faint dimensional static crackles through the ambient music."
-    }) );
     set_property("light", 2);
     set_property("indoors", 1);
     set_property("no attack", 1);

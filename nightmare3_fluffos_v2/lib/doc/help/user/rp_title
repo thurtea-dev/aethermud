@@ -1,0 +1,16 @@
+RP TITLE
+
+An RP title is a short cosmetic roleplay title shown before your
+character's name (for example: Warlord Thurtea) anywhere your name
+is displayed to others.
+
+There is no command to set your own title. RP-Wizards grant titles
+in recognition of roleplay; ask one in game if you feel you have
+earned one. Titles are 2 to 20 characters, cosmetic only, and may
+be revoked.
+
+Staff commands:
+  grant title <player> <title>     Award a title
+  revoke title <player>            Remove a title
+
+SEE ALSO: names, position, score

@@ -6,17 +6,9 @@
 #include <daemons.h>
 
 inherit ROOM;
-inherit "/std/rifts_ambient";
 
 void create() {
     ::create();
-    set_ambient_messages( ({
-        "The trees creak without any wind.",
-        "A shimmer of blue light traces the ley lines overhead through the canopy.",
-        "Something moves in the shadows between the trees. It is gone when you look directly.",
-        "The air hums with a frequency just below hearing. Your PPE responds to it.",
-        "Mist curls between the root systems, glowing faintly at the edges."
-    }) );
     set_property("light", 2);
     set_property("indoors", 0);
     set_property("ley_line_nexus", 1);
