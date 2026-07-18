@@ -332,8 +332,15 @@ object compile_object(string str) {
 static void crash(string err) {
     write_file(DIR_LOGS+"/crashes", mud_name()+" crashed "+ctime(time())+" with error "+
       err+".\n");
-    shout("Driver: "+mud_name()+" has crashed. Saving and disconnecting "
-      "all players.\n");
+    /* SIGTERM from mud.sh stop/restart arrives here as "Process
+       terminated". That is a routine shutdown, not a crash; word the
+       player-facing message accordingly. Real crashes keep the old text. */
+    if(err && strsrch(err, "Process terminated") != -1)
+        shout("Driver: "+mud_name()+" is restarting. Saving all players; "
+          "please reconnect shortly.\n");
+    else
+        shout("Driver: "+mud_name()+" has crashed. Saving and disconnecting "
+          "all players.\n");
     users()->force_me("quit");
 }
 

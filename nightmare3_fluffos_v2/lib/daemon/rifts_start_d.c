@@ -1463,13 +1463,13 @@ string *query_race_psionic_grant(string race) {
 
 private void do_race_spells(object player, string race) {
     string existing;
-    string spells;
     string *grants;
+    string *clean;
     int ppe_base;
+    int i;
 
     grants = query_race_spell_grant(race);
     if(!grants || !sizeof(grants)) return;
-    spells = implode(grants, ";");
     ppe_base = 0;
     switch(lower_case(race)) {
     case "godling":
@@ -1504,11 +1504,16 @@ private void do_race_spells(object player, string race) {
     }
 
     existing = (string)player->getenv("known_spells");
-    if(existing && sizeof(existing))
-        player->setenv("known_spells", existing + ";" + spells);
-    else
-        player->setenv("known_spells", spells);
-    if(ppe_base > 0) {
+    if(!existing) existing = "";
+    /* Rebuild the list deduplicated: prior entries once each, then any
+       granted spells not already known. Safe to run repeatedly. */
+    clean = ({});
+    grants = explode(existing, ";") + grants;
+    for(i = 0; i < sizeof(grants); i++)
+        if(strlen(grants[i]) && member_array(grants[i], clean) == -1)
+            clean += ({ grants[i] });
+    player->setenv("known_spells", implode(clean, ";"));
+    if(ppe_base > 0 && (int)player->query_stats("max_PPE") < ppe_base) {
         player->set_stats("PPE", ppe_base);
         player->set_stats("max_PPE", ppe_base);
     }
@@ -1516,13 +1521,13 @@ private void do_race_spells(object player, string race) {
 
 private void do_race_psionics(object player, string race) {
     string existing;
-    string add;
     string *grants;
+    string *clean;
     int isp_bonus;
+    int i;
 
     grants = query_race_psionic_grant(race);
     if(!grants || !sizeof(grants)) return;
-    add = implode(grants, ";");
     existing = (string)player->getenv("known_psionics");
     if(!existing) existing = "";
     isp_bonus = 0;
@@ -1547,13 +1552,16 @@ private void do_race_psionics(object player, string race) {
         break;
     }
 
-    if(sizeof(existing))
-        player->setenv("known_psionics", existing + ";" + add);
-    else
-        player->setenv("known_psionics", add);
-    if(isp_bonus > 0) {
-        player->set_stats("ISP",     (int)player->query_stats("ISP")     + isp_bonus);
-        player->set_stats("max_ISP", (int)player->query_stats("max_ISP") + isp_bonus);
+    /* Rebuild deduplicated (see do_race_spells). Safe to run repeatedly. */
+    clean = ({});
+    grants = explode(existing, ";") + grants;
+    for(i = 0; i < sizeof(grants); i++)
+        if(strlen(grants[i]) && member_array(grants[i], clean) == -1)
+            clean += ({ grants[i] });
+    player->setenv("known_psionics", implode(clean, ";"));
+    if(isp_bonus > 0 && (int)player->query_stats("max_ISP") < isp_bonus) {
+        player->set_stats("ISP", isp_bonus);
+        player->set_stats("max_ISP", isp_bonus);
     }
 }
 
