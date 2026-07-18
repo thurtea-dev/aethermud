@@ -242,12 +242,14 @@ nomask static int cmd_work(string str) {
     return 1;
 }
 
-/* Match _who.c role colors for creator cwd prompts. */
+/* Match _who.c role colors for creator cwd prompts.
+   Use query_wiz_role() simul_efun (position-based); bare getenv()
+   is not defined in this inherit on FluffOS 2.9. */
 private string wiz_prompt_color() {
     string role;
 
     if(!creatorp(this_object())) return "";
-    role = (string)getenv("wiz_role");
+    role = query_wiz_role(this_object());
     if(!role || !sizeof(role)) return "";
     if(role == "admin") return "%^BOLD%^%^RED%^";
     if(role == "coding") return "%^BOLD%^%^BLUE%^";
