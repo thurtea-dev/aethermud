@@ -9,16 +9,18 @@ inherit "/std/Object";
 #define DRY_TIME 300
 
 private string source_name;
+private int charges;
 
 void create() {
     ::create();
     source_name = "";
+    charges = 3;
     set_name("fresh blood");
     set_id(({ "blood", "fresh blood", "pool", "pool of blood", "pool of fresh blood" }));
     set_short("a pool of fresh blood");
     set_long(
         "Blood has pooled on the ground from a recent kill. It is still warm\n"
-        "and wet. Vampire races can drink it with 'drink blood'.\n");
+        "and wet. Vampire races can feed on it with 'drink blood' or 'eat blood'.\n");
     set_mass(1);
     set_property("is_blood", 1);
     call_out("dry_up", DRY_TIME);
@@ -30,7 +32,7 @@ void set_source(string str) {
     set_long(
         "Blood has pooled on the ground from " + source_name +
         "'s body. It is still warm and wet.\n"
-        "Vampire races can drink it with 'drink blood'.\n");
+        "Vampire races can feed on it with 'drink blood' or 'eat blood'.\n");
 }
 
 string query_source() { return source_name; }
@@ -50,8 +52,10 @@ void init() {
     ::init();
     env = environment(this_object());
     if(!env || !this_player()) return;
-    if(env == this_player() || env == environment(this_player()))
+    if(env == this_player() || env == environment(this_player())) {
         add_action("cmd_drink", "drink");
+        add_action("cmd_drink", "eat");
+    }
 }
 
 int cmd_drink(string str) {
@@ -61,7 +65,6 @@ int cmd_drink(string str) {
     int cur;
     int max_val;
     int gain;
-    int i;
 
     if(!str) return 0;
     str = lower_case(str);
@@ -85,12 +88,10 @@ int cmd_drink(string str) {
     if(mdc_race) {
         cur = (int)pl->query_stats("MDC");
         max_val = (int)pl->query_stats("max_MDC");
-        gain = 0;
-        for(i = 0; i < 2; i++) gain += random(6) + 1;
+        gain = random(6) + 1;
         if(cur + gain > max_val) gain = max_val - cur;
         if(gain < 1) {
             write("You drink the blood but you are already at full strength.\n");
-            destruct(this_object());
             return 1;
         }
         pl->set_stats("MDC", cur + gain);
@@ -103,7 +104,6 @@ int cmd_drink(string str) {
         if(cur + gain > max_val) gain = max_val - cur;
         if(gain < 1) {
             write("You drink the blood but you are already at full strength.\n");
-            destruct(this_object());
             return 1;
         }
         pl->set_stats("rifts_hp", cur + gain);
@@ -111,6 +111,10 @@ int cmd_drink(string str) {
         pl->tell_room_living(env, pl, 0, " drinks from a pool of fresh blood.\n");
     }
 
-    destruct(this_object());
+    charges--;
+    if(charges <= 0) {
+        write("The last of the blood is gone. The pool is drained dry.\n");
+        destruct(this_object());
+    }
     return 1;
 }

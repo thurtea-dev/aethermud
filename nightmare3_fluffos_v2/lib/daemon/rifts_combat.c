@@ -5,7 +5,7 @@
 
 #include <daemons.h>
 
-#define ROUND_DURATION 15
+#define ROUND_DURATION 6
 
 /* Per-player melee round tracker: player -> ({ attacks_remaining, round_start_time }) */
 private mapping rifts_round_data;

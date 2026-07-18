@@ -3,7 +3,7 @@ COMBAT: Palladium Rifts combat system
 OVERVIEW:
   Combat in AetherMUD is based on the Palladium Rifts RPG system.
   Each character has a set number of Attacks Per Melee (APM) which
-  reset every 15 seconds.
+  reset every 6 seconds.
 
 STARTING COMBAT:
   kill <target>      - Attack a target and enter combat.
