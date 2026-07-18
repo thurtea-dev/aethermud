@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Staff Toolkit</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <nav><a href="index.html">Home</a></nav>
+  <h1>Staff Toolkit</h1>
+  <p>Ambassador file tools and high-mortal commands: granted to every staff
+  role (apprentice, rp_wiz, domain_wiz, creator/immortal, arch/head arch) on
+  top of the role-specific tool covered on your own role page.</p>
+
+  <h2>Ambassador commands</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>earmuffs</code></td><td>Toggle blocking or accepting shouts.</td></tr>
+    <tr><td><code>goto</code></td><td>Teleport to a living thing by name, or to a file path if no living target is found.</td></tr>
+    <tr><td><code>home</code></td><td>Return to your workroom, or another player's by name.</td></tr>
+    <tr><td><code>man</code></td><td>Look up efun, SimulEfun, applies, and lfun documentation.</td></tr>
+    <tr><td><code>people</code></td><td>Formatted, filterable, sortable roster of connected users.</td></tr>
+    <tr><td><code>set</code> / <code>unset</code></td><td>View, set, or clear a personal environment variable.</td></tr>
+  </table>
+
+  <h2>File tools</h2>
+  <p><code>secure/cmds/ambassador</code>: the shared read/write file kit every staff role gets.</p>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>pwd</code> / <code>cd</code></td><td>Print your current working directory, or change it.</td></tr>
+    <tr><td><code>ls</code></td><td>List a directory. Supports <code>-a</code>, <code>-l</code>, <code>-t</code>, <code>-n</code>, <code>-b</code>, <code>-s</code>.</td></tr>
+    <tr><td><code>cat</code> / <code>head</code> / <code>tail</code> / <code>more</code></td><td>Dump a file, its first lines, its last lines, or page through it.</td></tr>
+    <tr><td><code>cp</code></td><td>Copy a file to a new name or location.</td></tr>
+    <tr><td><code>diff</code></td><td>Line-by-line diff of two files, paged through <code>more</code>.</td></tr>
+    <tr><td><code>ed</code></td><td>Open the line editor on a file.</td></tr>
+    <tr><td><code>grep</code></td><td>Regex search across one or more files. Supports <code>&gt; output</code> redirection.</td></tr>
+    <tr><td><code>load</code></td><td>Try to load or compile an object from disk and report any errors.</td></tr>
+    <tr><td><code>sc</code> / <code>ss</code></td><td>Deep-scan an object's full inventory tree, or shallow-scan its immediate inventory.</td></tr>
+    <tr><td><code>gauge</code></td><td>Profile a command's CPU and eval cost.</td></tr>
+  </table>
+  <div class="callout">
+    <p><strong>Note:</strong> <code>gauge</code> is reachable by every staff role in principle, but the command itself checks for the admin position specifically. In practice only admin can run it.</p>
+  </div>
+
+  <h2>High-mortal commands</h2>
+  <p><code>cmds/hm</code>: granted to every staff role, and to any ordinary mortal above level 19.</p>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>mark</code></td><td>Mark the current room as a teleport anchor.</td></tr>
+    <tr><td><code>teleport</code></td><td>Teleport to your marked or start location, or to another player of your own class.</td></tr>
+    <tr><td><code>start</code></td><td>Set your current room as your login start point.</td></tr>
+    <tr><td><code>title</code></td><td>Set your post-name title string. No-ops for staff, who use <code>setenv TITLE</code> instead.</td></tr>
+    <tr><td><code>message</code></td><td>Customize your room-entry and room-exit messages.</td></tr>
+    <tr><td><code>review</code></td><td>Display your current message strings and title.</td></tr>
+    <tr><td><code>create</code></td><td>Conjure a weapon, armor, or bag from nothing.</td></tr>
+    <tr><td><code>cloak</code></td><td>Toggle a rogue stealth mode.</td></tr>
+    <tr><td><code>marry</code> / <code>divorce</code></td><td>Wed, or legally divorce, two players.</td></tr>
+  </table>
+  <div class="callout">
+    <p><strong>Conversion gap:</strong> most of this directory is still unconverted Nightmare III fantasy content.
+    <code>create</code> and <code>cloak</code> check old-system skill percentages. <code>marry</code> and
+    <code>divorce</code> only work for an admin or a player whose class is set to the legacy "monk" value, which
+    no Rifts chargen ever sets, so in practice only admin can use them. Treat this whole directory as functional
+    but not Rifts-converted.</p>
+  </div>
+
+  <h2>Legacy skill commands</h2>
+  <div class="callout">
+    <p><strong><code>cmds/skills/</code> (about 70 files: <code>fireball</code>, <code>backstab</code>,
+    <code>heal</code>, <code>lockpick</code>, and the rest) is entirely unreachable Nightmare III legacy content.</strong>
+    Every command in that directory checks for an old fantasy class (mage, cleric, monk, kataan, fighter, rogue)
+    that no Rifts character build ever has, since Rifts characters use races and OCCs instead. If a player asks
+    why <code>cast fireball</code> or a skill-style attack command "does nothing," it's not a bug: those commands
+    are live in the search path but permanently inert. The real Rifts spell and psionic systems are
+    <code>cast</code> and <code>psi</code>, covered on the <a href="commands.html">Commands</a> page.</p>
+  </div>
+</body>
+</html>

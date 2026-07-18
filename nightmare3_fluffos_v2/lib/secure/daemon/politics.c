@@ -16,6 +16,8 @@ mapping personnel;
 
 void save_me()
 {
+    if(unguarded((: file_size, "/secure/save/daemon" :)) != -2)
+      unguarded((: mkdir, "/secure/save/daemon" :));
     unguarded((: save_object, SAVE_POLITICS :));
 }
 

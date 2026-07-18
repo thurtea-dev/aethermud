@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AetherMUD Admin Command Reference</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <nav><a href="index.html">Home</a> <a href="admin.html">Admin</a></nav>
+  <h1>Admin Command Reference</h1>
+  <p>Position: arch / head arch only. <code>cmds/adm</code>, <code>secure/cmds/adm</code>,
+  <code>cmds/creator</code>, and <code>secure/cmds/creator</code> are only added to a player's
+  command search path when their position is exactly arch or head arch. Coding wizards (position
+  creator/immortal) do not get this directory, despite the name: see
+  <a href="coding.html">Coding wizard</a> for what they build with instead.</p>
+
+  <h2>cmds/adm</h2>
+
+  <h3>Player and character management</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>advance</code></td><td>Force-advance a player N levels, rerolling HP/SDC/PPE/ISP gains.</td></tr>
+    <tr><td><code>give</code></td><td>Clone an object by path and hand it to an online player.</td></tr>
+    <tr><td><code>grantrace</code> / <code>grantskills</code></td><td>Backfill race spells and psionics, or OCC skills, on a player. Post-hoc fix tools.</td></tr>
+    <tr><td><code>setfaction</code></td><td>Set or clear a player's faction membership.</td></tr>
+    <tr><td><code>setocc</code> / <code>setrcc</code></td><td>Set a player's OCC, or set their race and re-roll race stats.</td></tr>
+    <tr><td><code>setrole</code></td><td>Set a wizard's position and role tag: admin, domain, coding, or rp.</td></tr>
+    <tr><td><code>setskill</code></td><td>Set a named Rifts skill percentage on a player.</td></tr>
+    <tr><td><code>stat</code></td><td>Dump a full stat block for an online player.</td></tr>
+    <tr><td><code>makewiz</code></td><td>Promote an online mortal to Apprentice wizard.</td></tr>
+    <tr><td><code>playerwipe</code></td><td>Wipe a player's save file, postal data, and realm directory.</td></tr>
+  </table>
+
+  <h3>World and movement</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>goto</code></td><td>Teleport to a player's location or a room path.</td></tr>
+    <tr><td><code>trans</code></td><td>Bring a player to your current location.</td></tr>
+    <tr><td><code>force</code></td><td>Force an online player to run an arbitrary command. Logged.</td></tr>
+    <tr><td><code>haven</code></td><td>Hide yourself from <code>users()</code>: not visible to who or finger.</td></tr>
+  </table>
+
+  <h3>Communication and broadcast</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>archshout</code></td><td>Shout without needing a language.</td></tr>
+    <tr><td><code>broadcast</code></td><td>Message every connected user, bypassing all blocking.</td></tr>
+    <tr><td><code>channel</code></td><td>Restrict or unrestrict a player from a communication channel.</td></tr>
+  </table>
+
+  <h3>Logging, monitoring, and diagnostics</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>monitor</code></td><td>Get notified when a named player stops idling.</td></tr>
+    <tr><td><code>snoopers</code></td><td>List who is snooping whom.</td></tr>
+    <tr><td><code>cache</code> / <code>fdinfo</code> / <code>opcprof</code> / <code>dumpallobj</code></td><td>Driver cache stats, file descriptor status, opcode profiling, dump loaded objects.</td></tr>
+    <tr><td><code>commands</code></td><td>Regenerate the compiled command list from the creator, admin, and mortal command directories.</td></tr>
+  </table>
+
+  <h3>Game state</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>end</code></td><td>Start the Armageddon (scheduled shutdown) sequence.</td></tr>
+    <tr><td><code>shutdown</code></td><td>Immediate shutdown. Requires a logged reason.</td></tr>
+    <tr><td><code>warmboot</code></td><td>Bulk in-place reload of daemons, commands, and domains. Notifies online admins.</td></tr>
+    <tr><td><code>bench</code></td><td>Run driver micro-benchmarks.</td></tr>
+  </table>
+
+  <h2>secure/cmds/adm</h2>
+
+  <h3>Account gatekeeping</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>addguest</code> / <code>removeguest</code> / <code>whoguests</code></td><td>Manage the guest list allowed in while the mud is locked.</td></tr>
+    <tr><td><code>allow</code> / <code>unallow</code> / <code>whoallowed</code></td><td>Let a character name in from a registered site, or remove that allowance.</td></tr>
+    <tr><td><code>register</code> / <code>unregister</code> / <code>whoregistered</code></td><td>Put a site on, or off, the registration-required list.</td></tr>
+    <tr><td><code>tempban</code></td><td>Put a site on registration for a set number of minutes.</td></tr>
+    <tr><td><code>watch</code> / <code>unwatch</code> / <code>whowatched</code></td><td>Flag a name or site so its logins are logged.</td></tr>
+    <tr><td><code>arrest</code></td><td>Remove a player pending law review.</td></tr>
+    <tr><td><code>rid</code></td><td>Permanently remove a player. The safe way to delete a save file.</td></tr>
+  </table>
+
+  <h3>Grants, accounts, and logs</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>grant</code> / <code>revoke</code></td><td>Grant or revoke an RP title.</td></tr>
+    <tr><td><code>godling</code></td><td>Apply the Godling race and RCC package to a player.</td></tr>
+    <tr><td><code>link</code> / <code>unlink</code></td><td>Link character names together as one player's alts, or remove a link.</td></tr>
+    <tr><td><code>elections</code></td><td>Start or end elections, or set the next election date.</td></tr>
+    <tr><td><code>economy</code></td><td>Add a currency, or change an existing one's rate, inflation, or weight.</td></tr>
+    <tr><td><code>lawlog</code></td><td>Open or append a law-matters log for a player.</td></tr>
+    <tr><td><code>currency</code></td><td>Balance sheet of currency a player, or everyone, is holding.</td></tr>
+    <tr><td><code>setreboot</code></td><td>Set the automatic reboot interval.</td></tr>
+    <tr><td><code>xmote</code></td><td>Promote or demote a player's level or position directly. Logged.</td></tr>
+  </table>
+
+  <h2>cmds/creator</h2>
+
+  <h3>File and object management</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>pushd</code> / <code>popd</code></td><td>Directory-stack cd helpers.</td></tr>
+    <tr><td><code>pupdate</code></td><td>Update or recompile a program at a path relative to your cwd.</td></tr>
+    <tr><td><code>clone</code></td><td>QCS-aware clone into inventory.</td></tr>
+    <tr><td><code>dest</code></td><td>Destruct an object, or every non-interactive item in the room.</td></tr>
+    <tr><td><code>reset</code></td><td>Force-call <code>reset()</code> on the current room or a named object.</td></tr>
+    <tr><td><code>clean</code></td><td>Recursively destruct non-auto-loading items in your own inventory.</td></tr>
+  </table>
+
+  <h3>Debugging and driver introspection</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>malloc</code> / <code>mstatus</code> / <code>netstat</code></td><td>Memory allocator status, driver and mudlib stats, socket status.</td></tr>
+    <tr><td><code>callouts</code></td><td>List every pending <code>call_out()</code> with object, function, and delay.</td></tr>
+    <tr><td><code>scan</code></td><td>Recursively print an object's inventory and environment tree.</td></tr>
+    <tr><td><code>localcmds</code></td><td>List commands added to a player by other objects, such as guild or class actions.</td></tr>
+    <tr><td><code>rehash</code></td><td>Force the command daemon to re-scan a command directory.</td></tr>
+  </table>
+
+  <h3>Balance and QA validators</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>acheck</code> / <code>wcheck</code> / <code>roomcheck</code></td><td>Sanity-check an armor, weapon, or room object against the standard conventions.</td></tr>
+    <tr><td><code>ac</code> / <code>wc</code></td><td>Display an object's Armor Class and protected limbs, or its Weapon Class.</td></tr>
+  </table>
+
+  <h3>QCS content creation</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>qcsdirs</code></td><td>Create the missing realm area directory scaffold for a wizard.</td></tr>
+  </table>
+  <p>The player-facing <code>create</code>, <code>modify</code>, <code>add</code>, and <code>delete</code>
+  verbs used every day for building are covered on the <a href="qcs.html">QCS page</a>, not repeated here.</p>
+
+  <h3>Communication and misc</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>wizshout</code></td><td>Global shout for staff. Logged.</td></tr>
+    <tr><td><code>codeblock</code> / <code>tellblock</code></td><td>Toggle blocking all remote communication, or just tells.</td></tr>
+    <tr><td><code>invis</code> / <code>vis</code></td><td>Become invisible to lower-level players, or visible again.</td></tr>
+    <tr><td><code>langs</code></td><td>Show what languages a player knows.</td></tr>
+    <tr><td><code>domains</code> / <code>realms</code></td><td>Domain and realm activity leaderboards.</td></tr>
+    <tr><td><code>elog</code> / <code>replog</code></td><td>Tail your own personal error log, or reports log.</td></tr>
+    <tr><td><code>sethome</code></td><td>Set your home room, used by <code>workroom</code>.</td></tr>
+    <tr><td><code>echo</code> / <code>echoto</code></td><td>Echo a message to your room, or to a specific player. Logged.</td></tr>
+    <tr><td><code>uptime</code></td><td>Report how long AetherMUD has been up.</td></tr>
+    <tr><td><code>wizheal</code></td><td>Fully heal a living creature.</td></tr>
+    <tr><td><code>events</code></td><td>List pending scheduled and domain events.</td></tr>
+    <tr><td><code>banish</code></td><td>Protect a name from being taken by a new player.</td></tr>
+  </table>
+
+  <h2>secure/cmds/creator</h2>
+
+  <h3>File and object management</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>mkdir</code> / <code>rmdir</code></td><td>Create or remove a directory.</td></tr>
+    <tr><td><code>mv</code> / <code>du</code></td><td>Rename or move a file, or get a recursive disk-usage report for a path.</td></tr>
+    <tr><td><code>clone</code></td><td>Clone an arbitrary object by path into inventory.</td></tr>
+    <tr><td><code>move</code></td><td>Move one referenced object to another.</td></tr>
+    <tr><td><code>update</code></td><td>Destruct and reload a single file's blueprint. The command behind the reload rules in <a href="admin.html">Admin</a>.</td></tr>
+    <tr><td><code>rm</code></td><td>Remove one or more files.</td></tr>
+  </table>
+
+  <h3>Refs and debugging toolkit</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>call</code></td><td>Call an arbitrary function on an object by reference.</td></tr>
+    <tr><td><code>cref</code> / <code>dref</code> / <code>eref</code> / <code>ref</code> / <code>refs</code> / <code>unref</code> / <code>tref</code></td><td>Clone, destruct, or otherwise operate on a referenced object.</td></tr>
+    <tr><td><code>dbxframe</code> / <code>dbxwhere</code></td><td>Inspect a stack frame, or print the last uncaught error trace for a player.</td></tr>
+  </table>
+  <div class="callout">
+    <p><strong>eval executes arbitrary LPC code inline.</strong> It is the single most powerful command in the
+    game: whatever you can write, it can do, including destroying player data. Test on yourself or a disposable
+    NPC before running it against a live player. Non-SECURE-group use is logged.</p>
+  </div>
+
+  <h3>Access, sponsorship, and logging</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>grant</code></td><td>Grant read, write, or full access on a domain or realm subtree to another creator.</td></tr>
+    <tr><td><code>sponsor</code></td><td>Promote a new immortal to full immortal, creating their realm and workroom.</td></tr>
+    <tr><td><code>changelog</code></td><td>Open an interactive changelog entry for a file or directory.</td></tr>
+    <tr><td><code>log</code></td><td>Tail an arbitrary file under <code>/log/</code>.</td></tr>
+    <tr><td><code>locate</code> / <code>imcp</code></td><td>Intermud locate query, or intermud file copy to another mud.</td></tr>
+  </table>
+
+  <h3>Misc</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>wizz</code></td><td>Teleport to the Wizard's Lounge.</td></tr>
+    <tr><td><code>force</code></td><td>Force a living to run a command.</td></tr>
+    <tr><td><code>snoop</code></td><td>Snoop, or un-snoop, a player's input and output.</td></tr>
+  </table>
+</body>
+</html>
