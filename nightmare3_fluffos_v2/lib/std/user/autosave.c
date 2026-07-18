@@ -29,16 +29,24 @@ void setup() {
     master()->create_save();
     call_out("save_player", 2, query_name());
     convert_auto();
-    if(!(i = sizeof(__AutoLoad))) return; 
-    while(i--) { 
-        if(sizeof(__AutoLoad[i]) != 2) continue; 
-        if(!stringp(__AutoLoad[i][0]) || !pointerp(__AutoLoad[i][1])) continue; 
-        catch(ob = new(__AutoLoad[i][0])); 
-        if(!ob) continue; 
-        ob->move(this_object()); 
-        catch(ob->init_arg(__AutoLoad[i][1]));     
-    } 
-} 
+    if(!(i = sizeof(__AutoLoad))) return;
+    while(i--) {
+        if(sizeof(__AutoLoad[i]) != 2) continue;
+        if(!stringp(__AutoLoad[i][0]) || !pointerp(__AutoLoad[i][1])) continue;
+        catch(ob = new(__AutoLoad[i][0]));
+        if(!ob) continue;
+        ob->move(this_object());
+        catch(ob->init_arg(__AutoLoad[i][1]));
+    }
+    /* setup() runs again on a live body when a linkdead player is
+       reused by login.c enter_character()/exec_user(). __AutoLoad still
+       mirrors the last pre_save() snapshot at that point, so leaving it
+       populated clones a second copy of every auto-load item (wiz
+       tools, credcards) into an inventory that already has them.
+       pre_save() rebuilds this list from inventory on every save, so
+       clearing it here loses nothing. */
+    __AutoLoad = ({});
+}
  
 void heart_beat() { 
     int x; 
