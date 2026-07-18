@@ -27,8 +27,9 @@ private string *build_eligible_list(object player) {
     string occ_name, cat;
     int i, j;
 
-    occ_name = lower_case((string)player->getenv("rifts_occ"));
+    occ_name = (string)player->getenv("rifts_occ");
     if(!occ_name || !sizeof(occ_name)) return ({});
+    occ_name = lower_case(occ_name);
 
     occ_data = (mapping)OCC_D->query_occ(occ_name);
     if(!occ_data) return ({});
@@ -82,11 +83,12 @@ int cmd_skillrequest(string str) {
 
     /* --- no arg: show numbered menu --- */
     if(!str || !sizeof(str)) {
-        occ_name = lower_case((string)player->getenv("rifts_occ"));
+        occ_name = (string)player->getenv("rifts_occ");
         if(!occ_name || !sizeof(occ_name)) {
             write("You have no OCC set.  Contact a wizard.\n");
             return 1;
         }
+        occ_name = lower_case(occ_name);
         menu = build_eligible_list(player);
         if(!sizeof(menu)) {
             write("No secondary skills are available for " + occ_name + " right now.\n");

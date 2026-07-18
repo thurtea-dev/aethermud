@@ -18,8 +18,9 @@ private int is_tattoo_capable() {
     string occ;
 
     race = lower_case((string)this_player()->query_race());
-    occ  = lower_case((string)this_player()->getenv("rifts_occ"));
+    occ  = (string)this_player()->getenv("rifts_occ");
     if(!occ) occ = "";
+    else occ = lower_case(occ);
 
     if(strsrch(race, "atlantean") != -1) return 1;
     if(occ == "sunaj assassin") return 1;

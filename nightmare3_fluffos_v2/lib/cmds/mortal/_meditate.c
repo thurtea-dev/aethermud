@@ -15,10 +15,12 @@ private int is_ley_line_room(object env) {
 private int is_magic_occ(object player) {
     string occ;
     string flags;
-    occ   = lower_case((string)player->getenv("rifts_occ"));
-    flags = lower_case((string)player->getenv("rifts_occ_flags"));
+    occ   = (string)player->getenv("rifts_occ");
+    flags = (string)player->getenv("rifts_occ_flags");
     if(!occ) occ = "";
+    else occ = lower_case(occ);
     if(!flags) flags = "";
+    else flags = lower_case(flags);
     if(strsrch(flags, "magic") != -1) return 1;
     if(strsrch(occ, "ley line") != -1) return 1;
     if(strsrch(occ, "techno-wizard") != -1) return 1;
@@ -31,10 +33,12 @@ private int is_magic_occ(object player) {
 private int is_psionic_occ(object player) {
     string occ;
     string flags;
-    occ   = lower_case((string)player->getenv("rifts_occ"));
-    flags = lower_case((string)player->getenv("rifts_occ_flags"));
+    occ   = (string)player->getenv("rifts_occ");
+    flags = (string)player->getenv("rifts_occ_flags");
     if(!occ) occ = "";
+    else occ = lower_case(occ);
     if(!flags) flags = "";
+    else flags = lower_case(flags);
     if(strsrch(flags, "psychic") != -1) return 1;
     if(strsrch(occ, "mind melter") != -1) return 1;
     if(strsrch(occ, "cyber-knight") != -1) return 1;

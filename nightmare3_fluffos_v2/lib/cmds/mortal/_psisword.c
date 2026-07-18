@@ -13,8 +13,9 @@ int cmd_psisword(string str) {
     int level;
     int dur;
 
-    occ = lower_case((string)this_player()->getenv("rifts_occ"));
+    occ = (string)this_player()->getenv("rifts_occ");
     if(!occ) occ = "";
+    else occ = lower_case(occ);
     if(strsrch(occ, "cyber-knight") == -1 &&
        strsrch(occ, "cyber knight") == -1) {
         write("Only Cyber-Knights can manifest a psi-sword.\n");

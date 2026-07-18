@@ -1835,8 +1835,9 @@ void rifts_hp_regen_tick() {
     if(!(int)RIFTS_D->is_rifts_race(query_race())) return;
 
     race_val  = lower_case((string)query_race());
-    occ_val   = lower_case((string)getenv("rifts_occ"));
+    occ_val   = (string)getenv("rifts_occ");
     if(!occ_val) occ_val = "";
+    else occ_val = lower_case(occ_val);
     in_combat = (sizeof((object *)query_attackers()) > 0);
 
     if(strsrch(race_val, "dragon") != -1) {

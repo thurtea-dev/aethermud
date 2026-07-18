@@ -367,6 +367,12 @@ static void offer_admin_promotion() {
 static void confirm_admin_promotion(string str) {
     if(str && strlen(str) && lower_case(str)[0..0] == "y") {
         __Player->set_position("head arch");
+        /* Set the Rifts OCC envs the way makewiz does: a character that
+           skips chargen must never be left with these unset (commands
+           and the regen tick read them; see the 2026-07-18 null
+           lower_case fix). */
+        __Player->setenv("rifts_occ", "none");
+        __Player->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
         message("system",
           "\nYou have been granted admin rank.\n", this_object());
     }

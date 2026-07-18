@@ -12,12 +12,15 @@ private int has_assassin_training(object player) {
     string occ;
     string flags;
 
-    occ = lower_case((string)player->getenv("rifts_occ"));
+    occ = (string)player->getenv("rifts_occ");
+    if(!occ) occ = "";
+    else occ = lower_case(occ);
     if(occ == "master assassin" || occ == "sunaj assassin" ||
        occ == "professional thief" || occ == "freelance spy" ||
        occ == "forger" || occ == "headhunter" || occ == "bounty hunter")
         return 1;
-    flags = lower_case((string)player->getenv("rifts_occ_flags"));
+    flags = (string)player->getenv("rifts_occ_flags");
+    if(flags) flags = lower_case(flags);
     if(flags && strsrch(flags, "assassin") != -1)
         return 1;
     if((int)player->query_skill("prowl") >= 40 &&
@@ -64,7 +67,9 @@ private int stealth_ok(object player) {
 private int occ_assassin_bonus(object player) {
     string occ;
 
-    occ = lower_case((string)player->getenv("rifts_occ"));
+    occ = (string)player->getenv("rifts_occ");
+    if(!occ) occ = "";
+    else occ = lower_case(occ);
     if(occ == "master assassin" || occ == "sunaj assassin")
         return 8;
     if(occ == "professional thief" || occ == "freelance spy")
