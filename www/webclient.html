@@ -76,7 +76,7 @@
 
     function wsUrl() {
       var proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-      var host = window.location.hostname || "localhost";
+      var host = window.location.hostname || "aethermud.com";
       var port = termEl.getAttribute("data-ws-port") || "1129";
       return proto + "//" + host + ":" + port + "/";
     }
