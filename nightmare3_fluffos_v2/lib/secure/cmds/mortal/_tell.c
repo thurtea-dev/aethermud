@@ -77,8 +77,8 @@ int cmd_tell(string str) {
         else if(in_edit(ob) || in_input(ob))
           message("my_action", (string)ob->query_CapName()+" is in input "+
             "and may not be able to respond.", this_player());
-        message("my_action", "You tell "+(string)ob->query_CapName()+
-          ": "+msg, this_player());
+        message("my_action", "%^BOLD%^%^BLUE%^You tell "+
+          (string)ob->query_CapName()+": "+msg+"%^RESET%^", this_player());
         ob->set_property("reply", (string)this_player()->query_name());
     }
     return 1;

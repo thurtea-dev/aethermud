@@ -23,6 +23,10 @@ int cmd_say(string str) {
         notify_fail("You mutter to yourself.\n");
         return 0;
     }
+    if((int)this_player()->query_property("is_sneaking")) {
+        this_player()->remove_property("is_sneaking");
+        write("You give up your silent movements as you speak.\n");
+    }
 
     tag_on    = (int)this_player()->query_property("guild_tag_on");
     guild_tag = (string)this_player()->query_property("guild_tag");

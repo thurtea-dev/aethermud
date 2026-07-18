@@ -199,6 +199,12 @@ string format_wiz_row(object ob, int use_color) {
     if (use_color) {
         if (tag == "[Admin-Wiz]")
             color = "%^BOLD%^%^RED%^";
+        else if (tag == "[RP-Wiz]")
+            color = "%^BOLD%^%^GREEN%^";
+        else if (tag == "[Coding-Wiz]")
+            color = "%^BOLD%^%^BLUE%^";
+        else if (tag == "[Domain-Wiz]")
+            color = "%^RED%^";
         else if (tag == "[Apprentice]")
             color = "%^CYAN%^";
         else

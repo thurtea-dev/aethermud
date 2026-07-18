@@ -52,7 +52,11 @@ int cmd_kill(string str) {
    }
    /* check for an okay hit before we actually continue, Val */
    if (!(retvalue = (int)this_player()->kill_ob(victim))) return 1;
- 
+
+   if((int)this_player()->query_property("is_sneaking")) {
+      this_player()->remove_property("is_sneaking");
+      write("You abandon stealth as you attack!\n");
+   }
    write("You attack " +
      (string)victim->query_display_name(this_player()) + "!\n");
    tell_object(victim,

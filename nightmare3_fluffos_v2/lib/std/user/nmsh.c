@@ -11,6 +11,8 @@
 #define MAX_CMD_ALIASES          60
 #define MIN_HISTORY_SIZE         10
 
+void set_cwd_home();
+
 private string __CurrentWorkingDirectory;
 private mapping __Nicknames, __Aliases, __Xverbs; 
 static private int __CWDCount, __CWDBottom, __CWDTop, __CmdNumber; 
@@ -48,8 +50,9 @@ void setup() {
         add_action("cmd_pwd", "cwd");
         add_action("cmd_pwd", "pwd");
         add_action("cmd_work", "work");
-    } 
-} 
+        if(!__CurrentWorkingDirectory) set_cwd_home();
+    }
+}
  
 nomask static int cmd_alias(string str) { 
     string *a, *b;
@@ -551,7 +554,23 @@ void reset_prompt() {
     __Prompt = replace_string(__Prompt, "$n", query_name());
 } 
  
-string query_cwd() { return __CurrentWorkingDirectory; } 
+/* Initialize cwd to this wizard's own /realms/<name> home directory.
+   Public so promotion tools (makewiz) can set it right away; harmless
+   to call externally since it only ever points at the wizard's own
+   home and only when that directory actually exists. */
+void set_cwd_home() {
+    string path;
+
+    if(!creatorp(this_object())) return;
+    path = user_path(query_name());
+    if(!path || path == "") return;
+    if(strlen(path) > 1 && path[strlen(path)-1] == '/')
+        path = path[0..strlen(path)-2];
+    if(file_size(path) != -2) return;
+    __CurrentWorkingDirectory = path;
+}
+
+string query_cwd() { return __CurrentWorkingDirectory; }
  
 int query_history_size() { return MIN_HISTORY_SIZE; } 
      

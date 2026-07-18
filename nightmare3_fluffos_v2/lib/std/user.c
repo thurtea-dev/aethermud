@@ -220,6 +220,7 @@ varargs void move_player(mixed dest, string msg) {
     object *inv;
     string here,going,temp1,temp2,temp3,vname;
     int i, illum, bzbd, adj, tmp, ln_skill;
+    int prowl_hidden, pskill, plevel, proll;
 
     prev = environment( this_object() );
     here = file_name(prev);
@@ -247,7 +248,29 @@ varargs void move_player(mixed dest, string msg) {
 	adj += query_stats("dexterity");
 	add_sp(-1);
     }
-    if(!query_invis() && !hiddenp(this_object())) {
+    /* Prowl mode: one Prowl skill roll per move while is_sneaking is
+       set (prowl/sneak/hide commands). Success hides this move's
+       departure and arrival messages; failure shows them normally.
+       The mode itself only ends on attack, speech, or toggling off. */
+    prowl_hidden = 0;
+    if((int)query_property("is_sneaking")) {
+	pskill = (int)query_skill("prowl");
+	if(pskill > 0) {
+	    plevel = query_level();
+	    if(plevel < 1) plevel = 1;
+	    pskill += (plevel - 1) * 5;
+	    if(pskill > 98) pskill = 98;
+	    pskill += (int)ADDICTION_D->query_skill_modifier(this_object());
+	    if(pskill < 1) pskill = 1;
+	    proll = random(100) + 1;
+	    if(proll <= pskill) prowl_hidden = 1;
+	}
+	if(prowl_hidden)
+	    message("my_action", "You slip away unnoticed.", this_object());
+	else
+	    message("my_action", "You fail to move quietly.", this_object());
+    }
+    if(!query_invis() && !hiddenp(this_object()) && !prowl_hidden) {
 	inv = all_inventory(prev);
 	for(i=0, bzbd = sizeof(inv); i<bzbd; i++) {
 	    if(!living(inv[i]) || inv[i] == this_object()) continue;
@@ -273,9 +296,9 @@ varargs void move_player(mixed dest, string msg) {
 	    if(!msg || msg == "") message("mmin", replace_string(query_mmin(), query_cap_name(), vname), inv[i]);
 	    else message("min", replace_string(query_min(), query_cap_name(), vname), inv[i]);
 	}
-	if(query_followers())
-	    move_followers(prev);
     }
+    if(!query_invis() && !hiddenp(this_object()) && query_followers())
+	move_followers(prev);
     add_sp(-1);
     describe_current_room(1);
     show_sbar();
@@ -1347,7 +1370,7 @@ void receive_message(string msg_class, string msg) {
     case "snoop":      msg = "%^CYAN%^"+msg; break;
     case "tell":
 	if(sscanf(msg, "%s:%s", pre, post) == 2)
-	    msg = "%^BLUE%^"+pre+":"+post;
+	    msg = "%^BOLD%^%^BLUE%^"+pre+":"+post;
 	break;
     }
     if(!term_info) reset_terminal();

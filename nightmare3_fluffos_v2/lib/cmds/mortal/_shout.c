@@ -49,6 +49,11 @@ int cmd_shout(string str) {
         return 0;
     }
 
+    if((int)this_player()->query_property("is_sneaking")) {
+        this_player()->remove_property("is_sneaking");
+        write("You give up your silent movements as you shout.\n");
+    }
+
     this_player()->setenv("last_shout_time", sprintf("%d", time()));
 
     cap_name = (string)this_player()->query_cap_name();

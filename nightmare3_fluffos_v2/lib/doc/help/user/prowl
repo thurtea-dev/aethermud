@@ -1,0 +1,14 @@
+Syntax: prowl
+
+Toggles prowl mode. Requires the Prowl skill.
+
+While prowling, every time you move the game rolls your Prowl skill
+percentage. On a success, others in the room do not see your departure
+or arrival. On a failure, you are seen moving normally, but prowl mode
+stays active for your next move.
+
+Prowl mode ends when you attack, speak, shout, or type prowl again.
+
+The sneak and hide commands start the same silent-movement mode.
+
+See also: sneak, hide, assassination

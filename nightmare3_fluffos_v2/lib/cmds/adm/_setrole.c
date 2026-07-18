@@ -10,6 +10,7 @@ int cmd_setrole(string str) {
     string pname;
     string role;
     string new_pos;
+    string new_title;
     object target;
 
     if(!admin_wizp(this_player())) {
@@ -23,10 +24,10 @@ int cmd_setrole(string str) {
     pname = lower_case(pname);
     role = lower_case(role);
 
-    if(role == "admin") new_pos = "arch";
-    else if(role == "domain") new_pos = "domain_wiz";
-    else if(role == "coding") new_pos = "creator";
-    else if(role == "rp") new_pos = "rp_wiz";
+    if(role == "admin") { new_pos = "arch"; new_title = "Administrator $N"; }
+    else if(role == "domain") { new_pos = "domain_wiz"; new_title = "Domain Wizard $N"; }
+    else if(role == "coding") { new_pos = "creator"; new_title = "Coding Wizard $N"; }
+    else if(role == "rp") { new_pos = "rp_wiz"; new_title = "Roleplay Wizard $N"; }
     else {
         write("Valid roles: admin, domain, coding, rp\n");
         return 1;
@@ -41,6 +42,7 @@ int cmd_setrole(string str) {
         return 1;
     }
     target->set_position(new_pos);
+    target->setenv("TITLE", new_title);
     target->save_player((string)target->query_name());
     write("Set " + (string)target->query_cap_name() + "'s wizard role to '" +
           role + "'.\n");

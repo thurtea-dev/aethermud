@@ -79,6 +79,8 @@ int cmd_makewiz(string str) {
     catch(RIFTS_START_D->grant_race_package(target));
     catch(LANGUAGE_D->grant_native_languages(target));
     target->setenv("active_language", "American");
+    target->setenv("TITLE", "Apprentice $N");
+    catch(target->set_cwd_home());
 
     target->save_player((string)target->query_name());
     write("Promoted " + (string)target->query_cap_name() +
