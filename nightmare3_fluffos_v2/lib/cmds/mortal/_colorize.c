@@ -18,7 +18,7 @@ int cmd_colorize(string str) {
             this_player()->setenv("colorize_set", "1");
             this_player()->reset_terminal();
             this_player()->save_player((string)this_player()->query_name());
-            write("Color enabled. Type 'look' to see the difference.\n");
+            write("%^BOLD%^%^GREEN%^Color enabled.%^RESET%^\n");
         } else {
             this_player()->setenv("TERM", "unknown");
             this_player()->setenv("colorize_set", "1");
@@ -36,7 +36,7 @@ int cmd_colorize(string str) {
         this_player()->setenv("colorize_set", "1");
         this_player()->reset_terminal();
         this_player()->save_player((string)this_player()->query_name());
-        write("Color enabled. Type 'look' to see the difference.\n");
+        write("%^BOLD%^%^GREEN%^Color enabled.%^RESET%^\n");
         return 1;
     }
 
