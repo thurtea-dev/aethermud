@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play AetherMUD in your browser</title>
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-brand">
+      <a href="index.html">AetherMUD</a>
+      <span class="site-tag">A TTRPG-inspired MUD</span>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="play.html" aria-current="page">Play</a>
+      <a href="world.html">World</a>
+      <a href="races.html">Races</a>
+      <a href="occs.html">OCCs</a>
+      <a href="chargen.html">Chargen</a>
+      <a href="roadmap.html">Roadmap</a>
+    </nav>
+  </header>
+
+  <div class="webclient-toolbar">
+    <span id="webclient-status" class="webclient-status">Connecting...</span>
+    <button id="webclient-reconnect" disabled>Reconnect</button>
+    <span class="webclient-hint">Requires a modern browser. If the
+    connection fails, use <a href="play.html">Mudlet or telnet</a> on
+    port 1122.</span>
+  </div>
+
+  <div id="webclient-term" class="webclient-term" data-ws-port="1129"></div>
+
+  <div class="webclient-input-row">
+    <input id="webclient-input" type="text" autocomplete="off"
+           autocapitalize="off" spellcheck="false"
+           placeholder="Type a command and press Enter" disabled>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var termEl = document.getElementById("webclient-term");
+    var statusEl = document.getElementById("webclient-status");
+    var reconnectBtn = document.getElementById("webclient-reconnect");
+    var inputEl = document.getElementById("webclient-input");
+    var socket = null;
+
+    var term = new Terminal({
+      convertEol: true,
+      cursorBlink: false,
+      disableStdin: true,
+      scrollback: 4000,
+      fontFamily: 'Consolas, "Courier New", monospace',
+      fontSize: 15,
+      theme: { background: "#1a1e1e", foreground: "#c8cccc" }
+    });
+    var fit = new FitAddon.FitAddon();
+    term.loadAddon(fit);
+    term.open(termEl);
+    fit.fit();
+    window.addEventListener("resize", function () { fit.fit(); });
+    termEl.addEventListener("click", function () { inputEl.focus(); });
+
+    function setStatus(kind, text) {
+      statusEl.className = "webclient-status webclient-status--" + kind;
+      statusEl.textContent = text;
+    }
+
+    function wsUrl() {
+      var proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+      var host = window.location.hostname || "localhost";
+      var port = termEl.getAttribute("data-ws-port") || "1129";
+      return proto + "//" + host + ":" + port + "/";
+    }
+
+    function connect() {
+      setStatus("connecting", "Connecting...");
+      reconnectBtn.disabled = true;
+      socket = new WebSocket(wsUrl());
+      socket.binaryType = "arraybuffer";
+      socket.onopen = function () {
+        setStatus("connected", "Connected");
+        inputEl.disabled = false;
+        inputEl.focus();
+      };
+      socket.onmessage = function (ev) {
+        if (typeof ev.data === "string") term.write(ev.data);
+        else term.write(new Uint8Array(ev.data));
+      };
+      socket.onclose = function () {
+        setStatus("disconnected", "Disconnected");
+        reconnectBtn.disabled = false;
+        inputEl.disabled = true;
+        term.write("\r\n[Connection closed. Press Reconnect.]\r\n");
+      };
+      socket.onerror = function () { /* onclose follows */ };
+    }
+
+    inputEl.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Enter") return;
+      ev.preventDefault();
+      if (!socket || socket.readyState !== WebSocket.OPEN) return;
+      socket.send(inputEl.value + "\n");
+      inputEl.value = "";
+    });
+
+    reconnectBtn.addEventListener("click", connect);
+    connect();
+  })();
+  </script>
+
+  <footer class="site-footer">
+    <p>AetherMUD, a TTRPG-inspired MUD. Palladium Rifts on FluffOS / Nightmare III.</p>
+  </footer>
+</body>
+</html>

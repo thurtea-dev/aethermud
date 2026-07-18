@@ -37,5 +37,32 @@ setrole &lt;player&gt; admin|domain|coding|rp</pre>
 /realms/
 /domains/adm/wiz_tools/
 /log/adm/</pre>
+
+  <h2 id="install">Run your own copy</h2>
+  <p>AetherMUD builds from source on Linux (Fedora, Ubuntu, WSL2). Short
+  path: clone the repo, <code>./mud.sh init-config</code>, build the FluffOS
+  driver (<code>./configure nm3 &amp;&amp; make &amp;&amp; make install</code>),
+  then <code>./mud.sh start</code> and telnet to port 1122. Full steps:
+  <code>docs/INSTALL.md</code> in the repository; daily operations in
+  <code>docs/RUNNING.md</code>.</p>
+
+  <h2>Staff guides</h2>
+  <p>Offline HTML handbooks for wizard staff. In-game: <code>help staff</code>, <code>help kit</code>, <code>help coding</code>, and related topics.</p>
+  <ul>
+    <li><a href="roadmap.html">Roadmap</a> (remaining work and next steps)</li>
+    <li><a href="chargen.html">Character creation</a></li>
+    <li><a href="qcs.html">Quick Creation System</a></li>
+    <li><a href="apprentice.html">Apprentice wizard</a> (kit, tracks, promotion)</li>
+    <li><a href="coding.html">Coding wizard</a></li>
+    <li><a href="domain.html">Domain wizard</a></li>
+    <li><a href="roleplay.html">Roleplay wizard</a></li>
+    <li><a href="admin.html">Admin</a></li>
+  </ul>
+
+  <h2>Promotion path</h2>
+  <pre>makewiz &lt;player&gt;          Apprentice + kit
+kit                       Track task (rp / domain / coding)
+domain / review           Domain and coding queues
+setrole &lt;player&gt; &lt;role&gt;   Full staff role</pre>
 </body>
 </html>

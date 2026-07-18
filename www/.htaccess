@@ -3,4 +3,5 @@ Redirect 301 /info.html /index.html
 Redirect 301 /staff.html /admin.html
 Redirect 301 /server.html /index.html
 Redirect 301 /client.html /play.html
-Redirect 301 /webclient.html /play.html
+# webclient.html is a live page again (browser client, 2026-07-18);
+# its legacy redirect to play.html is retired.

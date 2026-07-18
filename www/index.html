@@ -31,65 +31,15 @@
     </nav>
   </header>
 
-  <h1>AetherMUD</h1>
-  <p class="lead">AetherMUD, a TTRPG-inspired MUD on FluffOS / Nightmare III. Palladium Rifts on a living mudlib.</p>
-
-  <p>The Great Cataclysm shattered Earth's golden age, and the ley lines
-  erupted with the magic of a dying world. Rifts opened to a thousand alien
-  dimensions, and everything came through. Play a Coalition grunt, a
-  Ley Line Walker, a Juicer burning bright, or a dragon hatchling wearing
-  a borrowed human shape. Explore Chi-Town, Tolkeen, the Splynn
-  Dimensional Market, and New Camelot; ride Moxim's rifts between
-  continents. Start with the <a href="world.html">world guide</a>,
-  <a href="races.html">races</a>, and <a href="occs.html">OCCs</a>.</p>
-
-  <h2 id="connect">Connect</h2>
-  <table>
-    <tr><th>Client</th><th>Host</th><th>Port</th></tr>
-    <tr><td>Telnet</td><td>localhost</td><td>1122</td></tr>
-    <tr><td>Mudlet</td><td>localhost</td><td>1122 (telnet)</td></tr>
-  </table>
-  <pre>telnet localhost 1122</pre>
-  <p>After login, type <code>colorize</code> if you want ANSI color.</p>
-
-  <h2 id="about">About the game</h2>
-  <p>Measured from the live mudlib (2026-07-17):</p>
-  <ul>
-    <li><strong>62</strong> playable <a href="races.html">races</a>, <strong>66</strong> <a href="occs.html">OCCs</a></li>
-    <li><strong>115</strong> spells, <strong>~50</strong> psionic powers, <strong>158</strong> skills</li>
-    <li>~430 playable Rifts rooms across Praxis, Chi-Town, Tolkeen, Horton, New Camelot, and NGR Germany, plus stub zones (Lazlo, Lone Star, Puerto Angel, demon plane). Splynn, Alvurron, and Atlantis content lives under <code>domains/Praxis/areas/splynn/</code> (<a href="world.html">world guide</a> with honest zone status)</li>
-    <li>173 mortal commands; custom prompt with MDC/SDC/PPE/ISP pool tokens (<code>prompt</code>, <code>prompt tokens</code>)</li>
-  </ul>
-  <p>In-game help is two-level: <code>help</code> lists categories; <code>help &lt;category&gt;</code>
-  lists topics; <code>help &lt;topic&gt;</code> opens a topic (separator-insensitive:
-  <code>armor of ithan</code> matches <code>armor_of_ithan</code>). Use <code>help index</code> for the flat list.</p>
-
-  <h2 id="install">Run your own copy</h2>
-  <p>AetherMUD builds from source on Linux (Fedora, Ubuntu, WSL2). Short
-  path: clone the repo, <code>./mud.sh init-config</code>, build the FluffOS
-  driver (<code>./configure nm3 &amp;&amp; make &amp;&amp; make install</code>),
-  then <code>./mud.sh start</code> and telnet to port 1122. Full steps:
-  <code>docs/INSTALL.md</code> in the repository; daily operations in
-  <code>docs/RUNNING.md</code>.</p>
-
-  <h2>Staff guides</h2>
-  <p>Offline HTML handbooks for wizard staff. In-game: <code>help staff</code>, <code>help kit</code>, <code>help coding</code>, and related topics.</p>
-  <ul>
-    <li><a href="roadmap.html">Roadmap</a> (remaining work and next steps)</li>
-    <li><a href="chargen.html">Character creation</a></li>
-    <li><a href="qcs.html">Quick Creation System</a></li>
-    <li><a href="apprentice.html">Apprentice wizard</a> (kit, tracks, promotion)</li>
-    <li><a href="coding.html">Coding wizard</a></li>
-    <li><a href="domain.html">Domain wizard</a></li>
-    <li><a href="roleplay.html">Roleplay wizard</a></li>
-    <li><a href="admin.html">Admin</a></li>
-  </ul>
-
-  <h2>Promotion path</h2>
-  <pre>makewiz &lt;player&gt;          Apprentice + kit
-kit                       Track task (rp / domain / coding)
-domain / review           Domain and coding queues
-setrole &lt;player&gt; &lt;role&gt;   Full staff role</pre>
+  <div class="landing">
+    <a class="landing-hero" href="webclient.html" title="Play AetherMUD in your browser">
+      <img src="assets/AetherMUD.jpeg" alt="AetherMUD - click to play in your browser">
+    </a>
+    <p class="lead">AetherMUD, a TTRPG-inspired MUD on FluffOS / Nightmare III.
+    Palladium Rifts on a living mudlib. Click the image to play in your
+    browser, or connect with <a href="play.html">Mudlet or telnet</a> on
+    port 1122.</p>
+  </div>
 
   <footer class="site-footer">
     <p>AetherMUD, a TTRPG-inspired MUD. Not affiliated with Palladium Books.</p>

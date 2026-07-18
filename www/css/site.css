@@ -452,3 +452,25 @@ tr:nth-child(even) td { background: var(--bg-raised); }
 }
 
 .site-footer p { margin: 0 0 0.35rem; }
+
+/* Landing page (index.html) */
+
+.landing-hero {
+  display: block;
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.landing-hero img { display: block; width: 100%; height: auto; }
+.landing-hero:hover { border-color: var(--link); }
+
+/* Browser client page (webclient.html) */
+
+.webclient-term {
+  border: 1px solid var(--border);
+  background: var(--bg-code);
+  padding: 0.5rem;
+  height: 72vh;
+}
+
+.webclient-hint { font-size: 0.85rem; color: var(--text-muted); }
