@@ -1103,8 +1103,6 @@ private void wiz_promote_announce(string who, string rank, string promoter) {
 }
 
 private void wiz_setup_workroom(string pname, string pos) {
-    string wdir;
-    string wroom;
     string rdir;
     string rroom;
     string content;
@@ -1115,44 +1113,6 @@ private void wiz_setup_workroom(string pname, string pos) {
     else if(pos == "domain_wiz") book_role = "domain";
     else if(pos == "apprentice") book_role = "apprentice";
     else book_role = "admin";
-
-    wdir  = "/domains/wizards/" + pname;
-    wroom = wdir + "/workroom.c";
-    if(file_size(wroom) <= 0) {
-        catch(mkdir(wdir));
-        content =
-            "/* /domains/wizards/" + pname + "/workroom.c\n"
-            "   Personal workroom for " + capitalize(pname) + ". */\n"
-            "#include <std.h>\n"
-            "#include <rooms.h>\n"
-            "inherit ROOM;\n"
-            "void create() {\n"
-            "    ::create();\n"
-            "    set_property(\"light\", 3);\n"
-            "    set_property(\"indoors\", 1);\n"
-            "    set_property(\"no attack\", 1);\n"
-            "    set_short(\"" + capitalize(pname) + "'s workroom\");\n"
-            "    set_long(\n"
-            "        \"A functional wizard workroom. Shelves line the walls.\\n\"\n"
-            "        \"A large desk sits in the center. This is\\n\"\n"
-            "        \"" + capitalize(pname) + "'s private workspace.\\n\"\n"
-            "        \"A reference manual sits on the desk.\\n\"\n"
-            "    );\n"
-            "    set_exits( ([\"out\" : \"/domains/wizards/hallway\"]) );\n"
-            "}\n"
-            "void reset() {\n"
-            "    object bk;\n"
-            "    ::reset();\n"
-            "    if(!present(\"book\", this_object())) {\n"
-            "        bk = clone_object(\"/domains/adm/wiz_tools/wiz_reference_book\");\n"
-            "        if(bk) {\n"
-            "            bk->set_property(\"book_role\", \"" + book_role + "\");\n"
-            "            bk->move(this_object());\n"
-            "        }\n"
-            "    }\n"
-            "}\n";
-        write_file(wroom, content);
-    }
 
     rdir  = "/realms/" + pname;
     rroom = rdir + "/workroom.c";
