@@ -560,6 +560,14 @@ void setup() {
         NEWS_D->read_news();
     set_max_sp(query_stats("dexterity")*7);
     if((int)RIFTS_D->is_rifts_race(query_race())) {
+        /* Reconnecting from linkdeath re-runs setup() on the existing
+           body (login.c exec_user), and each tick reschedules itself.
+           Clear every pending chain before scheduling, or reconnects
+           stack extra timers and silently multiply regen. */
+        while(remove_call_out("rifts_regen_tick") != -1)
+            ;
+        while(remove_call_out("rifts_hp_regen_tick") != -1)
+            ;
         call_out("rifts_regen_tick", 60);
         call_out("rifts_hp_regen_tick", 120);
         catch(TATTOO_D->apply_passive_tattoos(this_object()));

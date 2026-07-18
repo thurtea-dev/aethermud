@@ -557,6 +557,39 @@ private void give_race_equip(object player, string race) {
         give_item(player, "military_radio.c");
         give_credits(player, (random(6)+1 + random(6)+1) * 10);
         break;
+    /* CS-issued hunter kit, same supply chain as the Dog Pack: body
+       armor, laser pistol, vibro-knife, CS radio, pocket change. */
+    case "cs psi-stalker":
+        give_item(player, "coalition_grunt_armor.c");
+        give_item(player, "cp30_laser.c");
+        give_item(player, "e_clip.c");
+        give_item(player, "vibro_knife.c");
+        give_item(player, "military_radio.c");
+        give_credits(player, (random(6)+1 + random(6)+1) * 10);
+        break;
+    /* Scavenged wilderness kit: light armor and a salvaged rifle.
+       Combat is mostly physical/psionic; gear stays minimal. */
+    case "wild psi-stalker":
+        give_item(player, "leather_jacket.c");
+        give_item(player, "vibro_knife.c");
+        give_item(player, "c12_laser_rifle.c");
+        give_item(player, "e_clip.c");
+        give_item(player, "backpack.c");
+        give_item(player, "rations.c");
+        give_item(player, "rations.c");
+        give_credits(player, (random(6)+1) * 100);
+        break;
+    /* Light MDC armor (sealed environmental suit, the closest thing
+       to fire-resistant gear in the lib) plus a sidearm. */
+    case "burster":
+        give_item(player, "environmental_body_armor.c");
+        give_item(player, "c18_pistol.c");
+        give_item(player, "e_clip.c");
+        give_item(player, "backpack.c");
+        give_item(player, "rations.c");
+        give_item(player, "rations.c");
+        give_credits(player, (random(6)+1 + random(6)+1) * 100);
+        break;
     default:
         give_equip(player, "none");
         break;

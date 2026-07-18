@@ -53,13 +53,14 @@ against `/domains/Praxis/equipment/`.
 
 ### High (playable class starts materially under-equipped)
 
-- **cs psi-stalker / wild psi-stalker** (races, OCC-less): fall to the
-  default civilian package. CS psi-stalkers should get CS-issued armor
-  and an energy weapon like the dog boy case; wild psi-stalkers should
-  get wilderness gear (leather, vibro-knife, rifle, rations). Add cases
-  to `give_race_equip()`.
-- **burster** (race, OCC-less): tabletop gives light MDC armor and a
-  sidearm. Currently default package.
+- **cs psi-stalker / wild psi-stalker**: FIXED 2026-07-18. CS
+  psi-stalker gets the CS-issued kit (grunt armor, CP-30, e-clip,
+  vibro-knife, military radio, 2d6 x 10 credits, same as dog boy);
+  wild psi-stalker gets wilderness gear (leather jacket, vibro-knife,
+  C-12 rifle, e-clip, backpack, 2 rations, 1d6 x 100 credits).
+- **burster**: FIXED 2026-07-18. Environmental body armor (closest
+  fire-resistant MDC suit in the lib), C-18 pistol, e-clip, backpack,
+  2 rations, 2d6 x 100 credits.
 - **cs grunt / cs dead boy**: occ.c text promises C-20 pistol, C-12
   rifle, and four grenades; actual grant is dead boy armor, CP-30
   pistol, two e-clips, radio. Missing the rifle and grenades (grenade
