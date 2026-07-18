@@ -9,9 +9,22 @@
 <body>
   <nav><a href="index.html">Home</a> <a href="races.html">Races</a> <a href="occs.html">OCCs</a></nav>
   <h1>Character creation</h1>
-  <p>Room: <code>/domains/Praxis/setter.c</code>. Guide NPC: chargen_guide. Pool: 62 races, 66 OCCs, 158 skills (electives at chargen).</p>
+  <p>Login is account-based: one account name and password, then a character
+  select menu. Each account may have up to 5 characters. Creation itself
+  happens in <code>/domains/Praxis/setter.c</code> with the chargen_guide NPC.
+  Pool: 62 races, 66 OCCs, 158 skills (electives at chargen).</p>
 
-  <h2>Steps</h2>
+  <h2>Login and character select</h2>
+  <ol>
+    <li>Account name (create a new account on first connect, or use an existing one)</li>
+    <li>Password</li>
+    <li>Character select: pick a number for an existing character, or type
+    <code>new</code> to create another (blocked at 5 characters for non-staff accounts)</li>
+    <li>For a brand-new character: gender (<code>male</code> / <code>female</code>),
+    then an optional display name</li>
+  </ol>
+
+  <h2>Chargen room steps</h2>
   <p>Every answer is typed as a plain word or name, with no command verb.</p>
   <ol>
     <li>Zone: <code>americas</code>, <code>atlantis</code>, or <code>europe</code></li>
@@ -21,11 +34,20 @@
     <li>OCC: <code>list</code>, then the OCC name, e.g. <code>headhunter</code>, or <code>none</code></li>
     <li>Elective skills: <code>skills &lt;category&gt;</code>, then the skill name, e.g. <code>tracking</code></li>
     <li>Secondary skills (if granted)</li>
-    <li>Finish: starting package, languages, teleport to welcome room</li>
+    <li>Finish: starting package, languages, teleport to the zone start room</li>
   </ol>
 
   <h2>Example</h2>
-  <pre>&gt; americas
+  <pre>What account name do you wish? myaccount
+Password: ********
+
+=== Character Select ===
+  1. Myfirst
+  new. Create a new character
+Choose a character number, or 'new': new
+Enter a name for your new character: mysecond
+...
+&gt; americas
 &gt; roll
 &gt; reroll
 &gt; human
@@ -42,6 +64,7 @@
   </ul>
 
   <h2>Notes</h2>
-  <p>Disconnect mid-creation resumes from the saved creation_step. Dog Boy auto-assigns a Coalition soldier package.</p>
+  <p>Disconnect mid-creation resumes from the saved <code>creation_step</code>.
+  Dog Boy auto-assigns a Coalition Soldier OCC.</p>
 </body>
 </html>

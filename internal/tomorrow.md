@@ -1,39 +1,14 @@
-Here are two prompts. I've split them by risk: Prompt 1 is pure text/doc changes (zero gameplay risk), Prompt 2 is the three that touch live LPC code.
+Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
 
-***
+Three tasks. Show diffs before applying. Apply only after showing.
 
-**Prompt 1 — send first (low risk, no LPC):**
+Task 1 — MacGuyver: fix persisted Godling save.
+MacGuyver was demoted but their save file still has Godling race and rifts_welcome as start room. Read staff_of_demotion.c — the new offline restore path should have fixed this but the save predates it. Run offline_demote("macguyver") via the daemon directly, or add a one-time admin command fixdemote <name> that calls apply_demote_restore() on any named offline player and writes their save. Whichever approach is cleaner — show it before applying.
 
-> Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
->
-> Three cleanup tasks, all report-then-apply in one pass. Nothing here touches LPC combat, stats, or player data.
->
-> **Task 1 — `start_ambient()` ruling: strip from all 4 rooms.**
-> Find the four files confirmed last session: `domains/Praxis/areas/rockys_bar.c`, `domains/Praxis/areas/splynn/rockys_bar_splynn.c`, `domains/chitown/areas/chitown_burbs.c`, `domains/newcamelot/areas/black_forest.c`. In each, remove the `start_ambient()` call from `reset()` (and any `#include` or `inherit` line that becomes dead after removal). Do not touch anything else in those files. Confirm whether `std/rifts_ambient.c` is still referenced anywhere else in the tree after the removals; if it is orphaned entirely, note it but do not delete it.
->
-> **Task 2 — Stale `sirname` help file.**
-> Find `docs/help/user/sirname` (or wherever it actually lives — confirm the path first). Rewrite it as a short redirect notice: the `sirname` command has been removed; use `rp_title` instead. Match the formatting convention of adjacent help files. If `rp_title` has its own help file, confirm its path and cross-reference it. Do not rewrite the `rp_title` help file itself.
->
-> **Task 3 — `setter.c` skip-OCC chargen not setting `rifts_occ_flags`.**
-> Find `setter.c` (confirm path). Locate the skip-OCC chargen path(s) that set `rifts_occ` but omit `rifts_occ_flags`. Add the same default `rifts_occ_flags` initialisation that `login.c`'s bootstrap sets (confirmed working from the earlier null-guard sweep). Belt-and-braces fix only — do not change any other setter logic.
->
-> Show diffs for all three tasks before applying. Apply only after showing diffs, then commit with a descriptive message. Do not push. End with the full session-end report format required by CLAUDE.md.
+Task 2 — Thurtea landing in rifts_welcome instead of workroom.
+After the hotfix reboot, Thurtea logged in and landed in domains/Praxis/rifts_welcome instead of /realms/thurtea/workroom. This should not happen for admin. Read login.c — find where the start room is resolved for an existing character and confirm staff always restore to their saved room or fallback to their workroom, never to rifts_welcome.
 
-***
+Task 3 — Race/OCC starting equipment audit.
+Read domains/Praxis/setter.c and the race/OCC definition files. For every race and OCC that has a give_starting_eq() call or equivalent, verify the items granted match the Rifts tabletop starting equipment. Flag any race or OCC where starting gear is missing, wrong, or empty. Do not fix all of them this session — produce a prioritized list of what is wrong, fix the top 5 most-played races/OCCs (human, dog boy, juicer, ley line walker, cyber-knight), and leave the rest documented in docs/starting-equipment-audit.md for future passes.
 
-**Prompt 2 — send after Prompt 1 is confirmed and committed:**
-
-> Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
->
-> Three gameplay fixes. Investigate first, show diffs, apply only after showing diffs.
->
-> **Task 1 — Splynn e-clip economy: scope and build.**
-> Find `rocky_barkeep.c` and any existing Splynn shop/vendor NPCs under `domains/Praxis/areas/splynn/`. Determine: (a) whether any player-facing e-clip purchase or recharge exists anywhere in the tree (grep for `e-clip`, `eclip`, `e_clip`, `recharge` in domains/); (b) what rifle/ranged weapon items already exist that consume e-clips. Then build the minimum viable e-clip economy: a Splynn vendor NPC that sells e-clips and a recharge point (either a separate object or added to an existing vendor), wired into the Splynn area. Follow existing working vendor patterns (e.g. `alvurron_dealer.c`, `kittani_merchant.c`). All locals declared at top of function per FluffOS C89 rule.
->
-> **Task 2 — Camelot flame hilt respawn timer.**
-> Find the flame hilt object and its reset/respawn logic (confirm exact file path). The current behaviour is respawn on driver reset (~30-60 real min). The target is once per in-game day (6h40m real time). Search the codebase for any existing timed-respawn or call_out-based daily-respawn pattern to use as a model. If none exists, implement a `call_out` based approach in the item's or its room's reset logic. Show the pattern you're copying or proposing before applying.
->
-> **Task 3 — `webclient.html` TLS fallback notice.**
-> The live site at `https://aethermud.com/webclient.html` shows a WebSocket timeout because the bridge on port 1129 is plain `ws://` and the browser requires `wss://` on an HTTPS page. This is a known infrastructure gap — do not attempt to fix the bridge or nginx config (that's VPS-side, out of scope). Instead, update `www/webclient.html` so that when the WebSocket `onerror`/`onclose` fires on initial connect, it displays a clear user-facing message in the terminal area: something like "Browser play is temporarily unavailable on the live site. Connect with Mudlet or telnet: aethermud.com port 1122." Replace the generic "Disconnected" state with this specific message. The Reconnect button can stay.
->
-> Show diffs for all three tasks before applying. Apply only after showing diffs, then commit with a descriptive message. Do not push. End with the full session-end report format required by CLAUDE.md.
+End with session-end report per CLAUDE.md.
