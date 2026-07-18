@@ -1472,6 +1472,9 @@ private void do_race_spells(object player, string race) {
     spells = implode(grants, ";");
     ppe_base = 0;
     switch(lower_case(race)) {
+    case "godling":
+        ppe_base = 2000;
+        break;
     case "great horned dragon":
         ppe_base = 200;
         break;
@@ -1524,6 +1527,9 @@ private void do_race_psionics(object player, string race) {
     if(!existing) existing = "";
     isp_bonus = 0;
     switch(lower_case(race)) {
+    case "godling":
+        isp_bonus = 2000;
+        break;
     case "mind melter":
         isp_bonus = 50;
         break;
