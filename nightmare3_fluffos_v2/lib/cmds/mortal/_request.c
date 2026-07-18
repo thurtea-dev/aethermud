@@ -7,7 +7,7 @@
 
 inherit DAEMON;
 
-#define TITLE_LOG "/log/title_requests"
+#define TITLE_LOG "title_requests"
 
 static int valid_title_char(int c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ';

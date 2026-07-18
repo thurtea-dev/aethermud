@@ -7,7 +7,7 @@
 
 inherit DAEMON;
 
-#define TITLE_GRANT_LOG "/log/title_grants"
+#define TITLE_GRANT_LOG "title_grants"
 
 int cmd_grant(string str) {
     string rest;

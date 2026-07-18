@@ -68,7 +68,7 @@ int cmd_grantrace(string str) {
 
     catch(target->save_player(pname));
 
-    log_file("/log/adm/grantrace",
+    log_file("adm/grantrace",
         ctime(time()) + " " + (string)this_player()->query_name() +
         " granted race package to " + pname + " (" + race + ")\n");
     return 1;

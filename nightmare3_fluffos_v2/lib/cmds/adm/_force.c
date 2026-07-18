@@ -30,7 +30,7 @@ int cmd_force(string str) {
     }
     target->force_me(cmd);
     write("You force " + capitalize(name) + " to: " + cmd + "\n");
-    log_file("/log/adm/force",
+    log_file("adm/force",
         ctime(time()) + " " + (string)this_player()->query_name() +
         " forced " + name + " to: " + cmd + "\n");
     return 1;

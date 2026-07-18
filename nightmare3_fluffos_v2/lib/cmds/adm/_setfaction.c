@@ -61,7 +61,7 @@ int cmd_setfaction(string str) {
             (string)this_player()->query_cap_name() + ".\n");
         write("Removed " + capitalize(pname) + " from faction '" +
               old_faction + "'.\n");
-        log_file("/log/adm/setfaction",
+        log_file("adm/setfaction",
             ctime(time()) + " " + (string)this_player()->query_name() +
             " removed " + pname + " from " + old_faction + "\n");
         return 1;
@@ -84,7 +84,7 @@ int cmd_setfaction(string str) {
     tell_object(target,
         "Your faction has been set to '" + faction + "' by " +
         (string)this_player()->query_cap_name() + ".\n");
-    log_file("/log/adm/setfaction",
+    log_file("adm/setfaction",
         ctime(time()) + " " + (string)this_player()->query_name() +
         " set " + pname + " to " + faction + "\n");
     return 1;

@@ -54,7 +54,7 @@ int cmd_grantskills(string str) {
 
     catch(target->save_player(pname));
 
-    log_file("/log/adm/grantskills",
+    log_file("adm/grantskills",
         ctime(time()) + " " + (string)this_player()->query_name() +
         " granted OCC skills to " + pname +
         " (OCC: " + occ + ")\n");

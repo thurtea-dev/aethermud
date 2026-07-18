@@ -302,7 +302,7 @@ void do_assign(string wiz) {
           " write access, run:\n"
           "   grant write to " + lower_case(wiz) +
           " on /domains/" + pending_sub + "/)");
-    catch(log_file("/log/adm/domain_log", this_player()->query_name() +
+    catch(log_file("adm/domain_log", this_player()->query_name() +
         " assigned domain " + pending_sub + " to " + wiz + ": " +
         ctime(time()) + "\n"));
 }
@@ -325,7 +325,7 @@ void do_grant(string domain) {
           "   grant write to " + lower_case(pending_sub) +
           " on /domains/" + domain + "/\n"
           " which records it in /domains/" + domain + "/adm/access.c.)");
-    catch(log_file("/log/adm/domain_log", this_player()->query_name() +
+    catch(log_file("adm/domain_log", this_player()->query_name() +
         " granted " + pending_sub + " access to " + domain + ": " +
         ctime(time()) + "\n"));
 }
@@ -338,7 +338,7 @@ void do_revoke(string domain) {
     write("(Logged only. To make it effective, an admin must remove the\n"
           " grant from /domains/" + domain + "/adm/access.c -- there is no\n"
           " revoke command; edit the file or call its remove_access().)");
-    catch(log_file("/log/adm/domain_log", this_player()->query_name() +
+    catch(log_file("adm/domain_log", this_player()->query_name() +
         " revoked " + pending_sub + " from " + domain + ": " +
         ctime(time()) + "\n"));
 }

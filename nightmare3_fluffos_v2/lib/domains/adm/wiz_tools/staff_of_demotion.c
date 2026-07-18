@@ -221,7 +221,7 @@ void do_promote(string pos) {
     write(capitalize(pending_sub) + " promoted to " + pos + ".");
     logline = this_player()->query_name() + " promoted " + pending_sub +
         " to " + pos + ": " + ctime(time()) + "\n";
-    catch(log_file("/log/adm/staff_promotions", logline));
+    catch(log_file("adm/staff_promotions", logline));
 }
 
 void do_setlevel(string val) {

@@ -98,7 +98,7 @@ private void wipe_one(string name) {
     if(file_size(postal) == -2) rm_tree(postal);
     if(file_size(realm)  == -2) rm_tree(realm);
 
-    log_file("/log/adm/playerwipes",
+    log_file("adm/playerwipes",
         ctime(time()) + " " + (string)this_player()->query_name() +
         " wiped " + name + "\n");
 }

@@ -313,9 +313,13 @@ After editing any of these: run `./mud.sh stop && ./mud.sh start`
 from the shell. Never tell the user warmboot is sufficient for these.
 
 ### 6. Log path double-slash bug
-Log paths must use literal strings. Do NOT concatenate LOG_DIR with
-a path that already starts with /log/. Use "/log/adm/setrole" not
-LOG_DIR + "/log/setrole".
+Two different conventions; mixing them causes /log//log/ paths:
+- log_file() (the simulefun) prepends /log/ itself. Pass a path
+  RELATIVE to /log: log_file("adm/setrole", ...). Never pass a path
+  starting with /log/ (all such call sites were fixed 2026-07-17).
+- write_file() takes the literal absolute path: "/log/adm/setrole".
+Never concatenate LOG_DIR/DIR_LOGS with a path that already starts
+with /log/.
 
 ### 7. Ambient messages
 Do NOT add set_ambient_messages() or start_ambient() to rooms.
@@ -329,7 +333,8 @@ line. Hardcoding NPC names in set_long() causes them to appear
 twice and in the wrong position (above exits).
 
 ### 9. Setrole log path
-/cmds/adm/_setrole.c logs to "/log/adm/setrole" (literal string).
+/cmds/adm/_setrole.c logs via log_file("adm/setrole", ...), which
+writes to /log/adm/setrole (see rule 6 for the two conventions).
 
 ### 10. Wiz tools location
 Admin/wizard tools live at /domains/adm/wiz_tools/ NOT /domains/Praxis/wiz_tools/
