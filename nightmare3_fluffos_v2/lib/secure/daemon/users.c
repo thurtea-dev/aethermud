@@ -2,6 +2,7 @@
 #include <objects.h>
 #include <security.h>
 #include <commands.h>
+#include <daemons.h>
 #include "users.h"
 
 inherit DAEMON;
@@ -13,14 +14,23 @@ void create() {
 }
 
 void change_password(string who, string passwd) {
+    string crypted;
+    string acct;
+
     if(!((int)master()->valid_apply( ({ "law" }) ))) return;
     if(!stringp(who) || !stringp(passwd)) return;
     if(member_group(who, "assist") || member_group(who, "superuser")) return;
     if(!user_exists(who)) return;
     if(find_player(who)) return;
+    crypted = crypt(passwd, 0);
     unguarded((: restore_object, DIR_USERS+"/"+who[0..0]+"/"+who :));
-    this_object()->set_password(crypt(passwd, 0));
+    this_object()->set_password(crypted);
     unguarded((: save_object, DIR_USERS+"/"+who[0..0]+"/"+who :));
+    /* Keep login-account hash aligned with the character password. */
+    acct = (string)ACCOUNT_D->account_for_character(who);
+    if(!acct || !sizeof(acct)) acct = who;
+    if((int)ACCOUNT_D->account_exists(acct))
+        ACCOUNT_D->set_password(acct, crypted);
 }
 
 void xmote(string who, string pos, int lev) {
@@ -32,6 +42,25 @@ void xmote(string who, string pos, int lev) {
     if(pos) this_object()->set_position(pos);
     if(lev) this_object()->set_level(lev);
     unguarded((: save_object, DIR_USERS+"/"+who[0..0]+"/"+who :));
+}
+
+/* Full demote restore for an offline save. player_object() is
+   login-only, so restore into this daemon (inherits OB_USER), apply
+   staff_of_demotion restore, then save back. */
+int offline_demote(string who) {
+    object staff;
+    string path;
+
+    if(!((int)master()->valid_apply( ({ "assist" }) ))) return 0;
+    if(!stringp(who) || !user_exists(who)) return 0;
+    if(find_player(who)) return 0;
+    path = DIR_USERS + "/" + who[0..0] + "/" + who;
+    unguarded((: restore_object, path :));
+    staff = load_object("/domains/adm/wiz_tools/staff_of_demotion");
+    if(!staff) return 0;
+    staff->apply_demote_restore(this_object());
+    unguarded((: save_object, path :));
+    return 1;
 }
 
 void suicide(string who) {

@@ -20,6 +20,10 @@ string *characters;
 string email;
 string last_character;
 
+/* Prototypes: callers above definitions need these on FluffOS 2.9. */
+int is_staff_account(string name);
+int owns_character(string acct, string charname);
+
 void create() {
     ::create();
     set_no_clean(1);
@@ -124,19 +128,90 @@ string *query_characters(string name) {
 
 int query_max_characters() { return MAX_ACCOUNT_CHARS; }
 
+/* Staff accounts have no character cap. */
+int at_character_limit(string acct) {
+    string *chars;
+    int staff;
+
+    if(!acct || !sizeof(acct)) return 1;
+    acct = lower_case(acct);
+    staff = is_staff_account(acct);
+    if(staff) return 0;
+    chars = query_characters(acct);
+    return sizeof(chars) >= MAX_ACCOUNT_CHARS;
+}
+
+int set_password(string name, string crypted_pass) {
+    if(!name || !crypted_pass || !sizeof(crypted_pass)) return 0;
+    name = lower_case(name);
+    if(!load_account(name)) return 0;
+    password = crypted_pass;
+    save_account();
+    clear_slot();
+    return 1;
+}
+
+string query_password_hash(string name) {
+    string pass;
+
+    if(!name || !sizeof(name)) return 0;
+    name = lower_case(name);
+    if(!load_account(name)) return 0;
+    pass = password;
+    clear_slot();
+    return pass;
+}
+
+/* Find which account owns a character name. Scans login_accounts. */
+string account_for_character(string charname) {
+    string *letters;
+    string *files;
+    string *chars;
+    string acct;
+    string dir;
+    int i, j, k;
+
+    if(!charname || !sizeof(charname)) return 0;
+    charname = lower_case(charname);
+    if(account_exists(charname) &&
+       owns_character(charname, charname))
+        return charname;
+    if(file_size(LOGIN_ACCOUNTS_DIR) != -2) return 0;
+    letters = get_dir(LOGIN_ACCOUNTS_DIR + "/");
+    if(!letters) return 0;
+    for(i = 0; i < sizeof(letters); i++) {
+        if(!letters[i] || sizeof(letters[i]) != 1) continue;
+        dir = LOGIN_ACCOUNTS_DIR + "/" + letters[i];
+        if(file_size(dir) != -2) continue;
+        files = get_dir(dir + "/");
+        if(!files) continue;
+        for(j = 0; j < sizeof(files); j++) {
+            if(strsrch(files[j], __SAVE_EXTENSION__) == -1) continue;
+            acct = replace_string(files[j], __SAVE_EXTENSION__, "");
+            chars = query_characters(acct);
+            for(k = 0; k < sizeof(chars); k++) {
+                if(chars[k] == charname) return acct;
+            }
+        }
+    }
+    return 0;
+}
+
 int add_character(string acct, string charname) {
     string *chars;
+    int staff;
 
     if(!acct || !charname) return 0;
     acct = lower_case(acct);
     charname = lower_case(charname);
+    staff = is_staff_account(acct);
     if(!load_account(acct)) return 0;
     chars = characters ? characters : ({});
     if(member_array(charname, chars) != -1) {
         clear_slot();
         return 0;
     }
-    if(sizeof(chars) >= MAX_ACCOUNT_CHARS) {
+    if(!staff && sizeof(chars) >= MAX_ACCOUNT_CHARS) {
         clear_slot();
         return 0;
     }

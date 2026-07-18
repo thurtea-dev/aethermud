@@ -16,8 +16,11 @@ static private string pending_promote_pos;
 void do_player_action();
 private void apply_promote_position();
 private void demote_restore(object ob);
+void apply_demote_restore(object ob);
 private void strip_godling_package(object ob);
 private void demote_force_quit(object ob);
+private int is_mortal_start_room(string room);
+private string pick_mortal_start(object ob);
 
 void create() {
     ::create();
@@ -155,7 +158,8 @@ void do_player_action() {
     switch(pending_action) {
     case "demote":
         if(ob) {
-            if(!creatorp(ob)) {
+            if(!creatorp(ob) &&
+               lower_case((string)ob->query_race()) != "godling") {
                 write(capitalize(pending_sub) + " is not a wizard.");
                 break;
             }
@@ -163,10 +167,14 @@ void do_player_action() {
             write("Demoted " + capitalize(pending_sub) +
                 " to mortal and restored their pre-wizard identity.");
         } else if(user_exists(pending_sub)) {
-            USERS_D->xmote(pending_sub, "player", 0);
-            write("Stripped wizard position from offline player " +
-                capitalize(pending_sub) + ". Race and stat restoration " +
-                "needs them online: rerun demote once they log in.");
+            /* player_object() is login-only; USERS_D restores the save
+               into itself and calls apply_demote_restore(). */
+            if((int)USERS_D->offline_demote(pending_sub))
+                write("Demoted offline player " + capitalize(pending_sub) +
+                    " to mortal and restored their pre-wizard identity.");
+            else
+                write("Unable to demote offline player " +
+                    capitalize(pending_sub) + ".");
         } else {
             write("No such player: " + capitalize(pending_sub) + ".");
         }
@@ -269,21 +277,57 @@ private void demote_force_quit(object ob) {
     object sink;
 
     if(!ob || !objectp(ob)) return;
-    tell_object(ob,
-        "Your wizard status has been revoked. Please reconnect.\n");
+    if(interactive(ob))
+        tell_object(ob,
+            "Your wizard status has been revoked. Please reconnect.\n");
+    /* Explicit save so race, stats, and primary_start hit the .o file. */
     catch(ob->save_player((string)ob->query_name()));
-    sink = new(OBJECT);
-    if(sink) {
-        catch(exec(sink, ob));
-        if(objectp(sink)) destruct(sink);
+    if(interactive(ob)) {
+        sink = new(OBJECT);
+        if(sink) {
+            catch(exec(sink, ob));
+            if(objectp(sink)) destruct(sink);
+        }
     }
     if(objectp(ob)) catch(ob->remove());
+}
+
+/* Reject wizard workrooms, the wizard hallway, chargen, and rifts_welcome. */
+private int is_mortal_start_room(string room) {
+    if(!room || !sizeof(room)) return 0;
+    if(file_size(room + ".c") <= 0) return 0;
+    if(strsrch(room, "/realms/") == 0) return 0;
+    if(strsrch(room, "/domains/wizards/") == 0) return 0;
+    if(room == "/domains/Praxis/rifts_welcome") return 0;
+    if(room == "/domains/Praxis/setter") return 0;
+    return 1;
+}
+
+private string pick_mortal_start(object ob) {
+    string start_room;
+
+    start_room = (string)ob->getenv("premote_start");
+    if(is_mortal_start_room(start_room)) return start_room;
+    start_room = (string)ob->query_primary_start();
+    if(is_mortal_start_room(start_room)) return start_room;
+    start_room = (string)ob->getenv("start");
+    if(is_mortal_start_room(start_room)) return start_room;
+    if(environment(ob)) {
+        start_room = base_name(environment(ob));
+        if(is_mortal_start_room(start_room)) return start_room;
+    }
+    return "/domains/Praxis/areas/monument_square";
 }
 
 /* Full mortal restoration for a demoted wizard. Reads the premote_*
    env snapshot written by makewiz (see _makewiz.c for the fixed
    premote_stats order). Wizards promoted before the snapshot existed
-   fall back to a fresh reroll for the restored race. */
+   fall back to a fresh reroll for the restored race.
+   Public entry used by USERS_D->offline_demote(). */
+void apply_demote_restore(object ob) {
+    demote_restore(ob);
+}
+
 private void demote_restore(object ob) {
     string race, cls, val, snap, start_room;
     string *parts;
@@ -296,13 +340,18 @@ private void demote_restore(object ob) {
     /* Position first: this also removes wiz_role, has_wiz_tools, and
        every wiz_tools object in inventory via WIZTOOLS_D. */
     ob->set_position("player");
+    ob->remove_env("wiz_role");
 
     race = (string)ob->getenv("premote_race");
-    if(!race || !sizeof(race)) race = "human";
+    if(!race || !sizeof(race) || lower_case(race) == "godling")
+        race = "human";
     cls = (string)ob->getenv("premote_class");
-    if(!cls || !sizeof(cls)) cls = race;
+    if(!cls || !sizeof(cls) || lower_case(cls) == "godling")
+        cls = race;
     ob->set_race(race);
     ob->set_class(cls);
+    /* Completed mortals must not re-enter chargen on next login. */
+    ob->setenv("creation_step", "done");
 
     /* Restore pre-wizard level so setrole-promoted level-20 staff do not
        land as high mortals after demotion. */
@@ -393,13 +442,17 @@ private void demote_restore(object ob) {
     ob->remove_env("TITLE");
     ob->remove_env("whotitle");
 
-    start_room = (string)ob->getenv("premote_start");
-    if(!start_room || !sizeof(start_room) ||
-       file_size(start_room + ".c") <= 0)
-        start_room = "/domains/Praxis/rifts_welcome";
+    start_room = pick_mortal_start(ob);
     ob->set_primary_start(start_room);
+    ob->setenv("start", start_room);
 
     strip_godling_package(ob);
+
+    /* Defense in depth: never leave a demoted player as Godling. */
+    if(lower_case((string)ob->query_race()) == "godling") {
+        ob->set_race("human");
+        race = "human";
+    }
 
     ob->remove_env("premote_race");
     ob->remove_env("premote_class");
@@ -415,11 +468,19 @@ private void demote_restore(object ob) {
     ob->remove_env("premote_spells");
     ob->remove_env("premote_psionics");
 
+    /* Save before quit so race/start_room survive reconnect. */
+    catch(ob->save_player((string)ob->query_name()));
+
     catch(log_file("adm/staff_promotions",
-        (string)this_player()->query_name() + " demoted " +
-        (string)ob->query_name() + " to mortal (" + race + "): " +
+        (string)(this_player() ? this_player()->query_name() : "system") +
+        " demoted " +
+        (string)ob->query_name() + " to mortal (" + race +
+        ", start " + start_room + "): " +
         ctime(time()) + "\n"));
-    demote_force_quit(ob);
+    /* Interactive players must reconnect; offline USERS_D restore
+       must not destroy the users daemon. */
+    if(interactive(ob))
+        demote_force_quit(ob);
 }
 
 void do_promote(string pos) {

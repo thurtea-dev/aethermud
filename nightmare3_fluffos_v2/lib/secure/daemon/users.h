@@ -3,6 +3,7 @@
 
 void change_password(string who, string passwd);
 void xmote(string who, string pos, int lev);
+int offline_demote(string who);
 void suicide(string who);
 static private void delete_user(string who);
 void setup();

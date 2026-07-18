@@ -44,8 +44,10 @@ static private void internal_remove();
 void remove();
 static void show_char_menu();
 static void select_character(string str);
+static void get_new_char_name(string str);
 static private int enter_character(string charname);
 static private void prompt_password();
+static private void sync_login_account_env();
 
 void create() { 
     __Name = ""; 
@@ -206,7 +208,7 @@ static void show_char_menu() {
         }
     }
     message("system",
-      "  new. Create a new character (not available yet)\n", this_object());
+      "  new. Create a new character\n", this_object());
     message("prompt",
       "Choose a character number, or 'new': ", this_object());
     input_to("select_character");
@@ -214,6 +216,7 @@ static void show_char_menu() {
 
 static void select_character(string str) {
     string *chars;
+    string sib;
     int n;
 
     if(!str || !sizeof(str)) {
@@ -222,10 +225,26 @@ static void select_character(string str) {
     }
     str = lower_case(str);
     if(str == "new" || str == "n") {
-        message("system",
-          "\nNew character creation is not available yet.\n"
-          "Ask staff or wait for the next update.\n", this_object());
-        show_char_menu();
+        if((int)ACCOUNT_D->at_character_limit(__Name)) {
+            message("system",
+              "\nThis account already has the maximum of 5 characters.\n"
+              "Delete or retire one before creating another.\n",
+              this_object());
+            show_char_menu();
+            return;
+        }
+        sib = (string)ACCOUNT_D->sibling_online(__Name, 0);
+        if(sib) {
+            message("system", sprintf(
+              "\nAnother character on this account (%s) is already logged in.\n"
+              "Log out that character before creating a new one.\n",
+              capitalize(sib)), this_object());
+            show_char_menu();
+            return;
+        }
+        message("prompt",
+          "\nEnter a name for your new character: ", this_object());
+        input_to("get_new_char_name");
         return;
     }
     chars = (string *)ACCOUNT_D->query_characters(__Name);
@@ -242,6 +261,98 @@ static void select_character(string str) {
     }
     if(!enter_character(chars[n - 1]))
         return;
+}
+
+/* Additional character on an existing account: name, then gender/cap-name
+   chargen path. Password is copied from the account hash. */
+static void get_new_char_name(string str) {
+    string name;
+    string pass;
+
+    if(!str || !sizeof(str)) {
+        show_char_menu();
+        return;
+    }
+    __CapName = str;
+    name = convert_name(str);
+    if(!((int)BANISH_D->valid_name(name))) {
+        message("system", sprintf(
+          "\n%s is not a valid character name.\n"
+          "Names must be alphabetic characters no longer than %d letters,\n"
+          "and no less than %d letters.\n",
+          capitalize(name), MAX_USER_NAME_LENGTH, MIN_USER_NAME_LENGTH),
+          this_object());
+        message("prompt", "Character name: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    if(user_exists(name)) {
+        message("system",
+          "\nThat name is already in use. Choose another.\n", this_object());
+        message("prompt", "Character name: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    if((int)ACCOUNT_D->owns_character(__Name, name)) {
+        message("system",
+          "\nThat character is already on this account.\n", this_object());
+        message("prompt", "Character name: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    if(!((int)BANISH_D->allow_logon(name, query_ip_number()))) {
+        message("news", read_file(REGISTRATION_NEWS), this_object());
+        show_char_menu();
+        return;
+    }
+    if((int)ACCOUNT_D->at_character_limit(__Name)) {
+        message("system",
+          "\nThis account already has the maximum of 5 characters.\n",
+          this_object());
+        show_char_menu();
+        return;
+    }
+    if(__Player && !__CopyExists && !interactive(__Player))
+        destruct(__Player);
+    __Player = (object)master()->player_object(name);
+    if(!__Player) {
+        message("system", "\nUnable to create that character.\n",
+          this_object());
+        internal_remove();
+        return;
+    }
+    pass = (string)ACCOUNT_D->query_password_hash(__Name);
+    if(!pass || !sizeof(pass)) {
+        message("system",
+          "\nAccount password missing. Contact staff.\n", this_object());
+        if(__Player && !interactive(__Player)) destruct(__Player);
+        __Player = 0;
+        internal_remove();
+        return;
+    }
+    if(!(int)ACCOUNT_D->add_character(__Name, name)) {
+        message("system",
+          "\nCould not add the character to this account.\n", this_object());
+        if(__Player && !interactive(__Player)) destruct(__Player);
+        __Player = 0;
+        show_char_menu();
+        return;
+    }
+    __CharName = name;
+    __IsNewAccount = 0;
+    __Player->set_password(pass);
+    __Player->setenv("login_account", __Name);
+    ACCOUNT_D->set_last_character(__Name, name);
+    log_file("new_players", sprintf("%s : account %s char %s : %s\n",
+      query_ip_number(), __Name, name, ctime(time())));
+    message("prompt", "\nChoose your gender: Male, Female\nGender: ",
+      this_object());
+    input_to("choose_gender");
+}
+
+static private void sync_login_account_env() {
+    if(__Player && __Name && sizeof(__Name))
+        __Player->setenv("login_account", __Name);
 }
 
 static private int enter_character(string charname) {
@@ -275,6 +386,7 @@ static private int enter_character(string charname) {
         internal_remove();
         return 0;
     }
+    sync_login_account_env();
     if((int)__Player->query_property("permanently_dead")) {
         pd_name   = (string)__Player->query_cap_name();
         pd_level  = (int)__Player->query_property("death_level");
@@ -437,7 +549,8 @@ static void confirm_password(string str2, string str1) {
             ACCOUNT_D->create_account(__Name, crypted, ({ __Name }));
             __CharName = __Name;
         }
-        __Player->set_password(crypted); 
+        __Player->set_password(crypted);
+        __Player->setenv("login_account", __Name);
         message("prompt", "\nChoose your gender: Male, Female\nGender: ",
           this_object());
         input_to("choose_gender");
@@ -470,8 +583,11 @@ static void choose_gender(string str) {
 }
 
 static void choose_cap_name(string str) {
+    string who;
+
     if(!str || str == "") str = capitalize(__CapName);
-    if(!((int)BANISH_D->valid_cap_name(str, __Name))) {
+    who = __CharName && sizeof(__CharName) ? __CharName : __Name;
+    if(!((int)BANISH_D->valid_cap_name(str, who))) {
         message("prompt", "Incorrect format.  Choose again: ", this_object());
         input_to("choose_cap_name");
         return;
@@ -501,11 +617,9 @@ static void enter_real_name(string str) {
     offer_admin_promotion();
   }
 
-/* Only reachable from the brand-new-account path (enter_real_name(),
- * itself only reached via new_user()). Returning-player logins go
- * through character select and never pass through here. */
+/* Brand-new account only. Additional characters skip the founder offer. */
 static void offer_admin_promotion() {
-    if((int)__Player->any_admin_exists()) {
+    if(!__IsNewAccount || (int)__Player->any_admin_exists()) {
         exec_user();
         return;
     }

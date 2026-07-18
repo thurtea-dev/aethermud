@@ -12,6 +12,7 @@
 #define MIN_HISTORY_SIZE         10
 
 void set_cwd_home();
+private string wiz_prompt_color();
 
 private string __CurrentWorkingDirectory;
 private mapping __Nicknames, __Aliases, __Xverbs; 
@@ -241,8 +242,23 @@ nomask static int cmd_work(string str) {
     return 1;
 }
 
+/* Match _who.c role colors for creator cwd prompts. */
+private string wiz_prompt_color() {
+    string role;
+
+    if(!creatorp(this_object())) return "";
+    role = (string)getenv("wiz_role");
+    if(!role || !sizeof(role)) return "";
+    if(role == "admin") return "%^BOLD%^%^RED%^";
+    if(role == "coding") return "%^BOLD%^%^BLUE%^";
+    if(role == "rp" || role == "roleplay") return "%^BOLD%^%^GREEN%^";
+    if(role == "domain") return "%^RED%^";
+    if(role == "apprentice") return "%^CYAN%^";
+    return "";
+}
+
 nomask string write_prompt() { 
-    string tmp, ret; 
+    string tmp, ret, color; 
     int x;
  
     if((ret = __Prompt) == DEFAULT_PROMPT) {
@@ -250,6 +266,9 @@ nomask string write_prompt() {
             tmp = (string)this_object()->query_rifts_prompt();
             if(stringp(tmp) && tmp != "") ret = tmp;
         }
+        color = wiz_prompt_color();
+        if(color && sizeof(color))
+            ret = color + ret + "%^RESET%^";
         message("prompt", ret, this_object());
         return ret;
     }
@@ -335,6 +354,9 @@ nomask string write_prompt() {
                 break;
         }
     }
+    color = wiz_prompt_color();
+    if(color && sizeof(color))
+        ret = color + ret + "%^RESET%^";
     message("prompt", ret, this_object());
     return ret;
 } 

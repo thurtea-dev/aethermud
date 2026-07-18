@@ -5,9 +5,24 @@
  */
 
 #include <std.h>
+#include <daemons.h>
 #include "/secure/include/flags.h"
 
 inherit "/std/daemon";
+
+private void sync_account_password(object who, string crypted) {
+    string acct;
+
+    if(!who || !crypted || !sizeof(crypted)) return;
+    acct = (string)who->getenv("login_account");
+    if(!acct || !sizeof(acct))
+        acct = (string)ACCOUNT_D->account_for_character(
+          (string)who->query_name());
+    if(!acct || !sizeof(acct))
+        acct = (string)who->query_name();
+    if(acct && (int)ACCOUNT_D->account_exists(acct))
+        ACCOUNT_D->set_password(acct, crypted);
+}
 
 int cmd_password(string str) {
     string nom;
@@ -51,11 +66,15 @@ static void enter_new(string pass) {
 }
 
 static void confirm_new(string pass2, string pass1) {
+    string crypted;
+
     if(pass1 != pass2) {
         message("system", "\nPasswords do not match. Password not changed.", this_player());
         return;
     }
-    this_player()->set_password(crypt(pass2, 0));
+    crypted = crypt(pass2, 0);
+    this_player()->set_password(crypted);
+    sync_account_password(this_player(), crypted);
     message("system", "\nPassword changed successfully.", this_player());
 }
 
