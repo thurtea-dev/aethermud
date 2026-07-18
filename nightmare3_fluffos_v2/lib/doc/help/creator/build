@@ -1,0 +1,84 @@
+AETHERMUD CREATOR GUIDE: BUILD (QUICK CREATION SYSTEM)
+
+The build command is the Quick Creation System (QCS) dispatcher. It is
+granted by the Staff of Creation, which coding wizards receive on
+promotion and must hold in inventory. Admin wizards may also use it.
+Files are generated under your realm: /realms/<you>/area/ in the
+subdirectories room/, npc/, weap/, and armor/. Most verbs require you
+to be standing inside your own realm.
+
+Type build with no arguments (or build help) for a quick summary
+in-game.
+
+CREATING THINGS
+
+  build create room <direction> <filename>
+      Makes a new room file, links it from your current room in the
+      given direction, and adds the reverse exit back.
+      Example: build create room north guard_post
+
+  build create npc <filename>
+      Makes a new NPC file from the QCS template.
+      Example: build create npc bandit
+
+  build create weapon <filename>
+      Makes a new weapon file.
+      Example: build create weapon vibro_knife
+
+  build create armor <filename>
+      Makes a new armor file.
+      Example: build create armor leather_jacket
+
+MODIFYING THINGS
+
+  build modify here <property> <value>
+      Changes a property of the room you are standing in.
+      Example: build modify here short A dusty guard post
+
+  build modify <filename> <property> <value>
+      Changes a property of a file in your realm area.
+      Example: build modify bandit level 5
+
+  Room properties:   short, long, light, indoors
+  NPC properties:    name, short, long, level, hp, race, occ, align, mdc
+  Weapon properties: name, short, long, wc, type, damage (NdN), mdc (0/1)
+  Armor properties:  name, short, long, ac, ar, sdc, mdc, slot
+
+  Files recompile automatically after each modify.
+
+EXITS AND POPULATION
+
+  build add exit <direction> <path>
+      Adds an exit from your current room to the given room path.
+      Example: build add exit east /realms/you/area/room/armory
+
+  build add <npcfile> to here
+      Adds a reset() spawn of the NPC to your current room, so it
+      repopulates after reboots.
+      Example: build add bandit to here
+
+  build add <npcfile> to <roomfile>
+      Same, but for a named room file instead of the current room.
+
+OTHER VERBS
+
+  build delete <object>       Removes an object in the room (not living).
+  build clone <filename>      Clones a file from your realm area into
+                              your inventory (NPCs go to the room).
+  build about <file|here>     Summary of a generated file.
+  build more <file|here>      Full source listing of a generated file.
+
+Held-staff extras (same tool, own verbs, no build prefix):
+  clone <path>                Clone any file by path or realm name.
+  purge <object>              Destroy a non-living object in the room.
+
+NOTES
+
+  - QCS requires the Staff of Creation in your inventory. Losing the
+    staff disables all build verbs; it returns on login (autoload).
+  - Generated files are plain LPC. You can hand-edit them afterward
+    with ed and reload with the staff or an update from an admin.
+  - Filenames are sanitized to lowercase letters, digits, and
+    underscores.
+
+See also: qcs, ed

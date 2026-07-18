@@ -10,7 +10,7 @@ these are standalone pages, not LPC.
 - `admin.html`, `apprentice.html`, `coding.html`, `domain.html`,
   `qcs.html`, `roleplay.html` - staff role guides.
 - `chargen.html` - player-facing character generation guide (kept in
-  sync with the actual chargen flow in `secure/std/setter.c` /
+  sync with the actual chargen flow in `domains/Praxis/setter.c` /
   `daemon/chargen_guide.c`).
 - `occs.html`, `races.html`, `world.html` - reference pages for OCCs,
   races, and the game world.

@@ -1,0 +1,19 @@
+AETHERMUD CREATOR GUIDE: QCS
+
+QCS is the Quick Creation System: template-driven building of rooms,
+NPCs, weapons, and armor under /realms/<you>/area/ without writing LPC
+by hand.
+
+All QCS verbs are used through the build command, granted by the Staff
+of Creation (held in inventory; coding and admin wizards only):
+
+  build create room <dir> <file>     build create npc <file>
+  build create weapon <file>         build create armor <file>
+  build modify here <prop> <value>   build modify <file> <prop> <value>
+  build add exit <dir> <path>        build add <npcfile> to here
+  build delete <object>              build clone <file>
+  build about <file|here>            build more <file|here>
+
+For full syntax, property lists, and examples: help build
+
+See also: build, ed

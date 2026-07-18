@@ -274,6 +274,10 @@ int qcs_dispatch(string verb, string args) {
     if(verb == "more") {
         return (int)"/cmds/creator/_qcs_room"->qcs_about(this_player(), args, 1);
     }
+    if(verb == "help") {
+        qcs_help();
+        return 1;
+    }
     write("Unknown QCS command. Type: qcs\n");
     return 1;
 }

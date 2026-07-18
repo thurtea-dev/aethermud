@@ -15,6 +15,7 @@ static private string pending_promote_pos;
 
 void do_player_action();
 private void apply_promote_position();
+private void demote_restore(object ob);
 
 void create() {
     ::create();
@@ -152,10 +153,21 @@ void do_player_action() {
     switch(pending_action) {
     case "demote":
         if(ob) {
-            ob->set_position("player");
-            ob->save_player((string)ob->query_name());
+            if(!creatorp(ob)) {
+                write(capitalize(pending_sub) + " is not a wizard.");
+                break;
+            }
+            demote_restore(ob);
+            write("Demoted " + capitalize(pending_sub) +
+                " to mortal and restored their pre-wizard identity.");
+        } else if(user_exists(pending_sub)) {
+            USERS_D->xmote(pending_sub, "player", 0);
+            write("Stripped wizard position from offline player " +
+                capitalize(pending_sub) + ". Race and stat restoration " +
+                "needs them online: rerun demote once they log in.");
+        } else {
+            write("No such player: " + capitalize(pending_sub) + ".");
         }
-        write("Demoted " + capitalize(pending_sub) + " to player (if online).");
         break;
     case "goto":
         if(!ob) { write("Player not found online.\n"); return; }
@@ -185,6 +197,128 @@ void do_player_action() {
 private void apply_promote_position() {
     if(pending_promote_ob)
         pending_promote_ob->set_position(pending_promote_pos);
+}
+
+/* Full mortal restoration for a demoted wizard. Reads the premote_*
+   env snapshot written by makewiz (see _makewiz.c for the fixed
+   premote_stats order). Wizards promoted before the snapshot existed
+   fall back to a fresh reroll for the restored race. */
+private void demote_restore(object ob) {
+    string race, cls, val, snap, start_room;
+    string *parts;
+    string *stat_names;
+    string *rflags;
+    mapping rolls;
+    string *keys_arr;
+    int i, pe, hp, sdc, mdc;
+
+    /* Position first: this also removes wiz_role, has_wiz_tools, and
+       every wiz_tools object in inventory via WIZTOOLS_D. */
+    ob->set_position("player");
+
+    race = (string)ob->getenv("premote_race");
+    if(!race || !sizeof(race)) race = "human";
+    cls = (string)ob->getenv("premote_class");
+    if(!cls || !sizeof(cls)) cls = race;
+    ob->set_race(race);
+    ob->set_class(cls);
+
+    snap = (string)ob->getenv("premote_stats");
+    stat_names = ({ "IQ", "ME", "MA", "PS", "PP", "PE", "PB", "Spd",
+        "MDC", "max_MDC", "SDC", "max_SDC", "is_MDC", "rifts_hp",
+        "max_rifts_hp", "PPE", "max_PPE", "ISP", "max_ISP" });
+    if(snap && sizeof(parts = explode(snap, " ")) >= 19) {
+        for(i = 0; i < 19; i++)
+            ob->set_stats(stat_names[i], to_int(parts[i]));
+    } else {
+        rolls = (mapping)RIFTS_D->do_rifts_rolls(race);
+        if(rolls) {
+            keys_arr = keys(rolls);
+            for(i = 0; i < sizeof(keys_arr); i++)
+                ob->set_stats(keys_arr[i], rolls[keys_arr[i]]);
+        }
+        pe = (int)ob->query_stats("PE");
+        hp = (int)RIFTS_D->init_hp(race, pe);
+        ob->set_stats("rifts_hp", hp);
+        ob->set_stats("max_rifts_hp", hp);
+        if((int)RIFTS_D->is_mdc_race(race)) {
+            mdc = (int)RIFTS_D->init_mdc(race, pe);
+            ob->set_stats("MDC", mdc);
+            ob->set_stats("max_MDC", mdc);
+            sdc = pe * 2;
+            ob->set_stats("SDC", sdc);
+            ob->set_stats("max_SDC", sdc);
+            ob->set_stats("is_MDC", 1);
+        } else {
+            sdc = (int)RIFTS_D->init_sdc(race, pe);
+            ob->set_stats("SDC", sdc);
+            ob->set_stats("max_SDC", sdc);
+            ob->set_stats("MDC", 0);
+            ob->set_stats("max_MDC", 0);
+            ob->set_stats("is_MDC", 0);
+        }
+    }
+    if((int)RIFTS_D->is_mdc_race(race)) {
+        ob->set_property("rifts_mdc_race", 1);
+        ob->setenv("rifts_mdc_race", "1");
+    } else {
+        ob->remove_property("rifts_mdc_race");
+        ob->remove_env("rifts_mdc_race");
+    }
+
+    val = (string)ob->getenv("premote_occ");
+    ob->setenv("rifts_occ", (val && sizeof(val)) ? val : "none");
+    val = (string)ob->getenv("premote_occ_flags");
+    if(val && sizeof(val)) ob->setenv("rifts_occ_flags", val);
+    else ob->remove_env("rifts_occ_flags");
+    val = (string)ob->getenv("premote_flags");
+    if(val && sizeof(val)) {
+        ob->setenv("rifts_flags", val);
+    } else {
+        rflags = (string *)RIFTS_D->query_race_flags(race);
+        if(rflags && sizeof(rflags))
+            ob->setenv("rifts_flags", implode(rflags, ","));
+        else ob->remove_env("rifts_flags");
+    }
+    val = (string)ob->getenv("premote_alignment");
+    if(val && sizeof(val)) ob->setenv("rifts_alignment", val);
+    val = (string)ob->getenv("premote_align");
+    if(val && sizeof(val)) ob->set_alignment(to_int(val));
+    else ob->set_alignment(0);
+    val = (string)ob->getenv("premote_language");
+    ob->setenv("active_language", (val && sizeof(val)) ? val : "American");
+
+    ob->remove_env("speak_all_languages");
+    ob->remove_env("always_known");
+    ob->remove_env("TITLE");
+    ob->remove_env("whotitle");
+
+    start_room = (string)ob->getenv("premote_start");
+    if(!start_room || !sizeof(start_room) ||
+       file_size(start_room + ".c") <= 0)
+        start_room = "/domains/Praxis/rifts_welcome";
+    ob->set_primary_start(start_room);
+
+    ob->remove_env("premote_race");
+    ob->remove_env("premote_class");
+    ob->remove_env("premote_occ");
+    ob->remove_env("premote_occ_flags");
+    ob->remove_env("premote_flags");
+    ob->remove_env("premote_alignment");
+    ob->remove_env("premote_align");
+    ob->remove_env("premote_language");
+    ob->remove_env("premote_start");
+    ob->remove_env("premote_stats");
+
+    tell_object(ob,
+        "You have been returned to mortal life. Your former body and\n"
+        "abilities are restored, and the world awaits you again.\n");
+    ob->move_player(start_room);
+    ob->save_player((string)ob->query_name());
+    catch(log_file("adm/staff_promotions",
+        (string)this_player()->query_name() + " demoted " +
+        (string)ob->query_name() + " to mortal (" + race + "): " +
+        ctime(time()) + "\n"));
 }
 
 void do_promote(string pos) {

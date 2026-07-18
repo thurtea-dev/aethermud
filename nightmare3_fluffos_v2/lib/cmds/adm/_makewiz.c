@@ -11,6 +11,7 @@ inherit DAEMON;
 int cmd_makewiz(string str) {
     string pname;
     string cur_pos;
+    string psnap;
     object target;
     mapping rolls;
     string *rflags;
@@ -38,6 +39,44 @@ int cmd_makewiz(string str) {
               cur_pos + ").\n");
         return 1;
     }
+    /* Snapshot the mortal identity before promotion overwrites it, so
+       the staff of demotion can restore it later. premote_stats holds
+       19 space-separated values in this fixed order: IQ ME MA PS PP PE
+       PB Spd MDC max_MDC SDC max_SDC is_MDC rifts_hp max_rifts_hp PPE
+       max_PPE ISP max_ISP (keep in sync with demote_restore() in
+       /domains/adm/wiz_tools/staff_of_demotion.c). */
+    psnap = (string)target->query_race();
+    target->setenv("premote_race", (psnap && sizeof(psnap)) ? psnap : "human");
+    psnap = (string)target->query_class();
+    if(psnap && sizeof(psnap)) target->setenv("premote_class", psnap);
+    psnap = (string)target->getenv("rifts_occ");
+    target->setenv("premote_occ", (psnap && sizeof(psnap)) ? psnap : "none");
+    psnap = (string)target->getenv("rifts_occ_flags");
+    if(psnap && sizeof(psnap)) target->setenv("premote_occ_flags", psnap);
+    psnap = (string)target->getenv("rifts_flags");
+    if(psnap && sizeof(psnap)) target->setenv("premote_flags", psnap);
+    psnap = (string)target->getenv("rifts_alignment");
+    if(psnap && sizeof(psnap)) target->setenv("premote_alignment", psnap);
+    target->setenv("premote_align",
+        sprintf("%d", (int)target->query_alignment()));
+    psnap = (string)target->getenv("active_language");
+    if(psnap && sizeof(psnap)) target->setenv("premote_language", psnap);
+    psnap = (string)target->query_primary_start();
+    if(psnap && sizeof(psnap)) target->setenv("premote_start", psnap);
+    target->setenv("premote_stats", sprintf(
+        "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
+        (int)target->query_stats("IQ"), (int)target->query_stats("ME"),
+        (int)target->query_stats("MA"), (int)target->query_stats("PS"),
+        (int)target->query_stats("PP"), (int)target->query_stats("PE"),
+        (int)target->query_stats("PB"), (int)target->query_stats("Spd"),
+        (int)target->query_stats("MDC"), (int)target->query_stats("max_MDC"),
+        (int)target->query_stats("SDC"), (int)target->query_stats("max_SDC"),
+        (int)target->query_stats("is_MDC"),
+        (int)target->query_stats("rifts_hp"),
+        (int)target->query_stats("max_rifts_hp"),
+        (int)target->query_stats("PPE"), (int)target->query_stats("max_PPE"),
+        (int)target->query_stats("ISP"), (int)target->query_stats("max_ISP")));
+
     target->set_position("apprentice");
     if(!creatorp(target) ||
        lower_case((string)target->query_position()) != "apprentice") {

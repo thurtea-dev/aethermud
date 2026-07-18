@@ -139,6 +139,13 @@ int cmd_psi(string str) {
     /* Deduct ISP */
     this_player()->set_stats("ISP", isp - isp_cost);
 
+    /* Prowl: focusing psionics on someone else gives you away. */
+    if((int)this_player()->query_property("is_sneaking") &&
+       target && target != this_player()) {
+        this_player()->remove_property("is_sneaking");
+        write("You abandon stealth as you unleash your psionics!\n");
+    }
+
     /* Apply effect */
     RIFTS_PSIONICS_D->apply_psionic_effect(psi_name, target);
     return 1;
