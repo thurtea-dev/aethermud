@@ -181,13 +181,19 @@ string get_role_tag(object ob) {
 }
 
 string format_wiz_row(object ob, int use_color) {
-    string tag, name, row, color;
+    string tag, name, row, color, wt;
     int idle;
 
     tag = get_role_tag(ob);
     name = (string)ob->query_cap_name();
     if (!name || !strlen(name) || name == "0")
         name = capitalize((string)ob->query_name());
+    /* whotitle suffix: explicit env wins; the founder position gets a
+       default so the first admin reads "- The First Admin" in who. */
+    wt = (string)ob->getenv("whotitle");
+    if ((!wt || !strlen(wt)) &&
+        lower_case((string)ob->query_position()) == "head arch")
+        wt = "The First Admin";
     idle = query_idle(ob);
 
     if (use_color) {
@@ -200,6 +206,9 @@ string format_wiz_row(object ob, int use_color) {
     } else {
         row = arrange_string(tag, 13) + "  " + arrange_string(name, 16);
     }
+
+    if (wt && strlen(wt))
+        row += "- " + wt + " ";
 
     if (idle > 300)
         row += "(idle " + (idle / 60) + "m)";
