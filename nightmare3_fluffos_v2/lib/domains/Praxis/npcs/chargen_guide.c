@@ -2,6 +2,7 @@
    Gamemaster NPC: conversational walkthrough for Rifts chargen. */
 
 #include <std.h>
+#include <config.h>
 
 inherit MONSTER;
 
@@ -12,21 +13,23 @@ private void tell_player(object tp, string msg) {
     tell_object(tp, "The Gamemaster says: " + msg);
 }
 
-private int chargen_is_complete(object tp) {
+/* Total silence for completed chargen and for all staff. No farewell. */
+private int gm_silent(object tp) {
     string step;
+    string pos;
 
     if(!tp) return 1;
     if((string)tp->getenv("chargen_complete") == "1") return 1;
     step = (string)tp->getenv("creation_step");
     if(step && step == "done") return 1;
+    /* creatorp: position outside MORTAL_POSITIONS (player/high mortal/
+       ambassador). Covers wiz_level / non-mortal position checks. */
+    if(creatorp(tp)) return 1;
+    pos = (string)tp->query_position();
+    if(pos && sizeof(pos) &&
+       member_array(pos, MORTAL_POSITIONS) == -1)
+        return 1;
     return 0;
-}
-
-private void farewell_once(object tp) {
-    if(!tp || !objectp(tp)) return;
-    if((string)tp->getenv("gm_farewell_done") == "1") return;
-    tp->setenv("gm_farewell_done", "1");
-    tell_player(tp, "Your path is set. Good luck out there.\n");
 }
 
 private string query_creation_step(object tp) {
@@ -43,10 +46,7 @@ private void tell_current_step(object tp) {
     string race;
     string occ;
 
-    if(chargen_is_complete(tp)) {
-        farewell_once(tp);
-        return;
-    }
+    if(gm_silent(tp)) return;
     step = query_creation_step(tp);
     race = (string)tp->query_race();
     occ = (string)tp->getenv("rifts_occ");
@@ -96,8 +96,7 @@ private void tell_current_step(object tp) {
             "  <skill name>        type the skill name to choose it\n");
         break;
     case "done":
-        farewell_once(tp);
-        break;
+        return;
     default:
         tell_player(tp,
             "Say 'help creation' for the full sequence, or 'status' for\n"
@@ -130,26 +129,24 @@ void create() {
 }
 
 void init() {
-    if(this_player() && living(this_player()) && interactive(this_player())) {
-        pending_greet = this_player();
-        remove_call_out("greet");
-        call_out("greet", 1);
-    }
+    if(!this_player() || !living(this_player()) ||
+       !interactive(this_player()))
+        return;
+    if(gm_silent(this_player())) return;
+    pending_greet = this_player();
+    remove_call_out("greet");
+    call_out("greet", 1);
 }
 
 void greet() {
     object tp;
 
     if(!environment(this_object())) return;
-    /* call_out clears this_player(); use the player saved in init(). */
     tp = pending_greet;
     pending_greet = 0;
     if(!tp || !objectp(tp)) return;
     if(environment(tp) != environment(this_object())) return;
-    if(chargen_is_complete(tp)) {
-        farewell_once(tp);
-        return;
-    }
+    if(gm_silent(tp)) return;
     tell_player(tp,
         "Welcome to the void. I can walk you through creation one step\n"
         "at a time. Say 'status' or 'what next' for your current step.\n");
@@ -165,10 +162,7 @@ void catch_tell(string str) {
     if(sscanf(str, "%s says, \"%s\"", a, b) != 2) return;
     tp = this_player();
     if(!tp) return;
-    if(chargen_is_complete(tp)) {
-        farewell_once(tp);
-        return;
-    }
+    if(gm_silent(tp)) return;
     low = lower_case(b);
 
     if(strsrch(low, "status") != -1 || strsrch(low, "what next") != -1 ||

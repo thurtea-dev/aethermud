@@ -3,6 +3,7 @@
 
 #include <dirs.h>
 
+#define ACCOUNT_D            (DIR_SECURE_DAEMONS+"/account_d")
 #define ADVANCE_D            (DIR_SECURE_DAEMONS+"/advance")
 #define ALCHEMIST_D          (DIR_DAEMONS+"/alchemist")
 #define ASTRONOMY_D          (DIR_DAEMONS+"/astronomy")
