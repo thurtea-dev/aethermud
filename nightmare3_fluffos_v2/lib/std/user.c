@@ -1280,6 +1280,12 @@ private void ensure_wiz_tools() {
 
     if(!creatorp(this_object())) return;
     catch(sync_wiz_role(this_object()));
+    /* has_wiz_tools records that this wizard's tool set was already
+       granted once. Honoring it here lets wizards keep their tools in
+       a supplies chest instead of inventory without every login
+       re-granting a fresh set to an empty inventory. Demotion clears
+       the env (set_position else-branch), so re-promotion regrants. */
+    if((string)getenv("has_wiz_tools") == "1") return;
     inv = all_inventory(this_object());
     for(i = 0; i < sizeof(inv); i++) {
         bn = base_name(inv[i]);

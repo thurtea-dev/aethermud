@@ -66,9 +66,10 @@ private int valid_domain_name(string name) {
 
 void create() {
     ::create();
-    set_name("staff of domains");
-    set_id( ({ "staff", "staff of domains", "domains staff", "domain staff" }) );
-    set_short("a staff of domains");
+    set_name("staff of dominion");
+    set_id( ({ "staff", "staff of dominion", "dominion staff",
+               "staff of domains", "domains staff", "domain staff" }) );
+    set_short("a staff of dominion");
     set_long(
         "A gleaming crystalline staff pulsing with territorial authority.\n"
         "It grants its wielder power over the domains of the world.\n"

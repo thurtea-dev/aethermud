@@ -94,7 +94,7 @@ private string book_content(string role) {
         return
         "=== AetherMUD Domain Wizard (quick ref) ===\n\n"
         "position: domain_wiz   wiz_role: domain\n"
-        "Tool required: staff of domains (domain)\n\n"
+        "Tool required: staff of dominion (domain)\n\n"
         "DOMAIN MENU\n"
         "  1. Create domain dir   2. Assign to coder\n"
         "  3. List domains        4. Set description\n"
