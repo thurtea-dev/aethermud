@@ -18,6 +18,8 @@ void create() {
     set_value(800);
     set_vendor_type("ammo");
     set_property("e_clip", 1);
-    set_property("clip_charges", 60);
+    set_property("ammo_type", "e_clip");
+    set_property("ammo_count", 60);
+    set_property("ammo_max", 60);
     set_property("exotic_clip", 1);
 }

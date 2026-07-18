@@ -24,8 +24,9 @@ void create() {
     set_property("damage_sides",     6);
     set_property("damage_bonus",     0);
     set_property("damage_string",    "6d6 MD");
-    set_property("shots_max",        10);
-    set_property("shots_remaining",  10);
+    set_property("ammo_max",         10);
+    set_property("current_ammo",     10);
+    set_property("ammo_type",        "e_clip");
     set_property("ranged",           1);
     set_property("range_feet",       400);
     set_property("no_sell",          1);

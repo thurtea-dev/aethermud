@@ -20,5 +20,8 @@ void create() {
     set_property("damage_sides", 6);
     set_property("damage_string", "3d6 MD");
     set_property("ammo_max", 30);
+    set_property("current_ammo", 30);
+    set_property("ammo_type", "e_clip");
+    set_property("ranged", 1);
     set_property("rifts_weapon", 1);
 }
