@@ -1,33 +1,39 @@
-## Prompt 1, send to Claude Code on Fedora, LOCAL
+Here are two prompts. I've split them by risk: Prompt 1 is pure text/doc changes (zero gameplay risk), Prompt 2 is the three that touch live LPC code.
 
-Fix the highest-impact, hardest-failure gap first (magic race grants), since it's a small, contained fix compared to the skill-invocation gap, and it unblocks 9 races that currently cannot use their signature ability at all.
+***
 
-```
-Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
+**Prompt 1 — send first (low risk, no LPC):**
 
-Propose a fix only. Show me the diff, do not apply it yet.
+> Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
+>
+> Three cleanup tasks, all report-then-apply in one pass. Nothing here touches LPC combat, stats, or player data.
+>
+> **Task 1 — `start_ambient()` ruling: strip from all 4 rooms.**
+> Find the four files confirmed last session: `domains/Praxis/areas/rockys_bar.c`, `domains/Praxis/areas/splynn/rockys_bar_splynn.c`, `domains/chitown/areas/chitown_burbs.c`, `domains/newcamelot/areas/black_forest.c`. In each, remove the `start_ambient()` call from `reset()` (and any `#include` or `inherit` line that becomes dead after removal). Do not touch anything else in those files. Confirm whether `std/rifts_ambient.c` is still referenced anywhere else in the tree after the removals; if it is orphaned entirely, note it but do not delete it.
+>
+> **Task 2 — Stale `sirname` help file.**
+> Find `docs/help/user/sirname` (or wherever it actually lives — confirm the path first). Rewrite it as a short redirect notice: the `sirname` command has been removed; use `rp_title` instead. Match the formatting convention of adjacent help files. If `rp_title` has its own help file, confirm its path and cross-reference it. Do not rewrite the `rp_title` help file itself.
+>
+> **Task 3 — `setter.c` skip-OCC chargen not setting `rifts_occ_flags`.**
+> Find `setter.c` (confirm path). Locate the skip-OCC chargen path(s) that set `rifts_occ` but omit `rifts_occ_flags`. Add the same default `rifts_occ_flags` initialisation that `login.c`'s bootstrap sets (confirmed working from the earlier null-guard sweep). Belt-and-braces fix only — do not change any other setter logic.
+>
+> Show diffs for all three tasks before applying. Apply only after showing diffs, then commit with a descriptive message. Do not push. End with the full session-end report format required by CLAUDE.md.
 
-query_race_spell_grant() in daemon/rifts_start_d.c does not cover the 9 races flagged faerie_magic or nature_magic in daemon/rifts.c query_race_flags() (common faerie, common pixie, frost pixie, green wood faerie, night-elves faerie, silver bells faerie, tree sprite, water sprite, brownie). These races currently get no starting spells and no starting PPE despite being flagged as innately magical.
+***
 
-Research what spell list and PPE amount would be appropriate for each of these two groups under the source material, keep it minimal and small for now since the user plans to expand later, then propose the exact case additions to query_race_spell_grant() needed to grant a small starting spell list and correct PPE for all 9 races. Show the full diff. Do not touch query_race_psionic_grant() or any other function.
-```
+**Prompt 2 — send after Prompt 1 is confirmed and committed:**
 
-## Prompt 2, send to Claude Code on Fedora, LOCAL
-
-Capture the mercenary group design as a planning document, no code yet.
-
-```
-Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
-
-This is a documentation task only. Do not write any code files.
-
-Create a new planning document (check whether docs/zone-expansion-plan.md or a new file under docs/ is the better home, follow existing doc conventions in this repo) capturing this design for a future mercenary group system:
-
-Level 4 players can found a mercenary group. The founder and a co-leader can add new members. Adding a member grants that player a group emblem object. A member leaves the group by dropping or removing the emblem. The first three mercenary groups will have secret faction bases hidden in Chi-Town, Splynn, and New Camelot. As one example, the New Camelot garden fountain has a hidden entrance that only opens for a player carrying a group emblem.
-
-Write this as a design spec: goals, the emblem object's expected properties, the add and remove member flow, how base access should be gated by emblem possession, and open questions that still need answers before implementation (for example, what happens to a group's base access if the founder is removed or goes inactive, whether groups have a size cap, whether there can be more than three groups eventually).
-
-Do not propose any code changes or begin implementation. This is planning only, to be revisited once current foundation gaps are resolved.
-```
-
-Once both come back, we will decide whether to also tackle the psionic shortcut gap and the broader skill-invocation gap before circling back to actually build the mercenary system, and only then update the README files to reflect the real, settled state of the project.
+> Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
+>
+> Three gameplay fixes. Investigate first, show diffs, apply only after showing diffs.
+>
+> **Task 1 — Splynn e-clip economy: scope and build.**
+> Find `rocky_barkeep.c` and any existing Splynn shop/vendor NPCs under `domains/Praxis/areas/splynn/`. Determine: (a) whether any player-facing e-clip purchase or recharge exists anywhere in the tree (grep for `e-clip`, `eclip`, `e_clip`, `recharge` in domains/); (b) what rifle/ranged weapon items already exist that consume e-clips. Then build the minimum viable e-clip economy: a Splynn vendor NPC that sells e-clips and a recharge point (either a separate object or added to an existing vendor), wired into the Splynn area. Follow existing working vendor patterns (e.g. `alvurron_dealer.c`, `kittani_merchant.c`). All locals declared at top of function per FluffOS C89 rule.
+>
+> **Task 2 — Camelot flame hilt respawn timer.**
+> Find the flame hilt object and its reset/respawn logic (confirm exact file path). The current behaviour is respawn on driver reset (~30-60 real min). The target is once per in-game day (6h40m real time). Search the codebase for any existing timed-respawn or call_out-based daily-respawn pattern to use as a model. If none exists, implement a `call_out` based approach in the item's or its room's reset logic. Show the pattern you're copying or proposing before applying.
+>
+> **Task 3 — `webclient.html` TLS fallback notice.**
+> The live site at `https://aethermud.com/webclient.html` shows a WebSocket timeout because the bridge on port 1129 is plain `ws://` and the browser requires `wss://` on an HTTPS page. This is a known infrastructure gap — do not attempt to fix the bridge or nginx config (that's VPS-side, out of scope). Instead, update `www/webclient.html` so that when the WebSocket `onerror`/`onclose` fires on initial connect, it displays a clear user-facing message in the terminal area: something like "Browser play is temporarily unavailable on the live site. Connect with Mudlet or telnet: aethermud.com port 1122." Replace the generic "Disconnected" state with this specific message. The Reconnect button can stay.
+>
+> Show diffs for all three tasks before applying. Apply only after showing diffs, then commit with a descriptive message. Do not push. End with the full session-end report format required by CLAUDE.md.
