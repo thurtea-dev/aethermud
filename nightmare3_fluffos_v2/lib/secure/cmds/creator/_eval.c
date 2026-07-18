@@ -32,7 +32,10 @@ string x,y;
   "";
     if(archp(this_player())) filename = "/secure/tmp/";
     else filename = user_path((string)previous_object()->query_name());
-  if( file_size( filename ) != -2 ) 
+/* Self-heal: /secure/tmp is empty in git and /realms/<name>/ is
+   gitignored, so neither survives a fresh clone. Create on demand. */
+  if( file_size( filename ) != -2 ) catch( mkdir( filename ) );
+  if( file_size( filename ) != -2 )
     { notify_fail( "You must have a valid home directory!\n" ); return 0; }
   filename += "CMD_EVAL_TMP_FILE.c";
 // long name so won't coincide with file already in your directory by accident

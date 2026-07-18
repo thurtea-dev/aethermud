@@ -21,6 +21,10 @@ nightmare3_fluffos_v2/lib/log/*
 nightmare3_fluffos_v2/lib/tmp/**/*
 !nightmare3_fluffos_v2/lib/tmp/.gitkeep
 
+# Transient eval scratch dir (keep directory, ignore temp eval files)
+nightmare3_fluffos_v2/lib/secure/tmp/**/*
+!nightmare3_fluffos_v2/lib/secure/tmp/.gitkeep
+
 # Personal wizard realms (keep directory, ignore per-user sandboxes)
 nightmare3_fluffos_v2/lib/realms/*/
 !nightmare3_fluffos_v2/lib/realms/.gitkeep
