@@ -4,8 +4,10 @@
    and overrides default behavior.
 2. Read `README.md` in this directory - the project overview (what
    AetherMUD is, quick start, repo layout, doc index).
-3. This is the top of the tree - there is no parent breadcrumb to check.
-4. Related docs: everything under `docs/` (start with `docs/INSTALL.md`
+3. For practical "how do I..." steps, read `HOWTO.md` here. For "why is
+   it shaped this way", read `WHY.md` here.
+4. This is the top of the tree - there is no parent breadcrumb to check.
+5. Related docs: everything under `docs/` (start with `docs/INSTALL.md`
    and `docs/RUNNING.md`), `staff-handbook/` for in-game staff mechanics,
    `internal/` for personal/machine-specific working notes (not
    authoritative project docs). Recent planning/reference additions:
@@ -15,12 +17,11 @@
 
 ## Gotchas specific to this directory
 
-- Tracked docs at the repo root are `README.md`, `CLAUDE.md`, and this
-  `LLM_BREADCRUMB.md` (the per-directory breadcrumb pair required
-  alongside every directory's README). Don't add further top-level
-  `.md` files here - put setup/ops/planning docs under `docs/`, bulk
-  reference material under `docs/reference/`, and personal notes under
-  `internal/` (see CLAUDE.md's "Repo doc layout" section).
+- Tracked docs at the repo root are `README.md`, `CLAUDE.md`,
+  `HOWTO.md`, `WHY.md`, and this `LLM_BREADCRUMB.md`. Put further
+  setup/ops/planning docs under `docs/`, bulk reference material under
+  `docs/reference/`, and personal notes under `internal/` (see
+  CLAUDE.md's "Repo doc layout" section).
 - `zip-files/` exists on disk but is gitignored (reference archives,
   e.g. a Dead Souls mudlib snapshot used for comparison research) - it
   is never pushed and should not be treated as part of the tracked repo.

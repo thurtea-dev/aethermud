@@ -210,7 +210,7 @@ private void demote_restore(object ob) {
     string *rflags;
     mapping rolls;
     string *keys_arr;
-    int i, pe, hp, sdc, mdc;
+    int i, pe, hp, sdc, mdc, lev;
 
     /* Position first: this also removes wiz_role, has_wiz_tools, and
        every wiz_tools object in inventory via WIZTOOLS_D. */
@@ -222,6 +222,18 @@ private void demote_restore(object ob) {
     if(!cls || !sizeof(cls)) cls = race;
     ob->set_race(race);
     ob->set_class(cls);
+
+    /* Restore pre-wizard level so setrole-promoted level-20 staff do not
+       land as high mortals after demotion. */
+    val = (string)ob->getenv("premote_level");
+    if(val && sizeof(val)) {
+        lev = to_int(val);
+        if(lev < 1) lev = 1;
+        if(lev > 25) lev = 25;
+        ob->set_level(lev);
+    } else if((int)ob->query_level() > 19) {
+        ob->set_level(19);
+    }
 
     snap = (string)ob->getenv("premote_stats");
     stat_names = ({ "IQ", "ME", "MA", "PS", "PP", "PE", "PB", "Spd",
@@ -308,6 +320,7 @@ private void demote_restore(object ob) {
     ob->remove_env("premote_align");
     ob->remove_env("premote_language");
     ob->remove_env("premote_start");
+    ob->remove_env("premote_level");
     ob->remove_env("premote_stats");
 
     tell_object(ob,

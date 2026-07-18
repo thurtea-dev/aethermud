@@ -15,5 +15,10 @@ these are standalone pages, not LPC.
 - `occs.html`, `races.html`, `world.html` - reference pages for OCCs,
   races, and the game world.
 - `play.html` - how to connect and play.
+- `webclient.html` - in-browser terminal client (WebSocket bridge on
+  port 1129; HTTPS pages need wss, which is a known infra gap).
 - `roadmap.html` - public-facing development roadmap.
 - `css/`, `js/` - static assets for these pages.
+
+See HOWTO.md for editing/publishing these pages, and WHY.md for why the
+site is static HTML rather than served from the mudlib.

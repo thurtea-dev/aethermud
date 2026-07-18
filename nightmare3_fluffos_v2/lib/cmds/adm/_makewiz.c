@@ -43,8 +43,8 @@ int cmd_makewiz(string str) {
        the staff of demotion can restore it later. premote_stats holds
        19 space-separated values in this fixed order: IQ ME MA PS PP PE
        PB Spd MDC max_MDC SDC max_SDC is_MDC rifts_hp max_rifts_hp PPE
-       max_PPE ISP max_ISP (keep in sync with demote_restore() in
-       /domains/adm/wiz_tools/staff_of_demotion.c). */
+       max_PPE ISP max_ISP. Also stores premote_level. Keep in sync with
+       demote_restore() in /domains/adm/wiz_tools/staff_of_demotion.c. */
     psnap = (string)target->query_race();
     target->setenv("premote_race", (psnap && sizeof(psnap)) ? psnap : "human");
     psnap = (string)target->query_class();
@@ -63,6 +63,8 @@ int cmd_makewiz(string str) {
     if(psnap && sizeof(psnap)) target->setenv("premote_language", psnap);
     psnap = (string)target->query_primary_start();
     if(psnap && sizeof(psnap)) target->setenv("premote_start", psnap);
+    target->setenv("premote_level",
+        sprintf("%d", (int)target->query_level()));
     target->setenv("premote_stats", sprintf(
         "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
         (int)target->query_stats("IQ"), (int)target->query_stats("ME"),

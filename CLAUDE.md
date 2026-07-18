@@ -9,8 +9,9 @@ This is **AetherMUD**, a TTRPG-inspired MUD built on the **Nightmare III MUD** b
 - `nightmare3_fluffos_v2/fluffos-2.9-ds2.08/` - The C driver source
 - `nightmare3_fluffos_v2/lib/` - The LPC mudlib (Rifts conversion)
 
-Repo doc layout (since 2026-07-13): only README.md and CLAUDE.md live at
-the repo root. Setup/ops/planning docs are under `docs/`, bulk reference
+Repo doc layout (since 2026-07-13, updated 2026-07-18): README.md,
+CLAUDE.md, HOWTO.md, WHY.md, and LLM_BREADCRUMB.md live at the repo
+root. Setup/ops/planning docs are under `docs/`, bulk reference
 material (information.md, invocations.md, reference-chart.md) under
 `docs/reference/`, and personal/machine-specific working notes under
 `internal/`.

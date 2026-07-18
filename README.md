@@ -83,6 +83,8 @@ CLAUDE.md                  Mandatory coding rules for the mudlib
 
 | Doc | Purpose |
 |-----|---------|
+| [HOWTO.md](HOWTO.md) | Root how-to: run, edit, where to put work |
+| [WHY.md](WHY.md) | Root context: layout and staff-power decisions |
 | [docs/INSTALL.md](docs/INSTALL.md) | First-time setup on a fresh Linux box |
 | [docs/RUNNING.md](docs/RUNNING.md) | Start/stop, ports, logs, reload vs reboot |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Contributor workflow and LPC rules |
@@ -95,6 +97,10 @@ CLAUDE.md                  Mandatory coding rules for the mudlib
 | [docs/playtest-checklist.md](docs/playtest-checklist.md) | Playtest passes and roster |
 | [staff-handbook/](staff-handbook/index.md) | Internal staff reference |
 | [CLAUDE.md](CLAUDE.md) | Coding rules for the lib |
+
+Per-directory `README.md` / `HOWTO.md` / `WHY.md` pairs also exist under
+`nightmare3_fluffos_v2/lib/{cmds,domains,std,secure,realms}/`,
+`staff-handbook/`, and `www/`.
 
 ## Staff notes
 

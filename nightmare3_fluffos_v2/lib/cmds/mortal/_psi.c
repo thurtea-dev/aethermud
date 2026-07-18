@@ -139,11 +139,10 @@ int cmd_psi(string str) {
     /* Deduct ISP */
     this_player()->set_stats("ISP", isp - isp_cost);
 
-    /* Prowl: focusing psionics on someone else gives you away. */
-    if((int)this_player()->query_property("is_sneaking") &&
-       target && target != this_player()) {
+    /* Same prowl break as _kill.c: using psi always abandons stealth. */
+    if((int)this_player()->query_property("is_sneaking")) {
         this_player()->remove_property("is_sneaking");
-        write("You abandon stealth as you unleash your psionics!\n");
+        write("You abandon stealth as you attack!\n");
     }
 
     /* Apply effect */
@@ -239,6 +238,13 @@ int do_telepathy_send(string target_str, string message) {
     }
 
     this_player()->set_stats("ISP", isp - isp_cost);
+
+    /* Same prowl break as _kill.c. */
+    if((int)this_player()->query_property("is_sneaking")) {
+        this_player()->remove_property("is_sneaking");
+        write("You abandon stealth as you attack!\n");
+    }
+
     RIFTS_PSIONICS_D->apply_telepathy_send(target, message);
     return 1;
 }

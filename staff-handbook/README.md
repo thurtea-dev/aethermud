@@ -21,3 +21,5 @@ Rifts systems work in this MUD), not repo setup/ops documentation - see
 - `ch14-alignments.md` / `ch15-insanities.md` - alignment and insanity
   systems.
 - `ch16-builder.md` - building/content-creation reference for staff.
+- `HOWTO.md` - how to use and extend this handbook.
+- `WHY.md` - why the handbook exists beside `docs/` and `www/`.

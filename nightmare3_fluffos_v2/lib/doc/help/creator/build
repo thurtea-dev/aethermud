@@ -3,12 +3,16 @@ AETHERMUD CREATOR GUIDE: BUILD (QUICK CREATION SYSTEM)
 The build command is the Quick Creation System (QCS) dispatcher. It is
 granted by the Staff of Creation, which coding wizards receive on
 promotion and must hold in inventory. Admin wizards may also use it.
+
 Files are generated under your realm: /realms/<you>/area/ in the
 subdirectories room/, npc/, weap/, and armor/. Most verbs require you
 to be standing inside your own realm.
 
-Type build with no arguments (or build help) for a quick summary
-in-game.
+In-game shortcuts:
+  build              same as build help (quick summary)
+  build help         quick summary from the staff tool
+  help build         this full topic (creators only)
+  help qcs           short QCS overview that points here
 
 CREATING THINGS
 
@@ -53,12 +57,12 @@ EXITS AND POPULATION
       Example: build add exit east /realms/you/area/room/armory
 
   build add <npcfile> to here
-      Adds a reset() spawn of the NPC to your current room, so it
-      repopulates after reboots.
+      Adds a reset() spawn of the NPC to your current room.
       Example: build add bandit to here
 
   build add <npcfile> to <roomfile>
       Same, but for a named room file instead of the current room.
+      Example: build add bandit to guard_post
 
 OTHER VERBS
 
@@ -77,8 +81,9 @@ NOTES
   - QCS requires the Staff of Creation in your inventory. Losing the
     staff disables all build verbs; it returns on login (autoload).
   - Generated files are plain LPC. You can hand-edit them afterward
-    with ed and reload with the staff or an update from an admin.
+    with ed and reload with update.
   - Filenames are sanitized to lowercase letters, digits, and
     underscores.
+  - help build is a creator/staff topic. Mortals will not see it.
 
 See also: qcs, ed

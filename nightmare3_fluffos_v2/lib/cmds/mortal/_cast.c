@@ -138,12 +138,10 @@ int cmd_cast(string str) {
     /* Deduct PPE */
     this_player()->set_stats("PPE", ppe - ppe_cost);
 
-    /* Prowl: unleashing magic on someone else gives you away.
-       Windrush has no target but sweeps the whole room. */
-    if((int)this_player()->query_property("is_sneaking") &&
-       ((target && target != this_player()) || spell_name == "windrush")) {
+    /* Same prowl break as _kill.c: casting always abandons stealth. */
+    if((int)this_player()->query_property("is_sneaking")) {
         this_player()->remove_property("is_sneaking");
-        write("You abandon stealth as you unleash your magic!\n");
+        write("You abandon stealth as you attack!\n");
     }
 
     /* Apply effect */
