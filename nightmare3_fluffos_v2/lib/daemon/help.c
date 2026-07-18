@@ -161,19 +161,6 @@ static string topic_slug(string name) {
     return s;
 }
 
-static string find_user_help_file(string name) {
-    string slug;
-    string alt;
-
-    if(!name || name == "") return 0;
-    if(file_exists(DIR_USER_HELP + "/" + name)) return name;
-    slug = topic_slug(name);
-    if(file_exists(DIR_USER_HELP + "/" + slug)) return slug;
-    alt = replace_string(slug, "_", "-");
-    if(file_exists(DIR_USER_HELP + "/" + alt)) return alt;
-    return 0;
-}
-
 /* Strip all separators for loose topic matching: "armor of ithan",
  * "armor_of_ithan", and "armorofithan" all squash to "armorofithan". */
 static string squash_topic(string s) {
@@ -184,14 +171,49 @@ static string squash_topic(string s) {
     return s;
 }
 
+/* Scan DIR_USER_HELP for a filename whose squash equals sq. */
+static string squash_user_help_match(string sq) {
+    string *files;
+    int i;
+
+    if(!sq || !sizeof(sq)) return 0;
+    files = get_dir(DIR_USER_HELP + "/");
+    if(!files) return 0;
+    for(i = 0; i < sizeof(files); i++) {
+        if(squash_topic(files[i]) == sq) return files[i];
+    }
+    return 0;
+}
+
+static string find_user_help_file(string name) {
+    string slug;
+    string alt;
+    string match;
+
+    if(!name || name == "") return 0;
+    if(file_exists(DIR_USER_HELP + "/" + name)) return name;
+    slug = topic_slug(name);
+    if(file_exists(DIR_USER_HELP + "/" + slug)) return slug;
+    alt = replace_string(slug, "_", "-");
+    if(file_exists(DIR_USER_HELP + "/" + alt)) return alt;
+    match = squash_user_help_match(squash_topic(name));
+    if(match) return match;
+    return 0;
+}
+
 static string normalize_help_topic(string topic) {
     string alt;
     string canon;
     string sq;
-    string *files;
-    int i;
+    string match;
 
     topic = lower_case(topic);
+    /* Separator-insensitive resolve first so help armorofithan,
+       help armor of ithan, and help armor_of_ithan all hit the same
+       on-disk topic before alias / literal checks. */
+    sq = squash_topic(topic);
+    match = squash_user_help_match(sq);
+    if(match) return match;
     canon = help_alias_canonical(topic);
     if(canon) {
         if(file_exists(DIR_USER_HELP + "/" + canon)) return canon;
@@ -204,16 +226,6 @@ static string normalize_help_topic(string topic) {
     if(file_exists(DIR_USER_HELP + "/" + alt)) return alt;
     alt = replace_string(topic, "-", "_");
     if(file_exists(DIR_USER_HELP + "/" + alt)) return alt;
-    /* Last resort: separator-insensitive scan of the help directory. */
-    sq = squash_topic(topic);
-    if(sizeof(sq)) {
-        files = get_dir(DIR_USER_HELP + "/");
-        if(files) {
-            for(i = 0; i < sizeof(files); i++) {
-                if(squash_topic(files[i]) == sq) return files[i];
-            }
-        }
-    }
     return topic;
 }
 

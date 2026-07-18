@@ -16,6 +16,8 @@ static private string pending_promote_pos;
 void do_player_action();
 private void apply_promote_position();
 private void demote_restore(object ob);
+private void strip_godling_package(object ob);
+private void demote_force_quit(object ob);
 
 void create() {
     ::create();
@@ -199,6 +201,85 @@ private void apply_promote_position() {
         pending_promote_ob->set_position(pending_promote_pos);
 }
 
+/* Strip Godling spells/psionics/skills granted by makewiz, then rebuild
+   mortal race/OCC packages from the restored identity. */
+private void strip_godling_package(object ob) {
+    string *godling_skills;
+    string *have;
+    string val;
+    int i;
+
+    if(!ob) return;
+
+    /* Restore pre-promotion spell/psi lists when snapshotted; otherwise
+       clear the all-spells/all-psionics Godling dump. */
+    val = (string)ob->getenv("premote_spells");
+    if(val && sizeof(val)) ob->setenv("known_spells", val);
+    else ob->remove_env("known_spells");
+    val = (string)ob->getenv("premote_psionics");
+    if(val && sizeof(val)) ob->setenv("known_psionics", val);
+    else ob->remove_env("known_psionics");
+
+    godling_skills = ({
+        "wp energy pistol", "wp energy rifle", "wp heavy weapons",
+        "wp knife", "wp sword", "wp vibroblade", "wp blunt", "wp chain",
+        "wp paired weapons", "wp rifle", "wp archery",
+        "pilot automobile", "pilot hovercraft", "pilot hovercycle",
+        "pilot power armor", "pilot robot", "pilot glitter boy",
+        "pilot jet pack", "pilot boat", "pilot submersible",
+        "radio basic", "computer operation", "computer programming",
+        "basic electronics", "advanced electronics",
+        "read sensory equipment", "weapon systems",
+        "electronic countermeasures", "mechanical engineer",
+        "robot mechanics", "weapons engineer", "electrical engineer",
+        "first aid", "paramedic", "medical doctor", "holistic medicine",
+        "biology", "chemistry", "pathology", "wilderness survival",
+        "land navigation", "tracking", "camouflage", "hunting",
+        "fishing", "swimming", "climbing", "running", "navigation",
+        "detect ambush", "detect concealment", "intelligence",
+        "surveillance", "pick locks", "pick pockets", "safe-cracking",
+        "forgery", "disguise", "impersonation", "streetwise", "gambling",
+        "concealment", "prowl", "interrogation", "tactics",
+        "military etiquette", "demolitions", "boxing", "gymnastics",
+        "acrobatics", "body building", "meditation", "athletics",
+        "lore magic", "lore demons and monsters",
+        "lore rifts and dimensions", "lore psychic", "lore spirits",
+        "research", "salvage", "horsemanship", "seduction",
+        "identify plants", "barter", "appraise goods", "black market",
+        "fly"
+    });
+    /* Godling package grants these at 98. Only strip that tier so a
+       mortal who already had the skill at a normal starting % keeps it. */
+    have = (string *)ob->query_all_skills();
+    if(have) {
+        for(i = 0; i < sizeof(godling_skills); i++) {
+            if(member_array(godling_skills[i], have) == -1) continue;
+            if((int)ob->query_base_skill(godling_skills[i]) < 98) continue;
+            catch(ob->delete_skill(godling_skills[i]));
+        }
+    }
+
+    /* Rebuild mortal packages for the restored race/OCC. */
+    catch(RIFTS_START_D->grant_race_package(ob));
+    catch(RIFTS_START_D->grant_occ_skills(ob));
+}
+
+/* Drop the network connection so the player must reconnect as a mortal. */
+private void demote_force_quit(object ob) {
+    object sink;
+
+    if(!ob || !objectp(ob)) return;
+    tell_object(ob,
+        "Your wizard status has been revoked. Please reconnect.\n");
+    catch(ob->save_player((string)ob->query_name()));
+    sink = new(OBJECT);
+    if(sink) {
+        catch(exec(sink, ob));
+        if(objectp(sink)) destruct(sink);
+    }
+    if(objectp(ob)) catch(ob->remove());
+}
+
 /* Full mortal restoration for a demoted wizard. Reads the premote_*
    env snapshot written by makewiz (see _makewiz.c for the fixed
    premote_stats order). Wizards promoted before the snapshot existed
@@ -242,6 +323,11 @@ private void demote_restore(object ob) {
     if(snap && sizeof(parts = explode(snap, " ")) >= 19) {
         for(i = 0; i < 19; i++)
             ob->set_stats(stat_names[i], to_int(parts[i]));
+        /* Race body setup after stats so new_body() sees mortal attributes.
+           Re-apply the snapshot afterward in case new_body tweaked pools. */
+        catch(ob->new_body());
+        for(i = 0; i < 19; i++)
+            ob->set_stats(stat_names[i], to_int(parts[i]));
     } else {
         rolls = (mapping)RIFTS_D->do_rifts_rolls(race);
         if(rolls) {
@@ -269,7 +355,9 @@ private void demote_restore(object ob) {
             ob->set_stats("max_MDC", 0);
             ob->set_stats("is_MDC", 0);
         }
+        catch(ob->new_body());
     }
+
     if((int)RIFTS_D->is_mdc_race(race)) {
         ob->set_property("rifts_mdc_race", 1);
         ob->setenv("rifts_mdc_race", "1");
@@ -311,6 +399,8 @@ private void demote_restore(object ob) {
         start_room = "/domains/Praxis/rifts_welcome";
     ob->set_primary_start(start_room);
 
+    strip_godling_package(ob);
+
     ob->remove_env("premote_race");
     ob->remove_env("premote_class");
     ob->remove_env("premote_occ");
@@ -322,16 +412,14 @@ private void demote_restore(object ob) {
     ob->remove_env("premote_start");
     ob->remove_env("premote_level");
     ob->remove_env("premote_stats");
+    ob->remove_env("premote_spells");
+    ob->remove_env("premote_psionics");
 
-    tell_object(ob,
-        "You have been returned to mortal life. Your former body and\n"
-        "abilities are restored, and the world awaits you again.\n");
-    ob->move_player(start_room);
-    ob->save_player((string)ob->query_name());
     catch(log_file("adm/staff_promotions",
         (string)this_player()->query_name() + " demoted " +
         (string)ob->query_name() + " to mortal (" + race + "): " +
         ctime(time()) + "\n"));
+    demote_force_quit(ob);
 }
 
 void do_promote(string pos) {

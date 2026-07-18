@@ -53,6 +53,10 @@ int cmd_makewiz(string str) {
     target->setenv("premote_occ", (psnap && sizeof(psnap)) ? psnap : "none");
     psnap = (string)target->getenv("rifts_occ_flags");
     if(psnap && sizeof(psnap)) target->setenv("premote_occ_flags", psnap);
+    psnap = (string)target->getenv("known_spells");
+    target->setenv("premote_spells", (psnap && sizeof(psnap)) ? psnap : "");
+    psnap = (string)target->getenv("known_psionics");
+    target->setenv("premote_psionics", (psnap && sizeof(psnap)) ? psnap : "");
     psnap = (string)target->getenv("rifts_flags");
     if(psnap && sizeof(psnap)) target->setenv("premote_flags", psnap);
     psnap = (string)target->getenv("rifts_alignment");

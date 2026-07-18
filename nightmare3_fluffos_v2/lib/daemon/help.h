@@ -10,6 +10,7 @@ static void category_footer(int sec);
 static string *category_shadowed_files(int sec);
 static int match_category_name(string str);
 static string squash_topic(string s);
+static string squash_user_help_match(string sq);
 static void print_help_section(string title, string *topics);
 static string read_first_line(string path);
 static string normalize_help_topic(string topic);

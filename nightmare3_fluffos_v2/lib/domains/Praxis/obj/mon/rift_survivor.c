@@ -6,10 +6,16 @@
 
 inherit MONSTER;
 
+static private mapping greeted;
+static private object pending_greet;
+static private object pending_say_to;
+
 void say_line(string str);
 
 void create() {
     ::create();
+    greeted = ([]);
+    pending_greet = 0;
     set_name("survivor");
     set_id( ({ "survivor", "guide", "woman", "scout" }) );
     set_short("a weathered survivor");
@@ -35,17 +41,31 @@ void create() {
 void init() {
     if(this_player() && !creatorp(this_player()) &&
        living(this_player()) && interactive(this_player())) {
+        pending_greet = this_player();
         remove_call_out("greet_arrival");
         call_out("greet_arrival", 2);
     }
 }
 
 void greet_arrival() {
+    object tp;
+    string name;
+
     if(!environment(this_object())) return;
-    tell_room(environment(this_object()),
+    /* call_out clears this_player(); use the player saved in init(). */
+    tp = pending_greet;
+    pending_greet = 0;
+    if(!tp || !objectp(tp) || !interactive(tp) || creatorp(tp)) return;
+    if(environment(tp) != environment(this_object())) return;
+    name = (string)tp->query_name();
+    if(!name || !sizeof(name)) return;
+    if(!greeted) greeted = ([]);
+    /* One greeting per player per boot of this NPC object. */
+    if(greeted[name]) return;
+    greeted[name] = 1;
+    tell_object(tp,
         "The survivor glances over. \"Fresh out of a Rift. "
-        "You look confused. Say 'help' if you need a rundown.\"\n",
-        ({ this_object() }) );
+        "You look confused. Say 'help' if you need a rundown.\"\n");
 }
 
 void catch_tell(string str) {
@@ -53,6 +73,7 @@ void catch_tell(string str) {
 
     if(strsrch(str, " says") == -1) return;
     low = lower_case(str);
+    pending_say_to = this_player();
 
     if(strsrch(low, "hello") != -1 || strsrch(low, " hi ") != -1 ||
        strsrch(low, "\"hi\"") != -1) {
@@ -101,6 +122,17 @@ void catch_tell(string str) {
 }
 
 void say_line(string str) {
+    object tp;
+
     if(!environment(this_object())) return;
+    /* Answer only the speaker when possible, so a single say does not
+       look like a chorus if multiple listeners echo. */
+    tp = pending_say_to;
+    pending_say_to = 0;
+    if(tp && objectp(tp) && interactive(tp) &&
+       environment(tp) == environment(this_object())) {
+        tell_object(tp, str + "\n");
+        return;
+    }
     tell_room(environment(this_object()), str + "\n", ({ this_object() }) );
 }

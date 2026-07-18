@@ -85,6 +85,11 @@ void arch_news() {
 }
 
 void end_news() {
-    this_player()->describe_current_room(1);
+    /* finish_creation() already described the arrival room via
+       move_player(); skip the duplicate look on that path only. */
+    if((int)this_player()->query_property("skip_news_room_look"))
+        this_player()->remove_property("skip_news_room_look");
+    else
+        this_player()->describe_current_room(1);
     message("loggedin", "", this_player());
 }

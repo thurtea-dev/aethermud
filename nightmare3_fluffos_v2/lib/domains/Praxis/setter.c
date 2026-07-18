@@ -916,6 +916,13 @@ int chargen_catch(string str) {
     low = lower_case(verb);
     if(str && strlen(str)) low += " " + lower_case(str);
 
+    /* Bare roll/reroll must win even if the catch-all is tried before
+       the named add_action("roll_cmd", "reroll") binding. */
+    if(step == "stats" || step == "race") {
+        if(low == "roll" || low == "reroll")
+            return roll_cmd(0);
+    }
+
     if(step == "region" ||
        (string)this_player()->getenv("awaiting_region") == "1") {
         if(low == "americas" || low == "chitown" ||
@@ -1270,6 +1277,7 @@ void finish_creation() {
     player->remove_env("secondary_picks_remaining");
     player->remove_env("stats_rolled");
     player->setenv("creation_step", "done");
+    player->setenv("chargen_complete", "1");
 
     dest = (string)player->query_primary_start();
     if((int)RIFTS_D->is_rifts_race((string)player->query_race())) {
@@ -1301,7 +1309,9 @@ void finish_creation() {
     /* News was deferred in std/user.c's setup() specifically to avoid
        racing the chargen prompts (input_to() always beats add_action-
        based commands for the next raw input). Nothing is waiting on the
-       player's next line here, so it's safe to show now. */
+       player's next line here, so it's safe to show now. Skip the
+       end_news() room re-describe: move_player already showed the room. */
+    player->set_property("skip_news_room_look", 1);
     NEWS_D->read_news();
     player->save_player();
 }
