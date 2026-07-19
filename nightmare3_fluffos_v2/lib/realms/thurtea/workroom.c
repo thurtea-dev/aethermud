@@ -19,7 +19,10 @@ void create() {
     );
     set_smell("default", "Ink, ozone, and cold coffee.");
     set_listen("default", "The occasional crackle of a ley line tapped through the walls.");
-    set_exits( ([ "out" : "/domains/wizards/hallway" ]) );
+    set_exits( ([
+        "out"  : "/domains/wizards/hallway",
+        "wing" : "/domains/wizards/thurtea_test/test_hall"
+    ]) );
 }
 
 void reset() {

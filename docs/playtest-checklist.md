@@ -1,159 +1,235 @@
-# Playtest checklist - 2026-07-10
+# Playtest checklist - 2026-07-19 (bug-fix and polish pass)
 
-**STALE (2026-07-12 player wipe): the `pt*` accounts this checklist uses
-were all deleted. Recreate them (see `tools/playtest_create_chars.py`)
-before working through the sections below.**
+Step-by-step live tests for everything fixed or built in the recent
+sessions: chargen accept gate, reconnect placement, staff-area start
+guard, Moxim rift destinations, the whole-body damage model, and the
+new test wing. Work through it in order; each numbered step is one
+in-game action. Check the box when the observed result matches the
+expected result. Anything that does not match goes to
+`master_gap_report.txt`.
 
-Fresh characters were created for this pass. **Do not** use thurtea,
-splynncryth, or any older account. Roster + password:
-[playtest-roster.md](playtest-roster.md).
+This replaces the 2026-07-10 checklist (stale since the 2026-07-12
+player wipe; its still-pending zone walk-throughs survive in section
+8). The old `pt*` roster with expected score values is still in
+[playtest-roster.md](playtest-roster.md); recreate any of those
+characters quickly with `makechar` (section 6).
 
-Shared password for all `pt*` playtest characters: `playtestaa`
-
-Server: `./mud.sh status` (port **1122**). Telnet: `localhost 1122`.
-
----
-
-## 0. Design change already applied
-
-**Cyber-Knight attribute requirements** lowered from PS/PE/ME 12 (+ MA 10)
-to **PS 10, PE 10, MA 10, ME 10** (Palladium book floors) in
-`daemon/occ.c` and `doc/help/user/cyber_knight`.
-
-Verified: **ptcknight** (human Cyber-Knight) created successfully after
-one attr reroll. Under the old reqs this was nearly impossible on human
-3d6.
+Prerequisites: local server running (`./mud.sh status`, port 1122),
+one admin login (thurtea), one throwaway mortal (create in section 1,
+reuse in sections 2, 3, and 5). A FULL REBOOT must have happened
+after pulling these changes (std/user.c changed); `update` is not
+enough.
 
 ---
 
-## 1. Race eyeball characters (READY)
+## 1. Chargen full walkthrough (new account)
 
-Log in each, run `score`, `eq`, try racial commands, note anything weird.
+Create a fresh throwaway account (any name, normal registration).
 
-| Login | Race | What to check | Done |
-|-------|------|---------------|------|
-| ptdragona | Great Horned Dragon | MDC ~high, breath/fly/metamorph if present | [ ] |
-| ptdragonb | Great Horned Dragon | Same; compare MDC variance | [ ] |
-| ptvampa | Secondary Vampire | MDC, sunlight notes, visible_race human | [ ] |
-| ptvampb | Secondary Vampire | Same | [ ] |
-| ptatlana | Atlantean (Nomad) | Tattoos / PPE, OCC skills | [ ] |
-| ptatlanb | Atlantean (Vagabond) | Compare to Nomad package | [ ] |
-| pttitana | Titan (Vagabond) | Size / SDC, strength feel | [ ] |
-| pttitanb | Titan (Headhunter) | Combat gear, attr bonuses | [ ] |
+1. [ ] At the zone prompt, type `look` first. Expected: normal
+       command works; the prompt is not consumed (news-pager fix).
+2. [ ] Type `americas`. Expected: "The Americas. You will begin on
+       the outskirts of Praxis." and the STEP 2 attribute banner.
+3. [ ] Type `human` (out of order). Expected: refused; you are told
+       to roll, not silently advanced.
+4. [ ] Type `roll`. Expected: an 8-attribute block (IQ ME MA PS PP
+       PE PB Spd) plus "Type accept ... or reroll (4 of 4 rerolls
+       remaining)."
+5. [ ] Write down two attribute values. Type `reroll`. Expected: a
+       NEW block; at least some values differ from what you wrote
+       down (fresh dice, not a reprint), and rerolls remaining drops
+       to 3.
+6. [ ] Type `human` again, before accepting. Expected: still
+       blocked; "Accept your attributes first."
+7. [ ] Type `accept`. Expected: "Attributes accepted", final block
+       reprinted, race list shown.
+8. [ ] Type `reroll` after accepting. Expected: refused (the roll is
+       locked once accepted).
+9. [ ] Type `human`. Expected: race description, reshaped
+       attributes, then the STEP 4 alignment menu.
+10. [ ] Type `scrupulous`. Expected: "Alignment chosen: Scrupulous",
+        then the OCC list (STEP 5).
+11. [ ] Type `list`. Expected: available OCCs listed. At NO point in
+        this whole flow should any elective or secondary skill menu
+        appear.
+12. [ ] Type `vagabond`. Expected: OCC applied, starting package
+        granted, rift-arrival text, you land outside Praxis, score
+        sheet prints, and only then does unread news appear.
+13. [ ] Type `score` and `skills`. Expected: OCC package skills are
+        present without you ever picking one.
 
-### Known chargen quirk to confirm
+## 2. Reconnect and login-start tests (mortal + admin)
 
-FIXED 2026-07-10: race pick now applies `do_rifts_rolls()` via
-`apply_rifts_race_attributes()` in `setter.c`. Dragons/vampires
-(ptdragona/b, ptvampa/b) were recreated - GHD now shows PS 50+ / high
-MDC, not human 3d6. Eyeball and confirm racial commands still.
+Use the section 1 throwaway (call it TESTCHAR below).
 
----
+1. [ ] As TESTCHAR, walk a few rooms away from the start room (any
+       ordinary Praxis room).
+2. [ ] Kill the client connection (close the window; do NOT type
+       quit).
+3. [ ] Reconnect and log back in. Expected: you resume in the SAME
+       room, and anyone watching sees "TESTCHAR has rejoined our
+       reality."
+4. [ ] Repeat once more but type `quit` instead, then log in.
+       Expected: you also return to the room you quit in (quit saves
+       the logout room).
+5. [ ] As thurtea, poison the mortal's start:
+       `eval find_player("TESTCHAR")->set_primary_start("/realms/thurtea/workroom")`
+6. [ ] Have TESTCHAR quit and log back in. Expected: they do NOT
+       appear in the workroom; they land at Praxis square and their
+       saved start is repaired (verify:
+       `eval find_player("TESTCHAR")->query_primary_start()` shows
+       the square, not the workroom).
+7. [ ] As TESTCHAR, type `start here` in an ordinary room. Expected:
+       "You will now login here". Then try it inside any staff room
+       (if reachable at all). Expected: "You cannot set this as your
+       login location."
 
-## 2. Wizard promotion candidates (READY - need admin)
+## 3. Moxim rift destinations
 
-Characters exist as mortals. **You** (thurtea or splynncryth) must promote
-them while each target is **online**.
+As any character with credits (admins travel free). From anywhere,
+`rift <destination>` opens a portal; `enter rift` travels. After each
+arrival, confirm a live Moxim is standing in the arrival room, then
+use him (or the global command) for the next hop.
 
-`makewiz` creates **Apprentice** (`[Apprentice]` on who) and gives the
-**apprentice kit** (`kit`). They pick a track, submit a task, domain/coding
-review, then you `setrole` when marked ready.
+1. [ ] `rift americas` -> Chi-Town boulevard. Moxim present: yes/no.
+2. [ ] `rift atlantis` -> Splynn market. Moxim present: yes/no.
+3. [ ] `rift europe` -> New Camelot square. Moxim present: yes/no.
+4. [ ] `rift lazlo` -> Lazlo market. Moxim present: yes/no.
+5. [ ] `rift tolkeen` -> Tolkeen square. Moxim present: yes/no.
+6. [ ] `rift praxis` -> Monument Square. Moxim present: yes/no.
+7. [ ] In one arrival room, `say destinations` near Moxim. Expected:
+       his destination table matches the global `rift` list.
 
-| Login | Target role | Commands (target online) | Done |
-|-------|-------------|--------------------------|------|
-| ptdacon | Domain-Wiz | `makewiz ptdacon` -> they use `kit` (domain track) -> later `setrole ptdacon domain` | [ ] |
-| ptcoder | Coding-Wiz | `makewiz ptcoder` -> `kit` (coding track) -> later `setrole ptcoder coding` | [ ] |
-| ptrpwiz | RP-Wiz | `makewiz ptrpwiz` -> `kit` (rp track) -> later `setrole ptrpwiz rp` | [ ] |
+Note: Moxim clones spawned before the last full reboot carry the old
+destination table. If any hop lands in a gate/welcome room instead
+of the rooms above, the server has not been rebooted since the pull.
 
-Confirm `who` shows `[Apprentice]` after makewiz, then the role tag after
-setrole. Domain review: `domain` option 10. Coding queue: `review`.
+## 4. Test wing: wear slots, damage model, spells, sever
 
----
+As thurtea, from your workroom type `wing`.
 
-## 3. Cyber-Knight smoke (READY)
+Setup:
+1. [ ] In the hall, type `list` at Renn. Expected: 12 entries - one
+       weapon, one protective armor, one implant, and nine cosmetic
+       slot samples.
+2. [ ] Buy everything: `buy rifle`, `buy dead boy`, `buy optic eye`,
+       `buy cap`, `buy amulet`, `buy shirt`, `buy backpack`,
+       `buy belt`, `buy trousers`, `buy gloves`, `buy boots`,
+       `buy ring`, and a second `buy ring`.
 
-| Login | Check | Done |
-|-------|-------|------|
-| ptcknight | `score` shows Cyber-knight + ISP; `help cyber-knight` shows reqs 10/10/10/10 | [ ] |
-| ptcknight | Psi-sword activate / short fight north of Rift arrival | [ ] |
+Cosmetic slots:
+3. [ ] Wear each cosmetic piece. Expected: all nine slots fill
+       (head, neck, shirt, back, belt, legs, hands, feet, ring), no
+       limb messages, `eq` shows each in its slot.
+4. [ ] Wear the second signet ring. Expected: it goes to ring2. A
+       third ring (buy again) is refused: both ring slots full.
+5. [ ] Buy and wear a second cap while one is worn. Expected:
+       refused; one item per slot.
 
----
+Protective armor and appearance override:
+6. [ ] `wear armor` (Dead Boy). Expected: it wears on the whole
+       body alongside the cosmetic pieces (they do not conflict).
+7. [ ] Bring TESTCHAR (mortal) somewhere they can see you (a public
+       room; the wing will eject them). Expected: TESTCHAR sees "A
+       Coalition Dead Boy" in the room listing, not your name;
+       anyone who knows you still sees your name.
 
-## 4. Section 8 live checks (any two pt* mortals)
+Damage order (arena, `arena` from the hall):
+8. [ ] Attack the sparring drone bare-handed or with any weapon.
+       Expected: it takes damage normally (legacy hp target) and
+       dies; it respawns on the next room reset.
+9. [ ] Attack the rift crawler with a NON-mega-damage attack.
+       Expected: its mega-damage hide shrugs it off.
+10. [ ] Attack the rift crawler with the C-12 rifle. Expected: its
+        MDC (30) depletes and it dies.
+11. [ ] Wearing the Dead Boy armor, let a target hit you (or have a
+        second staff character hit you). Expected: the armor's MDC
+        pool depletes FIRST; your own MDC/SDC/HP untouched until the
+        armor pool empties.
+12. [ ] `cast armor of ithan` on yourself, then take hits. Expected:
+        the Ithan barrier absorbs BEFORE the worn armor pool; your
+        body pools move last. Watch the order: barrier, armor, body.
 
-Scripted suite already passed these; eyeball once as a human:
+Sever/restore (narrative severing):
+13. [ ] `sever list TESTCHAR-or-self` to see valid limbs, then
+        `sever <limb>` on a target limb (not head, torso, or whole
+        body - those must be refused; try `sever head` and expect
+        refusal).
+14. [ ] `look` at the victim, and have them type `body` and `limbs`.
+        Expected: the limb shows as severed in all three outputs,
+        with no damage or stat change (narrative only).
+15. [ ] `restore <limb>`. Expected: limb back, outputs clean.
 
-- [ ] Bank: Praxis bank room, `show id`, deposit/withdraw/balance
-- [ ] Combat: weak grunt, autododge/autoparry on
-- [ ] Radio: two chars, `radio on`, `radio tune 5`, message received
+Mortal gating:
+16. [ ] Have TESTCHAR try to enter the wing (walk them to your
+        workroom and through `wing`, or `trans` them into the hall).
+        Expected: the containment ward ejects them to Praxis square
+        in both cases.
+17. [ ] As TESTCHAR, `start here` anywhere inside the wing (if they
+        can even stand there long enough). Expected: refused.
 
----
+## 5. repairchar and makechar reference
 
-## 5. Chi-Town fortified city (eyeball when convenient)
+Syntax (both admin-only, target must be online):
 
-From the gate / boulevard (Moxim is here):
+```
+repairchar <player>                  dump chargen/stat state
+repairchar <player> clear            clear stuck chargen flags
+repairchar <player> finish           force creation_step=done
+repairchar <player> reroll           re-roll racial attributes/pools
+repairchar <player> skills           re-grant OCC skill package
+repairchar <player> setstat <A> <n>  set one attribute (IQ ME MA PS PP PE PB Spd)
 
-- [ ] Northeast into shopping arcade - `list`/`buy` at ration, arms, outfitter
-- [ ] ISS checkpoint (plaza northeast) - Psi-Stalker post, SAMAS hangar, kennels
-- [ ] Residential hatch down to maintenance (secret city-side entrance)
-- [ ] Sewer hydra: `push rock` after clearing hydra - obsidian blade + flame hilt
-- [ ] D-bee alt without fake ID: confirm Dog Boy / grunt / patrol hostility
+makechar <player> <race> <occ|none> <alignment>
+         [zone=<name|/path>] [gear=default|none]
+         [skills=a;b] [spells=a;b] [psi=a;b]
+```
 
----
+Copy-paste tests (TESTCHAR online):
 
-## 6. Tolkeen (new - Moxim `rift tolkeen`)
+1. [ ] `repairchar TESTCHAR` - expected: full state dump, all
+       attributes non-zero, creation_step done.
+2. [ ] `repairchar TESTCHAR setstat PS 20` - expected: confirmation;
+       `repairchar TESTCHAR` shows PS 20.
+3. [ ] `makechar TESTCHAR human vagabond scrupulous zone=americas` -
+       expected: full rebuild summary, TESTCHAR moved to the Praxis
+       welcome area with gear, and a rebuild notice shown to them.
+4. [ ] `makechar TESTCHAR titan none anarchist gear=none` -
+       expected: RCC-only rebuild, no equipment granted, zone
+       unchanged.
 
-Liberation Square has its own Moxim. Global `rift` / Moxim both list
-`tolkeen` (cmds/mortal/_rift.c + moxim.c).
+## 6. Tone/style spot-check (strings added this week)
 
-- [ ] Gate → square → market / barracks / mage quarter / inn
-- [ ] South from gate: approach → scorched field → siege edge (CS scout)
-- [ ] Crypt down from square: ward golem → shade → vault ward charm
-- [ ] TW vendor / mage / innkeeper interact; buy or talk once
+Read each in-game and confirm: professional tone, no slang, no long
+dashes, American spelling.
 
----
+1. [ ] Chargen STEP 1-5 banners and the accept/reroll prompts
+       (setter room).
+2. [ ] "TESTCHAR has rejoined our reality." (reconnect, section 2).
+3. [ ] The containment ward ejection line (test wing, section 4).
+4. [ ] Renn's and Sela's response lines (test wing hall; ask Sela
+       about logs, procedure, damage, armor, spells).
+5. [ ] The test wing room descriptions and all sample item
+       descriptions (each tag reads SAMPLE: <SLOT>).
+6. [ ] Moxim's flavor lines on each rift (section 3).
 
-## 7. Horton wilderness (hovertrain from Chi-Town burbs)
+## 7. After the pass
 
-- [ ] Station north to Main Street (exit fix); store/inn
-- [ ] Outskirts west orchard / north trail / east forest
-- [ ] Trail: creek+marsh, scrub+bandit camp, farmstead spokes
-- [ ] Quarry floor lurker; hermit cabin talk (`say quarry`)
-- [ ] Forest: logging road → ley glade → grove → wolf den
+- Bugs and mismatches: append to
+  `/domains/Praxis/adm/master_gap_report.txt`.
+- When everything above passes locally, commit, pull on the VPS, and
+  FULL-reboot the VPS (std/user.c is in this change set).
 
----
+## 8. Backlog: zone eyeball walk-throughs (carried from 2026-07-10)
 
-## 8. Apprentice / staff-system pass (merged from the old Playtest-list.md)
+Still worth one pass each when convenient; details in git history of
+this file (2026-07-10 version):
 
-Run as an admin character after creating an apprentice-to-be and a second
-admin-wiz character (the original pair was removed in the 2026-07-12 player
-wipe; any two fresh characters work, e.g. the wiz candidates in section 2).
-
-- [ ] Create the apprentice-to-be; confirm RCC/race stats generate correctly
-      and starting room/equipment match expectations
-- [ ] Create the admin-wiz character; confirm wiz-tools, staff supplies
-      chest, and mailbox appear as they did for the first admin
-- [ ] Assign the apprentice to the admin-wiz; test the actual apprentice
-      command/mechanic (kit, track selection, submission)
-- [ ] Confirm apprentice status shows correctly in score/character sheet for
-      both characters (is the mentor/apprentice relationship visible?)
-- [ ] Test the skill-teaching or skill-request flow if apprentices get
-      skills from their mentor (mailbox/request system in the workroom)
-- [ ] Test permission boundaries: can the apprentice access wizard-only
-      commands they should not, and can the admin-wiz manage/demote/promote?
-- [ ] Log out mentor or apprentice mid-session; does the bond persist
-      across relog?
-- [ ] Remove/break the apprentice bond cleanly; confirm no orphaned data in
-      either save file afterward
-- [ ] Cross-check Staff of Dominion interaction: apprentice/mentor roles
-      must not conflict with domain wizard permissions
-- [ ] Log out both test characters; confirm their save files are clean and
-      separate from the admin's (no cross-contamination)
-
-## 9. After playtest
-
-- Note bugs in chat or append to `master_gap_report.txt`
-- Zone growth priorities: [zone-expansion-plan.md](zone-expansion-plan.md)
-- Recreate chars anytime: `python3 tools/playtest_create_chars.py` (from the
-  repo root; refuses if a save already exists - delete saves first if
-  re-running)
+- [ ] Chi-Town: arcade shops, ISS checkpoint, maintenance hatch,
+      sewer hydra, D-bee hostility without fake ID.
+- [ ] Tolkeen: gate, square, market, barracks, mage quarter, crypt
+      (ward golem, shade, vault charm), siege edge.
+- [ ] Horton: hovertrain, Main Street, outskirts spokes, quarry
+      lurker, hermit cabin, forest ley glade and wolf den.
+- [ ] Staff systems: makewiz/apprentice kit/setrole flow, mentor
+      bond persistence, permission boundaries (old section 8).

@@ -5,6 +5,12 @@ only thurtea.o survives. Recreate characters (see
 `tools/playtest_create_chars.py`) before running any check below. Score
 snapshots remain valid as expected-value references.**
 
+**2026-07-19 note:** individual equivalents can now be rebuilt on any
+online character with one admin command instead of the script, e.g.
+`makechar <name> great_horned_dragon none unprincipled zone=americas`
+(see `docs/playtest-checklist.md` section 5). Expected-value snapshots
+below remain the reference.
+
 Shared password for all characters below: `playtestaa`
 
 These are **new** accounts. Dragons/vampires were recreated after the racial-dice chargen fix (attrs now race-scale, e.g. GHD PS 50+). Do not use thurtea / splynncryth for this pass.
