@@ -1653,17 +1653,22 @@ void set_primary_start(string str) {
 
 string query_primary_start() { return primary_start; }
 
-/* Rooms mortals must never use as a login start: personal workrooms
-   and anything inside a staff-only tree. Used both when setting a
-   start (valid_start_room) and when applying one at login (setup). */
+/* Rooms mortals must never use as a login start: anything inside a
+   staff-only tree. This is the single canonical check, used at
+   save-time (valid_start_room, for quit and net_dead), at set-time
+   (start here), and at login (setup repair). Every real workroom
+   lives under /realms/ or /domains/wizards/, and /std/ covers the
+   blueprint workroom template, so no bare "workroom" substring match
+   is needed; a normal room whose path merely contains that word must
+   not be refused. */
 private int staff_area_start(string path) {
     if(!path || !stringp(path) || !strlen(path)) return 0;
     if(path[0] != '/') path = "/" + path;
-    if(strsrch(path, "workroom") != -1) return 1;
     if(strsrch(path, "/realms/") == 0) return 1;
     if(strsrch(path, "/domains/adm/") == 0) return 1;
     if(strsrch(path, "/domains/wizards/") == 0) return 1;
     if(strsrch(path, "/secure/") == 0) return 1;
+    if(strsrch(path, "/std/") == 0) return 1;
     return 0;
 }
 
@@ -1684,6 +1689,9 @@ private int valid_start_room(object who, object env) {
     case ROOM_PARTY:
     case ROOM_CACHE:
     case ROOM_LOCKED:
+    /* Idle timeout moves the player here right before forcing quit;
+       without this case the idle supply shop becomes their start. */
+    case ROOM_IDLE_SHOP:
         return 0;
     }
     if((int)who->query_ghost()) return 0;
@@ -1702,7 +1710,17 @@ void save_logout_start() {
     string path;
 
     env = environment(this_object());
-    if(!valid_start_room(this_object(), env)) return;
+    if(!valid_start_room(this_object(), env)) {
+        /* Not silent: on a clean quit, tell the player where they
+           will actually resume. On net_dead the link is already gone
+           and the message is dropped harmlessly. */
+        if(interactive(this_object()) && primary_start &&
+           stringp(primary_start) && strlen(primary_start))
+            message("system", "This location cannot be kept as your "
+                "login start; you will resume at your previous one.",
+                this_object());
+        return;
+    }
     path = base_name(env);
     set_primary_start(path);
 }
