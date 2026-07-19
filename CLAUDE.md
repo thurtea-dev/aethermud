@@ -109,7 +109,10 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
 - **`daemon/command.c` rehash fix** (distinct_array, no duplicate path
   entries) was committed in `affed3b` on 2026-07-13.
 - `standardOld/` remains live and erroring on reset (see docs/ASSESSMENT.md
-  section 7); untouched by design so far.
+  section 7); untouched by design so far. UPDATE 2026-07-19: moved to
+  `nightmare3_fluffos_v2/attic/domains/Praxis/standardOld/` (outside the
+  driver's lib root, unreachable in-game) after confirming zero code,
+  config, and save-file references; see docs/lib-cleanup-manifest.md.
 - **Evening playtest fixes (same day):** windrush is now a true room
   spell: `cast windrush` with no target sweeps every living being in
   the room (per-victim PE save vs 14, blown out a random exit, 1d6
