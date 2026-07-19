@@ -28,6 +28,14 @@ nightmare3_fluffos_v2/lib/secure/tmp/**/*
 # Personal wizard realms (keep directory, ignore per-user sandboxes)
 nightmare3_fluffos_v2/lib/realms/*/
 !nightmare3_fluffos_v2/lib/realms/.gitkeep
+# Targeted exception: thurtea's canonical workroom deploys via git.
+# Git cannot re-include a file inside an excluded directory, so the
+# directory itself is un-ignored, its contents re-ignored, then the
+# one file un-ignored. Everything else under realms/thurtea/ stays
+# out of git.
+!nightmare3_fluffos_v2/lib/realms/thurtea/
+nightmare3_fluffos_v2/lib/realms/thurtea/*
+!nightmare3_fluffos_v2/lib/realms/thurtea/workroom.c
 
 # FluffOS build tree artifacts (binaries install to ../bin via make install)
 nightmare3_fluffos_v2/fluffos-2.9-ds2.08/tmp/

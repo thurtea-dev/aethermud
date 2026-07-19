@@ -529,6 +529,20 @@ void setup() {
 		    start_temp[0] = "realms";
 		    primary_start = implode(start_temp, "/");
 		}
+		else if(sizeof(start_temp) >= 3 && start_temp[0] == "domains" &&
+		    start_temp[1] == "wizards")
+		{
+		    /* Legacy per-wizard workrooms lived at
+		       /domains/wizards/<name>/...; canonical home is now
+		       /realms/<name>/... Only rewrite when the realms room
+		       exists, so wizards without one keep a working start.
+		       Shared rooms like /domains/wizards/hallway have no
+		       realms counterpart and are left alone by the same
+		       file check. */
+		    tmp = "/realms/" + implode(start_temp[2..], "/");
+		    if(file_size(tmp + ".c") > 0)
+			primary_start = tmp;
+		}
 	    }
 	}
 	if(!(primary_start && stringp(primary_start) && move(primary_start) == MOVE_OK))

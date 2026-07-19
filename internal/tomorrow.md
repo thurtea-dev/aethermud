@@ -1,11 +1,63 @@
-Before doing anything else, read CLAUDE.md and confirm you are following all rules stated there.
+Read CLAUDE.md first and confirm you're following the rules there before doing anything else.
 
-Two tasks. Show diffs before applying. Apply only after showing.
+We still have a real deployed split-brain bug with my workroom, and the
+previous triage did NOT finish the actual fix.
 
-Task 1 — MacGuyver: fix persisted Godling save.
-MacGuyver was demoted but their save file still has Godling race and rifts_welcome as start room. Read staff_of_demotion.c — the new offline restore path should have fixed this but the save predates it. Run offline_demote("macguyver") via the daemon directly, or add a one-time admin command fixdemote <name> that calls apply_demote_restore() on any named offline player and writes their save. Whichever approach is cleaner — show it before applying.
+Evidence from live post-deploy testing:
+- After reboot/login, I land in:
+  /domains/wizards/thurtea/workroom
+  which is the old legacy room with only the reference manual
+- When I manually go to:
+  /realms/thurtea/workroom
+  I get the newer room I actually expect to be canonical
+- There is still no chest visible in the room I actually log into
+- So the real issue is not just chest visibility; login/start-room resolution
+  is still sending me to the legacy /domains/wizards/<name>/workroom path
 
-Task 2 — Race/OCC starting equipment audit.
-Read domains/Praxis/setter.c and the race/OCC definition files. For every race and OCC that has a give_starting_eq() call or equivalent, verify the items granted match the Rifts tabletop starting equipment. Flag any race or OCC where starting gear is missing, wrong, or empty. Do not fix all of them this session — produce a prioritized list of what is wrong, fix the top 5 most-played races/OCCs (human, dog boy, juicer, ley line walker, cyber-knight), and leave the rest documented in docs/starting-equipment-audit.md for future passes.
+Your task this session:
+1. Trace exactly why my live login is still placing me in
+   /domains/wizards/thurtea/workroom after reboot, despite the earlier claim
+   that /realms/<name>/workroom is canonical and std/user.c migrates old
+   wizards/* paths to realms/*.
+2. Identify all code paths and saved data involved in determining my login
+   destination / home / start room:
+   - user save vars
+   - login.c path selection
+   - std/user.c setup or migration shims
+   - any wizard setup helpers
+3. Determine whether the problem is:
+   - my existing save still carrying a legacy path that the migration shim
+     does not actually catch,
+   - the migration logic matching the wrong prefix,
+   - a separate home/start-room variable bypassing the intended rewrite,
+   - or some other path source entirely.
+4. Fix it so my actual login lands in the canonical
+   /realms/thurtea/workroom, not /domains/wizards/thurtea/workroom.
+5. Then address the chest in the correct canonical workroom path:
+   - verify whether /realms/thurtea/workroom.c is actually tracked in git or
+     still ignored/untracked due to .gitignore
+   - if it is still being ignored, fix the repo so THIS specific workroom file
+     can be tracked and deployed safely without opening the floodgates on all
+     realms files
+   - ensure the canonical /realms/thurtea/workroom actually contains the
+     supplies chest clone/reset logic
+6. Also report plainly whether the legacy
+   /domains/wizards/thurtea/workroom is still needed for anything, or whether
+   it is just stale dead content that should be retired later.
 
-End with session-end report per CLAUDE.md.
+Important constraints:
+- Stay local only; do not tell me to SSH or run manual VPS-side commands in
+  the prompt.
+- Do not touch unrelated QCS durability work yet.
+- Do not touch starting-equipment tasks this session.
+- Keep this focused on making the actual deployed login/workroom/chest path
+  sane and consistent.
+- If the earlier "chest deployed" / "canonical path solved" claims were wrong,
+  say so plainly in the report.
+
+After the fix, give the usual session-end report with extra clarity:
+- root cause
+- exact files changed
+- whether save migration is one-time or persistent
+- whether a full reboot is required
+- whether this is safe to test locally before I deploy
