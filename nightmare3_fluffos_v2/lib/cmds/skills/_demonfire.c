@@ -3,6 +3,7 @@
  
  
 #include <std.h>
+#include <daemons.h>
  
   void do_good(object ob);
   void do_evil(object ob);
@@ -138,7 +139,7 @@ void do_good(object ob)
      {
          ob->add_alignment(-(random(30)+10));
      }
-         ob->do_damage("torso", group);
+         RIFTS_COMBAT_D->apply_direct_damage(ob, group);
          ob->set_paralyzed((int)ob->query_level()/2,
             "You are too busy fighting for control of your body! ");
          ob->kill_ob(caster, 0);             

@@ -4,6 +4,7 @@
 // Sat Oct 15 16:38:52 CET 1994
 
 #include <std.h>
+#include <daemons.h>
 
 inherit DAEMON;
 
@@ -47,7 +48,7 @@ int cmd_balefire (string str) {
 	    message("other_action","%^BOLD%^A lightning bold shoot from the sky and hits "+
 		(string)tp->query_cap_name()+"!%^RESET%^",environment(tp),tp);
 	    tp->add_mp(-25);
-	    tp->do_damage((string)tp->return_limb(),25);
+	    RIFTS_COMBAT_D->apply_direct_damage(tp, 25);
 	    return 1;
 	    } else
             return notify_fail("You aren't a faithful one!\n");
@@ -140,7 +141,7 @@ int cmd_balefire (string str) {
     }
     power += faith * 3;
     power *= level/10 + 1;
-    ob->do_damage("torso",power/50);
+    RIFTS_COMBAT_D->apply_direct_damage(ob, power/50);
     tp->add_skill_points("faith",power/100);
     tp->add_alignment(random(10));
     if ((int)tp->query_skill("faith") > 90) {

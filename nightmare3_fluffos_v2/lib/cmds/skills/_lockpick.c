@@ -5,6 +5,7 @@
 //	You will be assimilated.
 
 #include <std.h>
+#include <daemons.h>
 
 inherit DAEMON;
 
@@ -42,7 +43,7 @@ int cmd_lockpick(string str) {
 	write("You fail to pick the lock.\n");
 	if((int)this_player()->query_stats("dexterity") < random(101)) {
 	    write("You cut yourself on the lock!\n");
-	    this_player()->do_damage((string)this_player()->return_limb(), random(10));
+	    RIFTS_COMBAT_D->apply_direct_damage(this_player(), random(10));
 	    say(this_player()->query_cap_name()+" gets cut picking the lock.\n");
 	    this_player()->add_skill_points("locks", random(5));
 	    return 1;

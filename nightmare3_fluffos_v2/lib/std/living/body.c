@@ -61,6 +61,8 @@ string *query_limbs();
 string return_limb();
 string return_target_limb();
 int query_is_limb(string limb);
+varargs int sever_limb(string limb, int silent);
+int restore_limb(string limb);
 
 
 //  This function initializes the variables
@@ -253,17 +255,24 @@ int remove_limb(string limb_name) {
     return 0;
 }
 
-//  This function returns a random limb
+//  This function returns a random limb (flavor only; damage always
+//  lands on whole_body, which is excluded here for message quality)
 
 string return_limb() {
-    return limbs[random(sizeof(limbs))];
+    string *pool;
+
+    pool = (limbs ? limbs - ({ "whole_body" }) : ({}));
+    if(!sizeof(pool)) return "torso";
+    return pool[random(sizeof(pool))];
 }
 
 //  This function returns a random limb, giving weight to
-//  those limbs that can take the most damage
+//  those limbs that can take the most damage.  Flavor only since
+//  2026-07-19: combat messages name a limb, but damage is pooled.
 
 string return_target_limb() {
     string tmp_lmb;
+    string *pool;
     int res, i, count;
 
     if(target_limb && !query_is_limb(target_limb)) target_limb = 0;
@@ -273,12 +282,13 @@ string return_target_limb() {
         if(random(120) > (int)this_object()->query_skill("defense"))
           return tmp_lmb;
     }
-    if(!sizeof(limbs)) return "torso";
-    count = member_array("torso", limbs);
+    pool = (limbs ? limbs - ({ "whole_body" }) : ({}));
+    if(!sizeof(pool)) return "torso";
+    count = member_array("torso", pool);
     i = 0;
-    while(i++ < ((sizeof(limbs))/2))
-      if( (res=random(sizeof(limbs))) == count ) break;
-    return limbs[res];
+    while(i++ < ((sizeof(pool))/2))
+      if( (res=random(sizeof(pool))) == count ) break;
+    return pool[res];
 }
 
 string *query_limbs() { return limbs; }
@@ -314,17 +324,21 @@ string query_reference(string limb) {
     if(body[limb]) return body[limb]["limb_ref"];
 }
 
+/*  Since 2026-07-19 all damage lands on the single whole_body pool.
+    The limb argument is accepted for caller compatibility and flavor
+    only; per-limb damage tracking is retired.  Severing is now a
+    separate narrative mechanic (see sever_limb / restore_limb).  */
 int do_damage(string limb, int damage) {
-    if(body[limb]) {
-	body[limb]["damage"] += damage;
-	player_data["general"]["hp"] -= damage;
-	if(body[limb]["damage"] < 0) body[limb]["damage"] = 0;
-	if(player_data["general"]["max_hp"]<player_data["general"]["hp"]) player_data["general"]["hp"] = player_data["general"]["max_hp"];
-        message("status", sprintf("hp: %d    sp: %d    mp: %d",
-          query_hp(), query_sp(), query_mp()), this_object());
-	return damage;
+    if(!player_data || !player_data["general"]) return 0;
+    if(body && body["whole_body"]) {
+	body["whole_body"]["damage"] += damage;
+	if(body["whole_body"]["damage"] < 0) body["whole_body"]["damage"] = 0;
     }
-    return 0;
+    player_data["general"]["hp"] -= damage;
+    if(player_data["general"]["max_hp"]<player_data["general"]["hp"]) player_data["general"]["hp"] = player_data["general"]["max_hp"];
+    message("status", sprintf("hp: %d    sp: %d    mp: %d",
+      query_hp(), query_sp(), query_mp()), this_object());
+    return damage;
 }
 
 int query_ac(string limb) {
@@ -559,84 +573,103 @@ int set_heal_rate(int x) {
 
 int query_heal_rate() { return heal_rate; }
 
-int severed_limb(string limb) {
-     int temp;
-    string childlimb;
+/*  Retired 2026-07-19: severing no longer triggers from limb damage,
+    because limbs no longer accumulate damage (see do_damage).  Both
+    functions are kept as no-op stubs for old callers.  Narrative
+    severing is done via sever_limb() below.  */
 
-    if(!body[limb]) return 0;
+int severed_limb(string limb) { return 0; }
+
+int check_on_limb(string limb) { return 1; }
+
+/*  Narrative limb severing (2026-07-19).  No damage interaction: this
+    marks the limb missing for RP, cybernetics, and special effects.
+    Refuses whole_body, torso, and FATAL-referenced limbs (the head).
+    Cascades to the child limb (severing an arm also takes the hand).
+    Drops any wielded weapon and legacy limb-worn armour into a body
+    part object in the room.  silent suppresses messages/objects for
+    the cascade step.  */
+varargs int sever_limb(string limb, int silent) {
+    object weap, old_limb;
+    object *arm;
+    string childlimb;
+    int i;
+
+    if(!body || !body[limb]) return 0;
+    if(limb == "whole_body" || limb == "torso") return 0;
+    if(body[limb]["limb_ref"] == "FATAL") return 0;
     childlimb = body[limb]["limb_ref"];
-    if(childlimb == "FATAL") {
-	player_data["general"]["hp"] = -1;
-	return 2;
+    weap = wielded[limb];
+    if(weap) {
+	remove_weapon_from_limb(weap);
+	weap->set_not_equipped();
     }
-    if(childlimb == "") {
-	remove_limb(limb);
-	return 1;
-    }
-    if(!body[childlimb]) {
-        remove_limb(limb);
-        return 1;
-    }
-    temp = body[childlimb]["damage"];
-    if(temp < body[childlimb]["max_dam"]) {
-	do_damage(childlimb, body[childlimb]["max_dam"]+25);
-	check_on_limb(childlimb);
+    arm = body[limb]["armour_ob"];
+    if(arm) {
+	for(i = 0; i<sizeof(arm); i++) {
+	    if(!arm[i]) continue;
+	    remove_armour_from_limb(arm[i], (string *)arm[i]->query_actual_limbs());
+	    arm[i]->set_not_equipped();
+	}
     }
     remove_limb(limb);
+    if(!silent) {
+	message("my_combat", sprintf("Your %s is severed!", limb),
+	  this_object());
+	if(environment(this_object())) {
+	    tell_room(environment(this_object()),
+	      this_object()->query_cap_name()+" has "+
+	      this_object()->query_possessive()+" "+limb+" severed!\n",
+	      ({ this_object() }));
+	    old_limb = new(OB_BODY_PART);
+	    old_limb->set_limb(this_object()->query_cap_name(), limb);
+	    old_limb->move(environment(this_object()));
+	    if(weap) weap->move(old_limb);
+	    if(arm) {
+		for(i=0; i<sizeof(arm); i++) {
+		    if(arm[i]) arm[i]->move(old_limb);
+		}
+	    }
+	}
+    }
+    if(childlimb && childlimb != "" && body[childlimb])
+	sever_limb(childlimb, 1);
     return 1;
 }
 
-int check_on_limb(string limb) {
-    object weap;
-    object *arm;
-    string *locations;
-    int i;
+/*  Restore a severed limb (cleric replace skill, cybernetic
+    replacement, admin restore).  Rebuilds limb data from the race
+    body table when available, otherwise from sensible defaults.  */
+int restore_limb(string limb) {
+    mapping borg;
+    string ref, btype;
+    string *wield_limbs;
+    int max_dam;
 
-    object old_limb;
-
-    if(!body[limb]) return 0;
-    if(body[limb]["damage"] > body[limb]["max_dam"]) {
-	if(creatorp(this_object())) {
-            message("my_combat", sprintf("If you were not immortal, you would "
-              "lose your %s right now!", limb), this_object());
-	    body[limb]["damage"] = body[limb]["max_dam"] - 1;
-	    return 1;
+    if(!severed || member_array(limb, keys(severed)) == -1) return 0;
+    if(body && body[limb]) return 0;
+    ref = severed[limb];
+    if(!stringp(ref)) ref = "";
+    max_dam = query_max_hp()/3;
+    if(max_dam < 1) max_dam = 1;
+    wield_limbs = 0;
+    if(this_object()->is_player()) {
+	borg = (mapping)RACE_D->body(this_object());
+	if(mapp(borg) && borg[limb]) {
+	    ref = borg[limb]["limb_ref"];
+	    max_dam = borg[limb]["max_dam"];
 	}
-        if(userp(this_object())) {
-            body[limb]["damage"] = body[limb]["max_dam"] - 1;
-            return 1;
-        }
-    if(limb == "torso")
-      message("my_combat", "A mortal blow is dealt to your body!", this_object());
-      else message("my_combat", sprintf("Your %s is severed!",limb),
-        this_object());
-        if(limb == "torso") tell_object(environment(this_object()),this_object()->query_cap_name()+" is dealt a mortal blow to the torso!", this_object());
-	else tell_room(environment(this_object()),this_object()->query_cap_name()+" has "+this_object()->query_possessive()+" "+limb+" severed!", this_object());
-	weap = wielded[limb];
-	if(weap) {
-	    remove_weapon_from_limb(weap);
-	    weap->set_not_equipped();
-	}
-	arm = body[limb]["armour_ob"];
-	if(arm) {
-        for(i = 0; i<sizeof(arm); i++) {
-                remove_armour_from_limb(arm[i], (string *)arm[i]->query_actual_limbs());
-		arm[i]->set_not_equipped();
-	    }
-	}
-        old_limb = new(OB_BODY_PART);
-	old_limb->set_limb(query_cap_name(), limb);
-	old_limb->move(environment(this_object()));
-	if(weap) weap->move(old_limb);
-	if(arm) {
-	    for(i=0; i<sizeof(arm); i++) {
-	   	arm[i]->move(old_limb);
-	    }
-	}
-	player_data["general"]["hp"] -= 25;
-	heal_rate = -3;
-	return severed_limb(limb);
+	wield_limbs = (string *)RACE_D->query_wielding_limbs(
+	  (string)this_object()->query_race());
     }
+    else {
+	btype = (string)this_object()->query_body_type();
+	if(btype && btype != "")
+	    wield_limbs = (string *)RACE_D->query_monster_wielding_limbs(btype);
+    }
+    add_limb(limb, ref, max_dam, 0, 0);
+    if(pointerp(wield_limbs) && member_array(limb, wield_limbs) != -1)
+	add_wielding_limb(limb);
     return 1;
 }
 

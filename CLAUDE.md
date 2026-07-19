@@ -237,6 +237,23 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   is complete. The VPS should never be edited directly except to pull
   already-tested commits.
 
+## Recent session work (2026-07-19)
+
+- **Whole-body damage model, cosmetic wear slots, appearance override,
+  narrative severing** all landed this session; the full rules live in
+  the "Armor, Slots, and the Whole-Body Damage Model" section below.
+  Touched: std/living/body.c, std/living/combat.c, std/armour.c,
+  std/user.c, std/monster.c, std/living.c, daemon/rifts_combat.c,
+  daemon/rifts_spells_d.c, cmds/mortal/_body.c, _eq.c,
+  cmds/skills/_limbs.c, _cure.c, _replace.c, _backstab.c, _balefire.c,
+  _demonfire.c, _drain.c, _lockpick.c, cmds/adm/_sever.c (new),
+  domains/Praxis/crypt.c, sheriff.c, obj/misc/stone.c,
+  equipment/dead_boy_armor.c, equipment/splynn/predator_armor.c.
+  FULL REBOOT required (std/ files changed).
+- Legacy heal skills (_mheal, _mend, _heal, _rot) still call
+  heal_limb(); harmless no-ops on gameplay under the pooled model,
+  left for a later cleanup pass alongside their class gating.
+
 ## What is still open (high level)
 
 See `master_gap_report.txt` for detail. Major remaining work:
@@ -516,9 +533,59 @@ Never allow player-accessible commands to:
 - Named NPCs should set `set_property("position_str", "...")` in `create()`.
 - Combat stance is separate: the `stance` command uses the `combat_stance` property.
 
-## Armor Slot
+## Armor, Slots, and the Whole-Body Damage Model (since 2026-07-19)
 
-- Use `set_property("rifts_slot", "armor")` on protective armor for `_eq` display.
-- This is display-only and does not change wear/remove internals.
-- `std/living/body.c` remains the source of truth for wear/remove behavior.
-- Cosmetic items should continue using their own slot labels (head, neck, shirt, back, belt, legs, hands, feet, etc).
+Damage model:
+- All combat and hazard damage lands on pooled stats only: barrier
+  fields (properties ithan_armor, invincible_armor, psi_shield_mdc),
+  then worn armor pools (armor_mdc/armor_sdc properties on the item),
+  then the character's MDC (MDC beings) or SDC then rifts_hp. Pure
+  legacy victims with no Rifts pools fall back to the NM3 hp pool via
+  do_damage("whole_body", n).
+- The single damage-bearing pseudo-limb is named `whole_body` (players
+  in std/user.c new_body(), NPCs in std/monster.c set_body_type()).
+  Do NOT rename it: the body/limbs mappings are serialized into player
+  saves.
+- Per-limb damage, damage-triggered severing, and limb targeting are
+  retired. body.c do_damage() pools everything; check_on_limb() and
+  severed_limb() are no-op stubs. return_limb()/return_target_limb()
+  exist for message flavor only and never return whole_body.
+- Non-combat damage sources must call
+  RIFTS_COMBAT_D->apply_direct_damage(victim, damage), never
+  do_damage() with a named limb.
+- Protective spells (Armor of Ithan, Invincible Armor, psychic body
+  field) are depleting barrier pools stored in properties and drained
+  by the damage chain. They never touch the character's MDC stat.
+
+Limb severing is narrative-only:
+- body.c sever_limb(limb) / restore_limb(limb); admin command `sever`
+  (cmds/adm/_sever.c: sever/restore/list); cleric `replace` skill uses
+  restore_limb. Severed limbs show in look, body, and limbs output.
+  whole_body, torso, and FATAL limbs (head) cannot be severed.
+
+Wear slots:
+- Protective armor (mdc_armor/sdc_armor property, type "body armour",
+  or rifts_slot "armor") is worn on whole_body via the legacy equip
+  path; std/armour.c is_protective_armour() decides.
+- Cosmetic pieces occupy slot-based wear (std/armour.c, NOT the limb
+  system): head, neck, shirt, back, belt, legs, hands, feet, ring1,
+  ring2. One item per slot; rings fill ring1 then ring2. The slot
+  comes from the rifts_slot property (aliases hat/necklace/pants/
+  shoes/gloves/cloak accepted) or falls back to the armour type
+  (helmet, necklace, cloak, backpack, belt, pants, gloves, boots,
+  ring). Cosmetic pieces need no set_limbs() and never carry or stop
+  damage.
+- Items with neither a protective marker nor a resolvable slot
+  (shields, odd legacy NM3 types) still use the old limb-based path.
+
+Appearance override:
+- set_appearance_name("A Coalition Dead Boy") on a protective armor
+  piece makes strangers see that string instead of the wearer's
+  race-based room-listing name while it is worn on whole_body. Stored
+  verbatim (include the article you want). Strangers-only: players who
+  know the wearer still see their name. Implemented in std/armour.c
+  and std/user.c query_appearance_override() (computed live from worn
+  gear; no property, nothing to clean up on removal/destruction).
+- Wired as proof of concept on dead_boy_armor.c and predator_armor.c.
+  Sunaj Assassin armor, Armor of the Beast, and JR-15 do NOT exist yet
+  and still need creation once lore/MDC values are decided.

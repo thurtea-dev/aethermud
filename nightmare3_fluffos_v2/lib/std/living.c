@@ -390,22 +390,23 @@ string query_long(string unused) {
     pre = "You look over the "+query_gender()+" "+(string)this_object()->query_race()+".\n";
    if(combat::query_long("junk")) pre += ::query_long("junk")+"\n";
     if(description) pre += shown+" "+description+"\n";
-    if(!userp(this_object())) {
-        if(severed) tmp = keys(severed);
-        if(tmp && sizeof(tmp)) {
-            reg += query_cap_name()+" is missing a "+tmp[0];
-            if(sizeof(tmp) > 1) {
-                if(sizeof(tmp) != 2) reg += ",";
-                for(i=1; i<sizeof(tmp); i++) {
-                    if(i== sizeof(tmp)-1) reg += " and a ";
-                    reg += " " +tmp[i];
-                    if(i != sizeof(tmp)-1) reg +=",";
-                }
+    /* Missing limbs show for players and NPCs alike (2026-07-19);
+       the "no missing limbs" filler line stays NPC-only. */
+    if(severed) tmp = keys(severed);
+    if(tmp && sizeof(tmp)) {
+        reg += query_cap_name()+" is missing a "+tmp[0];
+        if(sizeof(tmp) > 1) {
+            if(sizeof(tmp) != 2) reg += ",";
+            for(i=1; i<sizeof(tmp); i++) {
+                if(i== sizeof(tmp)-1) reg += " and a ";
+                reg += " " +tmp[i];
+                if(i != sizeof(tmp)-1) reg +=",";
             }
-            reg += ".\n";
         }
-        else reg += query_cap_name() + " has no missing limbs.\n";
+        reg += ".\n";
     }
+    else if(!userp(this_object()))
+        reg += query_cap_name() + " has no missing limbs.\n";
     if((int)RIFTS_D->is_rifts_race((string)this_object()->query_race())) {
         cur = (int)query_stats("rifts_hp");
         max = (int)query_stats("max_rifts_hp");

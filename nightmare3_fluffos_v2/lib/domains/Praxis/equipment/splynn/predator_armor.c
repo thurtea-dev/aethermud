@@ -31,4 +31,7 @@ void create() {
     set_property("rifts_armor", 1);
     set_property("is_invisible", 1);
     set_property("optical_camo", 1);
+    /* Sealed hunting armor: strangers see only an armored hunter, not
+       the wearer's race, while it is worn (appearance override system). */
+    set_appearance_name("A predator-armored hunter");
 }

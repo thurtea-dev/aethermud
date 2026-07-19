@@ -12,6 +12,9 @@ inherit DAEMON;
 
 private string slot_name_from_ob(object ob) {
     string slot, type;
+    /* Worn cosmetic pieces know their assigned slot (2026-07-19). */
+    slot = (string)ob->query_cosmetic_slot();
+    if(slot && sizeof(slot)) return capitalize(slot);
     slot = (string)ob->query_property("rifts_slot");
     if(slot && sizeof(slot)) return capitalize(slot);
     type = (string)ob->query_type();
@@ -67,7 +70,7 @@ int cmd_eq(string str) {
     int i, j;
 
     slot_order = ({ "Head", "Neck", "Shirt", "Back", "Belt",
-                    "Legs", "Hands", "Feet" });
+                    "Legs", "Hands", "Feet", "Ring1", "Ring2" });
 
     inv = all_inventory(this_player());
     slot_map    = ([]);

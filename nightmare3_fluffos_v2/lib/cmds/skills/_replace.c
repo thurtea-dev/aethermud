@@ -124,36 +124,9 @@ int check_alignment(object tp) {
 }
  
 int do_add(object ob, string limb) {
-//rewritten by Gregon 01July1994 to process all types of limbs.
- 
-    string fall_off, race, side, part;
-    int div;
- 
-    if(sscanf(limb,"%s %s",side,part)!=2) return 0;
- 
-    if((string)ob->query_race()=="artrell") {
-       switch(part) {
-         case "hand" : div=5; fall_off=""; break;
-         case "arm"  : div=4; fall_off=side+" hand"; break;
-       }
-    }
-    else {
-       switch(part) {
-         case "hand" : div=4; fall_off=""; break;
-         case "arm" : div=3; fall_off=side+" hand"; break;
-       }
-    }
-    switch(part) {
-       case "wing": div=5; fall_off="";break;
-       case "foot": div=4; fall_off="";break;
-       case "leg" : div=3; fall_off=side+" foot";break;
-       case "hoof": div=4; fall_off="";break;
-    }
- 
-    ob->add_limb(limb, fall_off, to_int((int)ob->query_max_hp()/div), 0, 0); 
-    if(part == "hand")
-       ob->add_wielding_limb(limb);
-    return 1;
+/*  Since 2026-07-19 limb restoration lives in body.c restore_limb(),
+    which rebuilds the limb from the race body table.  */
+    return (int)ob->restore_limb(limb);
 }
  
 void help() {

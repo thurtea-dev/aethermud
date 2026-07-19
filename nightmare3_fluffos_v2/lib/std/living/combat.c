@@ -328,7 +328,9 @@ void execute_attack() {
                     this_object(), attackers[0], damage);
         }
         else if(damage > 0) {
-            x = (int)attackers[0]->do_damage(target_thing, damage);
+            /* Legacy NM3 path (neither combatant a Rifts race): damage
+               lands on the whole_body pool; target_thing is flavor only. */
+            x = (int)attackers[0]->do_damage("whole_body", damage);
         }
         else {
             x = 0;
@@ -360,7 +362,6 @@ void execute_attack() {
         }
         // x == -1 means Rifts daemon handled messages; skip NM3 send_messages.
         if(x != -1) send_messages(casting, current, target_thing, (x < 0 ? 0 : x));
-        if(x > 0) attackers[0]->check_on_limb(target_thing);
     }
     casting = 0;
 }

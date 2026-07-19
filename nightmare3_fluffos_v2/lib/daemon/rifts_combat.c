@@ -272,6 +272,54 @@ private void destroy_armor(object armor, object wearer, object room) {
         armor->move(room);
 }
 
+/* ── Magical/psionic barrier fields (2026-07-19) ─────────────────────────── */
+/* Protective spells and psionics (Armor of Ithan, Invincible Armor, psychic */
+/* body field) protect exactly like worn armor: a depleting pool checked     */
+/* ahead of worn armor that breaks when it reaches zero.  The pool lives in  */
+/* a property on the defender; nothing touches the defender's own MDC stat.  */
+
+private int query_barrier_total(object who) {
+    int total;
+
+    if(!who) return 0;
+    total  = (int)who->query_property("ithan_armor");
+    total += (int)who->query_property("invincible_armor");
+    total += (int)who->query_property("psi_shield_mdc");
+    return total;
+}
+
+private int drain_one_barrier(object defender, string prop, string desc,
+                              int damage) {
+    int pool, absorbed;
+
+    pool = (int)defender->query_property(prop);
+    if(pool < 1 || damage < 1) return 0;
+    absorbed = (damage <= pool) ? damage : pool;
+    pool -= absorbed;
+    defender->set_property(prop, pool);
+    if(pool < 1) {
+        message("my_combat", "Your " + desc + " collapses!", defender);
+        if(environment(defender))
+            tell_observers_subject(environment(defender), defender,
+                ({ defender }), "$S's " + desc + " collapses!\n");
+    }
+    return absorbed;
+}
+
+private int drain_barriers(object defender, int damage) {
+    int absorbed;
+
+    absorbed = drain_one_barrier(defender, "ithan_armor",
+        "Armor of Ithan field", damage);
+    if(absorbed < damage)
+        absorbed += drain_one_barrier(defender, "invincible_armor",
+            "Invincible Armor", damage - absorbed);
+    if(absorbed < damage)
+        absorbed += drain_one_barrier(defender, "psi_shield_mdc",
+            "psychic body field", damage - absorbed);
+    return absorbed;
+}
+
 /* ── Public: APM and round tracking ───────────────────────────────────────── */
 
 /* Returns attacks per melee round for a player. */
@@ -749,6 +797,7 @@ int apply_rifts_damage(object attacker, object defender, int raw_damage) {
     int armor_bypass;
     int penetrate_ar;
     int ar_bypass_half;
+    int barrier_hit;
 
     if(!attacker || !defender || raw_damage < 0) return 0;
 
@@ -880,6 +929,35 @@ int apply_rifts_damage(object attacker, object defender, int raw_damage) {
     wd = roll_rifts_weapon_damage(attacker);
     if(wd > 0) damage = wd + query_damage_bonus(attacker);
     if(damage < 1) damage = 1;
+
+    /* Barrier fields (Armor of Ithan etc) absorb ahead of worn armor.  */
+    /* Like worn MDC armor, SDC attacks bounce off them entirely.       */
+    if(query_barrier_total(defender) > 0) {
+        if(!has_mdc_weapon && !is_mdc_atk) {
+            message("my_combat",
+                "Your attack bounces off the shimmering field around " +
+                id_name(defender, attacker) + "!", attacker);
+            message("my_combat",
+                id_name(attacker, defender) +
+                "'s attack bounces off your protective field!", defender);
+            tell_observers_combat(environment(attacker), attacker, defender,
+                "$A's attack bounces off the field surrounding $D.\n");
+            return -1;
+        }
+        barrier_hit = drain_barriers(defender, damage);
+        if(barrier_hit >= damage) {
+            message("my_combat",
+                "Your attack is absorbed by the field surrounding " +
+                id_name(defender, attacker) + "!", attacker);
+            message("my_combat",
+                "The field around you absorbs " +
+                id_name(attacker, defender) + "'s attack!", defender);
+            tell_observers_combat(environment(attacker), attacker, defender,
+                "$A's attack is absorbed by the field surrounding $D.\n");
+            return -1;
+        }
+        damage -= barrier_hit;
+    }
 
     actual = 0;
 
@@ -1159,6 +1237,19 @@ int apply_vehicle_mdc_damage(object defender, int raw_damage, string weapon_desc
 
     if(!weapon_desc || !strlen(weapon_desc)) weapon_desc = "vehicle weapon";
 
+    /* Barrier fields absorb first; vehicle weapons are always MDC-capable. */
+    if(query_barrier_total(defender) > 0) {
+        overflow = drain_barriers(defender, raw_damage);
+        if(overflow >= raw_damage) {
+            message("my_combat",
+                sprintf("The field around you absorbs the %s blast!",
+                    weapon_desc), defender);
+            return -1;
+        }
+        raw_damage -= overflow;
+        overflow = 0;
+    }
+
     if((int)RIFTS_D->is_mdc_race((string)defender->query_race()) ||
        (int)defender->query_property("mdc_creature")) {
 
@@ -1269,6 +1360,143 @@ int apply_vehicle_mdc_damage(object defender, int raw_damage, string weapon_desc
         defender->cease_all_attacks();
     }
     return -1;
+}
+
+/* ── Public: Direct (non-combat-round) damage ─────────────────────────────── */
+/* */
+/* Entry point for skills, traps, and room hazards that used to call the      */
+/* NM3 per-limb do_damage() directly (backstab, balefire, demonfire, drain,   */
+/* lockpick cuts, crypt/sheriff/stone hazards).  Since 2026-07-19 all such    */
+/* damage runs through the same pooled protection chain as regular combat:    */
+/* barrier fields, then worn MDC/SDC armor pools, then the victim's own       */
+/* MDC (MDC beings) or SDC then rifts_hp.  Victims with no Rifts pools at    */
+/* all (pure legacy monsters) fall back to the NM3 whole_body hp pool.       */
+/* Sends no hit messages (callers narrate); does send armor-break,            */
+/* unconsciousness, and death messages.  Returns damage actually applied.     */
+int apply_direct_damage(object victim, int damage) {
+    int cur_mdc, cur_sdc, cur_hp;
+    int absorbed, left;
+    int is_mdc_def;
+    object armor;
+    object env;
+
+    if(!victim || !objectp(victim) || damage < 1) return 0;
+    env = environment(victim);
+    left = damage;
+
+    /* Barrier fields first, same as the combat chain. */
+    if(query_barrier_total(victim) > 0) {
+        absorbed = drain_barriers(victim, left);
+        left -= absorbed;
+        if(left < 1) return damage;
+    }
+
+    is_mdc_def = ((int)RIFTS_D->is_mdc_race((string)victim->query_race()) ||
+                  (int)victim->query_property("mdc_creature"));
+
+    /* Worn armor pools next: MDC armor, then SDC armor. */
+    armor = find_worn_armor(victim, "mdc_armor");
+    if(armor) {
+        init_armor_hp(armor);
+        cur_mdc = (int)armor->query_property("current_armor_mdc");
+        if(cur_mdc > 0) {
+            absorbed = (left <= cur_mdc) ? left : cur_mdc;
+            cur_mdc -= absorbed;
+            armor->set_property("current_armor_mdc", cur_mdc);
+            left -= absorbed;
+            if(cur_mdc < 1) {
+                message("my_combat",
+                    "Your " + (string)armor->query_name() + " is destroyed!",
+                    victim);
+                if(env)
+                    tell_observers_subject(env, victim, ({ victim }),
+                        "$S's armor is destroyed!\n");
+                destroy_armor(armor, victim, env);
+            }
+            if(left < 1) return damage;
+        }
+    }
+    armor = find_worn_armor(victim, "sdc_armor");
+    if(armor) {
+        init_armor_hp(armor);
+        cur_sdc = (int)armor->query_property("current_armor_sdc");
+        if(cur_sdc > 0) {
+            absorbed = (left <= cur_sdc) ? left : cur_sdc;
+            cur_sdc -= absorbed;
+            armor->set_property("current_armor_sdc", cur_sdc);
+            left -= absorbed;
+            if(cur_sdc < 1) {
+                message("my_combat",
+                    "Your " + (string)armor->query_name() + " is destroyed!",
+                    victim);
+                if(env)
+                    tell_observers_subject(env, victim, ({ victim }),
+                        "$S's armor is destroyed!\n");
+                destroy_armor(armor, victim, env);
+            }
+            if(left < 1) return damage;
+        }
+    }
+
+    /* MDC beings: remaining damage drains the MDC pool. */
+    if(is_mdc_def) {
+        cur_mdc = (int)victim->query_stats("MDC");
+        cur_mdc -= left;
+        victim->set_stats("MDC", cur_mdc);
+        if(cur_mdc <= -20) {
+            message("my_combat", "You are destroyed!", victim);
+            if(env)
+                tell_observers_subject(env, victim, ({ victim }),
+                    "$S is destroyed!\n");
+            victim->cease_all_attacks();
+            victim->die();
+        } else if(cur_mdc <= 0) {
+            message("my_combat", "You fall unconscious!", victim);
+            if(env)
+                tell_observers_subject(env, victim, ({ victim }),
+                    "$S collapses, unconscious!\n");
+            victim->cease_all_attacks();
+        }
+        return damage;
+    }
+
+    /* SDC beings with Rifts pools: SDC buffer, then rifts_hp. */
+    if((int)victim->query_stats("max_rifts_hp") > 0 ||
+       (int)victim->query_stats("SDC") > 0) {
+        cur_sdc = (int)victim->query_stats("SDC");
+        if(cur_sdc > 0) {
+            absorbed = (left <= cur_sdc) ? left : cur_sdc;
+            cur_sdc -= absorbed;
+            victim->set_stats("SDC", cur_sdc);
+            left -= absorbed;
+        }
+        if(left > 0) {
+            cur_hp = (int)victim->query_stats("rifts_hp");
+            cur_hp -= left;
+            victim->set_stats("rifts_hp", cur_hp);
+        }
+        cur_hp = (int)victim->query_stats("rifts_hp");
+        if(cur_hp <= -10) {
+            message("my_combat", "You die!", victim);
+            if(env)
+                tell_observers_subject(env, victim, ({ victim }),
+                    "$S dies!\n");
+            victim->cease_all_attacks();
+            victim->die();
+        } else if(cur_hp <= 0) {
+            message("my_combat", "You fall unconscious!", victim);
+            if(env)
+                tell_observers_subject(env, victim, ({ victim }),
+                    "$S collapses, unconscious!\n");
+            victim->cease_all_attacks();
+        }
+        return damage;
+    }
+
+    /* Pure legacy victim: NM3 whole_body pool, NM3 death check. */
+    victim->do_damage("whole_body", left);
+    if((int)victim->query_hp() < 0) victim->die();
+    return damage;
 }
 
 /* PPE and ISP regeneration; called from living.c heart_beat() once per hour. */

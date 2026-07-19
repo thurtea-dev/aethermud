@@ -366,7 +366,7 @@ void squad_part_six(object who) {
   present("hood", who)->remove();
   present("handcuffs", who)->remove();
   for(x=0; x<6; ++x)
-    who->do_damage("torso", dam + 10);
+    RIFTS_COMBAT_D->apply_direct_damage(who, dam + 10);
   call_out("squad_part_seven", 4, environment(who));
   who->die();
 }

@@ -1,4 +1,5 @@
 #include <std.h>
+#include <daemons.h>
 
 #define PH "/realms/drakken/clerics/"
 #define SAVE_FILE "/domains/Praxis/data/cleric_crypt"
@@ -245,7 +246,7 @@ int pray_func(string str) {
 	      " with his %^CYAN%^warhammer%^RESET%^!"
 	      : " Luckily for you the hammer is a shadow also, and therefore the damage is minimal."
       ) );
-      ob->do_damage(limb,5+random(prayers)+is_hammer*25);
+      RIFTS_COMBAT_D->apply_direct_damage(ob, 5+random(prayers)+is_hammer*25);
       tell_object(ob,"Tempos decides you are not worth to bother with anyway and disappears.");
     }
     prayers++;

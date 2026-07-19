@@ -285,6 +285,9 @@ void set_body_type(string str) {
 	     monster_bod[mon_limbs[i]]["max_dam"], 0, 0);
   set_wielding_limbs((string *)RACE_D->query_monster_wielding_limbs(str));
   set_fingers((int)RACE_D->query_monster_fingers(str));
+  /* Single damage-bearing pseudo-limb, matching user.c new_body():
+     body armour collapses onto it and all pooled damage lands here. */
+  add_limb("whole_body", "", query_max_hp() + 1, 0, 0);
   body_type = str;
     set_mp(mag);
     set_max_mp(max_mag);

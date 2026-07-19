@@ -8,6 +8,7 @@
 inherit DAEMON;
 
 void send_messages(object tp, object ob, string Class, string limb);
+private void heal_rifts_pools(object ob, int amount);
 
 int cmd_cure(string str) {
     string whom, limb, Class;
@@ -52,13 +53,9 @@ int cmd_cure(string str) {
 	notify_fail("Nah... it does not need healing.\n");
 	return 0;
     }
-    if(!limb) cost = 90;
-    else if(limb == "all") cost = 180;
-    else if(member_array(limb, (string *)ob->query_limbs()) == -1) {
-        notify_fail("That limb is missing!\n");
-	return 0;
-    }
-    else cost = 50;
+    /* Limbs no longer take separate damage (2026-07-19); any limb
+       argument is treated as a normal full-body cure. */
+    cost = 90;
     if(ob != tp) cost = random(cost)+3;
     if((int)tp->query_mp() < cost) {
 	notify_fail("Too low on magic power.\n");
@@ -69,15 +66,7 @@ int cmd_cure(string str) {
 	notify_fail("You are not skilled enough to do that!\n");
 	return 0;
     }
-    if(!limb) {
-	amount = (healing*((int)ob->query_max_hp()))/100;
-    }
-    else if(limb == "all") {
-	amount = ((healing*((int)ob->query_max_hp()))/100)/2;
-    }
-    else {
-	amount = (healing*((int)ob->query_dam(limb)))/100;
-    }
+    amount = (healing*((int)ob->query_max_hp()))/100;
     this_player()->set_magic_round();
     if(amount > (int)ob->query_max_hp() - (int)ob->query_hp())
       amount = (int)ob->query_max_hp() - (int)ob->query_hp();
@@ -96,23 +85,24 @@ int cmd_cure(string str) {
         }
         else tp->add_exp(random(amount));
     }
-    if(!limb) {
-	ob->add_hp(amount);
-	send_messages(tp, ob, Class, 0);
-    }
-    else if(limb == "all") {
-	limbs = (string *)ob->query_limbs();
-	for(i=0; i<sizeof(limbs); i++) {
-	    ob->heal_limb(limbs[i], (amount / 2));
-	}
-	ob->add_hp(amount / 2);
-	send_messages(tp, ob, Class, limb);
-    }
-    else {
-	ob->heal_limb(limb, amount);
-	send_messages(tp, ob, Class, limb);
-    }
+    ob->add_hp(amount);
+    heal_rifts_pools(ob, amount);
+    send_messages(tp, ob, Class, 0);
     return 1;
+}
+
+/*  Rifts characters track wounds in rifts_hp, not the NM3 hp pool;
+    heal both so cure works for everyone (2026-07-19).  */
+private void heal_rifts_pools(object ob, int amount) {
+    int cur, max;
+
+    max = (int)ob->query_stats("max_rifts_hp");
+    if(max < 1) return;
+    cur = (int)ob->query_stats("rifts_hp");
+    if(cur >= max) return;
+    cur += amount;
+    if(cur > max) cur = max;
+    ob->set_stats("rifts_hp", cur);
 }
 
 void send_messages(object tp, object ob, string Class, string limb) {

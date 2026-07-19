@@ -29,7 +29,15 @@ string query_remove_string();
 object query_remove_func();
 string query_type();
 object query_worn();
- 
+void set_appearance_name(string str);
+string query_appearance_name();
+string query_cosmetic_slot();
+int is_protective_armour();
+mixed query_wear();
+private string resolve_cosmetic_slot();
+private string assign_cosmetic_slot(string cos);
+private object find_worn_slot_item(object wearer, string slot);
+
 private int armour_fits_wearer(object wearer) {
     string race;
     int dragon_form;
@@ -67,9 +75,10 @@ void create() {
  
 int wear(string str) {
     mixed *limbs;
-    string ret, what, where;
+    string ret, what, where, slot;
+    function f;
     int i, j;
- 
+
     if(!str) return notify_fail("Wear what?\n");
     if(!id(what = str) && sscanf(str, "%s on %s", what, where) != 2) {
         if(parse_objects(this_player(), str) != this_object()) {
@@ -97,28 +106,40 @@ int wear(string str) {
             this_player());
         return 1;
     }
-    i = sizeof(limbs = query_limbs());
-    while(i--) {
-        if(stringp(limbs[i])) continue;
-        if((j=member_array(where, limbs[i])) != -1) limbs[i] = limbs[i][j];
-        else if(where) {
-          message("my_action", "You cannot wear this on your "+where+".",
-            this_player());
-          return 1;
-        }
-        else {
-          message("my_action", "You must specify which limb you want this "
-          "on.", this_player());
-          return 1;
-        }
+    slot = 0;
+    if(!is_protective_armour() && (slot = resolve_cosmetic_slot())) {
+        /* Cosmetic slot wear (2026-07-19): non-protective pieces occupy
+           a cosmetic slot and never touch the limb/damage system. */
+        if(functionp(f = query_wear()) && !((*f)())) return 1;
+        slot = assign_cosmetic_slot(slot);
+        if(!slot) return 1;
+        limbs = ({ slot });
     }
-    if((string)query_type() == "body armour" &&
-       member_array("whole_body", (string *)this_player()->query_limbs()) != -1)
-        limbs = ({ "whole_body" });
-    if(ret = (string)this_player()->equip_armour_to_limb(this_object(),limbs)){
-        if(ret == "NO") return 1;
-        message("my_action", ret, this_player());
-        return 1;
+    else {
+        slot = 0;
+        i = sizeof(limbs = query_limbs());
+        while(i--) {
+            if(stringp(limbs[i])) continue;
+            if((j=member_array(where, limbs[i])) != -1) limbs[i] = limbs[i][j];
+            else if(where) {
+              message("my_action", "You cannot wear this on your "+where+".",
+                this_player());
+              return 1;
+            }
+            else {
+              message("my_action", "You must specify which limb you want this "
+              "on.", this_player());
+              return 1;
+            }
+        }
+        if(is_protective_armour() &&
+           member_array("whole_body", (string *)this_player()->query_limbs()) != -1)
+            limbs = ({ "whole_body" });
+        if(ret = (string)this_player()->equip_armour_to_limb(this_object(),limbs)){
+            if(ret == "NO") return 1;
+            message("my_action", ret, this_player());
+            return 1;
+        }
     }
     if(functionp(armour_static["wear"])) {}
     else if(stringp(armour_static["wear"]))
@@ -129,6 +150,7 @@ int wear(string str) {
       ".", environment(this_player()), ({ this_player() }));
     armour_static["worn by"] = this_player();
     armour_static["actual limbs"] = limbs;
+    if(slot) armour_static["cosmetic_slot"] = slot;
     return 1;
 }
  
@@ -180,14 +202,18 @@ void unwear() {
       message("my_action", armour_static["unwear"], armour_static["worn by"]);
     else message("my_action", "You remove your "+query_short()+".",
       armour_static["worn by"]);
-    armour_static["worn by"]->remove_armour_from_limb(this_object(),
-      armour_static["actual limbs"]);
+    /* Cosmetic slot items never registered on a limb, so skip the limb
+       unhook (slot names can collide with real limb names like head). */
+    if(!armour_static["cosmetic_slot"])
+        armour_static["worn by"]->remove_armour_from_limb(this_object(),
+          armour_static["actual limbs"]);
     message("other_action", (string)armour_static["worn by"]->query_cap_name()+
       " removes "+(string)armour_static["worn by"]->query_possessive()
       +" "+query_name()+".", environment(armour_static["worn by"]),
       ({ armour_static["worn by"] }));
     map_delete(armour_static, "worn by");
     map_delete(armour_static, "actual limbs");
+    map_delete(armour_static, "cosmetic_slot");
 }
  
 void extinguish_glow() {
@@ -210,7 +236,9 @@ void unequip() { if(armour_static["worn by"]) unwear(); }
  
 void set_not_equipped() {
     if(query_worn()) map_delete(armour_static, "worn by");
-    if(armour_static["actual limbs"]) map_delete(armour_static, "actual limbs");}
+    if(armour_static["actual limbs"]) map_delete(armour_static, "actual limbs");
+    if(armour_static["cosmetic_slot"]) map_delete(armour_static, "cosmetic_slot");
+}
  
 int remove() {
     if(armour_static && armour_static["lit"]) {
@@ -285,9 +313,94 @@ string query_long(string str) {
 string *query_actual_limbs() { return armour_static["actual limbs"]; }
  
 int is_armour() { return 1; }
- 
+
 void set_struck(mixed val) {
     armour_static["struck"] = val;
 }
 
 mixed query_struck() { return armour_static["struck"]; }
+
+/*  Protective armor is worn on whole_body and carries MDC/SDC pools;
+    everything else that resolves to a cosmetic slot is display-only.  */
+int is_protective_armour() {
+    if((int)query_property("mdc_armor")) return 1;
+    if((int)query_property("sdc_armor")) return 1;
+    if((string)query_type() == "body armour") return 1;
+    if((string)query_property("rifts_slot") == "armor") return 1;
+    return 0;
+}
+
+/*  Map the rifts_slot property (or, failing that, the armour type) to
+    one of the cosmetic wear slots: head, neck, shirt, back, belt,
+    legs, hands, feet, ring (ring fills ring1 then ring2).  Returns 0
+    when the piece does not fit the slot system (shields, legacy NM3
+    armour types), which falls through to the old limb-based path.  */
+private string resolve_cosmetic_slot() {
+    string slot, type;
+
+    slot = (string)query_property("rifts_slot");
+    if(slot == "armor") return 0;
+    if(!slot || slot == "") {
+        type = (string)query_type();
+        if(!type || type == "") return 0;
+        slot = type;
+    }
+    switch(slot) {
+    case "head": case "hat": case "helmet": return "head";
+    case "neck": case "necklace": case "amulet": return "neck";
+    case "shirt": return "shirt";
+    case "back": case "cloak": case "backpack": return "back";
+    case "belt": return "belt";
+    case "legs": case "pants": return "legs";
+    case "hands": case "gloves": return "hands";
+    case "feet": case "shoes": case "boots": case "boot": return "feet";
+    case "ring": case "ring1": case "ring2": return slot;
+    default: return 0;
+    }
+}
+
+/*  Pick the concrete slot for this piece, checking occupancy.  Rings
+    fill ring1 then ring2.  Messages the player and returns 0 when the
+    slot is taken.  */
+private string assign_cosmetic_slot(string cos) {
+    if(cos == "ring" || cos == "ring1" || cos == "ring2") {
+        if(cos != "ring2" && !find_worn_slot_item(this_player(), "ring1"))
+            return "ring1";
+        if(cos != "ring1" && !find_worn_slot_item(this_player(), "ring2"))
+            return "ring2";
+        message("my_action", "You are already wearing two rings.",
+          this_player());
+        return 0;
+    }
+    if(find_worn_slot_item(this_player(), cos)) {
+        message("my_action", "You are already wearing something there.",
+          this_player());
+        return 0;
+    }
+    return cos;
+}
+
+private object find_worn_slot_item(object wearer, string slot) {
+    object *inv;
+    int i;
+
+    inv = all_inventory(wearer);
+    if(!inv) return 0;
+    for(i=0; i<sizeof(inv); i++) {
+        if(!inv[i]) continue;
+        if(!((int)inv[i]->is_armour())) continue;
+        if((object)inv[i]->query_worn() != wearer) continue;
+        if((string)inv[i]->query_cosmetic_slot() == slot) return inv[i];
+    }
+    return 0;
+}
+
+string query_cosmetic_slot() { return armour_static["cosmetic_slot"]; }
+
+/*  Appearance override (2026-07-19): when this piece is worn on
+    whole_body, strangers see this string in place of the wearer's
+    race-based room-listing name.  Stored verbatim, so include the
+    article you want: "A Coalition Dead Boy", "Knight".  */
+void set_appearance_name(string str) { armour_save["appearance_name"] = str; }
+
+string query_appearance_name() { return armour_save["appearance_name"]; }

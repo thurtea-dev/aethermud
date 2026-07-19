@@ -5,7 +5,8 @@
 */
  
  
-#include <std.h>    
+#include <std.h>
+#include <daemons.h>    
  
 inherit DAEMON;
  
@@ -120,7 +121,7 @@ void do_other(object ob)
        (string)ob->query_cap_name()+" falls to "+
        (string)this_player()->query_possessive()+" knees, screaming "
        "in agony.%^RESET%^ ", environment(ob), ob);
-   ob->do_damage("head", random(80)+20);
+   RIFTS_COMBAT_D->apply_direct_damage(ob, random(80)+20);
    ob->add_stat_bonus("intelligence", -10);
    ob->add_stat_bonus("wisdom", -10);
    return;
@@ -146,7 +147,7 @@ void do_dumb(object ob)
        (string)ob->query_subjective()+" is engulfed in flames! "
        "You hear the sound of cackling as the flames wink out of " 
        "existance. ", environment(ob), ob);
-   ob->do_damage("torso", random(30)+50);
+   RIFTS_COMBAT_D->apply_direct_damage(ob, random(30)+50);
    return;
   }
  

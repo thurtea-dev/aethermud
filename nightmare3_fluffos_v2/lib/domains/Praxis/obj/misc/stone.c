@@ -4,6 +4,7 @@
 // Created by Manny@Nightmare 940901
 
 #include <std.h>
+#include <daemons.h>
 
 object target;
 void set_target(object who);
@@ -103,9 +104,8 @@ int throw_stone(string str) {
       limb = "torso";
       break;
   }
-  target->do_damage(limb, random(50)+10);
-  if(((int)target->check_on_limb(limb) == 2) || (target->query_hp() < 0))
-    target->die();
+  /* Pooled damage; death handled inside the Rifts chain (2026-07-19). */
+  RIFTS_COMBAT_D->apply_direct_damage(target, random(50)+10);
   return 1;
 }
 

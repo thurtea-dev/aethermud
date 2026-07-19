@@ -11,6 +11,7 @@
  */
  
 #include <std.h>
+#include <daemons.h>
 #define XX "%^BOLD%^RED%^"
  
 inherit DAEMON;
@@ -154,10 +155,10 @@ int cmd_backstab(string str) {
  
      damage = damage/2 +random(damage/2);
      damage -= victim->query_current_protection(hitlimb);
-     if(prot) damage-=damage/prot;   
-     victim->do_damage(hitlimb,damage);
-      victim->check_on_limb(hitlimb);
-    
+     if(prot) damage-=damage/prot;
+     /* Pooled damage through the Rifts chain (2026-07-19); hitlimb is flavor. */
+     RIFTS_COMBAT_D->apply_direct_damage(victim, damage);
+
    }
   }
   this_player()->add_alignment(-5);

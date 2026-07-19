@@ -24,4 +24,7 @@ void create() {
     set_property("armor_mdc", 80);
     set_property("current_armor_mdc", 80);
     set_property("armor_ar", 15);
+    /* Full-face Coalition armor: strangers see a Dead Boy, not the
+       wearer's race, while it is worn (appearance override system). */
+    set_appearance_name("A Coalition Dead Boy");
 }

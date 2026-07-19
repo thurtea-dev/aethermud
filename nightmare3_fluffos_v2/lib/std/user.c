@@ -108,6 +108,7 @@ void remove_from_face_list(string name);
 int knows_player(string name);
 string query_display_name(object viewer);
 string query_visible_name(object viewer);
+string query_appearance_override();
 void rifts_death_pvp_check();
 private void ensure_wiz_tools();
 void set_primary_start(string str);
@@ -1984,8 +1985,35 @@ int knows_player(string name) {
     return member_array(name, face_list) != -1;
 }
 
+/*  Appearance override (2026-07-19): worn whole_body armor with a
+    set_appearance_name() replaces the race-based display name shown
+    to strangers.  Computed live from worn gear each call, so armor
+    destruction, removal, or link-death can never leave stale state.  */
+string query_appearance_override() {
+    object *inv;
+    string ap;
+    string *lims;
+    int i;
+
+    inv = all_inventory(this_object());
+    if(!inv) return 0;
+    for(i=0; i<sizeof(inv); i++) {
+        if(!inv[i]) continue;
+        if(!((int)inv[i]->is_armour())) continue;
+        if((object)inv[i]->query_worn() != this_object()) continue;
+        ap = (string)inv[i]->query_appearance_name();
+        if(!ap || ap == "") continue;
+        lims = (string *)inv[i]->query_actual_limbs();
+        if(!pointerp(lims)) continue;
+        if(member_array("whole_body", lims) == -1) continue;
+        return ap;
+    }
+    return 0;
+}
+
 string query_display_name(object viewer) {
     string my_race;
+    string ap_override;
 
     if(query_ghost()) return "A ghost";
     if(invis) return 0;
@@ -1995,6 +2023,8 @@ string query_display_name(object viewer) {
         return query_cap_name();
 
     if(!(int)viewer->knows_player(query_name())) {
+        ap_override = query_appearance_override();
+        if(ap_override && ap_override != "") return ap_override;
         my_race = (string)query_property("visible_race");
         if((!my_race || my_race == "") && (int)query_property("metamorphed")) {
             my_race = (string)query_property("apparent_race");

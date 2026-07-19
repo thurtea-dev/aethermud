@@ -1805,30 +1805,28 @@ private void fx_firebolt(object target) {
     }
 }
 
+/*  Since 2026-07-19 protective spells are barrier pools drained by
+    the damage chain in rifts_combat.c, exactly like worn armor MDC.
+    The property IS the remaining pool; the wearer's own MDC stat is
+    never touched.  */
 private void fx_ithan_armor(object target) {
-    int cur_mdc;
     if((int)this_player()->query_property("ithan_armor")) {
         write("You already have an Armor of Ithan field.\n");
         return;
     }
     this_player()->set_property("ithan_armor", 30);
-    cur_mdc = (int)this_player()->query_stats("MDC");
-    this_player()->set_stats("MDC", cur_mdc + 30);
-    write("A glowing magical field surrounds you: +30 MDC!\n");
+    write("A glowing magical field surrounds you, absorbing 30 MDC of damage!\n");
     say(this_player()->query_cap_name() + " is surrounded by a shimmering magical field!");
     call_out("end_ithan_armor", 300, this_player());
 }
 
 void end_ithan_armor(object who) {
-    int mdc_val;
-    int armor_val;
     if(!objectp(who)) return;
-    armor_val = (int)who->query_property("ithan_armor");
+    if((int)who->query_property("ithan_armor") < 1) {
+        who->set_property("ithan_armor", 0);
+        return;
+    }
     who->set_property("ithan_armor", 0);
-    mdc_val = (int)who->query_stats("MDC");
-    if(mdc_val > armor_val) mdc_val -= armor_val;
-    else mdc_val = 0;
-    who->set_stats("MDC", mdc_val);
     tell_object(who, "Your Armor of Ithan field dissipates.\n");
 }
 
@@ -2362,30 +2360,25 @@ private void fx_dispel_barrier(object target) {
     say(this_player()->query_cap_name() + " dispels the magical barriers here!");
 }
 
+/*  Barrier pool, same model as Armor of Ithan (see note there).  */
 private void fx_invincible_armor(object target) {
-    int cur_mdc;
     if((int)this_player()->query_property("invincible_armor")) {
         write("Your invincible armor is already active.\n");
         return;
     }
     this_player()->set_property("invincible_armor", 200);
-    cur_mdc = (int)this_player()->query_stats("MDC");
-    this_player()->set_stats("MDC", cur_mdc + 200);
-    write("A crackling shell of magical force surrounds you completely: +200 MDC!\n");
+    write("A crackling shell of magical force surrounds you, absorbing 200 MDC of damage!\n");
     say(this_player()->query_cap_name() + " is enclosed in crackling invincible magical armor!");
     call_out("end_invincible_armor", 300, this_player());
 }
 
 void end_invincible_armor(object who) {
-    int mdc_val;
-    int armor_val;
     if(!objectp(who)) return;
-    armor_val = (int)who->query_property("invincible_armor");
+    if((int)who->query_property("invincible_armor") < 1) {
+        who->set_property("invincible_armor", 0);
+        return;
+    }
     who->set_property("invincible_armor", 0);
-    mdc_val = (int)who->query_stats("MDC");
-    if(mdc_val > armor_val) mdc_val -= armor_val;
-    else mdc_val = 0;
-    who->set_stats("MDC", mdc_val);
     tell_object(who, "Your invincible armor field collapses.\n");
 }
 
@@ -2543,22 +2536,13 @@ private void fx_negate_magic(object target) {
         return;
     }
     if((int)target->query_property("ithan_armor")) {
-        armor_val = (int)target->query_property("ithan_armor");
-        mdc_val   = (int)target->query_stats("MDC");
-        if(mdc_val > armor_val) mdc_val -= armor_val;
-        else mdc_val = 0;
-        target->set_stats("MDC", mdc_val);
+        /* Barrier pool model: clearing the property removes the field. */
         target->set_property("ithan_armor", 0);
         write("The Armor of Ithan on " + (string)target->query_cap_name() + " is negated!\n");
         tell_object(target, "Your magical armor is negated!\n");
         return;
     }
     if((int)target->query_property("invincible_armor")) {
-        armor_val = (int)target->query_property("invincible_armor");
-        mdc_val   = (int)target->query_stats("MDC");
-        if(mdc_val > armor_val) mdc_val -= armor_val;
-        else mdc_val = 0;
-        target->set_stats("MDC", mdc_val);
         target->set_property("invincible_armor", 0);
         write("The Invincible Armor on " + (string)target->query_cap_name() + " is negated!\n");
         tell_object(target, "Your invincible armor is shattered!\n");
