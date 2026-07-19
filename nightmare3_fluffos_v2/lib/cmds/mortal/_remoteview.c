@@ -33,7 +33,14 @@ int cmd_remoteview(string str) {
         return 1;
     }
 
-    target = RIFTS_PSIONICS_D->find_psi_remote_target(this_player(), str);
+    /* Self-target first: you always know yourself, so never send self
+       through the known-player range gate (which excludes the caster). */
+    str = lower_case(str);
+    if(str == "me" || str == "self" ||
+       str == lower_case((string)this_player()->query_name()))
+        target = this_player();
+    else
+        target = RIFTS_PSIONICS_D->find_psi_remote_target(this_player(), str);
     if(!target) {
         write("You cannot find anyone by that name within psychic range.\n"
               "They must be online and you must know them (introduce or remember).\n");

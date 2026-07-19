@@ -78,7 +78,6 @@ void create() {
     set_value(0);
     set_property("no_drop", 1);
     set_property("no_give", 1);
-    set_invis(1);
 }
 
 mixed *query_auto_load() {
