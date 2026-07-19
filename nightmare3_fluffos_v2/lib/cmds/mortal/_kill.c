@@ -3,7 +3,7 @@
  * rehack to check kill_ob first before continuing with kill and PK labeling
  * by Valodin, Feb 13, 1993
  * minor changes by Bohemund, Jan 22, 1993
- * notify victim of attack (duh...) Bohemund March 9. 1994
+ * notify victim of attack - Bohemund March 9. 1994
  */
 
 #include <std.h>

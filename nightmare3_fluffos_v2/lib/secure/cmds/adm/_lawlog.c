@@ -27,7 +27,7 @@ int cmd_lawlog(string str) {
       return notify_fail("Correct syntax: lawlog [ha] player\n");
  
     if(!archp(this_player()))
-      return notify_fail("No, no, no...arches only.\n");
+      return notify_fail("Only arches may use this command.\n");
  
     if(sscanf(str,"ha %s",who)==1) {
       if(member_group((string)this_player()->query_name(),"SECURE")) {

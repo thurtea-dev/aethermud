@@ -328,7 +328,7 @@ void create() {
 "north highway" : "A magical path leading through the North Forest, the "+
                   "North Forest Highway is magically protected against "+
                   "monsters, thus ensuring free passage to those who are "+
-                  "not stupid.. err.. bold enough to wander off it. "+
+                  "not bold enough to wander off it. "+
                   "However, it does not offer protection against bandits "+
                   "and highwaymen. The Highway connects with a path "+
                   "leading north from Krasna, forming a single, long road "+
@@ -337,7 +337,7 @@ void create() {
                   "southern end, the Highway has an exit leading to the "+
                   "rationally-designed, empirically-built and dogmatically-"+
                   "defended city of philosophers, Cartesia.",
-"horizon" : "You do not notice that here. duh.",
+"horizon" : "You do not notice that here.",
 "hole" : "North of the city, right before the remains of Centre "+
                   "Path curve northwest, lies a hole in the ground with a "+
                   "reddish glow coming out of it. That hole is reputed to "+

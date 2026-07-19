@@ -22,14 +22,14 @@ int cmd_raise(string str) {
 
   Class=me->query_class();
   if(!(Class="cleric" || Class="kataan"))
-    return notify_fail("You are unfamilar with such arts.\n");
+    return notify_fail("You are unfamiliar with such arts.\n");
 
   if(me->query_level() < 5)
-    return notify_fail("You are too ingorant in the ways of the world.\n"
+    return notify_fail("You are too ignorant in the ways of the world.\n"
 );
 
   if(!corpse=present(str, environment(this_player())))
-    return notify_fail("You feel a bit lost..\n");
+    return notify_fail("That is not here.\n");
 
   if(!corpse->id("corpse"))
     return notify_fail("You can only raise a corpse.\n");
