@@ -77,6 +77,6 @@ int cmd_boost(string str) {
 
 void help() {
     write("Syntax: <boost [friend]>\n\n"
-      "Allows you to boost the power of those feeling kinda weak.\n"
+      "Allows you to boost the power of a weakened ally.\n"
     );
 }

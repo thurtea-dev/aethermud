@@ -9,6 +9,8 @@ tracked, maintained docs referenced from the repo-root README.md.
   full reboot.
 - `DEVELOPMENT.md` - contributor workflow and LPC coding rules (a
   narrower companion to the root `CLAUDE.md`).
+- `STYLE.md` - tone and voice for player-facing strings, help text,
+  and code comments (no casual slang; NPC dialect exceptions).
 - `SHARING.md` - what's local-only config vs. what's tracked in git.
 - `PUBLISHING.md` - pre-publication checklist before making the repo or
   server more widely visible.

@@ -64,7 +64,7 @@ cmd_give(string str) {
               return 0;
           }
           if (amount<0) {
-	    notify_fail("Yeah, right.\n");
+	    notify_fail("You cannot give a negative amount.\n");
 	    return 0;
           }
           if(amount > (int)this_player()->query_money(type)) {
@@ -112,7 +112,7 @@ cmd_give(string str) {
          return 0;
          }
       default: {
-         notify_fail("Oops, can't do that.\n");
+         notify_fail("You cannot do that.\n");
          return 0;
          }
    }

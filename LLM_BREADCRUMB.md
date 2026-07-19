@@ -8,9 +8,10 @@
    it shaped this way", read `WHY.md` here.
 4. This is the top of the tree - there is no parent breadcrumb to check.
 5. Related docs: everything under `docs/` (start with `docs/INSTALL.md`
-   and `docs/RUNNING.md`), `staff-handbook/` for in-game staff mechanics,
-   `internal/` for personal/machine-specific working notes (not
-   authoritative project docs). Recent planning/reference additions:
+   and `docs/RUNNING.md`), `docs/STYLE.md` for player-facing tone/voice,
+   `staff-handbook/` for in-game staff mechanics, `internal/` for
+   personal/machine-specific working notes (not authoritative project
+   docs). Recent planning/reference additions:
    `docs/mercenary-groups-plan.md` (mercenary group system, planning
    only) and `docs/legacy-riftsmud-reference.md` (legacy RiftsMUD design
    memories).

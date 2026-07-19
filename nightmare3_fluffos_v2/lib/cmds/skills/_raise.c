@@ -32,7 +32,7 @@ int cmd_raise(string str) {
     return notify_fail("You feel a bit lost..\n");
 
   if(!corpse->id("corpse"))
-    return notify_fail("You oaf, you can only raise a corpse!!\n");
+    return notify_fail("You can only raise a corpse.\n");
 
   needs=(int)me->query_alignment();
   if(Class=="cleric" && needs>1000)

@@ -50,7 +50,7 @@ int cmd_cure(string str) {
       return 0;
     }
     if(!ob->is_player()) {
-	notify_fail("Nah... it does not need healing.\n");
+	notify_fail("That does not require curing.\n");
 	return 0;
     }
     /* Limbs no longer take separate damage (2026-07-19); any limb

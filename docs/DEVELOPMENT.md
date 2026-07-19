@@ -49,6 +49,7 @@ All Rifts daemons must appear in `lib/secure/cfg/preload.cfg`.
 - Do not describe spawned NPCs in `set_long()`
 - No em dashes in player-facing strings
 - American spelling in player-facing text: armor, color, defense
+- Tone/voice: see [STYLE.md](STYLE.md) (professional/serious; no casual slang in system messages)
 
 ## Edit workflow
 

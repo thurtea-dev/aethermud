@@ -18,7 +18,7 @@ int cmd_arrest(string str) {
     }
     str = lower_case(who);
     if(member_group(str, "SECURE")) {
-        notify_fail("Shyeah...NOT.\n");
+        notify_fail("You cannot arrest a SECURE group member.\n");
         return 0;
     }
     ob = find_player(str);

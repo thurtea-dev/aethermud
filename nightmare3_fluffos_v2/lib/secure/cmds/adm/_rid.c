@@ -23,7 +23,7 @@ int cmd_rid(string str) {
     }
     str = lower_case(str);                                         
     if(member_group(str, "superuser")) {
-        notify_fail("Shyeah...NOT.\n");
+        notify_fail("You cannot rid a superuser.\n");
         return 0;
     }
     ob = find_player(str);

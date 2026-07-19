@@ -30,6 +30,7 @@ Reference files (READ THESE before making content decisions):
 - `nightmare3_fluffos_v2/RiftsMUD Memories.txt` - Player memories of the original game (historical archive; keep its filename and content as-is)
 - `/domains/Praxis/adm/master_gap_report.txt` - Current gap analysis (check header for latest batch notes)
 - `www/index.html` (repo root) - Offline staff guides (QCS, coding, domain, roleplay, admin, chargen)
+- `docs/STYLE.md` - Player-facing and comment tone/voice (no casual slang; exceptions for deliberate NPC dialect). Apply whenever writing or editing strings.
 - GONE (do not cite): `RiftsMUD-AetherMUD Helpfiles.txt` and `RiftsMUD-AetherMUD RCC's OCC's List.txt` no longer exist in the repo; the OCC target list survives only via `docs/reference/reference-chart.md` and `daemon/occ.c` itself.
 
 ## CRITICAL: Verification Boundary - User Tests, Claude Does Not
