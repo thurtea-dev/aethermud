@@ -58,6 +58,30 @@ NPC:    name, short, long, level, hp, race, occ, align, mdc
 Weapon: name, short, long, wc, type, damage (NdN), mdc (0/1)
 Armor:  name, short, long, ac, ar, sdc, mdc, slot</pre>
 
+  <h3>Enemy durability: HP, SDC, and MDC</h3>
+  <p>Every NPC is either an SDC being or an MDC being; the NPC
+  <code>mdc</code> property switches between the two models.</p>
+  <ul>
+    <li><strong>SDC beings</strong> (<code>mdc 0</code>, the default)
+    have Hit Points underneath (the <code>hp</code> property, stored as
+    <code>rifts_hp</code>) and can also carry an SDC pool on top. SDC
+    works like a buffer: incoming damage drains SDC first, and only the
+    overflow reaches HP. At 0 HP the being falls unconscious; at -10 HP
+    it dies. QCS-generated NPCs start with HP only (SDC 0). To give one
+    an SDC buffer, hand-edit the file and add
+    <code>set_stats("SDC", n);</code> and
+    <code>set_stats("max_SDC", n);</code> after the hp lines; combat
+    honors them automatically.</li>
+    <li><strong>MDC beings</strong> (<code>mdc N</code> with N above
+    zero) are tracked as Mega-Damage Capacity directly: one MDC pool,
+    no HP/SDC layering. SDC weapons can never damage an MDC being's
+    MDC pool; only MDC weapons can bring one down.</li>
+  </ul>
+  <p>Worn armor sits in front of either model: damage drains the
+  armor's own MDC or SDC pool first, then overflows to the wearer
+  (SDC buffer, then HP, for SDC beings; the MDC pool for MDC
+  beings).</p>
+
   <h2>Where files land</h2>
   <pre>/realms/&lt;you&gt;/area/room/
 /realms/&lt;you&gt;/area/npc/
@@ -172,6 +196,17 @@ void create() {
     set_stats("max_MDC", 0);
     set_default_response("The creature watches silently.");
 }</pre>
+
+  <p>Note the durability lines: this bandit is an SDC being. Its 20
+  Hit Points (<code>set_stats("rifts_hp", 20)</code>) are what drops
+  it, and it has no SDC buffer yet, so hits reach HP directly. To
+  layer 30 SDC on top of those Hit Points, hand-edit the file and add
+  <code>set_stats("SDC", 30);</code> and
+  <code>set_stats("max_SDC", 30);</code> after the hp lines; attackers
+  then chew through the 30 SDC before touching HP. The three mdc lines
+  stay zero for an SDC being. Running <code>modify bandit mdc 90</code>
+  would instead make it an MDC creature with a single 90-MDC pool and
+  no HP/SDC layering at all.</p>
 
   <h3>Weapon creation</h3>
   <p>Weapons land under <code>area/weap/</code>. Armor is the same pattern
