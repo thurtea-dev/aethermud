@@ -61,13 +61,27 @@ against `/domains/Praxis/equipment/`.
 - **burster**: FIXED 2026-07-18. Environmental body armor (closest
   fire-resistant MDC suit in the lib), C-18 pistol, e-clip, backpack,
   2 rations, 2d6 x 100 credits.
-- **cs grunt / cs dead boy**: occ.c text promises C-20 pistol, C-12
-  rifle, and four grenades; actual grant is dead boy armor, CP-30
-  pistol, two e-clips, radio. Missing the rifle and grenades (grenade
-  files exist under `equipment/grenades/`). Also no C-20 item exists;
-  either build one or reword occ.c.
-- **cs ranger**: text promises energy pistol plus sniper rifle; gets
-  CP-40 rifle only. Add a pistol.
+- **cs grunt / cs dead boy**: FIXED 2026-07-18. Grant (shared with
+  coalition soldier) now adds the C-12 rifle and four grenades (2
+  frag, 1 plasma, 1 smoke) alongside dead boy armor, CP-30, two
+  e-clips, radio, 2d6 x 100 credits. No C-20 item exists (no stub
+  either), so the occ.c promise text now says "CP-30 heavy laser
+  pistol" in the cs grunt block and both cs dead boy blocks. Note:
+  `case "cs dead boy":` appears twice in `query_occ()` (once shared
+  with "coalition soldier", once alone, identical content); both were
+  updated, but the duplicate label should eventually be removed.
+  C-20 is still promised by cs military specialist, cs samas rpa
+  pilot, and the ISS entry (out of scope this pass; substitute or
+  build the item when those are worked).
+- **cs ranger**: FIXED 2026-07-18. Grant (shared with cs military
+  specialist, which rides along) now adds C-18 pistol, spare e-clip,
+  backpack, and 2 rations alongside the grunt armor, CP-40, personal
+  radio, and 2d6 x 100 credits. No sniper rifle item exists in the
+  repo (and no stub), so the occ.c promise text now names the CP-40
+  pulse laser rifle instead; "camouflage field uniform" was dropped
+  from the text (no such item); "Coalition ID" stays because id_card.c
+  is granted universally in grant_starting_package(). If a true sniper rifle
+  item is ever built, upgrade the ranger grant and text together.
 - **headhunter / bounty hunter**: text promises pistol and rifle
   ("two modern ranged weapons" / "laser pistol, rifle"); both get only
   the C-18 pistol. Add a rifle to each.

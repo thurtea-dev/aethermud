@@ -488,7 +488,7 @@ mapping query_occ(string occ_name) {
             "secondary_skills": 5,
             "attribute_requirements": ([ "IQ": 6, "PS": 9, "PE": 9 ]), /* approx */
             "starting_equipment":
-                "Coalition Dead Boy armor, C-20 laser pistol, C-12 heavy assault rifle, "
+                "Coalition Dead Boy armor, CP-30 heavy laser pistol, C-12 heavy assault rifle, "
                 "four grenades, and Coalition standard gear package.",
             "flags": ({}),
             "ppe_base": 0,
@@ -518,8 +518,9 @@ mapping query_occ(string occ_name) {
             "secondary_skills": 5,
             "attribute_requirements": ([ "IQ": 8, "PS": 10, "PE": 10 ]), /* approx */
             "starting_equipment":
-                "Light Coalition scout armor, energy pistol, sniper rifle, "
-                "survival backpack, camouflage field uniform, and Coalition ID.",
+                "Light Coalition grunt armor, C-18 energy pistol, CP-40 pulse "
+                "laser rifle, survival backpack with rations, personal radio, "
+                "and Coalition ID.",
             "flags": ({}),
             "ppe_base": 0,
             "ppe_per_level": 0,
@@ -700,7 +701,7 @@ mapping query_occ(string occ_name) {
             "secondary_skills": 4,
             "attribute_requirements": ([ "IQ": 8, "PS": 12, "PE": 12 ]), /* approx */
             "starting_equipment":
-                "Coalition Dead Boy body armor (full), C-20 laser pistol, "
+                "Coalition Dead Boy body armor (full), CP-30 heavy laser pistol, "
                 "C-12 heavy assault rifle, four grenades, radio headset, "
                 "and Coalition standard field kit.",
             "flags": ({}),
@@ -878,7 +879,7 @@ mapping query_occ(string occ_name) {
             "secondary_skills": 4,
             "attribute_requirements": ([ "IQ": 8, "PS": 12, "PE": 12 ]), /* approx */
             "starting_equipment":
-                "Coalition Dead Boy body armor (full), C-20 laser pistol, "
+                "Coalition Dead Boy body armor (full), CP-30 heavy laser pistol, "
                 "C-12 heavy assault rifle, four grenades, radio headset, "
                 "and Coalition standard field kit.",
             "flags": ({}),

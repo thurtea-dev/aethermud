@@ -66,8 +66,13 @@ private void give_equip(object player, string occ) {
     case "coalition soldier":
         give_item(player, "dead_boy_armor.c");
         give_item(player, "cp30_laser.c");
+        give_item(player, "c12_laser_rifle.c");
         give_item(player, "e_clip.c");
         give_item(player, "e_clip.c");
+        give_item(player, "grenades/frag_grenade.c");
+        give_item(player, "grenades/frag_grenade.c");
+        give_item(player, "grenades/plasma_grenade.c");
+        give_item(player, "grenades/smoke_grenade.c");
         give_item(player, "military_radio.c");
         give_credits(player, (random(6)+1 + random(6)+1) * 100);
         break;
@@ -76,6 +81,11 @@ private void give_equip(object player, string occ) {
     case "cs military specialist":
         give_item(player, "coalition_grunt_armor.c");
         give_item(player, "cp40_laser.c");
+        give_item(player, "c18_pistol.c");
+        give_item(player, "e_clip.c");
+        give_item(player, "backpack.c");
+        give_item(player, "rations.c");
+        give_item(player, "rations.c");
         give_item(player, "personal_radio.c");
         give_credits(player, (random(6)+1 + random(6)+1) * 100);
         break;
