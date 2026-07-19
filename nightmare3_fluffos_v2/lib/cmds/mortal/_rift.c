@@ -23,29 +23,30 @@ int cmd_rift(string str) {
     tp = this_player();
     if(!tp) return 0;
 
+    /* Same Moxim-room destinations as domains/Praxis/monsters/moxim.c */
     if(!mapp(__rifts_dests)) {
         __rifts_dests = ([
-            "americas" : ({ "/domains/chitown/areas/chitown_gate",
+            "americas" : ({ "/domains/chitown/areas/chitown_boulevard",
                             "Chi-Town", 500, "" }),
-            "chitown"   : ({ "/domains/chitown/areas/chitown_gate",
+            "chitown"   : ({ "/domains/chitown/areas/chitown_boulevard",
                              "Chi-Town", 500, "" }),
-            "chi-town"  : ({ "/domains/chitown/areas/chitown_gate",
+            "chi-town"  : ({ "/domains/chitown/areas/chitown_boulevard",
                              "Chi-Town", 500, "" }),
-            "atlantis" : ({ "/domains/Praxis/areas/splynn/splynn_entry",
+            "atlantis" : ({ "/domains/Praxis/areas/splynn/splynn_market",
                             "Splynn", 500, "splugorth" }),
-            "splynn"   : ({ "/domains/Praxis/areas/splynn/splynn_entry",
+            "splynn"   : ({ "/domains/Praxis/areas/splynn/splynn_market",
                             "Splynn", 500, "splugorth" }),
-            "europe"      : ({ "/domains/newcamelot/areas/camelot_gate",
+            "europe"      : ({ "/domains/newcamelot/areas/camelot_square",
                               "New Camelot", 500, "new_camelot" }),
-            "camelot"     : ({ "/domains/newcamelot/areas/camelot_gate",
+            "camelot"     : ({ "/domains/newcamelot/areas/camelot_square",
                               "New Camelot", 500, "new_camelot" }),
-            "newcamelot"  : ({ "/domains/newcamelot/areas/camelot_gate",
+            "newcamelot"  : ({ "/domains/newcamelot/areas/camelot_square",
                               "New Camelot", 500, "new_camelot" }),
-            "new-camelot" : ({ "/domains/newcamelot/areas/camelot_gate",
+            "new-camelot" : ({ "/domains/newcamelot/areas/camelot_square",
                               "New Camelot", 500, "new_camelot" }),
-            "lazlo"    : ({ "/domains/Lazlo/lazlo_welcome",
+            "lazlo"    : ({ "/domains/Lazlo/areas/lazlo_market",
                             "City of Lazlo", 500, "lazlo" }),
-            "tolkeen"  : ({ "/domains/tolkeen/areas/tolkeen_gate",
+            "tolkeen"  : ({ "/domains/tolkeen/areas/tolkeen_square",
                             "Free City of Tolkeen", 500, "tolkeen" }),
             "praxis"   : ({ "/domains/Praxis/areas/monument_square",
                             "Monument Square", 200, "" })

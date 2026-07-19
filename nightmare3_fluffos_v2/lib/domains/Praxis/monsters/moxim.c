@@ -44,30 +44,32 @@ void create() {
     set_default_response("Moxim glances at you. 'Ask about destinations if you want to travel.'");
     set_property("position_str", "stands here, watching the rifts.");
 
-    /* ({ room_path, display_name, cost, faction_key, flavor }) */
+    /* Destinations are the rooms that spawn a Moxim instance, so travelers
+       arrive beside that zone's Moxim - not the zone gate/welcome room.
+       ({ room_path, display_name, cost, faction_key, flavor }) */
     __dests = ([
-        "americas" : ({ "/domains/chitown/areas/chitown_gate",
+        "americas" : ({ "/domains/chitown/areas/chitown_boulevard",
                          "Chi-Town", 500, "",
                          "Moxim mutters, 'Iron and propaganda. Safe travels, if you can manage it.'" }),
-        "chitown" : ({ "/domains/chitown/areas/chitown_gate",
+        "chitown" : ({ "/domains/chitown/areas/chitown_boulevard",
                          "Chi-Town", 500, "",
                          "Moxim mutters, 'Iron and propaganda. Safe travels, if you can manage it.'" }),
-        "atlantis" : ({ "/domains/Praxis/areas/splynn/splynn_entry",
+        "atlantis" : ({ "/domains/Praxis/areas/splynn/splynn_market",
                          "Splynn", 500, "splugorth",
                          "Moxim mutters, 'The shores of Atlantis. Mind the Splugorth.'" }),
-        "splynn" : ({ "/domains/Praxis/areas/splynn/splynn_entry",
+        "splynn" : ({ "/domains/Praxis/areas/splynn/splynn_market",
                          "Splynn", 500, "splugorth",
                          "Moxim mutters, 'The shores of Atlantis. Mind the Splugorth.'" }),
-        "europe" : ({ "/domains/newcamelot/areas/camelot_gate",
+        "europe" : ({ "/domains/newcamelot/areas/camelot_square",
                          "New Camelot", 500, "new_camelot",
                          "Moxim mutters, 'Old magic and older stones. Europe awaits.'" }),
-        "camelot" : ({ "/domains/newcamelot/areas/camelot_gate",
+        "camelot" : ({ "/domains/newcamelot/areas/camelot_square",
                          "New Camelot", 500, "new_camelot",
                          "Moxim mutters, 'Old magic and older stones. Europe awaits.'" }),
-        "lazlo" : ({ "/domains/Lazlo/lazlo_welcome",
+        "lazlo" : ({ "/domains/Lazlo/areas/lazlo_market",
                          "City of Lazlo", 500, "lazlo",
                          "Moxim mutters, 'A city of peace. Enjoy the quiet while it lasts.'" }),
-        "tolkeen" : ({ "/domains/tolkeen/areas/tolkeen_gate",
+        "tolkeen" : ({ "/domains/tolkeen/areas/tolkeen_square",
                          "Free City of Tolkeen", 500, "tolkeen",
                          "Moxim mutters, 'Magic and stubbornness. Mind the Coalition guns.'" }),
         "praxis" : ({ "/domains/Praxis/areas/monument_square",
