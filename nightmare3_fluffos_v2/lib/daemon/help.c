@@ -706,15 +706,19 @@ static void suggest_similar_topics(string topic) {
     string lower;
     int i;
 
-    lower = lower_case(topic);
+    /* Squash both sides so spaced input still finds underscored files. */
+    lower = squash_topic(topic);
     topics = dedupe_user_topics(get_dir(DIR_USER_HELP + "/"));
     matches = ({});
     for(i = 0; i < sizeof(topics); i++) {
-        if(strsrch(lower_case(topics[i]), lower) != -1)
+        if(strsrch(squash_topic(topics[i]), lower) != -1)
             matches += ({ topics[i] });
     }
     if(!sizeof(matches)) return;
     if(sizeof(matches) > 8) matches = matches[0..7];
+    /* Filenames use underscores; players must only ever see spaces. */
+    for(i = 0; i < sizeof(matches); i++)
+        matches[i] = replace_string(matches[i], "_", " ");
     message("help", "Similar topics: " + implode(matches, ", "), this_player());
 }
 
@@ -744,7 +748,8 @@ static void help_menu(string category, string *topics, int ind) {
         if((x = i + 4) >=maxi) x = maxi;
         tmp = "";
         while(i < x) {
-            tmp += arrange_string(topics[i], 17);
+            tmp += arrange_string(
+                replace_string(topics[i], "_", " "), 17);
             i++;
         }
         message("info", tmp, this_player());
@@ -874,7 +879,8 @@ void cmd_help(string topic, string category, int menu) {
 	  }
         else if(!find_help(topic, category, menu)) {
             message("help", sprintf("The help topic %s does not exist in "
-              "the category %s.", topic, category), this_player());
+              "the category %s.", replace_string(topic, "_", " "),
+              category), this_player());
             if(menu) {
                 message("prompt", "\nHit <return> to continue: ",
                   this_player());
@@ -903,7 +909,7 @@ void cmd_help(string topic, string category, int menu) {
             return;
 	  }
         message("help", sprintf("No help available for the topic %s.",
-          topic), this_player());
+          replace_string(topic, "_", " ")), this_player());
         suggest_similar_topics(topic);
         if(menu) {
             message("prompt", "\nHit <return> to continue: ", this_player());
@@ -916,24 +922,29 @@ void cmd_help(string topic, string category, int menu) {
 static int find_help(string topic, string category, int menu) {
     object ob;
     string str;
+    string tfile;
+    string disp;
     mixed tmp;
 
     if(category == "*player general")
         topic = normalize_help_topic(topic);
+    /* Command files are named _<verb>.c with underscores; accept the
+       spaced form players see in listings by underscoring for lookup. */
+    tfile = replace_string(topic, " ", "_");
 
     switch(category) {
     case "*player general":
         if(!file_exists(tmp = DIR_USER_HELP+"/"+topic)) return 0;
         break;
     case "*player commands":
-        if(!file_exists(tmp = DIR_MORTAL_CMDS+"/_"+topic+".c") &&
-          !file_exists(tmp = DIR_SECURE_MORTAL_CMDS+"/_"+topic+".c")) return 0;
+        if(!file_exists(tmp = DIR_MORTAL_CMDS+"/_"+tfile+".c") &&
+          !file_exists(tmp = DIR_SECURE_MORTAL_CMDS+"/_"+tfile+".c")) return 0;
         if(!(ob = load_object(tmp)) || !function_exists("help", ob))
           return 0;
         tmp = ob;
         break;
     case "*abilities":
-        if(!file_exists(tmp = DIR_CLASS_CMDS+"/_"+topic+".c")) return 0;
+        if(!file_exists(tmp = DIR_CLASS_CMDS+"/_"+tfile+".c")) return 0;
         if(!(ob = load_object(tmp)) || !function_exists("help", ob))
           return 0;
         tmp = ob;
@@ -949,29 +960,29 @@ static int find_help(string topic, string category, int menu) {
             replace_string(topic, " ", "_"))) return 0;
         break;
     case "*creator commands":
-        if(file_exists(tmp = DIR_CREATOR_CMDS+"/_"+topic+".c") &&
+        if(file_exists(tmp = DIR_CREATOR_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;
-        else if(file_exists(tmp = DIR_SYSTEM_CMDS+"/_"+topic+".c") &&
+        else if(file_exists(tmp = DIR_SYSTEM_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;
-        else if(file_exists(tmp = DIR_AMBASSADOR_CMDS+"/_"+topic+".c") &&
+        else if(file_exists(tmp = DIR_AMBASSADOR_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;
-        else if(file_exists(tmp = DIR_SECURE_AMBASSADOR_CMDS+"/_"+topic+".c") &&
+        else if(file_exists(tmp = DIR_SECURE_AMBASSADOR_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;
-        else if(file_exists(tmp = DIR_SECURE_CREATOR_CMDS+"/_"+topic+".c") &&
+        else if(file_exists(tmp = DIR_SECURE_CREATOR_CMDS+"/_"+tfile+".c") &&
          (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;     
         else return 0;
         break;
     case "*ambassador general":
-        if(file_exists(tmp = DIR_AMBASSADOR_CMDS+"/_"+topic+".c") &&       
+        if(file_exists(tmp = DIR_AMBASSADOR_CMDS+"/_"+tfile+".c") &&       
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;     
-        else if(file_exists(tmp = DIR_SECURE_AMBASSADOR_CMDS+"/_"+topic+".c") &&
+        else if(file_exists(tmp = DIR_SECURE_AMBASSADOR_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;     
         else return 0;
         break; 
     case "*ambassador commands":
-        if(file_exists(tmp = DIR_AMBASSADOR_CMDS+"/_"+topic+".c") &&
+        if(file_exists(tmp = DIR_AMBASSADOR_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;
-        else if(file_exists(tmp = DIR_SYSTEM_CMDS+"/_"+topic+".c") &&
+        else if(file_exists(tmp = DIR_SYSTEM_CMDS+"/_"+tfile+".c") &&
           (ob = load_object(tmp)) && function_exists("help", ob)) tmp = ob;
         else return 0;
         break;
@@ -981,35 +992,37 @@ static int find_help(string topic, string category, int menu) {
             replace_string(topic, " ", "_"))) return 0;
         break;
     case "*high mortal commands":  
-        if(!file_exists(tmp = DIR_HM_CMDS+"/_"+topic+".c")) return 0;
+        if(!file_exists(tmp = DIR_HM_CMDS+"/_"+tfile+".c")) return 0;
         if(!(ob = load_object(tmp)) || !function_exists("help", ob))
           return 0;
         tmp = ob;
         break;
     case "*guild commands":
         if(!file_exists(tmp = sprintf("%s/%s/_%s.c", DIR_GUILD_CMDS,
-          (string)this_player()->query_guild(), topic))) return 0;
+          (string)this_player()->query_guild(), tfile))) return 0;
         if(!(ob = load_object(tmp)) || !function_exists("help", ob))
           return 0;
         tmp = ob;
         break;
     case "*admin commands":
         if(!archp(this_player())) return 0;
-        if(!file_exists(tmp = DIR_ADMIN_CMDS+"/_"+topic+".c") &&
-          !file_exists(tmp = DIR_SECURE_ADMIN_CMDS+"/_"+topic+".c")) return 0;
+        if(!file_exists(tmp = DIR_ADMIN_CMDS+"/_"+tfile+".c") &&
+          !file_exists(tmp = DIR_SECURE_ADMIN_CMDS+"/_"+tfile+".c")) return 0;
         if(!(ob = load_object(tmp)) || !function_exists("help", ob))
           return 0;
         tmp = ob;
         break; 
       }
+    /* topic may be an on-disk filename by now; never echo underscores. */
+    disp = replace_string(topic, "_", " ");
     if(!(int)this_player()->query_env("NO_CLEAR"))
     message("info", sprintf("\n%%^INITTERM%%^Topic: %%^GREEN%%^%s"
-      "%%^RESET%%^  \t%s System Help \tCategory: %%^GREEN%%^%s\n", 
-      topic, mud_name(), category), this_player());
+      "%%^RESET%%^  \t%s System Help \tCategory: %%^GREEN%%^%s\n",
+      disp, mud_name(), category), this_player());
     else
     message("info", sprintf("\nTopic: %%^GREEN%%^%s"
       "%%^RESET%%^  \t%s System Help \tCategory: %%^GREEN%%^%s\n",
-      topic, mud_name(), category), this_player());
+      disp, mud_name(), category), this_player());
     if(objectp(tmp)) {
         tmp->help();
         if(menu) {
