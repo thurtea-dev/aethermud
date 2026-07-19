@@ -113,6 +113,7 @@ void rifts_death_pvp_check();
 private void ensure_wiz_tools();
 void set_primary_start(string str);
 string query_primary_start();
+private int staff_area_start(string path);
 void save_logout_start();
 int set_start_here();
 
@@ -480,6 +481,7 @@ void new_body() {
 void setup() {
     string tmp, *start_temp;
     int needs_chargen;
+    int placed;
 
     set_living_name(query_name());
     set_heart_beat(1);
@@ -514,6 +516,20 @@ void setup() {
         move(ROOM_SETTER);
     else {
 	sight_bonus = (int)RACE_D->query_sight_bonus(query_race());
+	placed = 0;
+	/* Linkdead reconnect: login.c exec_user() re-runs setup() on the
+	   parked body instead of restart_heart(), so honor net_died_here
+	   here too or the player snaps back to primary_start instead of
+	   resuming where the link dropped. */
+	if(stringp(net_died_here) && strlen(net_died_here)) {
+	    if(move(net_died_here) == MOVE_OK) {
+		placed = 1;
+		if(environment(this_object()))
+		    tell_room(environment(this_object()), query_cap_name() +
+		      " has rejoined our reality.\n", ({ this_object() }));
+	    }
+	    net_died_here = 0;
+	}
 	if(!primary_start) primary_start = getenv("start");
 	if(primary_start)
 	{
@@ -546,8 +562,15 @@ void setup() {
 		}
 	    }
 	}
-	if(!(primary_start && stringp(primary_start) && move(primary_start) == MOVE_OK))
-	    move(ROOM_START);
+	/* Never let a mortal's saved start resolve to a staff area, no
+	   matter how the env got that value (old saves, admin moves,
+	   makechar zone=/realms/..., etc). Repair it to ROOM_START. */
+	if(!creatorp(this_object()) && staff_area_start(primary_start))
+	    primary_start = ROOM_START;
+	if(!placed) {
+	    if(!(primary_start && stringp(primary_start) && move(primary_start) == MOVE_OK))
+		move(ROOM_START);
+	}
 	setenv("start", primary_start);
     }
     if(!stringp(tmp = getenv("TERM"))) setenv("TERM", tmp = "unknown");
@@ -1630,6 +1653,20 @@ void set_primary_start(string str) {
 
 string query_primary_start() { return primary_start; }
 
+/* Rooms mortals must never use as a login start: personal workrooms
+   and anything inside a staff-only tree. Used both when setting a
+   start (valid_start_room) and when applying one at login (setup). */
+private int staff_area_start(string path) {
+    if(!path || !stringp(path) || !strlen(path)) return 0;
+    if(path[0] != '/') path = "/" + path;
+    if(strsrch(path, "workroom") != -1) return 1;
+    if(strsrch(path, "/realms/") == 0) return 1;
+    if(strsrch(path, "/domains/adm/") == 0) return 1;
+    if(strsrch(path, "/domains/wizards/") == 0) return 1;
+    if(strsrch(path, "/secure/") == 0) return 1;
+    return 0;
+}
+
 private int valid_start_room(object who, object env) {
     string path;
     string step;
@@ -1653,7 +1690,7 @@ private int valid_start_room(object who, object env) {
     if(!creatorp(who)) {
         step = (string)who->getenv("creation_step");
         if(step && step != "" && step != "done") return 0;
-        if(strsrch(path, "workroom") != -1) return 0;
+        if(staff_area_start(path)) return 0;
     }
     if((int)env->query_property("no teleport")) return 0;
     if(file_size(path + ".c") <= 0) return 0;
