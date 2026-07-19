@@ -1,5 +1,7 @@
 /* /domains/Praxis/npcs/chargen_guide.c
-   Gamemaster NPC: conversational walkthrough for Rifts chargen. */
+   Gamemaster NPC: optional walkthrough for Rifts chargen.
+   Setter.c prints the authoritative step banners; this NPC does not
+   auto-repeat them (that caused a third copy of STEP 1 on login). */
 
 #include <std.h>
 #include <config.h>
@@ -53,22 +55,18 @@ private void tell_current_step(object tp) {
     switch(step) {
     case "region":
         tell_player(tp,
-            "First, choose your starting zone. Type your choice:\n"
-            "  americas   (outskirts of Praxis)\n"
-            "  europe     (New Camelot)\n"
-            "  atlantis   (Splynn / Atlantis)\n");
+            "Choose your starting zone. Type: americas, europe, or atlantis.\n");
         break;
     case "stats":
         tell_player(tp,
-            "Roll your attributes.\n"
-            "  roll     random 3d6 per stat\n"
-            "  reroll   roll again (up to 4 rerolls, 5 total rolls)\n");
+            "Roll attributes, then accept or reroll:\n"
+            "  roll      random 3d6 per stat\n"
+            "  reroll    roll again (up to 4 rerolls)\n"
+            "  accept    keep the roll and continue to race\n");
         break;
     case "race":
         tell_player(tp,
-            "Choose a playable race.\n"
-            "  list          show races\n"
-            "  <race name>   type the race name to choose it\n");
+            "Choose a playable race. Type list, then the race name.\n");
         break;
     case "alignment":
         tell_player(tp,
@@ -78,22 +76,13 @@ private void tell_current_step(object tp) {
         break;
     case "occ":
         tell_player(tp,
-            "Choose an Occupational Character Class (OCC).\n"
-            "  list         show classes for your race\n"
-            "  <occ name>   type the OCC name to choose it\n"
-            "  none         stay without a class if allowed\n");
+            "Choose an OCC. Type list, an OCC name, or none.\n");
         break;
     case "elective":
-        tell_player(tp,
-            "Pick your elective skills from the categories shown.\n"
-            "  skills <category>   list skills in a category\n"
-            "  <skill name>        type the skill name to choose it\n");
-        break;
     case "secondary":
         tell_player(tp,
-            "Pick your secondary skills.\n"
-            "  skills <category>   list skills in a category\n"
-            "  <skill name>        type the skill name to choose it\n");
+            "Skill picking during creation was removed. Your OCC/RCC\n"
+            "package grants baseline skills. Request more via RP-Wiz.\n");
         break;
     case "done":
         return;
@@ -116,9 +105,8 @@ void create() {
     set_short("a Rifts Gamemaster");
     set_long(
         "A calm figure in Coalition-surplus gear with a data slate.\n"
-        "They guide new arrivals through character creation step by step.\n"
-        "Say 'help creation', 'status', 'what next', or ask about race,\n"
-        "OCC, alignment, or skills.");
+        "They can answer questions about character creation if asked.\n"
+        "Say 'help creation', 'status', or 'what next'.");
     set_level(1);
     set_aggressive(0);
     set_moving(0);
@@ -147,10 +135,11 @@ void greet() {
     if(!tp || !objectp(tp)) return;
     if(environment(tp) != environment(this_object())) return;
     if(gm_silent(tp)) return;
+    /* Short notice only. Do not call tell_current_step() here: setter.c
+       already printed the authoritative STEP banner for this login. */
     tell_player(tp,
-        "Welcome to the void. I can walk you through creation one step\n"
-        "at a time. Say 'status' or 'what next' for your current step.\n");
-    tell_current_step(tp);
+        "I am here if you need help. Say 'status' or 'what next' for\n"
+        "your current step, or 'help creation' for the full sequence.\n");
 }
 
 void catch_tell(string str) {
@@ -174,13 +163,12 @@ void catch_tell(string str) {
         tell_player(tp,
             "Full creation sequence. Type each answer as a plain word:\n"
             "  1. starting zone: americas, europe, or atlantis\n"
-            "  2. roll (then reroll, up to 4 times)\n"
+            "  2. roll, then accept (or reroll, up to 4 times)\n"
             "  3. type a race name from the list\n"
             "  4. type an alignment name\n"
             "  5. type an OCC name, or none\n"
-            "  6. elective skills (skills <category>, then the name)\n"
-            "  7. secondary skills\n"
-            "  8. finish - gear and ID card arrive automatically\n\n"
+            "  6. finish - OCC/RCC package skills and gear arrive automatically\n\n"
+            "Additional skills are requested in-game via RP-Wiz, not here.\n"
             "Say 'status' at any time for the step you are on now.\n");
         return;
     }
@@ -204,9 +192,9 @@ void catch_tell(string str) {
     }
     if(strsrch(low, "help skills") != -1) {
         tell_player(tp,
-            "After OCC selection the game prompts for elective skills,\n"
-            "then secondary skills. Use 'skills <category>' to list\n"
-            "skills and type the skill name for each choice.\n");
+            "Creation no longer picks elective or secondary skills.\n"
+            "Your OCC/RCC package grants baseline skills. Request more\n"
+            "after you enter the world via the RP-Wiz tool.\n");
         return;
     }
     if(strsrch(low, "hello") != -1 || strsrch(low, "hi") != -1 ||

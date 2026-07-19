@@ -26,9 +26,7 @@ void do_region_start();
 void finish_creation();
 void offer_occ_or_reroll();
 void do_elective_skills_start();
-int do_elective_skill_pick(string str);
 void do_secondary_skills_start();
-int do_secondary_skill_pick(string str);
 void begin_creation();
 void resume_creation();
 void creation_prompt(string step);
@@ -38,12 +36,15 @@ int alignment_cmd(string str);
 int list_occs_cmd(string str);
 int do_occ_pick(string str);
 int roll_cmd(string str);
+int accept_cmd(string str);
 int chargen_catch(string str);
 private int do_race_pick(string str);
 private int valid_race_choice(string str);
 private void choose_no_occ();
 private void show_race_list();
 private void show_occ_list(string *available);
+private void show_rolled_attributes();
+private void prompt_accept_or_reroll();
 
 void create() {
     ::create();
@@ -54,7 +55,8 @@ void create() {
         "to choose what you will become. The Rifts have torn the world "
         "apart. Who will you be in what remains?\n\n"
         "Character creation walks you through zone, attributes, race, "
-        "alignment, and class - one step at a time.");
+        "alignment, and class - one step at a time. Skills come from your "
+        "OCC/RCC package; additional skills are requested in-game.");
     set_items(
         (["room" : "The void from which all characters are born.",
           "list" : "A list of playable races in AetherMUD."]) );
@@ -64,11 +66,9 @@ void init() {
     string step;
 
     ::init();
-    /* Catch-all for plain string answers (zone, race, alignment, OCC,
-       and skill names typed with no verb). Added first so every named
-       verb below is checked before it; it returns 0 for anything it
-       does not recognize, letting normal commands fall through to the
-       player's command hook. */
+    /* Catch-all for plain string answers (zone, race, alignment, OCC
+       typed with no verb). Returns 0 for unrecognized input so normal
+       commands fall through to the player's command hook. */
     add_action("chargen_catch", "", 1);
     add_action("read", "read");
     add_action("pick", "pick");
@@ -77,29 +77,43 @@ void init() {
     add_action("alignment_cmd", "alignment");
     add_action("region_cmd", "region");
     add_action("start_cmd", "start");
-    add_action("elective_list_cmd","skills");
     add_action("roll_cmd", "roll");
     add_action("roll_cmd", "reroll");
+    add_action("accept_cmd", "accept");
     if(creatorp(this_player())) return;
+    /* Monster entry into this room also fires init() with this_player()
+       set to the monster. Never run chargen prompts for non-users. */
+    if(!interactive(this_player())) return;
     step = (string)this_player()->getenv("creation_step");
     if(this_player()->query_race() && (!step || step == "" || step == "done"))
         return;
-    if(!step || step == "")
+    if(!step || step == "") {
         begin_creation();
-    else
-        resume_creation();
+        return;
+    }
+    /* ROOT CAUSE of duplicate STEP 1: after begin_creation() sets
+       creation_step to "region", a second init() (same login) used to
+       call resume_creation(), which reprinted the full zone banner and
+       "Welcome back". Properties are non-persisted (Object.c static
+       __Properties), so a fresh login/reconnect still resumes once. */
+    if((int)this_player()->query_property("chargen_session_prompted"))
+        return;
+    this_player()->set_property("chargen_session_prompted", 1);
+    resume_creation();
 }
 
 void begin_creation() {
     this_player()->setenv("creation_step", "region");
     this_player()->set_rolls(0);
     this_player()->remove_env("stats_rolled");
+    this_player()->remove_env("stats_accepted");
     this_player()->remove_env("awaiting_occ");
     this_player()->remove_env("awaiting_alignment");
     this_player()->remove_env("awaiting_region");
     this_player()->remove_env("awaiting_elective_skills");
     this_player()->remove_env("awaiting_secondary_skills");
     this_player()->remove_env("secondary_picks_remaining");
+    this_player()->set_property("chargen_session_prompted", 1);
     creation_prompt("region");
 }
 
@@ -117,15 +131,17 @@ void creation_prompt(string step) {
         write("\n=== STEP 2: ROLL ATTRIBUTES ===");
         write("Roll Palladium attributes (3d6 each for IQ, ME, MA, PS, PP, PE, PB, Spd).");
         write("\nType: roll");
-        write("After rolling you may type: reroll   (up to 4 rerolls, 5 total rolls)\n");
+        write("After rolling you must type accept to keep the roll, or reroll");
+        write("(up to 4 rerolls, 5 total rolls). Race selection stays locked");
+        write("until you type accept.\n");
         return;
     }
     if(step == "race") {
         write("\n=== STEP 3: CHOOSE RACE / RCC ===");
-        if((string)this_player()->getenv("stats_rolled") == "1")
+        if((string)this_player()->getenv("stats_accepted") == "1")
             show_race_list();
         else
-            write("Roll your attributes first. Type: roll\n");
+            write("Accept your attributes first. Type: roll, then accept.\n");
         return;
     }
     if(step == "alignment") {
@@ -149,13 +165,32 @@ void resume_creation() {
         return;
     }
     write("\nWelcome back. You are still creating your character.\n");
+    /* Legacy saves stuck in removed skill-pick steps: finish with the
+       OCC/RCC package already applied (or none) and enter the world. */
+    if(step == "elective" || step == "secondary" ||
+       (string)this_player()->getenv("awaiting_elective_skills") == "1" ||
+       (string)this_player()->getenv("awaiting_secondary_skills") == "1") {
+        write("Skill picking during creation has been removed.");
+        write("Finishing with your OCC/RCC package skills.\n");
+        this_player()->remove_env("awaiting_elective_skills");
+        this_player()->remove_env("awaiting_secondary_skills");
+        finish_creation();
+        return;
+    }
     if(step == "region" || (string)this_player()->getenv("awaiting_region") == "1") {
         this_player()->setenv("creation_step", "region");
         creation_prompt("region");
         return;
     }
     if(step == "stats") {
-        if((string)this_player()->getenv("stats_rolled") == "1") {
+        if((string)this_player()->getenv("stats_rolled") == "1" &&
+           (string)this_player()->getenv("stats_accepted") != "1") {
+            write("Your current attributes:");
+            show_rolled_attributes();
+            prompt_accept_or_reroll();
+            return;
+        }
+        if((string)this_player()->getenv("stats_accepted") == "1") {
             this_player()->setenv("creation_step", "race");
             creation_prompt("race");
             return;
@@ -178,16 +213,6 @@ void resume_creation() {
         creation_prompt("occ");
         return;
     }
-    if(step == "elective" || (string)this_player()->getenv("awaiting_elective_skills") == "1") {
-        write("\n=== ELECTIVE SKILLS (IN PROGRESS) ===");
-        write("Type skills <category> to browse, then type a skill name to continue.\n");
-        return;
-    }
-    if(step == "secondary" || (string)this_player()->getenv("awaiting_secondary_skills") == "1") {
-        write("\n=== SECONDARY SKILLS (IN PROGRESS) ===");
-        write("Type skills <category> to browse, then type a skill name to continue.\n");
-        return;
-    }
     begin_creation();
 }
 
@@ -201,21 +226,59 @@ private int roll_d6(int count) {
     return total;
 }
 
+private void show_rolled_attributes() {
+    object player;
+
+    player = this_player();
+    write(sprintf(
+        " IQ:%-3d ME:%-3d MA:%-3d PS:%-3d\n"
+        " PP:%-3d PE:%-3d PB:%-3d Spd:%-3d",
+        (int)player->query_stats("IQ"), (int)player->query_stats("ME"),
+        (int)player->query_stats("MA"), (int)player->query_stats("PS"),
+        (int)player->query_stats("PP"), (int)player->query_stats("PE"),
+        (int)player->query_stats("PB"), (int)player->query_stats("Spd")));
+}
+
+private void prompt_accept_or_reroll() {
+    int rolls;
+    int left;
+
+    rolls = (int)this_player()->query_rolls();
+    left = 5 - rolls;
+    if(left > 0)
+        write(sprintf(
+            "\nType accept to keep these attributes, or reroll to roll again "
+            "(%d of 4 rerolls remaining).\n", left > 4 ? 4 : left));
+    else
+        write("\nNo rerolls remaining. Type accept to keep these attributes "
+              "and continue.\n");
+}
+
 void do_plain_rolls() {
     object player;
     int iq, me, ma, ps, pp, pe, pb, spd;
     int rolls;
 
     player = this_player();
+    if((string)player->getenv("creation_step") != "stats") {
+        write("You are not at the attribute rolling step.\n");
+        return;
+    }
+    if((string)player->getenv("stats_accepted") == "1") {
+        write("Attributes already accepted. Type a race name to continue.\n");
+        return;
+    }
     rolls = (int)player->query_rolls();
     if(rolls >= 5) {
-        write("You have used all five rolls. Type a race name from the list below.\n");
-        show_race_list();
+        write("You have used all five rolls. Type accept to continue.\n");
+        show_rolled_attributes();
+        prompt_accept_or_reroll();
         return;
     }
     if(rolls == 4)
         write("This will be your final reroll.\n");
     write("\nYou roll your attributes (3d6 each).");
+    /* Fresh dice every call - not a reprint of prior values. */
     iq  = roll_d6(3);
     me  = roll_d6(3);
     ma  = roll_d6(3);
@@ -242,17 +305,41 @@ void do_plain_rolls() {
 
     player->set_rolls(rolls + 1);
     player->setenv("stats_rolled", "1");
-    player->setenv("creation_step", "race");
+    /* Stay on "stats" until accept. Previously this jumped to "race"
+       immediately, so there was no accept/reroll gate. */
+    player->setenv("creation_step", "stats");
+    player->remove_env("stats_accepted");
 
     write(sprintf(
         " IQ:%-3d ME:%-3d MA:%-3d PS:%-3d\n"
         " PP:%-3d PE:%-3d PB:%-3d Spd:%-3d",
         iq, me, ma, ps, pp, pe, pb, spd));
-    if(rolls < 4)
-        write("\nRerolls remaining: " + (4 - rolls) + ". Type reroll to roll again, or type a race name from the list below.");
-    else
-        write("\nType a race name from the list below.");
-    show_race_list();
+    prompt_accept_or_reroll();
+}
+
+/* Commit rolled attributes and unlock race selection. */
+int accept_cmd(string str) {
+    string step;
+
+    if(!this_player()) return 0;
+    step = (string)this_player()->getenv("creation_step");
+    if(step != "stats") return 0;
+    if((string)this_player()->getenv("stats_rolled") != "1") {
+        write("Roll your attributes first. Type: roll\n");
+        return 1;
+    }
+    if((string)this_player()->getenv("stats_accepted") == "1") {
+        write("Attributes already accepted. Choose a race from the list.\n");
+        show_race_list();
+        return 1;
+    }
+    this_player()->setenv("stats_accepted", "1");
+    this_player()->setenv("creation_step", "race");
+    write("\nAttributes accepted. Here are your final rolled attributes:");
+    show_rolled_attributes();
+    write("\n(Your race may reshape these when you choose it.)");
+    creation_prompt("race");
+    return 1;
 }
 
 void apply_race_body_pools(string race) {
@@ -365,8 +452,8 @@ int list_occs_cmd(string str) {
     int i;
 
     if((string)this_player()->getenv("creation_step") == "race") {
-        if((string)this_player()->getenv("stats_rolled") != "1") {
-            write("Roll your attributes first. Type: roll\n");
+        if((string)this_player()->getenv("stats_accepted") != "1") {
+            write("Accept your attributes first. Type: accept\n");
             return 1;
         }
         show_race_list();
@@ -399,7 +486,7 @@ private void choose_no_occ() {
     this_player()->setenv("rifts_occ", "none");
     this_player()->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
     write("You choose to walk the world as a racial character with no OCC.");
-    do_elective_skills_start();
+    finish_creation();
 }
 
 int no_occ_cmd(string str) {
@@ -581,7 +668,7 @@ int do_occ_pick(string str) {
         if(isp > 0) write("Starting ISP: " + isp);
     }
 
-    do_elective_skills_start();
+    finish_creation();
     return 1;
 }
 
@@ -598,28 +685,15 @@ int pick(string str) {
             do_plain_rolls();
             return 1;
         }
-        write("Type roll to roll attributes, or reroll to roll again (up to 4 rerolls).\n");
+        if(str == "accept")
+            return accept_cmd(0);
+        write("Type roll, then accept to keep the roll, or reroll to roll again.\n");
         return 1;
     }
 
     // Re-route to OCC selection if awaiting_occ env var is set
     if((string)this_player()->getenv("awaiting_occ") == "1") {
         return do_occ_pick(str);
-    }
-    // Re-route to elective skill selection
-    if((string)this_player()->getenv("awaiting_elective_skills") == "1") {
-        if(str && strlen(str) >= 5 && lower_case(str[0..4]) == "skill") {
-            string sk;
-            sk = (strlen(str) > 6) ? str[6..] : "";
-            return do_elective_skill_pick(sk);
-        }
-    }
-    if((string)this_player()->getenv("awaiting_secondary_skills") == "1") {
-        if(str && strlen(str) >= 5 && lower_case(str[0..4]) == "skill") {
-            string sk;
-            sk = (strlen(str) > 6) ? str[6..] : "";
-            return do_secondary_skill_pick(sk);
-        }
     }
     if((string)this_player()->getenv("awaiting_alignment") == "1") {
         write("Please choose your alignment first. Type its name, for example: scrupulous");
@@ -629,15 +703,8 @@ int pick(string str) {
         write("You are not at race selection yet. Follow the creation prompts.\n");
         return 1;
     }
-    if((string)this_player()->getenv("stats_rolled") != "1") {
-        write("Roll your attributes first. Type: roll\n");
-        return 1;
-    }
-    /* "pick reroll" after the first roll used to fall through to race
-       matching and fail with "not a valid race". Reroll stays legal
-       until a race is chosen. */
-    if(str == "roll" || str == "reroll") {
-        do_plain_rolls();
+    if((string)this_player()->getenv("stats_accepted") != "1") {
+        write("Accept your attributes first. Type: accept\n");
         return 1;
     }
     if(!str) {
@@ -831,7 +898,7 @@ int alignment_cmd(string str) {
             this_player()->setenv("rifts_occ_flags", implode(occ_flags, ","));
             write("Dog Boys serve the Coalition States as military scouts.\n"
                   "You have been assigned the Coalition Soldier role.");
-            do_elective_skills_start();
+            finish_creation();
             return 1;
         }
         if(race == "cs psi-stalker" || race == "wild psi-stalker") {
@@ -848,7 +915,7 @@ int alignment_cmd(string str) {
     } else {
         this_player()->setenv("rifts_occ", "none");
         this_player()->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
-        do_elective_skills_start();
+        finish_creation();
     }
     return 1;
 }
@@ -879,10 +946,9 @@ void do_rolls() {
     this_player()->set_rolls(this_player()->query_rolls() + 1);
 }
 
-/* Plain "roll" / "reroll" typed with no verb prefix. During the OCC
-   step a reroll uses racial dice; before race selection it repeats
-   the plain 3d6 preview. Returns 0 outside chargen so the normal
-   roll command still works. */
+/* Plain "roll" / "reroll". During OCC selection, reroll uses racial
+   dice. During the stats step, each call rolls fresh 3d6 values.
+   Returns 0 outside chargen so the normal roll command still works. */
 int roll_cmd(string str) {
     string step;
 
@@ -890,19 +956,17 @@ int roll_cmd(string str) {
     step = (string)this_player()->getenv("creation_step");
     if((string)this_player()->getenv("awaiting_occ") == "1")
         return do_occ_pick("reroll");
-    if(step == "stats" || step == "race") {
+    if(step == "stats") {
         do_plain_rolls();
         return 1;
     }
     return 0;
 }
 
-/* Catch-all for plain string answers: zone names, race names,
-   alignment names, OCC names, and skill names typed with no verb.
-   With add_action(fn, "", 1) the driver passes only the text after
-   the first word; the first word arrives via query_verb(), so the
-   full line is rebuilt here. Returns 0 for anything unrecognized so
-   normal commands still reach the player's command hook. */
+/* Catch-all for plain string answers: zone, accept, race, alignment, OCC.
+   With add_action(fn, "", 1) the driver passes only the text after the
+   first word; the first word arrives via query_verb(), so the full line
+   is rebuilt here. Returns 0 for unrecognized input. */
 int chargen_catch(string str) {
     string step;
     string low;
@@ -916,11 +980,12 @@ int chargen_catch(string str) {
     low = lower_case(verb);
     if(str && strlen(str)) low += " " + lower_case(str);
 
-    /* Bare roll/reroll must win even if the catch-all is tried before
-       the named add_action("roll_cmd", "reroll") binding. */
-    if(step == "stats" || step == "race") {
+    if(step == "stats") {
         if(low == "roll" || low == "reroll")
             return roll_cmd(0);
+        if(low == "accept")
+            return accept_cmd(0);
+        return 0;
     }
 
     if(step == "region" ||
@@ -948,18 +1013,8 @@ int chargen_catch(string str) {
             return do_occ_pick(low);
         return 0;
     }
-    if((string)this_player()->getenv("awaiting_elective_skills") == "1") {
-        if(RIFTS_SKILLS_D->query_rifts_skill(low))
-            return do_elective_skill_pick(low);
-        return 0;
-    }
-    if((string)this_player()->getenv("awaiting_secondary_skills") == "1") {
-        if(RIFTS_SKILLS_D->query_rifts_skill(low))
-            return do_secondary_skill_pick(low);
-        return 0;
-    }
     if(step == "race") {
-        if((string)this_player()->getenv("stats_rolled") != "1") return 0;
+        if((string)this_player()->getenv("stats_accepted") != "1") return 0;
         if(valid_race_choice(low))
             return do_race_pick(low);
         return 0;
@@ -1018,240 +1073,21 @@ int start_cmd(string str) {
     this_player()->set_primary_start(dest_room);
     this_player()->setenv("creation_step", "stats");
     this_player()->set_rolls(0);
+    this_player()->remove_env("stats_rolled");
+    this_player()->remove_env("stats_accepted");
     creation_prompt("stats");
     return 1;
 }
 
-// ── Elective skill selection ────────────────────────────────────────────────
-
-private int get_elective_count(string occ) {
-    mapping occ_data;
-    int picks;
-
-    if(!occ || occ == "" || occ == "none") return 0;
-    occ_data = (mapping)OCC_D->query_occ(lower_case(occ));
-    if(!occ_data) return 0;
-    picks = (int)occ_data["occ_skill_picks"];
-    return picks > 0 ? picks : 0;
-}
-
-private string map_occ_pick_category(string occ_cat) {
-    string c;
-
-    if(!occ_cat || !sizeof(occ_cat)) return "";
-    c = lower_case(occ_cat);
-    if(c == "rogue") return "espionage";
-    if(c == "w.p.") return "weapons";
-    if(c == "wilderness") return "survival";
-    if(c == "pilot related") return "pilot";
-    if(c == "science") return "technical";
-    return c;
-}
-
-private string normalize_skill_category(string skill_cat) {
-    string c;
-
-    if(!skill_cat || !sizeof(skill_cat)) return "";
-    c = lower_case(skill_cat);
-    if(c == "rogue") return "espionage";
-    if(c == "science") return "technical";
-    return c;
-}
-
-private string get_elective_cats(string occ) {
-    mapping occ_data;
-    string *cats;
-    string *mapped;
-    int i;
-
-    if(!occ || occ == "" || occ == "none") return "";
-    occ_data = (mapping)OCC_D->query_occ(lower_case(occ));
-    if(!occ_data) return "";
-    cats = (string *)occ_data["occ_skills"];
-    if(!cats || !sizeof(cats)) return "any";
-    mapped = ({});
-    for(i = 0; i < sizeof(cats); i++)
-        mapped += ({ map_occ_pick_category(cats[i]) });
-    return implode(mapped, ",");
-}
-
-private int get_secondary_count(string occ) {
-    mapping occ_data;
-    int picks;
-
-    if(!occ || occ == "" || occ == "none") return 0;
-    occ_data = (mapping)OCC_D->query_occ(lower_case(occ));
-    if(!occ_data) return 0;
-    picks = (int)occ_data["secondary_skills"];
-    return picks > 0 ? picks : 0;
-}
-
+/* Chargen-time elective/secondary skill picking is retired. OCC/RCC
+   base_skills (applied in do_occ_pick) plus RIFTS_START_D packages remain.
+   These stubs exist only so any leftover call site finishes safely. */
 void do_elective_skills_start() {
-    string occ;
-    int count;
-    string cats;
-
-    occ = lower_case((string)this_player()->getenv("rifts_occ"));
-    if(!occ) occ = "none";
-    count = get_elective_count(occ);
-    if(count <= 0) {
-        do_secondary_skills_start();
-        return;
-    }
-    cats = get_elective_cats(occ);
-    this_player()->setenv("awaiting_elective_skills", "1");
-    this_player()->setenv("creation_step", "elective");
-    this_player()->setenv("elective_picks_remaining", sprintf("%d", count));
-    this_player()->setenv("elective_cats_allowed", cats);
-    write("\n=== CHOOSE YOUR ELECTIVE SKILLS ===");
-    write("You have " + count + " elective skill pick(s).");
-    if(cats == "any")
-        write("You may pick from any skill category.");
-    else
-        write("Allowed categories: " + cats);
-    write("\nType 'skills <category>' to list skills. Example: skills weapons");
-    write("Then type a skill name to select it. Example: tracking");
-    write("Available categories: weapons, pilot, military, espionage, technical, survival, physical, lore");
-}
-
-int elective_list_cmd(string str) {
-    string *skill_list;
-    string *labels;
-    string cats;
-    string cat;
-    int i;
-    int secondary_mode;
-
-    secondary_mode = ((string)this_player()->getenv("awaiting_secondary_skills") == "1");
-    if(!secondary_mode && (string)this_player()->getenv("awaiting_elective_skills") != "1") {
-        notify_fail("That command is only available during skill selection.\n");
-        return 0;
-    }
-    if(!str || !strlen(str)) {
-        write("Type: skills <category> Example: skills weapons");
-        return 1;
-    }
-    cat = lower_case(str);
-    if(!secondary_mode) {
-        cats = (string)this_player()->getenv("elective_cats_allowed");
-        if(cats && cats != "any" && strsrch(cats, cat) == -1) {
-            write("You cannot pick from that category. Allowed: " + cats);
-            return 1;
-        }
-    }
-    skill_list = (string *)RIFTS_SKILLS_D->query_skills_by_category(cat);
-    if(!skill_list || !sizeof(skill_list)) {
-        write("No skills found in category: " + cat);
-        return 1;
-    }
-    write("Skills in category " + cat + ":");
-    labels = ({});
-    for(i = 0; i < sizeof(skill_list); i++)
-        labels += ({ capitalize(skill_list[i]) });
-    write(format_page(labels, 4));
-    write("\nType a skill name to select it.");
-    return 1;
-}
-
-int do_elective_skill_pick(string str) {
-    string skill_name;
-    string cats;
-    string cat;
-    mapping sdata;
-    int remaining;
-
-    if((string)this_player()->getenv("awaiting_elective_skills") != "1") return 0;
-    if(!str || !strlen(str)) {
-        write("Type a skill name. Example: tracking");
-        return 1;
-    }
-    skill_name = lower_case(str);
-    sdata = (mapping)RIFTS_SKILLS_D->query_rifts_skill(skill_name);
-    if(!sdata) {
-        write("'" + skill_name + "' is not a recognized skill. Type 'skills <category>' to browse.");
-        return 1;
-    }
-    cats = (string)this_player()->getenv("elective_cats_allowed");
-    cat = normalize_skill_category((string)sdata["category"]);
-    if(cats && cats != "any" && strsrch(lower_case(cats), cat) == -1) {
-        write("That skill is not in your allowed categories. Allowed: " + cats);
-        return 1;
-    }
-    if((int)this_player()->query_skill(skill_name) > 0) {
-        write("You already have that skill.");
-        return 1;
-    }
-    RIFTS_SKILLS_D->grant_skill(this_player(), skill_name, 0);
-    remaining = to_int((string)this_player()->getenv("elective_picks_remaining")) - 1;
-    this_player()->setenv("elective_picks_remaining", sprintf("%d", remaining));
-    write("Skill added: " + capitalize(skill_name));
-    if(remaining <= 0) {
-        this_player()->remove_env("awaiting_elective_skills");
-        this_player()->remove_env("elective_picks_remaining");
-        this_player()->remove_env("elective_cats_allowed");
-        write("All elective skills chosen.");
-        do_secondary_skills_start();
-    } else {
-        write("Picks remaining: " + remaining);
-    }
-    return 1;
+    finish_creation();
 }
 
 void do_secondary_skills_start() {
-    string occ;
-    int count;
-
-    occ = lower_case((string)this_player()->getenv("rifts_occ"));
-    if(!occ) occ = "none";
-    count = get_secondary_count(occ);
-    if(count <= 0) {
-        finish_creation();
-        return;
-    }
-    this_player()->setenv("awaiting_secondary_skills", "1");
-    this_player()->setenv("creation_step", "secondary");
-    this_player()->setenv("secondary_picks_remaining", sprintf("%d", count));
-    write("\n=== CHOOSE YOUR SECONDARY SKILLS ===");
-    write("You have " + count + " secondary skill pick(s).");
-    write("You may pick from any skill category.");
-    write("\nType 'skills <category>' to list skills. Example: skills weapons");
-    write("Then type a skill name to select it. Example: tracking");
-    write("Available categories: weapons, pilot, military, espionage, technical, survival, physical, lore");
-}
-
-int do_secondary_skill_pick(string str) {
-    string skill_name;
-    mapping sdata;
-    int remaining;
-
-    if((string)this_player()->getenv("awaiting_secondary_skills") != "1") return 0;
-    if(!str || !strlen(str)) {
-        write("Type a skill name. Example: tracking");
-        return 1;
-    }
-    skill_name = lower_case(str);
-    sdata = (mapping)RIFTS_SKILLS_D->query_rifts_skill(skill_name);
-    if(!sdata) {
-        write("'" + skill_name + "' is not a recognized skill. Type 'skills <category>' to browse.");
-        return 1;
-    }
-    if((int)this_player()->query_skill(skill_name) > 0) {
-        write("You already have that skill.");
-        return 1;
-    }
-    RIFTS_SKILLS_D->grant_skill(this_player(), skill_name, 0);
-    remaining = to_int((string)this_player()->getenv("secondary_picks_remaining")) - 1;
-    this_player()->setenv("secondary_picks_remaining", sprintf("%d", remaining));
-    write("Skill added: " + capitalize(skill_name));
-    if(remaining <= 0) {
-        this_player()->remove_env("awaiting_secondary_skills");
-        this_player()->remove_env("secondary_picks_remaining");
-        write("All secondary skills chosen.");
-        finish_creation();
-    } else {
-        write("Picks remaining: " + remaining);
-    }
-    return 1;
+    finish_creation();
 }
 
 // ── Creation finalisation ───────────────────────────────────────────────────
@@ -1276,6 +1112,7 @@ void finish_creation() {
     player->remove_env("awaiting_secondary_skills");
     player->remove_env("secondary_picks_remaining");
     player->remove_env("stats_rolled");
+    player->remove_env("stats_accepted");
     player->setenv("creation_step", "done");
     player->setenv("chargen_complete", "1");
 
@@ -1366,8 +1203,8 @@ int read(string str) {
         notify_fail("That is not here to be read.\n");
         return 0;
     }
-    if((string)this_player()->getenv("stats_rolled") != "1") {
-        write("Roll your attributes first. Type: roll\n");
+    if((string)this_player()->getenv("stats_accepted") != "1") {
+        write("Accept your attributes first. Type: accept\n");
         return 1;
     }
 
