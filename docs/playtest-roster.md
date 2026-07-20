@@ -8,8 +8,9 @@ snapshots remain valid as expected-value references.**
 **2026-07-19 note:** individual equivalents can now be rebuilt on any
 online character with one admin command instead of the script, e.g.
 `makechar <name> great_horned_dragon none unprincipled zone=americas`
-(see `docs/playtest-checklist.md` section 5). Expected-value snapshots
-below remain the reference.
+(see `docs/playtest-checklist-wizards.md` section 1; the old combined
+checklist is now a pointer file). Expected-value snapshots below
+remain the reference.
 
 Shared password for all characters below: `playtestaa`
 
