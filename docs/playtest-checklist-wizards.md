@@ -6,8 +6,11 @@ with one throwaway MORTAL online for the gating and stranger checks;
 call it TESTCHAR below. Player-side tests live in
 [playtest-checklist-players.md](playtest-checklist-players.md).
 
-Prerequisites: server running, FULL REBOOT since the last std/user.c
-pull. Mismatches go to `/domains/Praxis/adm/master_gap_report.txt`.
+Prerequisites: server running, FULL REBOOT since the last pull of any
+`/std/` file (user.c, living.c, room.c, armour.c, combat.c, and
+everything else under `/std/`) — `update` or `warmboot` is not enough;
+see section 3 for what happens when this gets skipped. Mismatches go to
+`/domains/Praxis/adm/master_gap_report.txt`.
 
 ## 1. repairchar and makechar (admin-only, target online)
 
@@ -89,7 +92,60 @@ Sever/restore (narrative severing, admin command):
         or damage change (narrative only).
 15. [ ] `restore <limb>`. Expected: limb back, outputs clean.
 
-## 3. Gating: mortals must reach none of this
+## 3. Ring of Dominion (regression retest, post `admin_ring` fix)
+
+Background: after the `admin_ring` cosmetic slot was added to
+`std/armour.c` and `ring_of_dominion.c`'s `rifts_slot` was changed to
+`"admin_ring"`, `wear ring` made the ring vanish from inventory with no
+on-wear message and no error shown. Root cause: the driver had not been
+fully rebooted since the `std/armour.c` change landed, so the connected
+session was still running pre-`admin_ring` code — `resolve_cosmetic_slot()`
+fell through to the old limb-based path, and `ring_of_dominion.c` (which
+never called `set_limbs()`) passed an undefined limb array into
+`equip_armour_to_limb()`. Fixed by (a) a full reboot to load the current
+`std/armour.c`, and (b) a defensive `set_limbs(({ "right hand" }))` added
+to `ring_of_dominion.c` so any future fall-through fails as an ordinary
+limb-based refusal instead of silently destructing/dropping the item.
+
+**This is exactly the failure mode the FULL REBOOT prerequisite at the
+top of this file exists to prevent. Any `/std/` file change needs a real
+`mud.sh stop && mud.sh start`, never just `update` or `warmboot` — those
+only reload the blueprint, not the code already baked into
+already-connected sessions and already-loaded objects. If you're ever
+unsure whether a reboot actually happened after a `/std/` edit, check
+`log/runtime`'s timestamp against the most recent commit touching that
+file (`git log -1 -- std/<file>.c`); if the commit is newer than the
+last boot, the running driver has not picked it up yet.**
+
+1. [ ] Confirm the ring is present, unworn, in inventory (`inventory`
+       or `i`).
+2. [ ] `wear ring`. Expected: an on-wear message appears (either "You
+       slide the gold ring onto your finger..." if `admin_wizp`, or
+       "The ring stays cold and inert on your hand." if not). The ring
+       must still be listed afterward as "a plain gold ring (worn)" -
+       not vanished.
+3. [ ] Confirm the five wiz-tools were cloned into inventory (staff of
+       demotion, staff of dominion, staff of creation, RP-Wiz skill
+       tool, tattoo-gun) - skip any you already had before wearing the
+       ring.
+4. [ ] `eq` or `look` at yourself: confirm the ring shows on its own
+       slot, distinct from `ring_left`/`ring_right`.
+5. [ ] While the ring is worn, also wear a regular ring (e.g. the test
+       wing's signet ring) and/or a wedding band if one is available.
+       Expected: no conflict either direction - the ring of dominion
+       occupies `admin_ring`, never `ring_left`/`ring_right`, so both
+       should be wearable together with no refusal message from
+       either side.
+6. [ ] `remove ring`. Expected: "The ring cools, and the tools it
+       granted fade from your hands." Tools freshly cloned by the ring
+       are stripped; any tool you already had before wearing it
+       remains.
+7. [ ] `askring <question>` while worn (try "promote", "build",
+       "domain", "tattoo", "skill", "reboot", "save"). Expected: a
+       relevant canned answer for each. `askring` while NOT worn:
+       "The ring is silent. It only answers while worn."
+
+## 4. Gating: mortals must reach none of this
 
 1. [ ] As TESTCHAR, type `repairchar TESTCHAR`, `makechar x y z w`,
        `sever list`, and `playerwipe x`. Expected: every one gets an
@@ -107,7 +163,7 @@ Sever/restore (narrative severing, admin command):
        2026-07-19). As thurtea, `start here` still works
        (cmds/hm/_start.c, staff only).
 
-## 4. Poisoned-start repair (admin-side check)
+## 5. Poisoned-start repair (admin-side check)
 
 1. [ ] Poison the mortal's start:
        `eval find_player("TESTCHAR")->set_primary_start("/realms/thurtea/workroom")`
@@ -116,7 +172,7 @@ Sever/restore (narrative severing, admin command):
        `eval find_player("TESTCHAR")->query_primary_start()` now
        shows the square, not the workroom.
 
-## 5. Tone spot-check (staff-side strings)
+## 6. Tone spot-check (staff-side strings)
 
 1. [ ] Test wing room descriptions, ward ejection line, and every
        sample item description (each tag reads SAMPLE: <SLOT>).
@@ -125,7 +181,7 @@ Sever/restore (narrative severing, admin command):
 3. [ ] repairchar/makechar output blocks and the rebuild notice the
        target sees.
 
-## 6. After the pass
+## 7. After the pass
 
 Bugs to `master_gap_report.txt`. When both rounds pass locally:
 commit, pull on the VPS, full-reboot the VPS.
