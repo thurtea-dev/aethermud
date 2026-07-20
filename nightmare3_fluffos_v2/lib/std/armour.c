@@ -373,7 +373,8 @@ private string assign_cosmetic_slot(string cos) {
         return 0;
     }
     if(find_worn_slot_item(this_player(), cos)) {
-        message("my_action", "You are already wearing something there.",
+        message("my_action", "You are already wearing something on your " +
+          cos + ". Remove it first.",
           this_player());
         return 0;
     }

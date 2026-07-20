@@ -1,63 +1,43 @@
 Read CLAUDE.md first and confirm you're following the rules there before doing anything else.
 
-We still have a real deployed split-brain bug with my workroom, and the
-previous triage did NOT finish the actual fix.
+Context: last session built the ocean access system (breathing gate on
+the three underwater rooms, rebreather item on the neck cosmetic slot,
+blue rift spawner in chitown_boulevard.c, unique Sword of Atlantis via
+daemon/unique_items.c). It was committed (a18e26d) and deployed, but I
+have not yet run a live test pass myself.
 
-Evidence from live post-deploy testing:
-- After reboot/login, I land in:
-  /domains/wizards/thurtea/workroom
-  which is the old legacy room with only the reference manual
-- When I manually go to:
-  /realms/thurtea/workroom
-  I get the newer room I actually expect to be canonical
-- There is still no chest visible in the room I actually log into
-- So the real issue is not just chest visibility; login/start-room resolution
-  is still sending me to the legacy /domains/wizards/<name>/workroom path
+Design confirmation: the rebreather using the neck slot is correct and
+final - no change needed there. Players simply need to remove any
+necklace/amulet they're wearing first to equip it, which is intended and
+fine as-is. Do not add a separate slot or rework this.
 
-Your task this session:
-1. Trace exactly why my live login is still placing me in
-   /domains/wizards/thurtea/workroom after reboot, despite the earlier claim
-   that /realms/<name>/workroom is canonical and std/user.c migrates old
-   wizards/* paths to realms/*.
-2. Identify all code paths and saved data involved in determining my login
-   destination / home / start room:
-   - user save vars
-   - login.c path selection
-   - std/user.c setup or migration shims
-   - any wizard setup helpers
-3. Determine whether the problem is:
-   - my existing save still carrying a legacy path that the migration shim
-     does not actually catch,
-   - the migration logic matching the wrong prefix,
-   - a separate home/start-room variable bypassing the intended rewrite,
-   - or some other path source entirely.
-4. Fix it so my actual login lands in the canonical
-   /realms/thurtea/workroom, not /domains/wizards/thurtea/workroom.
-5. Then address the chest in the correct canonical workroom path:
-   - verify whether /realms/thurtea/workroom.c is actually tracked in git or
-     still ignored/untracked due to .gitignore
-   - if it is still being ignored, fix the repo so THIS specific workroom file
-     can be tracked and deployed safely without opening the floodgates on all
-     realms files
-   - ensure the canonical /realms/thurtea/workroom actually contains the
-     supplies chest clone/reset logic
-6. Also report plainly whether the legacy
-   /domains/wizards/thurtea/workroom is still needed for anything, or whether
-   it is just stale dead content that should be retired later.
+Before I run my live pass, re-read back through equipment/rebreather.c,
+the three ocean/ room files, ocean_rift.c, sword_of_atlantis.c, moxim.c,
+and chitown_boulevard.c exactly as they exist in the committed code right
+now (not from memory of writing them), and confirm out loud, file by file,
+that each does what the session report claimed. Specifically:
 
-Important constraints:
-- Stay local only; do not tell me to SSH or run manual VPS-side commands in
-  the prompt.
-- Do not touch unrelated QCS durability work yet.
-- Do not touch starting-equipment tasks this session.
-- Keep this focused on making the actual deployed login/workroom/chest path
-  sane and consistent.
-- If the earlier "chest deployed" / "canonical path solved" claims were wrong,
-  say so plainly in the report.
+1. Confirm wearing the rebreather correctly requires removing any current
+   neck-slot item first (normal slot-swap behavior), and that the item's
+   description/messaging makes it clear to a player why "wear rebreather"
+   fails if their neck slot is occupied - if the error message is generic
+   or unclear, improve it so it explicitly says to remove the neck item
+   first.
+2. Confirm the bounce-on-fail logic in the three ocean rooms actually
+   fires for a plain vagabond-type mortal with zero gear (trace it, don't
+   assume).
+3. Confirm the blue rift's !random(4) chance in chitown_boulevard.c reset()
+   doesn't collide with or get suppressed by the room's existing Moxim/
+   guardian spawn chances already in that same reset() function.
+4. Confirm daemon/unique_items.c was actually added to preload.cfg in the
+   correct load order relative to any daemon it depends on, and that the
+   full reboot instruction is still accurate.
 
-After the fix, give the usual session-end report with extra clarity:
-- root cause
-- exact files changed
-- whether save migration is one-time or persistent
-- whether a full reboot is required
-- whether this is safe to test locally before I deploy
+Report any discrepancy between what was claimed and what the code actually
+does. Do not make changes unless you find an actual bug or the unclear-
+error-message issue in point 1 - if you find either, fix it and clearly
+flag what changed. If everything else checks out as claimed, say so
+plainly and confirm the file list is otherwise unchanged from last
+session's report.
+
+End with the standard session-end report.
