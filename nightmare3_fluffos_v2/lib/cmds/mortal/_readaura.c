@@ -1,7 +1,7 @@
 // /cmds/mortal/_readaura.c
 // Read aura: psychically perceive a target's true race and level,
 // piercing any disguise (metamorph, visible_race, the secondary
-// vampire hardcode, or appearance-override armor).
+// vampire hardcode, or appearance-override armor). Same room only.
 
 #include <std.h>
 #include <daemons.h>
@@ -12,6 +12,7 @@ int cmd_readaura(string str) {
     object target;
     mapping pdata;
     string psi_name;
+    string target_str;
     int isp;
     int isp_cost;
 
@@ -35,14 +36,18 @@ int cmd_readaura(string str) {
         return 1;
     }
 
-    /* Unlike remoteview, this does NOT require the target to be known:
-       the whole point is unmasking a stranger. find_psi_aura_target()
-       matches by real name (if you happen to know it) or by the race
-       noun currently displayed to you, and never checks knows_player(). */
-    target = RIFTS_PSIONICS_D->find_psi_aura_target(this_player(), lower_case(str));
-    if(!target) {
-        write("You cannot find anyone by that name or description within psychic range.\n"
-              "They must be online and visible to you in some form.\n");
+    /* Same-room target resolution, matching _cast.c/_kill.c/_psi.c: "me"/
+       "self"/own name targets the caster, else present() in the room.
+       No knows_player() gate anywhere in this file - unlike remoteview,
+       this deliberately works on anyone present, known or disguised. */
+    target_str = lower_case(str);
+    if(target_str == "me" || target_str == "self" ||
+       target_str == lower_case((string)this_player()->query_name()))
+        target = this_player();
+    else
+        target = present(target_str, environment(this_player()));
+    if(!target || !living(target)) {
+        write("You don't see '" + str + "' here.\n");
         return 1;
     }
 
@@ -67,16 +72,23 @@ int cmd_readaura(string str) {
 void help() {
     write(
         "Syntax: readaura <target>\n\n"
-        "Psychically read a target's aura, revealing their true race and\n"
-        "power level to you alone, even if they are currently disguised\n"
-        "or displaying as something else. Works on strangers: unlike\n"
-        "remoteview, this does not require you to have introduced,\n"
-        "been introduced, or remembered them first.\n\n"
-        "This is a one-time read. It does not introduce you to the\n"
-        "target, does not add them to your known list, and reveals\n"
-        "nothing to anyone else in the room.\n\n"
-        "Costs ISP. The generic 'psi'/'cast' dispatch commands will\n"
-        "refuse to target a stranger, so always use readaura directly.\n\n"
+        "Psychically read the aura of a living target in your room,\n"
+        "revealing their true race and power level to you alone. This\n"
+        "pierces any disguise: it works even on someone currently\n"
+        "displaying as another race or shielded by an appearance\n"
+        "override, and even if you have never introduced, been\n"
+        "introduced, or remembered them.\n\n"
+        "The reading never reveals the target's name. It refers to\n"
+        "them only as 'they' or 'their true nature'.\n\n"
+        "This is a one-time read, not a relationship change. It does\n"
+        "not add the target to your known list, and shows nothing to\n"
+        "anyone else in the room.\n\n"
+        "Target by whatever word finds them in the room (their name,\n"
+        "or an identifying word if they are an NPC), the same as look\n"
+        "or kill.\n\n"
+        "Costs ISP. The generic 'psi'/'cast' dispatch commands require\n"
+        "a known target and will refuse a stranger, so always use\n"
+        "readaura directly.\n\n"
         "See also: psi, psionics, introduce, remember, known\n"
     );
 }

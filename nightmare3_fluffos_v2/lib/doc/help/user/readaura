@@ -1,19 +1,22 @@
 Syntax: readaura <target>
 
-Psychically read a target's aura, revealing their true race and power
-level to you alone. This pierces disguises: it works even on someone
-currently displaying as another race or shielded by an appearance
-override, and even if you have never introduced, been introduced, or
-remembered them.
+Psychically read the aura of a living target in your room, revealing
+their true race and power level to you alone. This pierces disguises:
+it works even on someone currently displaying as another race or
+shielded by an appearance override, and even if you have never
+introduced, been introduced, or remembered them.
+
+The reading never reveals the target's name. It refers to them only
+as "they" or "their true nature".
 
 This is a one-time read, not a relationship change. It does not add
-the target to your known list, does not reveal their name, and shows
-nothing to anyone else in the room.
+the target to your known list and shows nothing to anyone else in the
+room.
 
-Costs ISP (read aura power). The generic 'psi'/'cast' dispatch
-commands require a known target and will refuse a stranger, so always
-use readaura directly:
-  readaura human
-  readaura Splynncryth
+Costs ISP (read aura power). Target by whatever word finds them in the
+room (their name, or an identifying word if they are an NPC), the same
+as look or kill. The generic 'psi'/'cast' dispatch commands require a
+known target and will refuse a stranger, so always use readaura
+directly.
 
 See also: psi, psionics, remoteview, introduce, remember, known
