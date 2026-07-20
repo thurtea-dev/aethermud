@@ -24,6 +24,8 @@
     <tr><td><code>give</code></td><td>Clone an object by path and hand it to an online player.</td></tr>
     <tr><td><code>grantrace</code> / <code>grantskills</code></td><td>Backfill race spells and psionics, or OCC skills, on a player. Post-hoc fix tools.</td></tr>
     <tr><td><code>repairchar</code></td><td>Diagnose or repair a broken character: dump chargen flags and stats; <code>clear</code> / <code>finish</code> stuck creation state; <code>reroll</code> racial attributes; <code>skills</code> to re-grant the OCC package; <code>setstat</code> for one attribute. Online player required. Does not replace <code>setocc</code> / <code>setrcc</code>.</td></tr>
+    <tr><td><code>fixdemote</code></td><td>One-time repair for an offline player demoted before the offline restore path existed. Re-runs the full demotion restore on a named save.</td></tr>
+    <tr><td><code>sever</code></td><td>Narratively sever or restore a limb on an online player for RP (cybernetic stories, scars). Syntax: <code>sever &lt;player&gt; &lt;limb&gt;</code>, <code>sever &lt;player&gt; restore &lt;limb&gt;</code>, or <code>sever &lt;player&gt; list</code>. Does not deal combat damage.</td></tr>
     <tr><td><code>makechar</code></td><td>Rebuild an online player without interactive chargen: <code>makechar &lt;player&gt; &lt;race&gt; &lt;occ|none&gt; &lt;alignment&gt;</code> with optional <code>zone=</code>, <code>gear=default|none</code>, <code>skills=</code>, <code>spells=</code>, <code>psi=</code>. Uses the same package grants as chargen finish.</td></tr>
     <tr><td><code>setfaction</code></td><td>Set or clear a player's faction membership.</td></tr>
     <tr><td><code>setocc</code> / <code>setrcc</code></td><td>Set a player's OCC, or set their race and re-roll race stats.</td></tr>
@@ -149,7 +151,7 @@
     <tr><td><code>uptime</code></td><td>Report how long AetherMUD has been up.</td></tr>
     <tr><td><code>wizheal</code></td><td>Fully heal a living creature.</td></tr>
     <tr><td><code>events</code></td><td>List pending scheduled and domain events.</td></tr>
-    <tr><td><code>banish</code></td><td>Protect a name from being taken by a new player.</td></tr>
+    <tr><td><code>banish</code> / <code>unbanish</code> / <code>whobanished</code></td><td>Protect a name from being taken by a new player, remove that protection, or list (or check) banished names.</td></tr>
   </table>
 
   <h2>secure/cmds/creator</h2>
