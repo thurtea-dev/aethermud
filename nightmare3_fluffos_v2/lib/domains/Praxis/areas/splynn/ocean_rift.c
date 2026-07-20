@@ -1,9 +1,12 @@
 // /domains/Praxis/areas/splynn/ocean_rift.c
 // The ocean rift off the Splynn coast.
-// The Sword of Atlantis spawns here once.
+// The Sword of Atlantis spawns here once, ever: UNIQUE_ITEMS_D
+// remembers the first player pickup across reboots and reset() stops
+// respawning it after that.
 
 #include <std.h>
 #include <rooms.h>
+#include <daemons.h>
 
 #define EQ_PATH "/domains/Praxis/equipment/"
 
@@ -24,8 +27,8 @@ void create() {
         "to no natural phenomenon. In the depths of the rift, partially visible\n"
         "through the energized water, the outline of something ancient and huge\n"
         "suggests an Atlantean ruin far below the surface.\n\n"
-        "A weapon rests on a natural stone shelf at the rift's edge, untouched\n"
-        "by the dimensional energies. It glows with its own light.");
+        "A natural stone shelf juts from the rock at the rift's edge, the only\n"
+        "stable surface above the drop into the depths.");
     set_exits( ([
         "south" : "/domains/Praxis/areas/splynn/splynn_docks",
         "down"  : "/domains/Praxis/areas/splynn/ocean/ocean_rift_shallows"
@@ -45,16 +48,20 @@ void create() {
                    "Architecture from before the Rifts, or during, or after.\n"
                    "Time does not work normally near dimensional openings.",
         "shelf"  : "A natural stone shelf at the rift's edge. The only stable\n"
-                   "surface. Something has been placed here deliberately.",
-        "glow"   : "Blue and gold light from the rift edges and the sword.\n"
-                   "The colors are the same: whatever made the sword and whatever\n"
-                   "made the rift are connected."
+                   "surface. It looks like a place where something was once\n"
+                   "set down deliberately.",
+        "glow"   : "Blue and gold light from the rift edges, colors that\n"
+                   "belong to whatever opened this tear in the ocean floor."
     ]) );
 }
 
 void reset() {
+    int taken;
+
     ::reset();
-    if(!present("sword of atlantis", this_object()))
+    taken = 0;
+    catch(taken = (int)UNIQUE_ITEMS_D->query_taken("sword_of_atlantis"));
+    if(!taken && !present("sword of atlantis", this_object()))
         clone_object(EQ_PATH + "sword_of_atlantis.c")->move(this_object());
     if(!present("sea serpent", this_object()))
         clone_object("/domains/Praxis/monsters/sea_serpent")->move(this_object());

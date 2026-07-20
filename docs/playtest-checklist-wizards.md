@@ -42,9 +42,9 @@ Copy-paste tests (TESTCHAR online):
 ## 2. Test wing (from your workroom, exit `wing`)
 
 Setup:
-1. [ ] In the hall, `list` at Renn. Expected: 12 entries - one
+1. [ ] In the hall, `list` at Renn. Expected: 13 entries - one
        weapon, one protective armor, one implant, nine cosmetic
-       slot samples.
+       slot samples, and a rebreather mask.
 2. [ ] Buy everything: `buy rifle`, `buy dead boy`, `buy optic eye`,
        `buy cap`, `buy amulet`, `buy shirt`, `buy backpack`,
        `buy belt`, `buy trousers`, `buy gloves`, `buy boots`,

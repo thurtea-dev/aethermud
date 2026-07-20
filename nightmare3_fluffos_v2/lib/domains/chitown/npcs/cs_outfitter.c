@@ -36,6 +36,8 @@ void create() {
         "jacket" : ({ EQ_PATH+"leather_jacket.c", 900, "leather jacket" }),
         "rope" : ({ EQ_PATH+"rope.c", 120, "rope" }),
         "backpack" : ({ EQ_PATH+"backpack.c", 200, "backpack" }),
-        "pack" : ({ EQ_PATH+"backpack.c", 200, "backpack" })
+        "pack" : ({ EQ_PATH+"backpack.c", 200, "backpack" }),
+        "rebreather" : ({ EQ_PATH+"rebreather.c", 1200, "rebreather mask" }),
+        "mask" : ({ EQ_PATH+"rebreather.c", 1200, "rebreather mask" })
     ]));
 }

@@ -1,8 +1,14 @@
 /* /domains/Praxis/equipment/sword_of_atlantis.c
    The Sword of Atlantis: ancient True Atlantean holy weapon.
-   5d6 MD, bypasses AR, +3 strike, +2 parry, unsellable. */
+   5d6 MD, bypasses AR, +3 strike, +2 parry, unsellable.
+   Unique: the first time a mortal player takes it, UNIQUE_ITEMS_D
+   records the pickup and the ocean rift stops respawning it.
+   Copies already in player hands keep working; a returning holder's
+   login restore marks the flag automatically. */
 
 #include <std.h>
+#include <daemons.h>
+#include <move.h>
 
 inherit WEAPON;
 
@@ -34,4 +40,17 @@ void create() {
     set_property("bonus_parry", 2);
     set_property("no_sell", 1);
     set_value(0);
+}
+
+/* Record the first mortal pickup so the spawn room stops making
+   more. Creators handling it for tests do not burn the flag. */
+int move(mixed dest) {
+    int ret;
+
+    ret = ::move(dest);
+    if(ret == MOVE_OK && environment(this_object()) &&
+       userp(environment(this_object())) &&
+       !creatorp(environment(this_object())))
+        catch(UNIQUE_ITEMS_D->mark_taken("sword_of_atlantis"));
+    return ret;
 }

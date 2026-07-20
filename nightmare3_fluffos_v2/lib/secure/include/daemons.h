@@ -61,6 +61,7 @@
 #define WANTED_D             (DIR_DAEMONS+"/wanted_d")
 #define WIZTOOLS_D           (DIR_SECURE_DAEMONS+"/wiztools")
 #define EX5_D                (DIR_DAEMONS+"/ex5_d")
+#define UNIQUE_ITEMS_D       (DIR_DAEMONS+"/unique_items")
 #define SKILL_REQUEST_D      (DIR_DAEMONS+"/skill_request_d")
 #define APPRENTICE_D         (DIR_DAEMONS+"/apprentice_d")
 #define TATTOO_D             (DIR_DAEMONS+"/tattoo_d")

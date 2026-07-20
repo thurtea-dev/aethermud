@@ -96,12 +96,28 @@ void catch_tell(string str) {
     tp = this_player();
     if(!tp) { ::catch_tell(str); return; }
 
+    /* Checked before the destination keywords: "blue rift" contains
+       "rift" and would otherwise route to the destination table. */
+    if(strsrch(b, "blue") != -1 || strsrch(b, "ocean") != -1) {
+        call_out("blue_hint", 1, tp);
+        return;
+    }
     if(strsrch(b, "destination") != -1 || strsrch(b, "travel") != -1 ||
        strsrch(b, "where") != -1 || strsrch(b, "rift") != -1) {
         call_out("show_destinations", 1, tp);
         return;
     }
     ::catch_tell(str);
+}
+
+/* tp is passed explicitly because this_player() is 0 inside a call_out. */
+void blue_hint(object tp) {
+    if(!tp || !objectp(tp)) return;
+    tell_object(tp,
+        "Moxim says: Once in a while a rift comes through tinted deep\n"
+        "blue. Not my work. It opens on the Chi-Town boulevard when it\n"
+        "pleases and it leads to open ocean. Do not step through it\n"
+        "without a way to breathe water.\n");
 }
 
 /* tp is passed explicitly because this_player() is 0 inside a call_out. */

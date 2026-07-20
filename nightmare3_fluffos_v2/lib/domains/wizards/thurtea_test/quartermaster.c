@@ -74,6 +74,9 @@ void create() {
         "boots"         : ({ TW_PATH+"travel_boots.c", 10,
                              "travel boots (feet slot)" }),
         "ring"          : ({ TW_PATH+"signet_ring.c", 10,
-                             "steel signet ring (ring slot)" })
+                             "steel signet ring (ring slot)" }),
+        /* Environmental gear sample */
+        "rebreather"    : ({ EQ_PATH+"rebreather.c", 10,
+                             "rebreather mask (underwater access)" })
     ]) );
 }

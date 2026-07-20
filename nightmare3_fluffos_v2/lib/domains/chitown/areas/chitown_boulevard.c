@@ -51,6 +51,11 @@ void reset() {
     ::reset();
     if(!present("moxim", this_object()))
         clone_object(MOXIM_PATH)->move(this_object());
+    /* Intermittent blue rift to the ocean off Splynn: one reset in
+       four, collapsing on its own after 120 seconds. The blue tint
+       is the only sign it is not ordinary rift work. */
+    if(!present("blue rift", this_object()) && !random(4))
+        clone_object("/std/blue_rift_portal")->move(this_object());
     if(!present("cs patrol officer", this_object()))
         clone_object("/domains/chitown/npcs/cs_patrol")->move(this_object());
     if(!present("coalition sergeant", this_object()))

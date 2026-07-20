@@ -83,6 +83,28 @@ Moxim stands in the arrival room.
 If any hop lands in a gate/welcome room instead of the rooms above,
 the server has not had a full reboot since the destination fix.
 
+Ocean access (added 2026-07-19):
+
+8. [ ] Near any Moxim, `say blue rift`. Expected: his hint about a
+       blue rift on the Chi-Town boulevard that leads to open ocean,
+       NOT the destination table.
+9. [ ] Without breathing gear, walk to the Ocean Rift north of the
+       Splynn docks and go `down`. Expected: you are forced back to
+       the surface with a message naming the three ways to survive
+       (rebreather, oxygen implant, Swim as a Fish).
+10. [ ] Buy a rebreather at the Chi-Town outfitter (1200 credits),
+        `wear rebreather`, return, and go `down` again. Expected: you
+        pass into the Shallows, and can continue down to the Deep
+        Zone and the Rift Floor.
+11. [ ] Wait on the Chi-Town boulevard across a few resets until "a
+        rift glowing deep blue" appears (roughly one reset in four;
+        it collapses after two minutes). `enter rift`. Expected: you
+        arrive at the Ocean Rift surface room off Splynn.
+12. [ ] Sword of Atlantis: if it is still on the shelf at the Ocean
+        Rift, take it (mind the sea serpent). Expected: on every
+        later reset the shelf stays empty; the sword never respawns
+        for anyone once first taken.
+
 ## 4. Combat, armor pools, and cosmetic wear (player gear)
 
 Use ordinary shops (Praxis outfitter/arms dealers, or the Chi-Town
