@@ -23,7 +23,7 @@ to these systems has a website chore attached:
   `/cmds/creator/_qcs.c` and the in-game `help build` topic.
 - `admin.html`, `domain.html`, `roleplay.html`, `apprentice.html`
   mirror the role capabilities granted by wiztools and setrole.
-- `races.html` / `occs.html` track the daemon counts (62 races; OCC
+- `races.html` / `classes.html` track the daemon counts (62 races; class
   list in `/daemon/occ.c`).
 
 ## Publish to the live site

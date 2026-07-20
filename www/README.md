@@ -12,7 +12,7 @@ these are standalone pages, not LPC.
 - `chargen.html` - player-facing character generation guide (kept in
   sync with the actual chargen flow in `domains/Praxis/setter.c` /
   `daemon/chargen_guide.c`).
-- `occs.html`, `races.html`, `world.html` - reference pages for OCCs,
+- `classes.html`, `races.html`, `world.html` - reference pages for Classes,
   races, and the game world.
 - `play.html` - how to connect and play.
 - `webclient.html` - in-browser terminal client (WebSocket bridge on

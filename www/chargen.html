@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-  <nav><a href="index.html">Home</a> <a href="races.html">Races</a> <a href="occs.html">OCCs</a></nav>
+  <nav><a href="index.html">Home</a> <a href="races.html">Races</a> <a href="classes.html">Classes</a></nav>
   <h1>Character creation</h1>
   <p>Login is account-based: one account name and password, then a character
   select menu. Each account may have up to 5 characters. Creation itself
   happens in <code>/domains/Praxis/setter.c</code> with the chargen_guide NPC.
-  Pool: 62 races, 66 OCCs, 158 skills (OCC/RCC package at chargen;
+  Pool: 62 races, 66 Classes, 158 skills (class/RCC package at chargen;
   further skills via RP-Wiz in-game).</p>
 
   <h2>Login and character select</h2>
@@ -33,8 +33,8 @@
     (up to 4 rerolls). Race stays locked until <code>accept</code>.</li>
     <li>Race: <code>list</code>, then the race name, e.g. <code>human</code></li>
     <li>Alignment: the alignment name, e.g. <code>scrupulous</code></li>
-    <li>OCC: <code>list</code>, then the OCC name, e.g. <code>headhunter</code>, or <code>none</code></li>
-    <li>Finish: OCC/RCC package skills, languages, gear, teleport to zone start.
+    <li>Class: <code>list</code>, then the class name, e.g. <code>headhunter</code>, or <code>none</code></li>
+    <li>Finish: class/RCC package skills, languages, gear, teleport to zone start.
     No elective/secondary skill picking at chargen.</li>
   </ol>
 
@@ -65,7 +65,7 @@ Enter a name for your new character: mysecond
 
   <h2>Notes</h2>
   <p>Disconnect mid-creation resumes from the saved <code>creation_step</code>.
-  Dog Boy auto-assigns a Coalition Soldier OCC. Choosing a race may reshape
+  Dog Boy auto-assigns a Coalition Soldier class. Choosing a race may reshape
   the accepted 3d6 attributes to that race's dice and body pools.</p>
   <p>Staff repairing broken or incomplete characters: see
   <code>repairchar</code> and <code>makechar</code> on the

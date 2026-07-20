@@ -63,3 +63,7 @@ backups-prompt.md
 # Python bytecode caches (some were committed earlier; git rm -r --cached to untrack)
 __pycache__/
 *.pyc
+
+# Web Basic Auth password file (generate on VPS only; never commit hashes)
+www/.htpasswd
+.htpasswd

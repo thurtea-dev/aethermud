@@ -14,8 +14,8 @@
 - This is plain static HTML, not templated/generated - edits are direct
   file edits, no build step.
 - Content here should track the actual mudlib behavior (chargen flow,
-  staff commands, OCC/race lists). When you change chargen, staff ranks,
-  races, or OCCs in the LPC code, check whether the matching page here
+  staff commands, class/race lists). When you change chargen, staff ranks,
+  races, or classes in the LPC code, check whether the matching page here
   needs updating too - it will not update itself.
 - `chargen.html` in particular was rewritten to match the 2026-07-14
   plain-string chargen input model (see CLAUDE.md's "Recent session work

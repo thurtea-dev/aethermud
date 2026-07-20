@@ -22,13 +22,13 @@
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>advance</code></td><td>Force-advance a player N levels, rerolling HP/SDC/PPE/ISP gains.</td></tr>
     <tr><td><code>give</code></td><td>Clone an object by path and hand it to an online player.</td></tr>
-    <tr><td><code>grantrace</code> / <code>grantskills</code></td><td>Backfill race spells and psionics, or OCC skills, on a player. Post-hoc fix tools.</td></tr>
-    <tr><td><code>repairchar</code></td><td>Diagnose or repair a broken character: dump chargen flags and stats; <code>clear</code> / <code>finish</code> stuck creation state; <code>reroll</code> racial attributes; <code>skills</code> to re-grant the OCC package; <code>setstat</code> for one attribute. Online player required. Does not replace <code>setocc</code> / <code>setrcc</code>.</td></tr>
+    <tr><td><code>grantrace</code> / <code>grantskills</code></td><td>Backfill race spells and psionics, or class skills, on a player. Post-hoc fix tools.</td></tr>
+    <tr><td><code>repairchar</code></td><td>Diagnose or repair a broken character: dump chargen flags and stats; <code>clear</code> / <code>finish</code> stuck creation state; <code>reroll</code> racial attributes; <code>skills</code> to re-grant the class package; <code>setstat</code> for one attribute. Online player required. Does not replace <code>setocc</code> / <code>setrcc</code>.</td></tr>
     <tr><td><code>fixdemote</code></td><td>One-time repair for an offline player demoted before the offline restore path existed. Re-runs the full demotion restore on a named save.</td></tr>
     <tr><td><code>sever</code></td><td>Narratively sever or restore a limb on an online player for RP (cybernetic stories, scars). Syntax: <code>sever &lt;player&gt; &lt;limb&gt;</code>, <code>sever &lt;player&gt; restore &lt;limb&gt;</code>, or <code>sever &lt;player&gt; list</code>. Does not deal combat damage.</td></tr>
     <tr><td><code>makechar</code></td><td>Rebuild an online player without interactive chargen: <code>makechar &lt;player&gt; &lt;race&gt; &lt;occ|none&gt; &lt;alignment&gt;</code> with optional <code>zone=</code>, <code>gear=default|none</code>, <code>skills=</code>, <code>spells=</code>, <code>psi=</code>. Uses the same package grants as chargen finish.</td></tr>
     <tr><td><code>setfaction</code></td><td>Set or clear a player's faction membership.</td></tr>
-    <tr><td><code>setocc</code> / <code>setrcc</code></td><td>Set a player's OCC, or set their race and re-roll race stats.</td></tr>
+    <tr><td><code>setocc</code> / <code>setrcc</code></td><td>Set a player's class, or set their race and re-roll race stats.</td></tr>
     <tr><td><code>setrole</code></td><td>Set a wizard's position and role tag: admin, domain, coding, or rp.</td></tr>
     <tr><td><code>setskill</code></td><td>Set a named Rifts skill percentage on a player.</td></tr>
     <tr><td><code>stat</code></td><td>Dump a full stat block for an online player.</td></tr>
@@ -89,7 +89,7 @@
   <table>
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>grant</code> / <code>revoke</code></td><td>Grant or revoke an RP title.</td></tr>
-    <tr><td><code>godling</code></td><td>Apply the Godling race and RCC package to a player.</td></tr>
+    <tr><td><code>wizard</code></td><td>Apply the Wizard race and RCC package to a player (admin race).</td></tr>
     <tr><td><code>link</code> / <code>unlink</code></td><td>Link character names together as one player's alts, or remove a link.</td></tr>
     <tr><td><code>elections</code></td><td>Start or end elections, or set the next election date.</td></tr>
     <tr><td><code>economy</code></td><td>Add a currency, or change an existing one's rate, inflation, or weight.</td></tr>

@@ -425,7 +425,7 @@ tr:nth-child(even) td { background: var(--bg-raised); }
 .status--progress { color: #cfb87f; border-color: #7a6a3a; }
 .status--planned { color: var(--text-muted); }
 
-/* Compact name lists (races.html, occs.html) */
+/* Compact name lists (races.html, classes.html) */
 
 .name-list {
   columns: 2;

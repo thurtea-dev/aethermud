@@ -5,3 +5,13 @@ Redirect 301 /server.html /index.html
 Redirect 301 /client.html /play.html
 # webclient.html is a live page again (browser client, 2026-07-18);
 # its legacy redirect to play.html is retired.
+Redirect 301 /occs.html /classes.html
+
+# Staff-only pages (Basic Auth). Password file lives OUTSIDE the docroot.
+# Generate on the VPS only - never commit .htpasswd to git.
+<FilesMatch "^(qcs|apprentice|coding|domain|roleplay|admin|admin-commands|staff-toolkit)\.html$">
+  AuthType Basic
+  AuthName "AetherMUD Staff"
+  AuthUserFile /home/thurtea/domains/aethermud.com/.htpasswd
+  Require valid-user
+</FilesMatch>
