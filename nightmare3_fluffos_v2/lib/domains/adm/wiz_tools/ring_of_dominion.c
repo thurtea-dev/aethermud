@@ -37,6 +37,7 @@ void create() {
     );
     set_type("ring");
     set_property("rifts_slot", "admin_ring");
+    set_limbs( ({ "right hand" }) );
     set_ac(0);
     set_mass(1);
     set_value(0);
