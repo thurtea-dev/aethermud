@@ -1,0 +1,6083 @@
+.
+├── docs
+│   ├── reference
+│   │   ├── information.md
+│   │   ├── invocations.md
+│   │   ├── LLM_BREADCRUMB.md
+│   │   ├── README.md
+│   │   └── reference-chart.md
+│   ├── admin-thurtea-checklist.md
+│   ├── ASSESSMENT.md
+│   ├── DEVELOPMENT.md
+│   ├── INSTALL.md
+│   ├── legacy-riftsmud-reference.md
+│   ├── lib-cleanup-manifest.md
+│   ├── LLM_BREADCRUMB.md
+│   ├── mercenary-groups-plan.md
+│   ├── playtest-checklist.md
+│   ├── playtest-checklist-players.md
+│   ├── playtest-checklist-wizards.md
+│   ├── playtest-roster.md
+│   ├── PUBLISHING.md
+│   ├── README.md
+│   ├── RUNNING.md
+│   ├── SHARING.md
+│   ├── starting-equipment-audit.md
+│   ├── STYLE.md
+│   └── zone-expansion-plan.md
+├── internal
+│   ├── install-aethermud.md
+│   ├── LLM_BREADCRUMB.md
+│   ├── Playtest-list.md
+│   ├── README.md
+│   ├── report.md
+│   ├── riftsmud-memories.md
+│   ├── tomorrow.md
+│   └── TRANSFER-CHECKLIST.md
+├── nightmare3_fluffos_v2
+│   ├── attic
+│   │   ├── cmds
+│   │   │   ├── database
+│   │   │   │   └── soul.db
+│   │   │   ├── mortal
+│   │   │   │   └── _start.c
+│   │   │   └── soul
+│   │   │       └── atmos.c
+│   │   ├── domains
+│   │   │   ├── Examples
+│   │   │   │   ├── doc
+│   │   │   │   ├── etc
+│   │   │   │   │   ├── chest.c
+│   │   │   │   │   ├── flu.c
+│   │   │   │   │   ├── match.c
+│   │   │   │   │   └── torch.c
+│   │   │   │   ├── room
+│   │   │   │   │   ├── search.c
+│   │   │   │   │   ├── simple.c
+│   │   │   │   │   └── simple_search.c
+│   │   │   │   ├── virtual
+│   │   │   │   │   ├── exaA
+│   │   │   │   │   │   └── daemon.c
+│   │   │   │   │   ├── exaB
+│   │   │   │   │   │   ├── daemon.c
+│   │   │   │   │   │   ├── defines.h
+│   │   │   │   │   │   ├── descs.df
+│   │   │   │   │   │   ├── exceptions.c
+│   │   │   │   │   │   ├── exits.db
+│   │   │   │   │   │   └── terrs.db
+│   │   │   │   │   ├── exaC
+│   │   │   │   │   ├── exaA_server.c
+│   │   │   │   │   ├── exaB_server.c
+│   │   │   │   │   ├── explanation.t
+│   │   │   │   │   ├── README
+│   │   │   │   │   ├── start.c
+│   │   │   │   │   └── virtual
+│   │   │   │   └── weapon
+│   │   │   │       ├── curse_sword.c
+│   │   │   │       └── skill_sword.c
+│   │   │   └── Praxis
+│   │   │       └── standardOld
+│   │   │           ├── adv_inner.c
+│   │   │           ├── adv_main.c
+│   │   │           ├── alley1.c
+│   │   │           ├── alley2.c
+│   │   │           ├── app_room.c
+│   │   │           ├── arch.c
+│   │   │           ├── bank.c
+│   │   │           ├── bank.c~
+│   │   │           ├── bank_vault.c
+│   │   │           ├── booth.c
+│   │   │           ├── branches.c
+│   │   │           ├── building.c
+│   │   │           ├── cache.c
+│   │   │           ├── chapel.c
+│   │   │           ├── cleric_hall.c
+│   │   │           ├── cleric_join.c
+│   │   │           ├── cleric_vote.c
+│   │   │           ├── council.c
+│   │   │           ├── council_hall.c
+│   │   │           ├── council_vote.c
+│   │   │           ├── court_room.c
+│   │   │           ├── crypt.c
+│   │   │           ├── dump.c
+│   │   │           ├── east_road1.c
+│   │   │           ├── east_road2.c
+│   │   │           ├── east_road3.c
+│   │   │           ├── e_boc_la1.c
+│   │   │           ├── e_boc_la2.c
+│   │   │           ├── e_boc_la3.c
+│   │   │           ├── farm.c
+│   │   │           ├── fighter_hall.c
+│   │   │           ├── fighter_join.c
+│   │   │           ├── fighter_vote.c
+│   │   │           ├── forest1.c
+│   │   │           ├── forest2.c
+│   │   │           ├── forest3.c
+│   │   │           ├── freezer.c
+│   │   │           ├── hall2.c
+│   │   │           ├── hall3.c
+│   │   │           ├── hall4.c
+│   │   │           ├── hall5.c
+│   │   │           ├── hall.c
+│   │   │           ├── highway1.c
+│   │   │           ├── highway2.c
+│   │   │           ├── highway3.bak
+│   │   │           ├── highway3.c
+│   │   │           ├── hm_chamber.c
+│   │   │           ├── hole.c
+│   │   │           ├── hospital.c
+│   │   │           ├── hotel.c
+│   │   │           ├── house.c
+│   │   │           ├── idle_storage.c
+│   │   │           ├── idle_supply.c
+│   │   │           ├── immortal_hall.c
+│   │   │           ├── inn101.c
+│   │   │           ├── inn102.c
+│   │   │           ├── inn103.c
+│   │   │           ├── inn104.c
+│   │   │           ├── inn105.c
+│   │   │           ├── inn106.c
+│   │   │           ├── inn107.c
+│   │   │           ├── inn108.c
+│   │   │           ├── inn109.c
+│   │   │           ├── inn110.c
+│   │   │           ├── jungle.c
+│   │   │           ├── kataan_hall.c
+│   │   │           ├── kataan_join.c
+│   │   │           ├── kataan_vote.c
+│   │   │           ├── law.c
+│   │   │           ├── library.c
+│   │   │           ├── locked.c
+│   │   │           ├── lpc_inner.c
+│   │   │           ├── lpmud_room.c
+│   │   │           ├── mage_hall.bak
+│   │   │           ├── mage_hall.c
+│   │   │           ├── mage_join.c
+│   │   │           ├── mage_vote.c
+│   │   │           ├── medium.c
+│   │   │           ├── monastery.c
+│   │   │           ├── monk_hall.c
+│   │   │           ├── monk_join.c
+│   │   │           ├── monk_vote.c
+│   │   │           ├── mudlib.c
+│   │   │           ├── n_centre1.c
+│   │   │           ├── n_centre2.c
+│   │   │           ├── ombud_hall.c
+│   │   │           ├── party.c
+│   │   │           ├── pass1.c
+│   │   │           ├── pass2.c
+│   │   │           ├── pass3.c
+│   │   │           ├── pier1.c
+│   │   │           ├── pit.c
+│   │   │           ├── planning_room.c
+│   │   │           ├── post.c
+│   │   │           ├── project_room.c
+│   │   │           ├── pub.c
+│   │   │           ├── quest_room.c
+│   │   │           ├── rain_forest.c
+│   │   │           ├── realty.c
+│   │   │           ├── restaurant.c
+│   │   │           ├── rogue_hall.c
+│   │   │           ├── rogue_join.c
+│   │   │           ├── rogue_vote.c
+│   │   │           ├── roots.c
+│   │   │           ├── sage_room.c
+│   │   │           ├── s_centre1.c
+│   │   │           ├── s_centre2.c
+│   │   │           ├── s_centre3.c
+│   │   │           ├── s_centre4.c
+│   │   │           ├── setter.c
+│   │   │           ├── sewer.c
+│   │   │           ├── sewer_ent.c
+│   │   │           ├── sheriff.c
+│   │   │           ├── spider_pit.c
+│   │   │           ├── square.c
+│   │   │           ├── square.c~
+│   │   │           ├── stairs.c
+│   │   │           ├── storage.c
+│   │   │           ├── sun1.c
+│   │   │           ├── sun2.c
+│   │   │           ├── supply2.c
+│   │   │           ├── supply.c
+│   │   │           ├── torture_room.c
+│   │   │           ├── town_hall.c
+│   │   │           ├── trunk.c
+│   │   │           ├── unnamed1.c
+│   │   │           ├── void.c
+│   │   │           ├── wall.c
+│   │   │           ├── w_boc_la1.c
+│   │   │           ├── w_boc_la2.c
+│   │   │           ├── w_boc_la3.c
+│   │   │           ├── west_road1.c
+│   │   │           ├── west_road2.c
+│   │   │           ├── west_road3.c
+│   │   │           ├── wild1.c
+│   │   │           ├── wild2.backup
+│   │   │           ├── wild2.c
+│   │   │           └── yard.c
+│   │   ├── LLM_BREADCRUMB.md
+│   │   └── README.md
+│   ├── bin
+│   │   ├── addr_server
+│   │   ├── driver
+│   │   ├── LLM_BREADCRUMB.md
+│   │   ├── mudos.cfg
+│   │   ├── mudos.cfg.example
+│   │   ├── mudos.cfg.win32
+│   │   ├── portbind
+│   │   └── README.md
+│   ├── fluffos-2.9-ds2.08
+│   │   ├── ChangeLog.old
+│   │   │   ├── 0.8.gz
+│   │   │   ├── 0.9-0.9.13.gz
+│   │   │   ├── 0.9.14.gz
+│   │   │   ├── 0.9.15.gz
+│   │   │   ├── 0.9.16.gz
+│   │   │   ├── 0.9.17.gz
+│   │   │   ├── 0.9.18.gz
+│   │   │   ├── 0.9.19.gz
+│   │   │   └── ChangeLog.v20.gz
+│   │   ├── compat
+│   │   │   ├── simuls
+│   │   │   │   ├── apply.c
+│   │   │   │   ├── #break_string.c#
+│   │   │   │   ├── break_string.c
+│   │   │   │   ├── dump_socket_status.c
+│   │   │   │   ├── parse_command.c
+│   │   │   │   ├── process_string.c
+│   │   │   │   └── tail.c
+│   │   │   ├── fixstatic
+│   │   │   └── parser_error.c
+│   │   ├── include
+│   │   │   ├── function.h
+│   │   │   ├── localtime.h
+│   │   │   ├── origin.h
+│   │   │   ├── parser_error.h
+│   │   │   ├── runtime_config.h
+│   │   │   ├── semantic.cache
+│   │   │   ├── socket_err.h
+│   │   │   └── type.h
+│   │   ├── obj
+│   │   │   ├── add_action.o
+│   │   │   ├── addr_server.o
+│   │   │   ├── applies_table.o
+│   │   │   ├── array.o
+│   │   │   ├── avltree.o
+│   │   │   ├── backend.o
+│   │   │   ├── binaries.o
+│   │   │   ├── buffer.o
+│   │   │   ├── call_out.o
+│   │   │   ├── class.o
+│   │   │   ├── comm.o
+│   │   │   ├── compiler.o
+│   │   │   ├── contrib.o
+│   │   │   ├── crc32.o
+│   │   │   ├── crypt.o
+│   │   │   ├── debug.o
+│   │   │   ├── develop.o
+│   │   │   ├── disassembler.o
+│   │   │   ├── dumpstat.o
+│   │   │   ├── edit_source.o
+│   │   │   ├── ed.o
+│   │   │   ├── efuns_main.o
+│   │   │   ├── efuns_port.o
+│   │   │   ├── eoperators.o
+│   │   │   ├── eval.o
+│   │   │   ├── file.o
+│   │   │   ├── fliconv.o
+│   │   │   ├── function.o
+│   │   │   ├── generate.o
+│   │   │   ├── grammar.tab.o
+│   │   │   ├── hash.o
+│   │   │   ├── icode.o
+│   │   │   ├── interpret.o
+│   │   │   ├── lex.o
+│   │   │   ├── main.o
+│   │   │   ├── make_func.tab.o
+│   │   │   ├── malloc.o
+│   │   │   ├── mallocwrapper.o
+│   │   │   ├── mapping.o
+│   │   │   ├── master.o
+│   │   │   ├── math.o
+│   │   │   ├── matrix.o
+│   │   │   ├── md.o
+│   │   │   ├── mudlib_stats.o
+│   │   │   ├── object.o
+│   │   │   ├── otable.o
+│   │   │   ├── parse.o
+│   │   │   ├── parser.o
+│   │   │   ├── portbind.o
+│   │   │   ├── port.o
+│   │   │   ├── program.o
+│   │   │   ├── qsort.o
+│   │   │   ├── rc.o
+│   │   │   ├── reclaim.o
+│   │   │   ├── regexp.o
+│   │   │   ├── replace_program.o
+│   │   │   ├── scratchpad.o
+│   │   │   ├── simulate.o
+│   │   │   ├── simul_efun.o
+│   │   │   ├── socket_ctrl.o
+│   │   │   ├── socket_efuns.o
+│   │   │   ├── socket_err.o
+│   │   │   ├── sockets.o
+│   │   │   ├── sprintf.o
+│   │   │   ├── stralloc.o
+│   │   │   ├── trees.o
+│   │   │   └── uvalarm.o
+│   │   ├── packages
+│   │   │   ├── async.c
+│   │   │   ├── async.h
+│   │   │   ├── async_spec.c
+│   │   │   ├── compress.c
+│   │   │   ├── compress_spec.c
+│   │   │   ├── contrib.c
+│   │   │   ├── contrib_spec.c
+│   │   │   ├── db.c
+│   │   │   ├── db.h
+│   │   │   ├── db_spec.c
+│   │   │   ├── develop.c
+│   │   │   ├── develop_spec.c
+│   │   │   ├── dwlib.c
+│   │   │   ├── dwlib_spec.c
+│   │   │   ├── external.c
+│   │   │   ├── external_spec.c
+│   │   │   ├── GNUmakefile
+│   │   │   ├── GNUmakefile.pre
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.master
+│   │   │   ├── Makefile.pre
+│   │   │   ├── math.c
+│   │   │   ├── math_spec.c
+│   │   │   ├── matrix.c
+│   │   │   ├── matrix.h
+│   │   │   ├── matrix_spec.c
+│   │   │   ├── mudlib_stats.c
+│   │   │   ├── mudlib_stats.h
+│   │   │   ├── mudlib_stats_spec.c
+│   │   │   ├── packages
+│   │   │   ├── packages.a
+│   │   │   ├── parser.c
+│   │   │   ├── parser.h
+│   │   │   ├── parser_spec.c
+│   │   │   ├── readme
+│   │   │   ├── sockets.c
+│   │   │   ├── sockets_spec.c
+│   │   │   ├── uids.c
+│   │   │   ├── uids.h
+│   │   │   └── uids_spec.c
+│   │   ├── testsuite
+│   │   │   ├── clone
+│   │   │   │   ├── login.c
+│   │   │   │   ├── readme
+│   │   │   │   └── user.c
+│   │   │   ├── command
+│   │   │   │   ├── codefor.c
+│   │   │   │   ├── dest.c
+│   │   │   │   ├── ed.c
+│   │   │   │   ├── eval.c
+│   │   │   │   ├── quit.c
+│   │   │   │   ├── readme
+│   │   │   │   ├── rm.c
+│   │   │   │   ├── say.c
+│   │   │   │   ├── shutdown.c
+│   │   │   │   ├── speed.c
+│   │   │   │   ├── tests.c
+│   │   │   │   ├── update.c
+│   │   │   │   └── who.c
+│   │   │   ├── data
+│   │   │   │   └── readme
+│   │   │   ├── etc
+│   │   │   │   ├── config.test
+│   │   │   │   └── motd
+│   │   │   ├── include
+│   │   │   │   ├── command.h
+│   │   │   │   ├── config.h
+│   │   │   │   ├── globals.h
+│   │   │   │   ├── lpctypes.h
+│   │   │   │   ├── readme
+│   │   │   │   └── tests.h
+│   │   │   ├── inherit
+│   │   │   │   ├── master
+│   │   │   │   │   └── valid.c
+│   │   │   │   ├── base.c
+│   │   │   │   ├── clean_up.c
+│   │   │   │   ├── readme
+│   │   │   │   └── tests.c
+│   │   │   ├── log
+│   │   │   │   ├── author_stats
+│   │   │   │   ├── domain_stats
+│   │   │   │   └── readme
+│   │   │   ├── single
+│   │   │   │   ├── tests
+│   │   │   │   │   ├── compiler
+│   │   │   │   │   │   ├── fail
+│   │   │   │   │   │   ├── at_block.c
+│   │   │   │   │   │   ├── constant_expr.c
+│   │   │   │   │   │   └── succeed.c
+│   │   │   │   │   ├── efuns
+│   │   │   │   │   │   ├── add_action.c
+│   │   │   │   │   │   ├── add_light.c
+│   │   │   │   │   │   ├── all_inventory.c
+│   │   │   │   │   │   ├── allocate_buffer.c
+│   │   │   │   │   │   ├── allocate.c
+│   │   │   │   │   │   ├── allocate_mapping.c
+│   │   │   │   │   │   ├── badshad.c
+│   │   │   │   │   │   ├── bind.c
+│   │   │   │   │   │   ├── break_string.c
+│   │   │   │   │   │   ├── cache_stats.c
+│   │   │   │   │   │   ├── call_other.c
+│   │   │   │   │   │   ├── call_out.c
+│   │   │   │   │   │   ├── call_stack.c
+│   │   │   │   │   │   ├── capitalize.c
+│   │   │   │   │   │   ├── children.c
+│   │   │   │   │   │   ├── clear_bit.c
+│   │   │   │   │   │   ├── clone_object.c
+│   │   │   │   │   │   ├── clonep.c
+│   │   │   │   │   │   ├── command.c
+│   │   │   │   │   │   ├── cp.c
+│   │   │   │   │   │   ├── crc32.c
+│   │   │   │   │   │   ├── ctime.c
+│   │   │   │   │   │   ├── deep_inherit_list.c
+│   │   │   │   │   │   ├── deep_inventory.c
+│   │   │   │   │   │   ├── destruct.c
+│   │   │   │   │   │   ├── disable_commands.c
+│   │   │   │   │   │   ├── dumpallobj.c
+│   │   │   │   │   │   ├── ed.c
+│   │   │   │   │   │   ├── enable_wizard.c
+│   │   │   │   │   │   ├── environment.c
+│   │   │   │   │   │   ├── error.c
+│   │   │   │   │   │   ├── exec.c
+│   │   │   │   │   │   ├── explode.c
+│   │   │   │   │   │   ├── file_name.c
+│   │   │   │   │   │   ├── file_size.c
+│   │   │   │   │   │   ├── filter.c
+│   │   │   │   │   │   ├── find_call_out.c
+│   │   │   │   │   │   ├── find_living.c
+│   │   │   │   │   │   ├── find_object.c
+│   │   │   │   │   │   ├── find_player.c
+│   │   │   │   │   │   ├── function_exists.c
+│   │   │   │   │   │   ├── functionp.c
+│   │   │   │   │   │   ├── function_profile.c
+│   │   │   │   │   │   ├── generate_source.c
+│   │   │   │   │   │   ├── get_char.c
+│   │   │   │   │   │   ├── get_config.c
+│   │   │   │   │   │   ├── get_dir.c
+│   │   │   │   │   │   ├── goodshad.c
+│   │   │   │   │   │   ├── has_errors.c
+│   │   │   │   │   │   ├── implode.c
+│   │   │   │   │   │   ├── in_edit.c
+│   │   │   │   │   │   ├── inh0.c
+│   │   │   │   │   │   ├── inh1.c
+│   │   │   │   │   │   ├── inh2.c
+│   │   │   │   │   │   ├── inherit_list.c
+│   │   │   │   │   │   ├── inherits.c
+│   │   │   │   │   │   ├── input_to.c
+│   │   │   │   │   │   ├── interactive.c
+│   │   │   │   │   │   ├── intp.c
+│   │   │   │   │   │   ├── keys.c
+│   │   │   │   │   │   ├── light.c
+│   │   │   │   │   │   ├── living.c
+│   │   │   │   │   │   ├── livings.c
+│   │   │   │   │   │   ├── lower_case.c
+│   │   │   │   │   │   ├── malloc_status.c
+│   │   │   │   │   │   ├── map.c
+│   │   │   │   │   │   ├── map_delete.c
+│   │   │   │   │   │   ├── mapp.c
+│   │   │   │   │   │   ├── master.c
+│   │   │   │   │   │   ├── match_path.c
+│   │   │   │   │   │   ├── member_array.c
+│   │   │   │   │   │   ├── message.c
+│   │   │   │   │   │   ├── mkdir.c
+│   │   │   │   │   │   ├── move_object.c
+│   │   │   │   │   │   ├── mud_status.c
+│   │   │   │   │   │   ├── notify_fail.c
+│   │   │   │   │   │   ├── nullp.c
+│   │   │   │   │   │   ├── objectp.c
+│   │   │   │   │   │   ├── opcprof.c
+│   │   │   │   │   │   ├── origin.c
+│   │   │   │   │   │   ├── pointerp.c
+│   │   │   │   │   │   ├── present.c
+│   │   │   │   │   │   ├── previous_object.c
+│   │   │   │   │   │   ├── printf.c
+│   │   │   │   │   │   ├── query_ed_mode.c
+│   │   │   │   │   │   ├── query_idle.c
+│   │   │   │   │   │   ├── query_ip_name.c
+│   │   │   │   │   │   ├── query_ip_number.c
+│   │   │   │   │   │   ├── query_load_average.c
+│   │   │   │   │   │   ├── query_privs.c
+│   │   │   │   │   │   ├── query_snoop.c
+│   │   │   │   │   │   ├── query_snooping.c
+│   │   │   │   │   │   ├── query_verb.c
+│   │   │   │   │   │   ├── random.c
+│   │   │   │   │   │   ├── read_buffer.c
+│   │   │   │   │   │   ├── read_bytes.c
+│   │   │   │   │   │   ├── read_file.c
+│   │   │   │   │   │   ├── readme
+│   │   │   │   │   │   ├── receive.c
+│   │   │   │   │   │   ├── reg_assoc.c
+│   │   │   │   │   │   ├── regexp.c
+│   │   │   │   │   │   ├── remove_action.c
+│   │   │   │   │   │   ├── remove_call_out.c
+│   │   │   │   │   │   ├── rename.c
+│   │   │   │   │   │   ├── replace_string.c
+│   │   │   │   │   │   ├── restore_object.c
+│   │   │   │   │   │   ├── restore_variable.c
+│   │   │   │   │   │   ├── rm.c
+│   │   │   │   │   │   ├── rmdir.c
+│   │   │   │   │   │   ├── save_object.c
+│   │   │   │   │   │   ├── save_variable.c
+│   │   │   │   │   │   ├── say.c
+│   │   │   │   │   │   ├── set_bit.c
+│   │   │   │   │   │   ├── set_debug_level.c
+│   │   │   │   │   │   ├── set_heart_beat.c
+│   │   │   │   │   │   ├── set_hide.c
+│   │   │   │   │   │   ├── set_light.c
+│   │   │   │   │   │   ├── set_living_name.c
+│   │   │   │   │   │   ├── set_privs.c
+│   │   │   │   │   │   ├── shadow.c
+│   │   │   │   │   │   ├── shutdown.c
+│   │   │   │   │   │   ├── sizeof.c
+│   │   │   │   │   │   ├── snoop.c
+│   │   │   │   │   │   ├── sprintf.c
+│   │   │   │   │   │   ├── sscanf.c
+│   │   │   │   │   │   ├── talker.c
+│   │   │   │   │   │   ├── to_float.c
+│   │   │   │   │   │   ├── to_int.c
+│   │   │   │   │   │   ├── unloaded.c
+│   │   │   │   │   │   ├── users.c
+│   │   │   │   │   │   └── values.c
+│   │   │   │   │   └── operators
+│   │   │   │   │       └── range.c
+│   │   │   │   ├── inh.c
+│   │   │   │   ├── master.c
+│   │   │   │   ├── readme
+│   │   │   │   ├── simul_efun.c
+│   │   │   │   └── void.c
+│   │   │   ├── u
+│   │   │   │   └── readme
+│   │   │   ├── readme
+│   │   │   └── test_control.c
+│   │   ├── Win32
+│   │   │   ├── ar.c
+│   │   │   ├── configure.h
+│   │   │   ├── cp.bat
+│   │   │   ├── mv.bat
+│   │   │   ├── rm.bat
+│   │   │   └── touch.c
+│   │   ├── windows
+│   │   │   ├── addr_server.mak
+│   │   │   ├── clean.bat
+│   │   │   ├── configure.h
+│   │   │   ├── edit_source.mak
+│   │   │   ├── MudOS.mak
+│   │   │   ├── README.win32
+│   │   │   ├── step1.bat
+│   │   │   ├── stepdbg.bat
+│   │   │   └── steprel.bat
+│   │   ├── 1.out
+│   │   ├── add_action.c
+│   │   ├── add_action.h
+│   │   ├── addr_server
+│   │   ├── addr_server.c
+│   │   ├── addr_server.h
+│   │   ├── applies
+│   │   ├── applies.h
+│   │   ├── applies_table.c
+│   │   ├── arch.h
+│   │   ├── array.c
+│   │   ├── array.h
+│   │   ├── Artistic.README
+│   │   ├── avltree.c
+│   │   ├── avltree.h
+│   │   ├── backend.c
+│   │   ├── backend.h
+│   │   ├── binaries.c
+│   │   ├── binaries.h
+│   │   ├── bsdmalloc.c
+│   │   ├── bsdmalloc.h
+│   │   ├── buffer.c
+│   │   ├── buffer.h
+│   │   ├── Bugs
+│   │   ├── build.MudOS
+│   │   ├── buildMudOS.bat
+│   │   ├── call_out.c
+│   │   ├── call_out.h
+│   │   ├── cc.h
+│   │   ├── ChangeLog
+│   │   ├── ChangeLog.alpha
+│   │   ├── ChangeLog.beta
+│   │   ├── ChangeLog.fluffos
+│   │   ├── ChangeLog.fluffos-2.x
+│   │   ├── class.c
+│   │   ├── class.h
+│   │   ├── comm.c
+│   │   ├── comm.h
+│   │   ├── compiler.c
+│   │   ├── compiler.h
+│   │   ├── comptest
+│   │   ├── comptest.c
+│   │   ├── Config.example
+│   │   ├── config.h
+│   │   ├── configuration
+│   │   ├── configure
+│   │   ├── configure.h
+│   │   ├── Copyright
+│   │   ├── crc32.c
+│   │   ├── crc32.h
+│   │   ├── crctab.h
+│   │   ├── Credits.LPmud
+│   │   ├── Credits.MudOS
+│   │   ├── crypt.c
+│   │   ├── crypt.h
+│   │   ├── debug.c
+│   │   ├── debug.h
+│   │   ├── debugmalloc.c
+│   │   ├── debugmalloc.h
+│   │   ├── Dependencies
+│   │   ├── diff2.txt
+│   │   ├── disassembler.c
+│   │   ├── driver
+│   │   ├── driver.old
+│   │   ├── dumpstat.c
+│   │   ├── dumpstat.h
+│   │   ├── ed.c
+│   │   ├── ed.h
+│   │   ├── edit_source
+│   │   ├── edit_source.c
+│   │   ├── edit_source.h
+│   │   ├── efunctions.h
+│   │   ├── efun_defs.c
+│   │   ├── efun_protos.h
+│   │   ├── efuns_incl.h
+│   │   ├── efuns_main.c
+│   │   ├── efuns_main.h
+│   │   ├── efuns_port.c
+│   │   ├── eoperators.c
+│   │   ├── eoperators.h
+│   │   ├── eval.c
+│   │   ├── eval.h
+│   │   ├── Exit_Codes
+│   │   ├── file.c
+│   │   ├── file.h
+│   │   ├── file_incl.h
+│   │   ├── files
+│   │   ├── fliconv.c
+│   │   ├── fliconv.h
+│   │   ├── func_spec.c
+│   │   ├── func_spec.cpp
+│   │   ├── function.c
+│   │   ├── function.h
+│   │   ├── generate.c
+│   │   ├── generate.h
+│   │   ├── GNUmakefile
+│   │   ├── GNUmakefile.debug
+│   │   ├── GNUmakefile.in
+│   │   ├── GNUmakefile.keep
+│   │   ├── gnumalloc.c
+│   │   ├── gnumalloc.h
+│   │   ├── grammar.tab.c
+│   │   ├── grammar.tab.h
+│   │   ├── grammar.y
+│   │   ├── grammar.y.pre
+│   │   ├── hash.c
+│   │   ├── hash.h
+│   │   ├── icode.c
+│   │   ├── icode.h
+│   │   ├── Ideas
+│   │   ├── INSTALL
+│   │   ├── insttest
+│   │   ├── interpret.c
+│   │   ├── interpret.h
+│   │   ├── IT_CRASHED
+│   │   ├── lex.c
+│   │   ├── lex.h
+│   │   ├── lint.h
+│   │   ├── LLM_BREADCRUMB.md
+│   │   ├── local_options
+│   │   ├── local_options.ds
+│   │   ├── local_options.dw
+│   │   ├── local_options.dwclone
+│   │   ├── local_options.dw_orig
+│   │   ├── local_options.generic
+│   │   ├── local_options.lima
+│   │   ├── local_options.lpuni
+│   │   ├── local_options.merentha
+│   │   ├── local_options.nm3
+│   │   ├── local_options.skylib
+│   │   ├── local_options.test
+│   │   ├── local_options.tmi2
+│   │   ├── lpc.h
+│   │   ├── lpc_incl.h
+│   │   ├── macros.h
+│   │   ├── main.c
+│   │   ├── main.h
+│   │   ├── Makefile
+│   │   ├── Makefile.in
+│   │   ├── Makefile.in.pre
+│   │   ├── make_func.h
+│   │   ├── make_func.tab.c
+│   │   ├── make_func.y
+│   │   ├── make_malloc.c
+│   │   ├── malloc.c
+│   │   ├── malloc.h
+│   │   ├── malloc_incl.h
+│   │   ├── mallocwrapper.c
+│   │   ├── mapping.c
+│   │   ├── mapping.h
+│   │   ├── master.c
+│   │   ├── master.h
+│   │   ├── md.c
+│   │   ├── md.h
+│   │   ├── mmalloc.c
+│   │   ├── my_malloc.h
+│   │   ├── network_incl.h
+│   │   ├── NMakefile.in
+│   │   ├── NMakefile.in.pre
+│   │   ├── object.c
+│   │   ├── object.h
+│   │   ├── opc.h
+│   │   ├── opcodes.h
+│   │   ├── op_spec.c
+│   │   ├── option_defs.c
+│   │   ├── options.h
+│   │   ├── options_incl.h
+│   │   ├── origin.h
+│   │   ├── otable.c
+│   │   ├── otable.h
+│   │   ├── parse.c
+│   │   ├── parse.h
+│   │   ├── parse_trees
+│   │   ├── patchlevel.h
+│   │   ├── Performance
+│   │   ├── plainwrapper.c
+│   │   ├── Platforms
+│   │   ├── portability.h
+│   │   ├── portbind
+│   │   ├── portbind.c
+│   │   ├── port.c
+│   │   ├── port.h
+│   │   ├── preprocess.c
+│   │   ├── preprocess.h
+│   │   ├── program.c
+│   │   ├── program.h
+│   │   ├── qsort.c
+│   │   ├── qsort.h
+│   │   ├── rc.c
+│   │   ├── rc.h
+│   │   ├── README
+│   │   ├── README.md
+│   │   ├── reclaim.c
+│   │   ├── reclaim.h
+│   │   ├── regexp.c
+│   │   ├── regexp.h
+│   │   ├── replace_program.c
+│   │   ├── replace_program.h
+│   │   ├── scratchpad.c
+│   │   ├── scratchpad.h
+│   │   ├── simulate.c
+│   │   ├── simulate.h
+│   │   ├── simul_efun.c
+│   │   ├── simul_efun.h
+│   │   ├── smalloc.c
+│   │   ├── smalloc.h
+│   │   ├── socket_ctrl.c
+│   │   ├── socket_ctrl.h
+│   │   ├── socket_efuns.c
+│   │   ├── socket_efuns.h
+│   │   ├── socket_err.c
+│   │   ├── socket_err.h
+│   │   ├── spec.h
+│   │   ├── sprintf.c
+│   │   ├── sprintf.h
+│   │   ├── std.h
+│   │   ├── std_incl.h
+│   │   ├── stralloc.c
+│   │   ├── stralloc.h
+│   │   ├── strfuncs.c
+│   │   ├── sysmalloc.c
+│   │   ├── system_libs
+│   │   ├── telnet.h
+│   │   ├── trees.c
+│   │   ├── trees.h
+│   │   ├── uvalarm.c
+│   │   ├── uvalarm.h
+│   │   ├── Version
+│   │   ├── wrappedmalloc.c
+│   │   ├── wrappedmalloc.h
+│   │   └── y.tab.c
+│   ├── lib
+│   │   ├── adm
+│   │   ├── cmds
+│   │   │   ├── adm
+│   │   │   │   ├── _advance.c
+│   │   │   │   ├── _archshout.c
+│   │   │   │   ├── _bench.c
+│   │   │   │   ├── _broadcast.c
+│   │   │   │   ├── _cache.c
+│   │   │   │   ├── _channel.c
+│   │   │   │   ├── _commands.c
+│   │   │   │   ├── _cref.c
+│   │   │   │   ├── _dumpallobj.c
+│   │   │   │   ├── _end.c
+│   │   │   │   ├── _fdinfo.c
+│   │   │   │   ├── _fixdemote.c
+│   │   │   │   ├── _force.c
+│   │   │   │   ├── _give.c
+│   │   │   │   ├── _goto.c
+│   │   │   │   ├── _grantrace.c
+│   │   │   │   ├── _grantskills.c
+│   │   │   │   ├── _haven.c
+│   │   │   │   ├── _makechar.c
+│   │   │   │   ├── _makewiz.c
+│   │   │   │   ├── _monitor.c
+│   │   │   │   ├── _opcprof.c
+│   │   │   │   ├── _playerwipe.c
+│   │   │   │   ├── _repairchar.c
+│   │   │   │   ├── _setfaction.c
+│   │   │   │   ├── _setocc.c
+│   │   │   │   ├── _setrcc.c
+│   │   │   │   ├── _setrole.c
+│   │   │   │   ├── _setskill.c
+│   │   │   │   ├── _sever.c
+│   │   │   │   ├── _stat.c
+│   │   │   │   ├── _trans.c
+│   │   │   │   └── _warmboot.c
+│   │   │   ├── ambassador
+│   │   │   │   ├── _earmuffs.c
+│   │   │   │   ├── _goto.c
+│   │   │   │   ├── _home.c
+│   │   │   │   ├── _man.c
+│   │   │   │   ├── _people.c
+│   │   │   │   ├── _set.c
+│   │   │   │   └── _unset.c
+│   │   │   ├── creator
+│   │   │   │   ├── _ac.c
+│   │   │   │   ├── _acheck.c
+│   │   │   │   ├── _banish.c
+│   │   │   │   ├── _callouts.c
+│   │   │   │   ├── _classblock.c
+│   │   │   │   ├── _clean.c
+│   │   │   │   ├── _clone.c
+│   │   │   │   ├── _codeblock.c
+│   │   │   │   ├── _dest.c
+│   │   │   │   ├── _echo.c
+│   │   │   │   ├── _echoto.c
+│   │   │   │   ├── _elog.c
+│   │   │   │   ├── _events.c
+│   │   │   │   ├── _format.c
+│   │   │   │   ├── _invis.c
+│   │   │   │   ├── _langs.c
+│   │   │   │   ├── _localcmds.c
+│   │   │   │   ├── _malloc.c
+│   │   │   │   ├── _mraces.c
+│   │   │   │   ├── _mstatus.c
+│   │   │   │   ├── _netstat.c
+│   │   │   │   ├── _popd.c
+│   │   │   │   ├── _pupdate.c
+│   │   │   │   ├── _pushd.c
+│   │   │   │   ├── _qcs.c
+│   │   │   │   ├── _qcsdirs.c
+│   │   │   │   ├── _qcs_item.c
+│   │   │   │   ├── _qcs_npc.c
+│   │   │   │   ├── _qcs_room.c
+│   │   │   │   ├── _rehash.c
+│   │   │   │   ├── _replog.c
+│   │   │   │   ├── _reset.c
+│   │   │   │   ├── _roomcheck.c
+│   │   │   │   ├── _scan.c
+│   │   │   │   ├── _sethome.c
+│   │   │   │   ├── _stat.c
+│   │   │   │   ├── _tellblock.c
+│   │   │   │   ├── _trans.c
+│   │   │   │   ├── _unbundle.c
+│   │   │   │   ├── _unref.c
+│   │   │   │   ├── _uptime.c
+│   │   │   │   ├── _vis.c
+│   │   │   │   ├── _wc.c
+│   │   │   │   ├── _wcheck.c
+│   │   │   │   ├── _wizheal.c
+│   │   │   │   └── _wizshout.c
+│   │   │   ├── database
+│   │   │   │   └── where.db
+│   │   │   ├── guild
+│   │   │   ├── hm
+│   │   │   │   ├── _cloak.c
+│   │   │   │   ├── _create.c
+│   │   │   │   ├── _divorce.c
+│   │   │   │   ├── _mark.c
+│   │   │   │   ├── _marry.c
+│   │   │   │   ├── _message.c
+│   │   │   │   ├── _review.c
+│   │   │   │   ├── _start.c
+│   │   │   │   ├── _teleport.c
+│   │   │   │   └── _title.c
+│   │   │   ├── mortal
+│   │   │   │   ├── _abilities.c
+│   │   │   │   ├── _advance.c
+│   │   │   │   ├── _armorofithan.c
+│   │   │   │   ├── _assassinate.c
+│   │   │   │   ├── _assassination.c
+│   │   │   │   ├── _assist.c
+│   │   │   │   ├── _autododge.c
+│   │   │   │   ├── _autoparry.c
+│   │   │   │   ├── _bandage.c
+│   │   │   │   ├── _biography.c
+│   │   │   │   ├── _bionics.c
+│   │   │   │   ├── _body.c
+│   │   │   │   ├── _breath.c
+│   │   │   │   ├── _brief.c
+│   │   │   │   ├── _bug.c
+│   │   │   │   ├── _card.c
+│   │   │   │   ├── _cast.c
+│   │   │   │   ├── _chat.c
+│   │   │   │   ├── _clan.c
+│   │   │   │   ├── _cls.c
+│   │   │   │   ├── _color.c
+│   │   │   │   ├── _colorize.c
+│   │   │   │   ├── _combat.c
+│   │   │   │   ├── _commands.c
+│   │   │   │   ├── _converse.c
+│   │   │   │   ├── _credits.c
+│   │   │   │   ├── _customize.c
+│   │   │   │   ├── _date.c
+│   │   │   │   ├── _describe.c
+│   │   │   │   ├── _dig.c
+│   │   │   │   ├── _dodge.c
+│   │   │   │   ├── _drive.c
+│   │   │   │   ├── _drop.c
+│   │   │   │   ├── _echo.c
+│   │   │   │   ├── _eject.c
+│   │   │   │   ├── _emote.c
+│   │   │   │   ├── _empathy.c
+│   │   │   │   ├── _eq.c
+│   │   │   │   ├── _equipment.c
+│   │   │   │   ├── _examine.c
+│   │   │   │   ├── _exchange.c
+│   │   │   │   ├── _exp.c
+│   │   │   │   ├── _experience.c
+│   │   │   │   ├── _face.c
+│   │   │   │   ├── _faction.c
+│   │   │   │   ├── _faq.c
+│   │   │   │   ├── _fire.c
+│   │   │   │   ├── _flee.c
+│   │   │   │   ├── _fly.c
+│   │   │   │   ├── _follow.c
+│   │   │   │   ├── _forget.c
+│   │   │   │   ├── _forward.c
+│   │   │   │   ├── _get.c
+│   │   │   │   ├── _give.c
+│   │   │   │   ├── _greet.c
+│   │   │   │   ├── _guild.c
+│   │   │   │   ├── _harass.c
+│   │   │   │   ├── _help.c
+│   │   │   │   ├── _hide.c
+│   │   │   │   ├── _idea.c
+│   │   │   │   ├── _idle.c
+│   │   │   │   ├── _improve.c
+│   │   │   │   ├── _introduce.c
+│   │   │   │   ├── _inventory.c
+│   │   │   │   ├── _kill.c
+│   │   │   │   ├── _kills.c
+│   │   │   │   ├── _known.c
+│   │   │   │   ├── _language.c
+│   │   │   │   ├── _languages.c
+│   │   │   │   ├── _lastkiller.c
+│   │   │   │   ├── _left.c
+│   │   │   │   ├── _lineecho.c
+│   │   │   │   ├── _lines.c
+│   │   │   │   ├── _look.c
+│   │   │   │   ├── _magicnet.c
+│   │   │   │   ├── _mail.c
+│   │   │   │   ├── _meditate.c
+│   │   │   │   ├── _metamorph.c
+│   │   │   │   ├── _mindblock.c
+│   │   │   │   ├── _money.c
+│   │   │   │   ├── _mudlist.c
+│   │   │   │   ├── _mudparty.c
+│   │   │   │   ├── _news.c
+│   │   │   │   ├── _nextreboot.c
+│   │   │   │   ├── _objectread.c
+│   │   │   │   ├── _ooc.c
+│   │   │   │   ├── _parry.c
+│   │   │   │   ├── _party.c
+│   │   │   │   ├── _password.c
+│   │   │   │   ├── _pemote.c
+│   │   │   │   ├── _picture.c
+│   │   │   │   ├── _pilot.c
+│   │   │   │   ├── _position.c
+│   │   │   │   ├── _posting.c
+│   │   │   │   ├── _pray.c
+│   │   │   │   ├── _prompt.c
+│   │   │   │   ├── _prowl.c
+│   │   │   │   ├── _psi.c
+│   │   │   │   ├── _psihelp.c
+│   │   │   │   ├── _psionics.c
+│   │   │   │   ├── _psisword.c
+│   │   │   │   ├── _pskills.c
+│   │   │   │   ├── _push.c
+│   │   │   │   ├── _quests.c
+│   │   │   │   ├── _radio.c
+│   │   │   │   ├── _readaura.c
+│   │   │   │   ├── _reload.c
+│   │   │   │   ├── _remember.c
+│   │   │   │   ├── _remoteview.c
+│   │   │   │   ├── _reputation.c
+│   │   │   │   ├── _request.c
+│   │   │   │   ├── _rest.c
+│   │   │   │   ├── _retrieve.c
+│   │   │   │   ├── _rift.c
+│   │   │   │   ├── _right.c
+│   │   │   │   ├── _roll.c
+│   │   │   │   ├── _save.c
+│   │   │   │   ├── _saving_throws.c
+│   │   │   │   ├── _say.c
+│   │   │   │   ├── _sbar.c
+│   │   │   │   ├── _score.c
+│   │   │   │   ├── _senseevil.c
+│   │   │   │   ├── _setenv.c
+│   │   │   │   ├── _setrespawn.c
+│   │   │   │   ├── _shoot.c
+│   │   │   │   ├── _shout.c
+│   │   │   │   ├── _sirname.c
+│   │   │   │   ├── _sites.c
+│   │   │   │   ├── _skillrequest.c
+│   │   │   │   ├── _skills.c
+│   │   │   │   ├── _slave.c
+│   │   │   │   ├── _sneak.c
+│   │   │   │   ├── _snoopable.c
+│   │   │   │   ├── _speak.c
+│   │   │   │   ├── _spell.c
+│   │   │   │   ├── _spells.c
+│   │   │   │   ├── _sskills.c
+│   │   │   │   ├── _stance.c
+│   │   │   │   ├── _stats.c
+│   │   │   │   ├── _status.c
+│   │   │   │   ├── _stop.c
+│   │   │   │   ├── _store.c
+│   │   │   │   ├── _suicide.c
+│   │   │   │   ├── _take.c
+│   │   │   │   ├── _tattoo.c
+│   │   │   │   ├── _telekinesis.c
+│   │   │   │   ├── _telemechanics.c
+│   │   │   │   ├── _telepathy.c
+│   │   │   │   ├── _testcolor.c
+│   │   │   │   ├── _tongues.c
+│   │   │   │   ├── _touch.c
+│   │   │   │   ├── _trade.c
+│   │   │   │   ├── _treat.c
+│   │   │   │   ├── _typo.c
+│   │   │   │   ├── _unload.c
+│   │   │   │   ├── _users.c
+│   │   │   │   ├── _version.c
+│   │   │   │   ├── _wake.c
+│   │   │   │   ├── _wanted.c
+│   │   │   │   ├── _watchradio.c
+│   │   │   │   ├── _where.c
+│   │   │   │   ├── _whimpy.c
+│   │   │   │   ├── _whisper.c
+│   │   │   │   ├── _who.c
+│   │   │   │   ├── _wimpy.c
+│   │   │   │   ├── _wimpydir.c
+│   │   │   │   ├── _wish.c
+│   │   │   │   ├── _wiz.c
+│   │   │   │   ├── _wizchat.c
+│   │   │   │   ├── _workroom.c
+│   │   │   │   ├── _worn.c
+│   │   │   │   ├── _xp.c
+│   │   │   │   ├── _yell.c
+│   │   │   │   └── _zero.c
+│   │   │   ├── qcs
+│   │   │   │   ├── _about.c
+│   │   │   │   ├── _add.c
+│   │   │   │   ├── _create.c
+│   │   │   │   ├── _delete.c
+│   │   │   │   ├── _modify.c
+│   │   │   │   └── _more.c
+│   │   │   ├── race
+│   │   │   ├── skills
+│   │   │   │   ├── _absorb.c
+│   │   │   │   ├── _aim.c
+│   │   │   │   ├── _analyze.c
+│   │   │   │   ├── _annihilate.c
+│   │   │   │   ├── _aura.c
+│   │   │   │   ├── _backstab.c
+│   │   │   │   ├── _balefire.c
+│   │   │   │   ├── _blast.c
+│   │   │   │   ├── _bless.c
+│   │   │   │   ├── _bolt.c
+│   │   │   │   ├── _boost.c
+│   │   │   │   ├── _buffer.c
+│   │   │   │   ├── _bump.c
+│   │   │   │   ├── _burn.c
+│   │   │   │   ├── _chilltouch.c
+│   │   │   │   ├── _compare.c
+│   │   │   │   ├── _corrupt.c
+│   │   │   │   ├── _cure.c
+│   │   │   │   ├── _dark.c
+│   │   │   │   ├── _demonfire.c
+│   │   │   │   ├── _detect.c
+│   │   │   │   ├── _deus.c
+│   │   │   │   ├── _discern.c
+│   │   │   │   ├── _dispell.c
+│   │   │   │   ├── _drain.c
+│   │   │   │   ├── _ears.c
+│   │   │   │   ├── _enchant.c
+│   │   │   │   ├── _fear.c
+│   │   │   │   ├── _feed.c
+│   │   │   │   ├── _fireball.c
+│   │   │   │   ├── _forgive.c
+│   │   │   │   ├── _freeze.c
+│   │   │   │   ├── _heal.c
+│   │   │   │   ├── _hold.c
+│   │   │   │   ├── _keep.c
+│   │   │   │   ├── _light.c
+│   │   │   │   ├── _limbs.c
+│   │   │   │   ├── _lockpick.c
+│   │   │   │   ├── _lore.c
+│   │   │   │   ├── _mend.c
+│   │   │   │   ├── _mheal.c
+│   │   │   │   ├── _missile.c
+│   │   │   │   ├── _mist.c
+│   │   │   │   ├── _offer.c
+│   │   │   │   ├── _order.c
+│   │   │   │   ├── _palm.c
+│   │   │   │   ├── _paralyze.c
+│   │   │   │   ├── _parry.c
+│   │   │   │   ├── _peace.c
+│   │   │   │   ├── _peek.c
+│   │   │   │   ├── _pick.c
+│   │   │   │   ├── _protect.c
+│   │   │   │   ├── _purify.c
+│   │   │   │   ├── _raise.c
+│   │   │   │   ├── _rapture.c
+│   │   │   │   ├── _replace.c
+│   │   │   │   ├── _rot.c
+│   │   │   │   ├── _scry.c
+│   │   │   │   ├── _sense.c
+│   │   │   │   ├── _shield.c
+│   │   │   │   ├── _shock.c
+│   │   │   │   ├── _sneak.c
+│   │   │   │   ├── _steal.c
+│   │   │   │   ├── _stealth.c
+│   │   │   │   ├── _turn.c
+│   │   │   │   └── _warshout.c
+│   │   │   ├── HOWTO.md
+│   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   ├── README.md
+│   │   │   └── WHY.md
+│   │   ├── daemon
+│   │   │   ├── cfg
+│   │   │   │   ├── mon_races
+│   │   │   │   │   ├── arachnid
+│   │   │   │   │   ├── centaur
+│   │   │   │   │   ├── dragon
+│   │   │   │   │   ├── equine
+│   │   │   │   │   ├── fowl
+│   │   │   │   │   ├── insectoid
+│   │   │   │   │   ├── insectoid-winged
+│   │   │   │   │   ├── merperson
+│   │   │   │   │   └── quadruped
+│   │   │   │   ├── races
+│   │   │   │   │   ├── artrell
+│   │   │   │   │   ├── atlantean
+│   │   │   │   │   ├── dwarf
+│   │   │   │   │   ├── elf
+│   │   │   │   │   ├── faerie
+│   │   │   │   │   ├── giant
+│   │   │   │   │   ├── gnome
+│   │   │   │   │   ├── half-elf
+│   │   │   │   │   ├── halfling
+│   │   │   │   │   ├── half-orc
+│   │   │   │   │   ├── hobbit
+│   │   │   │   │   ├── human
+│   │   │   │   │   ├── kender
+│   │   │   │   │   ├── klingon
+│   │   │   │   │   ├── nymph
+│   │   │   │   │   ├── ogre
+│   │   │   │   │   ├── orc
+│   │   │   │   │   └── satyr
+│   │   │   │   ├── languages.cfg
+│   │   │   │   └── races.cfg
+│   │   │   ├── include
+│   │   │   │   └── intermud.h
+│   │   │   ├── save
+│   │   │   │   ├── accounts
+│   │   │   │   │   └── aethverifya.o
+│   │   │   │   ├── projects
+│   │   │   │   ├── votes
+│   │   │   │   ├── banish.o
+│   │   │   │   ├── economy.o
+│   │   │   │   ├── events.o
+│   │   │   │   ├── faction_d.o
+│   │   │   │   ├── intermud.o
+│   │   │   │   ├── network.o
+│   │   │   │   ├── player_list.o
+│   │   │   │   └── soul.o
+│   │   │   ├── services
+│   │   │   │   ├── auth.c
+│   │   │   │   ├── channel.c
+│   │   │   │   ├── emoteto.c
+│   │   │   │   ├── error.c
+│   │   │   │   ├── finger.c
+│   │   │   │   ├── locate.c
+│   │   │   │   ├── tell.c
+│   │   │   │   ├── ucache.c
+│   │   │   │   └── who.c
+│   │   │   ├── soul
+│   │   │   │   ├── a.l
+│   │   │   │   ├── b.l
+│   │   │   │   ├── c.l
+│   │   │   │   ├── d.l
+│   │   │   │   ├── e.l
+│   │   │   │   ├── f.l
+│   │   │   │   ├── g.l
+│   │   │   │   ├── h.l
+│   │   │   │   ├── i.l
+│   │   │   │   ├── j.l
+│   │   │   │   ├── k.l
+│   │   │   │   ├── l.l
+│   │   │   │   ├── m.l
+│   │   │   │   ├── n.l
+│   │   │   │   ├── p.l
+│   │   │   │   ├── q.l
+│   │   │   │   ├── r.l
+│   │   │   │   ├── s.l
+│   │   │   │   ├── t.l
+│   │   │   │   ├── w.l
+│   │   │   │   ├── y.l
+│   │   │   │   └── z.l
+│   │   │   ├── addiction_d.c
+│   │   │   ├── alchemist.c
+│   │   │   ├── apprentice_d.c
+│   │   │   ├── astronomy.c
+│   │   │   ├── banish.c
+│   │   │   ├── bionic_d.c
+│   │   │   ├── chat.c
+│   │   │   ├── command.c
+│   │   │   ├── donation.c
+│   │   │   ├── economy.c
+│   │   │   ├── estates.c
+│   │   │   ├── estates.h
+│   │   │   ├── ex5_d.c
+│   │   │   ├── faction_d.c
+│   │   │   ├── guild_d.c
+│   │   │   ├── help.c
+│   │   │   ├── help.h
+│   │   │   ├── http.c
+│   │   │   ├── http.h
+│   │   │   ├── intermud.c
+│   │   │   ├── language_d.c
+│   │   │   ├── languages.c
+│   │   │   ├── mail_d.c
+│   │   │   ├── multi.c
+│   │   │   ├── network.c
+│   │   │   ├── news.c
+│   │   │   ├── occ.c
+│   │   │   ├── party.c
+│   │   │   ├── project.c
+│   │   │   ├── quest_d.c
+│   │   │   ├── race.c
+│   │   │   ├── refs.c
+│   │   │   ├── rifts.c
+│   │   │   ├── rifts_combat.c
+│   │   │   ├── rifts_psionics_d.c
+│   │   │   ├── rifts_skills.c
+│   │   │   ├── rifts_spells_d.c
+│   │   │   ├── rifts_start_d.c
+│   │   │   ├── services.c
+│   │   │   ├── services.old
+│   │   │   ├── skill_request_d.c
+│   │   │   ├── skills.c
+│   │   │   ├── soul.c
+│   │   │   ├── tattoo_d.c
+│   │   │   ├── terminal.c
+│   │   │   ├── timezones.c
+│   │   │   ├── unique_items.c
+│   │   │   ├── voting.c
+│   │   │   └── wanted_d.c
+│   │   ├── doc
+│   │   │   ├── applies
+│   │   │   │   ├── author_file
+│   │   │   │   ├── catch_tell
+│   │   │   │   ├── clean_up
+│   │   │   │   ├── compile_object
+│   │   │   │   ├── connect
+│   │   │   │   ├── crash
+│   │   │   │   ├── create
+│   │   │   │   ├── creator_file
+│   │   │   │   ├── destruct_env_of
+│   │   │   │   ├── domain_file
+│   │   │   │   ├── epilog
+│   │   │   │   ├── error_handler
+│   │   │   │   ├── flag
+│   │   │   │   ├── get_bb_uid
+│   │   │   │   ├── get_root_uid
+│   │   │   │   ├── get_save_file_name
+│   │   │   │   ├── id
+│   │   │   │   ├── __INIT
+│   │   │   │   ├── init
+│   │   │   │   ├── log_error
+│   │   │   │   ├── logon
+│   │   │   │   ├── make_path_absolute
+│   │   │   │   ├── move
+│   │   │   │   ├── net_dead
+│   │   │   │   ├── object_name
+│   │   │   │   ├── preload
+│   │   │   │   ├── privs_file
+│   │   │   │   ├── process_input
+│   │   │   │   ├── receive_message
+│   │   │   │   ├── receive_snoop
+│   │   │   │   ├── reset
+│   │   │   │   ├── retrieve_ed_setup
+│   │   │   │   ├── save_ed_setup
+│   │   │   │   ├── slow_shutdown
+│   │   │   │   ├── telnet_suboption
+│   │   │   │   ├── valid_asm
+│   │   │   │   ├── valid_compile_to_c
+│   │   │   │   ├── valid_hide
+│   │   │   │   ├── valid_link
+│   │   │   │   ├── valid_object
+│   │   │   │   ├── valid_override
+│   │   │   │   ├── valid_read
+│   │   │   │   ├── valid_save_binary
+│   │   │   │   ├── valid_seteuid
+│   │   │   │   ├── valid_shadow
+│   │   │   │   ├── valid_socket
+│   │   │   │   ├── valid_write
+│   │   │   │   └── write_prompt
+│   │   │   ├── approval
+│   │   │   │   ├── balance
+│   │   │   │   │   ├── bal.armour
+│   │   │   │   │   ├── bal.ep
+│   │   │   │   │   ├── bal.guilds
+│   │   │   │   │   ├── bal.high_mortals
+│   │   │   │   │   ├── bal.monsters
+│   │   │   │   │   ├── bal.novice
+│   │   │   │   │   ├── bal.shop.pub.armoury
+│   │   │   │   │   ├── bal.weapons
+│   │   │   │   │   └── README
+│   │   │   │   ├── QC
+│   │   │   │   │   ├── check.doc
+│   │   │   │   │   ├── ideas
+│   │   │   │   │   ├── qc.code
+│   │   │   │   │   └── qc.realm
+│   │   │   │   └── README
+│   │   │   ├── build
+│   │   │   │   ├── armours
+│   │   │   │   │   └── tutorial
+│   │   │   │   ├── economy
+│   │   │   │   │   ├── pubs
+│   │   │   │   │   └── shops
+│   │   │   │   ├── etc
+│   │   │   │   │   ├── containers
+│   │   │   │   │   ├── guilds
+│   │   │   │   │   ├── Infections
+│   │   │   │   │   ├── light
+│   │   │   │   │   ├── messages
+│   │   │   │   │   ├── poisoning
+│   │   │   │   │   ├── properties
+│   │   │   │   │   ├── quests
+│   │   │   │   │   ├── quest_template
+│   │   │   │   │   └── vendor_types
+│   │   │   │   ├── monster
+│   │   │   │   │   ├── languages
+│   │   │   │   │   ├── races
+│   │   │   │   │   └── tutorial
+│   │   │   │   ├── room
+│   │   │   │   │   ├── Advanced
+│   │   │   │   │   ├── Basic
+│   │   │   │   │   ├── doors
+│   │   │   │   │   ├── fishing
+│   │   │   │   │   ├── FunctionList
+│   │   │   │   │   ├── Intermediate
+│   │   │   │   │   └── RoomLighting
+│   │   │   │   ├── virtual
+│   │   │   │   │   ├── 3d_virtual_rooms
+│   │   │   │   │   ├── virtual_docs
+│   │   │   │   │   └── virtual_setup
+│   │   │   │   ├── weapon
+│   │   │   │   │   └── tutorial
+│   │   │   │   ├── approval
+│   │   │   │   ├── building
+│   │   │   │   └── GettingStarted
+│   │   │   ├── classes
+│   │   │   │   ├── 1
+│   │   │   │   ├── 2
+│   │   │   │   ├── 3
+│   │   │   │   ├── 4
+│   │   │   │   ├── 5
+│   │   │   │   └── 6
+│   │   │   ├── efun
+│   │   │   │   ├── acos
+│   │   │   │   ├── add_action
+│   │   │   │   ├── all_inventory
+│   │   │   │   ├── allocate
+│   │   │   │   ├── allocate_buffer
+│   │   │   │   ├── allocate_mapping
+│   │   │   │   ├── asin
+│   │   │   │   ├── atan
+│   │   │   │   ├── author_stats
+│   │   │   │   ├── break_string
+│   │   │   │   ├── bufferp
+│   │   │   │   ├── cache_stats
+│   │   │   │   ├── call_other
+│   │   │   │   ├── call_out
+│   │   │   │   ├── call_out_info
+│   │   │   │   ├── capitalize
+│   │   │   │   ├── catch
+│   │   │   │   ├── ceil
+│   │   │   │   ├── children
+│   │   │   │   ├── clear_bit
+│   │   │   │   ├── clone_object
+│   │   │   │   ├── clonep
+│   │   │   │   ├── command
+│   │   │   │   ├── commands
+│   │   │   │   ├── cos
+│   │   │   │   ├── cp
+│   │   │   │   ├── crc32
+│   │   │   │   ├── crypt
+│   │   │   │   ├── ctime
+│   │   │   │   ├── debug_info
+│   │   │   │   ├── debugmalloc
+│   │   │   │   ├── deep_inherit_list
+│   │   │   │   ├── deep_inventory
+│   │   │   │   ├── destruct
+│   │   │   │   ├── disable_commands
+│   │   │   │   ├── disable_wizard
+│   │   │   │   ├── domain_stats
+│   │   │   │   ├── dumpallobj
+│   │   │   │   ├── dump_file_descriptors
+│   │   │   │   ├── dump_prog
+│   │   │   │   ├── dump_socket_status
+│   │   │   │   ├── each
+│   │   │   │   ├── ed
+│   │   │   │   ├── enable_commands
+│   │   │   │   ├── enable_wizard
+│   │   │   │   ├── environment
+│   │   │   │   ├── error
+│   │   │   │   ├── errorp
+│   │   │   │   ├── exec
+│   │   │   │   ├── exp
+│   │   │   │   ├── explode
+│   │   │   │   ├── export_uid
+│   │   │   │   ├── file_name
+│   │   │   │   ├── file_size
+│   │   │   │   ├── filter_array
+│   │   │   │   ├── find_call_out
+│   │   │   │   ├── find_living
+│   │   │   │   ├── find_object
+│   │   │   │   ├── find_player
+│   │   │   │   ├── first_inventory
+│   │   │   │   ├── floatp
+│   │   │   │   ├── floor
+│   │   │   │   ├── function_exists
+│   │   │   │   ├── functionp
+│   │   │   │   ├── function_profile
+│   │   │   │   ├── generate_source
+│   │   │   │   ├── get_char
+│   │   │   │   ├── get_config
+│   │   │   │   ├── get_dir
+│   │   │   │   ├── geteuid
+│   │   │   │   ├── getuid
+│   │   │   │   ├── implode
+│   │   │   │   ├── in_edit
+│   │   │   │   ├── inherit_list
+│   │   │   │   ├── inherits
+│   │   │   │   ├── in_input
+│   │   │   │   ├── input_to
+│   │   │   │   ├── interactive
+│   │   │   │   ├── intp
+│   │   │   │   ├── keys
+│   │   │   │   ├── link
+│   │   │   │   ├── living
+│   │   │   │   ├── livings
+│   │   │   │   ├── localtime
+│   │   │   │   ├── log
+│   │   │   │   ├── lower_case
+│   │   │   │   ├── malloc_status
+│   │   │   │   ├── map_array
+│   │   │   │   ├── map_delete
+│   │   │   │   ├── mapp
+│   │   │   │   ├── master
+│   │   │   │   ├── match_path
+│   │   │   │   ├── member_array
+│   │   │   │   ├── memory_info
+│   │   │   │   ├── message
+│   │   │   │   ├── mkdir
+│   │   │   │   ├── moncontrol
+│   │   │   │   ├── move_object
+│   │   │   │   ├── mud_status
+│   │   │   │   ├── new
+│   │   │   │   ├── next_inventory
+│   │   │   │   ├── notify_fail
+│   │   │   │   ├── nullp
+│   │   │   │   ├── objectp
+│   │   │   │   ├── objects
+│   │   │   │   ├── opcprof
+│   │   │   │   ├── origin
+│   │   │   │   ├── parse_command
+│   │   │   │   ├── pointerp
+│   │   │   │   ├── pow
+│   │   │   │   ├── present
+│   │   │   │   ├── previous_object
+│   │   │   │   ├── printf
+│   │   │   │   ├── process_string
+│   │   │   │   ├── process_value
+│   │   │   │   ├── query_heart_beat
+│   │   │   │   ├── query_host_name
+│   │   │   │   ├── query_idle
+│   │   │   │   ├── query_ip_name
+│   │   │   │   ├── query_ip_number
+│   │   │   │   ├── query_load_average
+│   │   │   │   ├── query_privs
+│   │   │   │   ├── query_shadowing
+│   │   │   │   ├── query_snoop
+│   │   │   │   ├── query_snooping
+│   │   │   │   ├── query_verb
+│   │   │   │   ├── random
+│   │   │   │   ├── read_buffer
+│   │   │   │   ├── read_bytes
+│   │   │   │   ├── read_file
+│   │   │   │   ├── receive
+│   │   │   │   ├── reclaim_objects
+│   │   │   │   ├── refs
+│   │   │   │   ├── regexp
+│   │   │   │   ├── reload_object
+│   │   │   │   ├── remove_action
+│   │   │   │   ├── remove_call_out
+│   │   │   │   ├── rename
+│   │   │   │   ├── replace_program
+│   │   │   │   ├── replace_string
+│   │   │   │   ├── resolve
+│   │   │   │   ├── restore_object
+│   │   │   │   ├── rm
+│   │   │   │   ├── rmdir
+│   │   │   │   ├── rusage
+│   │   │   │   ├── save_object
+│   │   │   │   ├── say
+│   │   │   │   ├── set_author
+│   │   │   │   ├── set_bit
+│   │   │   │   ├── set_debug_level
+│   │   │   │   ├── seteuid
+│   │   │   │   ├── set_eval_limit
+│   │   │   │   ├── set_heart_beat
+│   │   │   │   ├── set_hide
+│   │   │   │   ├── set_light
+│   │   │   │   ├── set_living_name
+│   │   │   │   ├── set_malloc_mask
+│   │   │   │   ├── set_privs
+│   │   │   │   ├── set_reset
+│   │   │   │   ├── shadow
+│   │   │   │   ├── shout
+│   │   │   │   ├── shutdown
+│   │   │   │   ├── sin
+│   │   │   │   ├── sizeof
+│   │   │   │   ├── snoop
+│   │   │   │   ├── socket_accept
+│   │   │   │   ├── socket_acquire
+│   │   │   │   ├── socket_address
+│   │   │   │   ├── socket_bind
+│   │   │   │   ├── socket_close
+│   │   │   │   ├── socket_connect
+│   │   │   │   ├── socket_create
+│   │   │   │   ├── socket_error
+│   │   │   │   ├── socket_listen
+│   │   │   │   ├── socket_release
+│   │   │   │   ├── socket_write
+│   │   │   │   ├── sort_array
+│   │   │   │   ├── sprintf
+│   │   │   │   ├── sqrt
+│   │   │   │   ├── sscanf
+│   │   │   │   ├── stat
+│   │   │   │   ├── strcmp
+│   │   │   │   ├── stringp
+│   │   │   │   ├── strlen
+│   │   │   │   ├── strsrch
+│   │   │   │   ├── swap
+│   │   │   │   ├── tail
+│   │   │   │   ├── tan
+│   │   │   │   ├── tell_object
+│   │   │   │   ├── tell_room
+│   │   │   │   ├── test_bit
+│   │   │   │   ├── this_object
+│   │   │   │   ├── this_player
+│   │   │   │   ├── throw
+│   │   │   │   ├── time
+│   │   │   │   ├── time_expression
+│   │   │   │   ├── to_float
+│   │   │   │   ├── to_int
+│   │   │   │   ├── trace
+│   │   │   │   ├── traceprefix
+│   │   │   │   ├── undefinedp
+│   │   │   │   ├── unique_array
+│   │   │   │   ├── uptime
+│   │   │   │   ├── userp
+│   │   │   │   ├── users
+│   │   │   │   ├── values
+│   │   │   │   ├── virtualp
+│   │   │   │   ├── wizardp
+│   │   │   │   ├── write
+│   │   │   │   ├── write_buffer
+│   │   │   │   ├── write_bytes
+│   │   │   │   └── write_file
+│   │   │   ├── etc
+│   │   │   │   ├── defines
+│   │   │   │   │   ├── __ARCH__
+│   │   │   │   │   ├── __DIR__
+│   │   │   │   │   ├── HAS_CACHE_STATS
+│   │   │   │   │   ├── HAS_DEBUG_LEVEL
+│   │   │   │   │   ├── HAS_DEBUGMALLOC
+│   │   │   │   │   ├── HAS_EACH
+│   │   │   │   │   ├── HAS_ED
+│   │   │   │   │   ├── HAS_LIGHT
+│   │   │   │   │   ├── HAS_MATH
+│   │   │   │   │   ├── HAS_MATRIX
+│   │   │   │   │   ├── HAS_MUDLIB_ERROR_HANDLER
+│   │   │   │   │   ├── HAS_MUDLIB_STATS
+│   │   │   │   │   ├── HAS_OPCPROF
+│   │   │   │   │   ├── HAS_PRINTF
+│   │   │   │   │   ├── HAS_PRIVS
+│   │   │   │   │   ├── HAS_RUSAGE
+│   │   │   │   │   ├── HAS_SHADOWS
+│   │   │   │   │   ├── HAS_SOCKETS
+│   │   │   │   │   ├── LPC3
+│   │   │   │   │   ├── MUD_NAME
+│   │   │   │   │   ├── MUDOS
+│   │   │   │   │   ├── __PORT__
+│   │   │   │   │   ├── SAVE_EXTENSION
+│   │   │   │   │   ├── USE_EUID
+│   │   │   │   │   └── __VERSION__
+│   │   │   │   └── Credits.DriverDocs
+│   │   │   ├── help
+│   │   │   │   ├── ambassador
+│   │   │   │   ├── creator
+│   │   │   │   │   ├── build
+│   │   │   │   │   ├── debug_hints
+│   │   │   │   │   ├── debug_macro
+│   │   │   │   │   ├── ed
+│   │   │   │   │   ├── mmsg
+│   │   │   │   │   ├── postal
+│   │   │   │   │   ├── qcs
+│   │   │   │   │   └── start
+│   │   │   │   ├── hm
+│   │   │   │   │   └── estates
+│   │   │   │   ├── user
+│   │   │   │   │   ├── aberrant
+│   │   │   │   │   ├── abilities
+│   │   │   │   │   ├── account
+│   │   │   │   │   ├── advance
+│   │   │   │   │   ├── aethermud
+│   │   │   │   │   ├── air_warlock
+│   │   │   │   │   ├── algor_frost_giant
+│   │   │   │   │   ├── alias
+│   │   │   │   │   ├── anarchist
+│   │   │   │   │   ├── ansi
+│   │   │   │   │   ├── arches
+│   │   │   │   │   ├── armor_of_ithan
+│   │   │   │   │   ├── artrell
+│   │   │   │   │   ├── assassination
+│   │   │   │   │   ├── assist
+│   │   │   │   │   ├── atlantean_nomad
+│   │   │   │   │   ├── atlantean_slave
+│   │   │   │   │   ├── autododge
+│   │   │   │   │   ├── autoparry
+│   │   │   │   │   ├── bandage
+│   │   │   │   │   ├── basilisk
+│   │   │   │   │   ├── bearman
+│   │   │   │   │   ├── bionics
+│   │   │   │   │   ├── body_fixer
+│   │   │   │   │   ├── bogie
+│   │   │   │   │   ├── borg
+│   │   │   │   │   ├── bounty_hunter
+│   │   │   │   │   ├── breath
+│   │   │   │   │   ├── brief
+│   │   │   │   │   ├── brownie
+│   │   │   │   │   ├── bug
+│   │   │   │   │   ├── burster
+│   │   │   │   │   ├── card
+│   │   │   │   │   ├── cast
+│   │   │   │   │   ├── changeling
+│   │   │   │   │   ├── channels
+│   │   │   │   │   ├── chat
+│   │   │   │   │   ├── city_rat
+│   │   │   │   │   ├── clan
+│   │   │   │   │   ├── classes
+│   │   │   │   │   ├── cleric
+│   │   │   │   │   ├── coalition_soldier
+│   │   │   │   │   ├── color
+│   │   │   │   │   ├── colorize
+│   │   │   │   │   ├── combat
+│   │   │   │   │   ├── commands
+│   │   │   │   │   ├── common_faerie
+│   │   │   │   │   ├── common_pixie
+│   │   │   │   │   ├── communication
+│   │   │   │   │   ├── concept
+│   │   │   │   │   ├── concept1
+│   │   │   │   │   ├── concept2
+│   │   │   │   │   ├── consent
+│   │   │   │   │   ├── conservator
+│   │   │   │   │   ├── converse
+│   │   │   │   │   ├── coyle
+│   │   │   │   │   ├── crazy
+│   │   │   │   │   ├── cs_dead_boy
+│   │   │   │   │   ├── cs_grunt
+│   │   │   │   │   ├── cs_military_specialist
+│   │   │   │   │   ├── cs_ranger
+│   │   │   │   │   ├── cs_samas_rpa_pilot
+│   │   │   │   │   ├── cs_technical_officer
+│   │   │   │   │   ├── currency
+│   │   │   │   │   ├── customize
+│   │   │   │   │   ├── cyber_doc
+│   │   │   │   │   ├── cyber_knight
+│   │   │   │   │   ├── days
+│   │   │   │   │   ├── death
+│   │   │   │   │   ├── deception
+│   │   │   │   │   ├── delphi_juicer
+│   │   │   │   │   ├── describe
+│   │   │   │   │   ├── description
+│   │   │   │   │   ├── diabolic
+│   │   │   │   │   ├── disclaimer
+│   │   │   │   │   ├── disposition
+│   │   │   │   │   ├── dodge
+│   │   │   │   │   ├── dog_boy
+│   │   │   │   │   ├── drop
+│   │   │   │   │   ├── dwarf
+│   │   │   │   │   ├── echo
+│   │   │   │   │   ├── eject
+│   │   │   │   │   ├── elf
+│   │   │   │   │   ├── emote
+│   │   │   │   │   ├── empathy
+│   │   │   │   │   ├── eq
+│   │   │   │   │   ├── equinoid
+│   │   │   │   │   ├── experience
+│   │   │   │   │   ├── face
+│   │   │   │   │   ├── faction
+│   │   │   │   │   ├── faerie
+│   │   │   │   │   ├── faq
+│   │   │   │   │   ├── fighter
+│   │   │   │   │   ├── fire_dragon
+│   │   │   │   │   ├── flee
+│   │   │   │   │   ├── fly
+│   │   │   │   │   ├── forger
+│   │   │   │   │   ├── forget
+│   │   │   │   │   ├── forward
+│   │   │   │   │   ├── freelance_spy
+│   │   │   │   │   ├── frost_pixie
+│   │   │   │   │   ├── gargoyle
+│   │   │   │   │   ├── get
+│   │   │   │   │   ├── getting-started
+│   │   │   │   │   ├── giant
+│   │   │   │   │   ├── gifted_gypsy
+│   │   │   │   │   ├── give
+│   │   │   │   │   ├── glitter_boy_pilot
+│   │   │   │   │   ├── gnome
+│   │   │   │   │   ├── goal
+│   │   │   │   │   ├── goblin
+│   │   │   │   │   ├── great_horned_dragon
+│   │   │   │   │   ├── green_wood_faerie
+│   │   │   │   │   ├── greet
+│   │   │   │   │   ├── guild
+│   │   │   │   │   ├── gunfighter
+│   │   │   │   │   ├── gurgoyle
+│   │   │   │   │   ├── half-elf
+│   │   │   │   │   ├── halfling
+│   │   │   │   │   ├── half-orc
+│   │   │   │   │   ├── harassment
+│   │   │   │   │   ├── headhunter
+│   │   │   │   │   ├── hide
+│   │   │   │   │   ├── history
+│   │   │   │   │   ├── hobbit
+│   │   │   │   │   ├── horror
+│   │   │   │   │   ├── human
+│   │   │   │   │   ├── hyperion_juicer
+│   │   │   │   │   ├── ice_dragon
+│   │   │   │   │   ├── idea
+│   │   │   │   │   ├── idling
+│   │   │   │   │   ├── improve
+│   │   │   │   │   ├── index
+│   │   │   │   │   ├── information_sharing
+│   │   │   │   │   ├── introduce
+│   │   │   │   │   ├── iss_peacekeeper
+│   │   │   │   │   ├── iss_specter
+│   │   │   │   │   ├── items
+│   │   │   │   │   ├── jotan
+│   │   │   │   │   ├── juicer
+│   │   │   │   │   ├── kankoran
+│   │   │   │   │   ├── kataan
+│   │   │   │   │   ├── kender
+│   │   │   │   │   ├── kill
+│   │   │   │   │   ├── kittani_field_mechanic
+│   │   │   │   │   ├── kittani_warrior
+│   │   │   │   │   ├── klingon
+│   │   │   │   │   ├── knight
+│   │   │   │   │   ├── knight_europe
+│   │   │   │   │   ├── known
+│   │   │   │   │   ├── languages
+│   │   │   │   │   ├── laugh
+│   │   │   │   │   ├── left
+│   │   │   │   │   ├── levels
+│   │   │   │   │   ├── ley_line_rifter
+│   │   │   │   │   ├── ley_line_walker
+│   │   │   │   │   ├── lineecho
+│   │   │   │   │   ├── linerows
+│   │   │   │   │   ├── lock
+│   │   │   │   │   ├── look
+│   │   │   │   │   ├── mage
+│   │   │   │   │   ├── magic
+│   │   │   │   │   ├── mail
+│   │   │   │   │   ├── map
+│   │   │   │   │   ├── marriage
+│   │   │   │   │   ├── master_assassin
+│   │   │   │   │   ├── maxi_man
+│   │   │   │   │   ├── meditate
+│   │   │   │   │   ├── mentors
+│   │   │   │   │   ├── mercenary
+│   │   │   │   │   ├── mercs
+│   │   │   │   │   ├── merc_soldier
+│   │   │   │   │   ├── metamorph
+│   │   │   │   │   ├── mindblock
+│   │   │   │   │   ├── mind_melter
+│   │   │   │   │   ├── misc
+│   │   │   │   │   ├── miscreant
+│   │   │   │   │   ├── monk
+│   │   │   │   │   ├── months
+│   │   │   │   │   ├── moons
+│   │   │   │   │   ├── movement
+│   │   │   │   │   ├── multi-playing
+│   │   │   │   │   ├── mystic
+│   │   │   │   │   ├── names
+│   │   │   │   │   ├── necromancer
+│   │   │   │   │   ├── nega_psychic
+│   │   │   │   │   ├── news
+│   │   │   │   │   ├── ngr_mechanic
+│   │   │   │   │   ├── ngr_soldier
+│   │   │   │   │   ├── night-elves_faerie
+│   │   │   │   │   ├── nimro_fire_giant
+│   │   │   │   │   ├── ninja_juicer
+│   │   │   │   │   ├── ntset_protector
+│   │   │   │   │   ├── nymph
+│   │   │   │   │   ├── objectread
+│   │   │   │   │   ├── occs
+│   │   │   │   │   ├── ogre
+│   │   │   │   │   ├── ooc
+│   │   │   │   │   ├── operator
+│   │   │   │   │   ├── orc
+│   │   │   │   │   ├── palmer
+│   │   │   │   │   ├── palmer2
+│   │   │   │   │   ├── parry
+│   │   │   │   │   ├── password
+│   │   │   │   │   ├── pemote
+│   │   │   │   │   ├── picture
+│   │   │   │   │   ├── pirate
+│   │   │   │   │   ├── pogtal
+│   │   │   │   │   ├── position
+│   │   │   │   │   ├── post
+│   │   │   │   │   ├── postal
+│   │   │   │   │   ├── principled
+│   │   │   │   │   ├── privacy
+│   │   │   │   │   ├── professional_thief
+│   │   │   │   │   ├── prompt
+│   │   │   │   │   ├── prowl
+│   │   │   │   │   ├── psi
+│   │   │   │   │   ├── psihelp
+│   │   │   │   │   ├── psionics
+│   │   │   │   │   ├── psisword
+│   │   │   │   │   ├── pskills
+│   │   │   │   │   ├── puerto_angel
+│   │   │   │   │   ├── quests
+│   │   │   │   │   ├── quit
+│   │   │   │   │   ├── races
+│   │   │   │   │   ├── radio
+│   │   │   │   │   ├── rahu-man
+│   │   │   │   │   ├── ratling
+│   │   │   │   │   ├── readaura
+│   │   │   │   │   ├── religion
+│   │   │   │   │   ├── reload
+│   │   │   │   │   ├── remember
+│   │   │   │   │   ├── remoteview
+│   │   │   │   │   ├── remove
+│   │   │   │   │   ├── reply
+│   │   │   │   │   ├── reporting
+│   │   │   │   │   ├── reputation
+│   │   │   │   │   ├── rest
+│   │   │   │   │   ├── retrieve
+│   │   │   │   │   ├── riftsmud
+│   │   │   │   │   ├── right
+│   │   │   │   │   ├── robot_pilot
+│   │   │   │   │   ├── rogue
+│   │   │   │   │   ├── rogue_scholar
+│   │   │   │   │   ├── rogue_scientist
+│   │   │   │   │   ├── roleplaying
+│   │   │   │   │   ├── royal_knight
+│   │   │   │   │   ├── rp_title
+│   │   │   │   │   ├── rules
+│   │   │   │   │   ├── sailor
+│   │   │   │   │   ├── satyr
+│   │   │   │   │   ├── save
+│   │   │   │   │   ├── saving_throws
+│   │   │   │   │   ├── say
+│   │   │   │   │   ├── sbar
+│   │   │   │   │   ├── score
+│   │   │   │   │   ├── scrupulous
+│   │   │   │   │   ├── scruvy
+│   │   │   │   │   ├── search
+│   │   │   │   │   ├── secondary_vampire
+│   │   │   │   │   ├── senseevil
+│   │   │   │   │   ├── sentiment
+│   │   │   │   │   ├── sentinel
+│   │   │   │   │   ├── shaman
+│   │   │   │   │   ├── shifter
+│   │   │   │   │   ├── shop
+│   │   │   │   │   ├── silver_bells_faerie
+│   │   │   │   │   ├── sirname
+│   │   │   │   │   ├── skillrequest
+│   │   │   │   │   ├── skills
+│   │   │   │   │   ├── slave
+│   │   │   │   │   ├── smuggler
+│   │   │   │   │   ├── special_forces
+│   │   │   │   │   ├── spells
+│   │   │   │   │   ├── sskills
+│   │   │   │   │   ├── staff
+│   │   │   │   │   ├── stance
+│   │   │   │   │   ├── starting_equipment
+│   │   │   │   │   ├── stats
+│   │   │   │   │   ├── stop
+│   │   │   │   │   ├── store
+│   │   │   │   │   ├── suicide
+│   │   │   │   │   ├── sunaj_assassin
+│   │   │   │   │   ├── syntax
+│   │   │   │   │   ├── take
+│   │   │   │   │   ├── tattoo
+│   │   │   │   │   ├── tattooed_man
+│   │   │   │   │   ├── tattoo_warrior
+│   │   │   │   │   ├── techno_wizard
+│   │   │   │   │   ├── telekinesis
+│   │   │   │   │   ├── telemechanics
+│   │   │   │   │   ├── telepathy
+│   │   │   │   │   ├── tell
+│   │   │   │   │   ├── terminal
+│   │   │   │   │   ├── thank
+│   │   │   │   │   ├── think
+│   │   │   │   │   ├── three_strikes
+│   │   │   │   │   ├── thunder_lizard_dragon
+│   │   │   │   │   ├── timezones
+│   │   │   │   │   ├── tips
+│   │   │   │   │   ├── titan
+│   │   │   │   │   ├── touch
+│   │   │   │   │   ├── trade
+│   │   │   │   │   ├── tree_sprite
+│   │   │   │   │   ├── tribal_warrior
+│   │   │   │   │   ├── trigger
+│   │   │   │   │   ├── triggers
+│   │   │   │   │   ├── troll
+│   │   │   │   │   ├── typo
+│   │   │   │   │   ├── unload
+│   │   │   │   │   ├── unprincipled
+│   │   │   │   │   ├── unwield
+│   │   │   │   │   ├── vagabond
+│   │   │   │   │   ├── vehicles
+│   │   │   │   │   ├── view
+│   │   │   │   │   ├── wake
+│   │   │   │   │   ├── water_sprite
+│   │   │   │   │   ├── weapons
+│   │   │   │   │   ├── wear
+│   │   │   │   │   ├── werebear
+│   │   │   │   │   ├── weretiger
+│   │   │   │   │   ├── werewolf
+│   │   │   │   │   ├── whisper
+│   │   │   │   │   ├── who
+│   │   │   │   │   ├── wield
+│   │   │   │   │   ├── wilderness_scout
+│   │   │   │   │   ├── wild_vampire
+│   │   │   │   │   ├── wimpy
+│   │   │   │   │   ├── withdraw
+│   │   │   │   │   ├── wizardship
+│   │   │   │   │   ├── wizardship2
+│   │   │   │   │   ├── worn
+│   │   │   │   │   └── www
+│   │   │   │   ├── wiz
+│   │   │   │   │   ├── admin
+│   │   │   │   │   ├── apprentice
+│   │   │   │   │   ├── call
+│   │   │   │   │   ├── coding
+│   │   │   │   │   ├── domain
+│   │   │   │   │   ├── kit
+│   │   │   │   │   ├── makewiz
+│   │   │   │   │   ├── roleplay
+│   │   │   │   │   ├── setrole
+│   │   │   │   │   ├── staff
+│   │   │   │   │   ├── update
+│   │   │   │   │   └── warmboot
+│   │   │   │   └── death
+│   │   │   ├── law
+│   │   │   │   ├── code_ownership
+│   │   │   │   ├── laws.immortal
+│   │   │   │   ├── MULTIPLE_CHARACTERS
+│   │   │   │   ├── playerkilling_objects
+│   │   │   │   ├── wizards_second
+│   │   │   │   └── wiztools
+│   │   │   ├── lfun
+│   │   │   │   ├── add_enter.3
+│   │   │   │   ├── add_enter.l
+│   │   │   │   ├── add_exit
+│   │   │   │   ├── add_hp
+│   │   │   │   ├── add_invis_exit
+│   │   │   │   ├── add_limb
+│   │   │   │   ├── add_mp
+│   │   │   │   ├── add_skill
+│   │   │   │   ├── add_sp
+│   │   │   │   ├── add_wielding_limb
+│   │   │   │   ├── catch_tell
+│   │   │   │   ├── check_on_limb
+│   │   │   │   ├── clean_up
+│   │   │   │   ├── convert.sh
+│   │   │   │   ├── do_damage
+│   │   │   │   ├── equip_armour_to_limb
+│   │   │   │   ├── equip_weapon_to_limb
+│   │   │   │   ├── extra_look
+│   │   │   │   ├── init_limb_data
+│   │   │   │   ├── invis_exit
+│   │   │   │   ├── man2ascii.sh
+│   │   │   │   ├── more
+│   │   │   │   ├── move
+│   │   │   │   ├── notify_kill
+│   │   │   │   ├── query_ac
+│   │   │   │   ├── query_all_skills
+│   │   │   │   ├── query_armour
+│   │   │   │   ├── query_auto_load
+│   │   │   │   ├── query_fingers
+│   │   │   │   ├── query_is_limb
+│   │   │   │   ├── query_limbs
+│   │   │   │   ├── query_max_hp
+│   │   │   │   ├── query_max_mp
+│   │   │   │   ├── query_max_sp
+│   │   │   │   ├── query_property
+│   │   │   │   ├── query_reference
+│   │   │   │   ├── query_weapon
+│   │   │   │   ├── query_wielding_limbs
+│   │   │   │   ├── remove
+│   │   │   │   ├── remove_exit
+│   │   │   │   ├── remove_invis_exit
+│   │   │   │   ├── remove_limb
+│   │   │   │   ├── return_limb
+│   │   │   │   ├── return_target_limb
+│   │   │   │   ├── set_ac
+│   │   │   │   ├── set_exits
+│   │   │   │   ├── set_fingers
+│   │   │   │   ├── set_hp
+│   │   │   │   ├── set_invis_exits
+│   │   │   │   ├── set_max_hp
+│   │   │   │   ├── set_max_mp
+│   │   │   │   ├── set_max_sp
+│   │   │   │   ├── set_mp
+│   │   │   │   ├── set_overall_ac
+│   │   │   │   ├── set_skill
+│   │   │   │   ├── set_sp
+│   │   │   │   ├── set_stats
+│   │   │   │   ├── set_wielding_limbs
+│   │   │   │   └── skip_obvious
+│   │   │   ├── library
+│   │   │   │   ├── changing_monsters
+│   │   │   │   ├── escape_codes
+│   │   │   │   ├── guilds
+│   │   │   │   ├── high_mortal
+│   │   │   │   ├── immortality
+│   │   │   │   ├── Information
+│   │   │   │   ├── intermud_rules
+│   │   │   │   ├── multiple_characters
+│   │   │   │   ├── name_changes
+│   │   │   │   ├── offensive_acts
+│   │   │   │   ├── organization
+│   │   │   │   ├── player_killing_clarification
+│   │   │   │   ├── players
+│   │   │   │   ├── rules
+│   │   │   │   ├── sexual_harrassment
+│   │   │   │   ├── snooping
+│   │   │   │   ├── spirit_of_the_game
+│   │   │   │   └── suiciding
+│   │   │   ├── lpc
+│   │   │   │   ├── advanced
+│   │   │   │   ├── basic
+│   │   │   │   │   ├── chapter1
+│   │   │   │   │   ├── chapter2
+│   │   │   │   │   ├── chapter3
+│   │   │   │   │   ├── chapter4
+│   │   │   │   │   ├── chapter5
+│   │   │   │   │   ├── chapter6
+│   │   │   │   │   ├── chapter7
+│   │   │   │   │   ├── chapter8
+│   │   │   │   │   ├── Contents
+│   │   │   │   │   └── Introduction
+│   │   │   │   ├── data_types
+│   │   │   │   │   ├── function
+│   │   │   │   │   ├── int
+│   │   │   │   │   ├── mapping
+│   │   │   │   │   └── string
+│   │   │   │   ├── etc
+│   │   │   │   │   └── error_msgs
+│   │   │   │   ├── intermediate
+│   │   │   │   │   ├── chapter1
+│   │   │   │   │   ├── chapter2
+│   │   │   │   │   ├── chapter3
+│   │   │   │   │   ├── chapter4
+│   │   │   │   │   ├── chapter5
+│   │   │   │   │   ├── chapter6
+│   │   │   │   │   ├── chapter7
+│   │   │   │   │   ├── Contents
+│   │   │   │   │   └── Copyright
+│   │   │   │   └── types
+│   │   │   │       ├── array.2d
+│   │   │   │       ├── buffer
+│   │   │   │       ├── float
+│   │   │   │       ├── function
+│   │   │   │       ├── general
+│   │   │   │       └── mappings
+│   │   │   ├── mudlib
+│   │   │   │   ├── features
+│   │   │   │   │   ├── login
+│   │   │   │   │   ├── network
+│   │   │   │   │   ├── reboots
+│   │   │   │   │   └── rooms
+│   │   │   │   ├── Agreement
+│   │   │   │   ├── Credits
+│   │   │   │   ├── DirectoryStructure
+│   │   │   │   ├── GivingAccess
+│   │   │   │   ├── MudLocking
+│   │   │   │   ├── Security
+│   │   │   │   ├── Start
+│   │   │   │   └── Troubleshooting
+│   │   │   ├── SimulEfun
+│   │   │   │   ├── absolute_path
+│   │   │   │   ├── absolute_value
+│   │   │   │   ├── add_sky_event
+│   │   │   │   ├── alignment_ok
+│   │   │   │   ├── alignment_string
+│   │   │   │   ├── ambassadorp
+│   │   │   │   ├── architecture
+│   │   │   │   ├── archp
+│   │   │   │   ├── arrange_string
+│   │   │   │   ├── base_name
+│   │   │   │   ├── cardinal
+│   │   │   │   ├── center
+│   │   │   │   ├── consolidate
+│   │   │   │   ├── convert_name
+│   │   │   │   ├── copy
+│   │   │   │   ├── currency_inflation
+│   │   │   │   ├── currency_mass
+│   │   │   │   ├── currency_rate
+│   │   │   │   ├── currency_value
+│   │   │   │   ├── date
+│   │   │   │   ├── day
+│   │   │   │   ├── destruct
+│   │   │   │   ├── distinct_array
+│   │   │   │   ├── domain
+│   │   │   │   ├── domain_exists
+│   │   │   │   ├── domain_master
+│   │   │   │   ├── effective_light
+│   │   │   │   ├── event
+│   │   │   │   ├── event_pending
+│   │   │   │   ├── exclude_array
+│   │   │   │   ├── exec
+│   │   │   │   ├── file_exists
+│   │   │   │   ├── file_privs
+│   │   │   │   ├── format_page
+│   │   │   │   ├── format_string
+│   │   │   │   ├── get_object
+│   │   │   │   ├── hiddenp
+│   │   │   │   ├── high_mortalp
+│   │   │   │   ├── hour
+│   │   │   │   ├── identify
+│   │   │   │   ├── leaderp
+│   │   │   │   ├── livings
+│   │   │   │   ├── load_object
+│   │   │   │   ├── log_file
+│   │   │   │   ├── member_group
+│   │   │   │   ├── minutes
+│   │   │   │   ├── month
+│   │   │   │   ├── moon_light
+│   │   │   │   ├── mud_currencies
+│   │   │   │   ├── mudlib
+│   │   │   │   ├── mudlib_version
+│   │   │   │   ├── mud_name
+│   │   │   │   ├── nominative
+│   │   │   │   ├── objective
+│   │   │   │   ├── ordinal
+│   │   │   │   ├── path_file
+│   │   │   │   ├── percent
+│   │   │   │   ├── pluralize
+│   │   │   │   ├── possessive
+│   │   │   │   ├── possessive_noun
+│   │   │   │   ├── query_host_port
+│   │   │   │   ├── query_night
+│   │   │   │   ├── query_snoop
+│   │   │   │   ├── query_snooping
+│   │   │   │   ├── read_database
+│   │   │   │   ├── reflexive
+│   │   │   │   ├── remove_sky_event
+│   │   │   │   ├── say
+│   │   │   │   ├── season
+│   │   │   │   ├── set_eval_limit
+│   │   │   │   ├── set_privs
+│   │   │   │   ├── shout
+│   │   │   │   ├── shutdown
+│   │   │   │   ├── snoop
+│   │   │   │   ├── strip_colours
+│   │   │   │   ├── tell_object
+│   │   │   │   ├── tell_room
+│   │   │   │   ├── total_light
+│   │   │   │   ├── translate
+│   │   │   │   ├── unguarded
+│   │   │   │   ├── user_exists
+│   │   │   │   ├── user_path
+│   │   │   │   ├── version
+│   │   │   │   ├── wrap
+│   │   │   │   ├── write
+│   │   │   │   └── year
+│   │   │   ├── TestPlans
+│   │   │   │   └── PlayerAbilities
+│   │   │   └── README
+│   │   ├── domains
+│   │   │   ├── adm
+│   │   │   │   ├── vehicle_test
+│   │   │   │   │   ├── vt_east.c
+│   │   │   │   │   ├── vt_ex5_pad.c
+│   │   │   │   │   ├── vt_main.c
+│   │   │   │   │   ├── vt_north.c
+│   │   │   │   │   └── vt_south.c
+│   │   │   │   ├── wiz_tools
+│   │   │   │   │   ├── apprentice_kit.c
+│   │   │   │   │   ├── mailbox.c
+│   │   │   │   │   ├── mailbox_welcome.c
+│   │   │   │   │   ├── ring_of_dominion.c
+│   │   │   │   │   ├── rp_skill_tool.c
+│   │   │   │   │   ├── skill_slip.c
+│   │   │   │   │   ├── staff_of_creation.c
+│   │   │   │   │   ├── staff_of_demotion.c
+│   │   │   │   │   ├── staff_of_dominion.c
+│   │   │   │   │   ├── staff_supplies_chest.c
+│   │   │   │   │   ├── tanstaafl_base.c
+│   │   │   │   │   ├── tattoo_gun.c
+│   │   │   │   │   └── wiz_reference_book.c
+│   │   │   │   └── adm.c
+│   │   │   ├── chitown
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── bandit_camp.c
+│   │   │   │   │   ├── burb_chop_shop.c
+│   │   │   │   │   ├── burb_dogboy_checkpoint.c
+│   │   │   │   │   ├── burb_fence_stall.c
+│   │   │   │   │   ├── burb_flophouse.c
+│   │   │   │   │   ├── burb_gang_corner.c
+│   │   │   │   │   ├── burb_night_market.c
+│   │   │   │   │   ├── burb_preacher_square.c
+│   │   │   │   │   ├── burb_refugee_camp.c
+│   │   │   │   │   ├── burb_rooftops.c
+│   │   │   │   │   ├── burb_smuggler_crawl.c
+│   │   │   │   │   ├── burb_soup_kitchen.c
+│   │   │   │   │   ├── burb_tenements.c
+│   │   │   │   │   ├── burb_wall_shadow.c
+│   │   │   │   │   ├── burb_water_pump.c
+│   │   │   │   │   ├── chitown_alley.c
+│   │   │   │   │   ├── chitown_black_market.c
+│   │   │   │   │   ├── chitown_boulevard.c
+│   │   │   │   │   ├── chitown_burb_row.c
+│   │   │   │   │   ├── chitown_burbs.c
+│   │   │   │   │   ├── chitown_burb_shanty.c
+│   │   │   │   │   ├── chitown_clinic.c
+│   │   │   │   │   ├── chitown_dead_end_junction.c
+│   │   │   │   │   ├── chitown_gate.c
+│   │   │   │   │   ├── chitown_hydra_lair.c
+│   │   │   │   │   ├── chitown_hydra_treasure.c
+│   │   │   │   │   ├── chitown_lower_market.c
+│   │   │   │   │   ├── chitown_maintenance_tunnel.c
+│   │   │   │   │   ├── chitown_market.c
+│   │   │   │   │   ├── chitown_officer_row.c
+│   │   │   │   │   ├── chitown_sewer_entrance.c
+│   │   │   │   │   ├── chitown_sewer_overflow.c
+│   │   │   │   │   ├── chitown_sewer_run.c
+│   │   │   │   │   ├── cs_apartment_lobby.c
+│   │   │   │   │   ├── cs_armory.c
+│   │   │   │   │   ├── cs_barracks.c
+│   │   │   │   │   ├── cs_civilian_arms.c
+│   │   │   │   │   ├── cs_command_plaza.c
+│   │   │   │   │   ├── cs_dogboy_kennels.c
+│   │   │   │   │   ├── cs_iss_checkpoint.c
+│   │   │   │   │   ├── cs_outfitter_shop.c
+│   │   │   │   │   ├── cs_propaganda_hall.c
+│   │   │   │   │   ├── cs_psi_stalker_post.c
+│   │   │   │   │   ├── cs_ration_depot.c
+│   │   │   │   │   ├── cs_recruitment.c
+│   │   │   │   │   ├── cs_residential.c
+│   │   │   │   │   ├── cs_samas_hangar.c
+│   │   │   │   │   ├── cs_secure_wing.c
+│   │   │   │   │   ├── cs_service_hatch.c
+│   │   │   │   │   ├── cs_shopping_arcade.c
+│   │   │   │   │   └── illinois_road.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   ├── chitown_contraband.c
+│   │   │   │   │   ├── cs_dog_tag.c
+│   │   │   │   │   └── fake_cs_id.c
+│   │   │   │   ├── monsters
+│   │   │   │   │   ├── bandit.c
+│   │   │   │   │   ├── burb_dog_boy.c
+│   │   │   │   │   ├── burb_thug.c
+│   │   │   │   │   ├── chitown_fence.c
+│   │   │   │   │   ├── chitown_ganger.c
+│   │   │   │   │   ├── chitown_tunnel_rat.c
+│   │   │   │   │   └── cs_juicer.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── burb_mechanic.c
+│   │   │   │       ├── burb_preacher.c
+│   │   │   │       ├── burb_refugee.c
+│   │   │   │       ├── burb_soup_cook.c
+│   │   │   │       ├── chitown_doctor.c
+│   │   │   │       ├── contraband_dealer.c
+│   │   │   │       ├── cs_arms_clerk.c
+│   │   │   │       ├── cs_citizen.c
+│   │   │   │       ├── cs_dog_boy.c
+│   │   │   │       ├── cs_grunt.c
+│   │   │   │       ├── cs_iss_clerk.c
+│   │   │   │       ├── cs_outfitter.c
+│   │   │   │       ├── cs_patrol.c
+│   │   │   │       ├── cs_psi_stalker.c
+│   │   │   │       ├── cs_quartermaster.c
+│   │   │   │       ├── cs_ration_clerk.c
+│   │   │   │       ├── cs_recruiter.c
+│   │   │   │       ├── cs_rift_liaison.c
+│   │   │   │       ├── cs_samas_pilot.c
+│   │   │   │       ├── cs_sergeant.c
+│   │   │   │       └── dead_boy_guard.c
+│   │   │   ├── demon_plane
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── demon_sliver_corridor.c
+│   │   │   │   │   ├── demon_sliver_depths.c
+│   │   │   │   │   ├── demon_sliver_fissure.c
+│   │   │   │   │   ├── demon_sliver_gate.c
+│   │   │   │   │   ├── demon_sliver_nest.c
+│   │   │   │   │   ├── demon_sliver_pit.c
+│   │   │   │   │   ├── demon_sliver_scar.c
+│   │   │   │   │   ├── demon_sliver_shrine.c
+│   │   │   │   │   └── demon_sliver_wastes.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   ├── demon_ichor_vial.c
+│   │   │   │   │   └── rift_shard_amulet.c
+│   │   │   │   ├── monsters
+│   │   │   │   │   ├── demon_sliver_alpha.c
+│   │   │   │   │   ├── demon_sliver_hunter.c
+│   │   │   │   │   └── demon_sliver_stalker.c
+│   │   │   │   └── npcs
+│   │   │   │       └── ley_researcher.c
+│   │   │   ├── Horton
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── horton_abandoned_farmstead.c
+│   │   │   │   │   ├── horton_ancient_grove.c
+│   │   │   │   │   ├── horton_bandit_camp.c
+│   │   │   │   │   ├── horton_cornfield_ruins.c
+│   │   │   │   │   ├── horton_creek_crossing.c
+│   │   │   │   │   ├── horton_forest_deep.c
+│   │   │   │   │   ├── horton_forest_edge.c
+│   │   │   │   │   ├── horton_hermit_cabin.c
+│   │   │   │   │   ├── horton_hunting_blind.c
+│   │   │   │   │   ├── horton_inn.c
+│   │   │   │   │   ├── horton_ley_glade.c
+│   │   │   │   │   ├── horton_logging_road.c
+│   │   │   │   │   ├── horton_main_street.c
+│   │   │   │   │   ├── horton_marsh_edge.c
+│   │   │   │   │   ├── horton_outskirts.c
+│   │   │   │   │   ├── horton_overgrown_orchard.c
+│   │   │   │   │   ├── horton_pine_hollow.c
+│   │   │   │   │   ├── horton_quarry_floor.c
+│   │   │   │   │   ├── horton_quarry_rim.c
+│   │   │   │   │   ├── horton_rail_spur.c
+│   │   │   │   │   ├── horton_scrub_ridge.c
+│   │   │   │   │   ├── horton_station.c
+│   │   │   │   │   ├── horton_store.c
+│   │   │   │   │   ├── horton_wilderness_trail.c
+│   │   │   │   │   ├── horton_wolf_den.c
+│   │   │   │   │   ├── horton_wrecked_convoy.c
+│   │   │   │   │   └── hovertrain.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   ├── basic_medkit.c
+│   │   │   │   │   └── salvaged_armor_plate.c
+│   │   │   │   ├── monsters
+│   │   │   │   │   ├── feral_boar.c
+│   │   │   │   │   ├── horton_militia_guard.c
+│   │   │   │   │   ├── horton_scavenger.c
+│   │   │   │   │   ├── quarry_lurker.c
+│   │   │   │   │   ├── trail_bandit.c
+│   │   │   │   │   └── wild_dog_pack.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── horton_hermit.c
+│   │   │   │       ├── horton_innkeeper.c
+│   │   │   │       └── horton_shopkeeper.c
+│   │   │   ├── Lazlo
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── lazlo_gate.c
+│   │   │   │   │   ├── lazlo_ley_shrine.c
+│   │   │   │   │   ├── lazlo_library.c
+│   │   │   │   │   ├── lazlo_magic_quarter.c
+│   │   │   │   │   ├── lazlo_market.c
+│   │   │   │   │   ├── lazlo_shoreline.c
+│   │   │   │   │   └── lazlo_square.c
+│   │   │   │   ├── monsters
+│   │   │   │   │   ├── lazlo_feral_dog.c
+│   │   │   │   │   └── ley_line_instructor.c
+│   │   │   │   ├── npcs
+│   │   │   │   │   ├── lazlo_gate_guard.c
+│   │   │   │   │   ├── lazlo_ley_priest.c
+│   │   │   │   │   ├── lazlo_mage_vendor.c
+│   │   │   │   │   └── lazlo_scholar.c
+│   │   │   │   └── lazlo_welcome.c
+│   │   │   ├── LoneStar
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── lone_star_barracks.c
+│   │   │   │   │   ├── lone_star_containment.c
+│   │   │   │   │   ├── lone_star_gate.c
+│   │   │   │   │   ├── lone_star_lab.c
+│   │   │   │   │   ├── lone_star_perimeter.c
+│   │   │   │   │   ├── lone_star_plaza.c
+│   │   │   │   │   └── lone_star_supply.c
+│   │   │   │   ├── equipment
+│   │   │   │   ├── monsters
+│   │   │   │   │   └── ls_mutant_subject.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── coalition_scientist.c
+│   │   │   │       ├── cs_dog_boy_guard.c
+│   │   │   │       └── ls_supply_officer.c
+│   │   │   ├── newcamelot
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── academy_dormitory.c
+│   │   │   │   │   ├── academy_lecture_hall.c
+│   │   │   │   │   ├── academy_library.c
+│   │   │   │   │   ├── academy_quad.c
+│   │   │   │   │   ├── academy_summoning.c
+│   │   │   │   │   ├── black_forest.c
+│   │   │   │   │   ├── blacksmith_forge.c
+│   │   │   │   │   ├── camelot_armoury.c
+│   │   │   │   │   ├── camelot_garden.c
+│   │   │   │   │   ├── camelot_gate.c
+│   │   │   │   │   ├── camelot_square.c
+│   │   │   │   │   ├── camelot_tavern.c
+│   │   │   │   │   ├── camelot_wizard_tower.c
+│   │   │   │   │   ├── castle_armoury_royal.c
+│   │   │   │   │   ├── castle_barracks.c
+│   │   │   │   │   ├── castle_courtyard.c
+│   │   │   │   │   ├── castle_dungeon.c
+│   │   │   │   │   ├── castle_gatehouse.c
+│   │   │   │   │   ├── castle_great_hall.c
+│   │   │   │   │   ├── castle_throne_room.c
+│   │   │   │   │   ├── castle_tower_top.c
+│   │   │   │   │   ├── castle_war_room.c
+│   │   │   │   │   ├── chapel_of_light.c
+│   │   │   │   │   ├── europe_road.c
+│   │   │   │   │   ├── forest_lake.c
+│   │   │   │   │   ├── forest_lake_far_shore.c
+│   │   │   │   │   ├── market_street1.c
+│   │   │   │   │   ├── market_street2.c
+│   │   │   │   │   ├── stables.c
+│   │   │   │   │   └── training_grounds.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   ├── camelot_longsword.c
+│   │   │   │   │   ├── chain_mail.c
+│   │   │   │   │   ├── dragonfire_lance.c
+│   │   │   │   │   ├── knight_shield.c
+│   │   │   │   │   ├── nexus_stone.c
+│   │   │   │   │   ├── short_sword.c
+│   │   │   │   │   └── spell_tome.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── academy_headmaster.c
+│   │   │   │       ├── academy_student.c
+│   │   │   │       ├── camelot_armourer.c
+│   │   │   │       ├── camelot_blacksmith.c
+│   │   │   │       ├── camelot_mage.c
+│   │   │   │       ├── camelot_squire.c
+│   │   │   │       ├── chapel_priestess.c
+│   │   │   │       ├── dragon_knight.c
+│   │   │   │       ├── dungeon_prisoner.c
+│   │   │   │       ├── king_arrthuu.c
+│   │   │   │       ├── lesser_fire_elemental.c
+│   │   │   │       ├── mrrlyn.c
+│   │   │   │       ├── pendragon_barkeep.c
+│   │   │   │       ├── quartermaster_knight.c
+│   │   │   │       ├── royal_knight_guard.c
+│   │   │   │       ├── stable_hand.c
+│   │   │   │       └── young_dragon.c
+│   │   │   ├── NGR
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── ngr_biergarten.c
+│   │   │   │   │   ├── ngr_checkpoint.c
+│   │   │   │   │   ├── ngr_frontline_trench.c
+│   │   │   │   │   ├── NGR_garrison.c
+│   │   │   │   │   ├── NGR_gate.c
+│   │   │   │   │   ├── NGR_market_district.c
+│   │   │   │   │   ├── ngr_no_mans_land.c
+│   │   │   │   │   ├── ngr_patrol_road.c
+│   │   │   │   │   ├── ngr_plaza.c
+│   │   │   │   │   ├── ngr_residential.c
+│   │   │   │   │   ├── NGR_triax_depot.c
+│   │   │   │   │   ├── ngr_triax_showroom.c
+│   │   │   │   │   ├── ngr_underground_bunker.c
+│   │   │   │   │   └── ngr_watchtower.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   └── triax_helmet.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── gargoyle_raider.c
+│   │   │   │       ├── ngr_arms_dealer.c
+│   │   │   │       ├── ngr_barkeep.c
+│   │   │   │       ├── ngr_border_guard.c
+│   │   │   │       ├── ngr_civilian.c
+│   │   │   │       ├── ngr_elite_soldier.c
+│   │   │   │       ├── ngr_gate_guard.c
+│   │   │   │       ├── ngr_patrol_soldier.c
+│   │   │   │       ├── ngr_sniper.c
+│   │   │   │       └── triax_rep.c
+│   │   │   ├── Praxis
+│   │   │   │   ├── adm
+│   │   │   │   │   ├── access.c
+│   │   │   │   │   ├── audit_equipment.txt
+│   │   │   │   │   ├── audit_npcs.txt
+│   │   │   │   │   ├── audit_occs.txt
+│   │   │   │   │   ├── audit_psionics.txt
+│   │   │   │   │   ├── audit_races.txt
+│   │   │   │   │   ├── audit_skills.txt
+│   │   │   │   │   ├── audit_spells.txt
+│   │   │   │   │   ├── gap_report.txt
+│   │   │   │   │   ├── master.c
+│   │   │   │   │   └── master_gap_report.txt
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── splynn
+│   │   │   │   │   │   ├── alvurron
+│   │   │   │   │   │   ├── ocean
+│   │   │   │   │   │   ├── catacomb_chamber.c
+│   │   │   │   │   │   ├── catacomb_entrance.c
+│   │   │   │   │   │   ├── catacomb_hall.c
+│   │   │   │   │   │   ├── catacomb_tomb.c
+│   │   │   │   │   │   ├── ocean_rift.c
+│   │   │   │   │   │   ├── preserve_blind.c
+│   │   │   │   │   │   ├── preserve_bonefield.c
+│   │   │   │   │   │   ├── preserve_catwalk.c
+│   │   │   │   │   │   ├── preserve_hive.c
+│   │   │   │   │   │   ├── preserve_hivedeep.c
+│   │   │   │   │   │   ├── preserve_hollow.c
+│   │   │   │   │   │   ├── preserve_reeds.c
+│   │   │   │   │   │   ├── preserve_ridge.c
+│   │   │   │   │   │   ├── preserve_snag.c
+│   │   │   │   │   │   ├── preserve_snareline.c
+│   │   │   │   │   │   ├── preserve_switchback.c
+│   │   │   │   │   │   ├── preserve_thicket.c
+│   │   │   │   │   │   ├── preserve_thornbrake.c
+│   │   │   │   │   │   ├── preserve_trail.c
+│   │   │   │   │   │   ├── preserve_waterhole.c
+│   │   │   │   │   │   ├── rockys_bar_splynn.c
+│   │   │   │   │   │   ├── shadow_slave.c
+│   │   │   │   │   │   ├── slave_pens.c
+│   │   │   │   │   │   ├── splynn_back_alley.c
+│   │   │   │   │   │   ├── splynn_black_market.c
+│   │   │   │   │   │   ├── splynn_clan_hall.c
+│   │   │   │   │   │   ├── splynn_docks.c
+│   │   │   │   │   │   ├── splynn_east_bazaar.c
+│   │   │   │   │   │   ├── splynn_entry.c
+│   │   │   │   │   │   ├── splynn_forest_edge.c
+│   │   │   │   │   │   ├── splynn_guild_row.c
+│   │   │   │   │   │   ├── splynn_market.c
+│   │   │   │   │   │   ├── splynn_pits.c
+│   │   │   │   │   │   ├── splynn_preserves.c
+│   │   │   │   │   │   ├── splynn_south_road.c
+│   │   │   │   │   │   ├── splynn_underground.c
+│   │   │   │   │   │   └── splynn_west_road.c
+│   │   │   │   │   ├── back_alley.c
+│   │   │   │   │   ├── coalition_checkpoint.c
+│   │   │   │   │   ├── collapsed_building.c
+│   │   │   │   │   ├── cs_territory.c
+│   │   │   │   │   ├── cutters_shop.c
+│   │   │   │   │   ├── deserter_hideout.c
+│   │   │   │   │   ├── general_store.c
+│   │   │   │   │   ├── highway_ruins.c
+│   │   │   │   │   ├── hydra_lair.c
+│   │   │   │   │   ├── hydra_treasure.c
+│   │   │   │   │   ├── long_road.c
+│   │   │   │   │   ├── market_street.c
+│   │   │   │   │   ├── monument_square.c
+│   │   │   │   │   ├── nexus_approach.c
+│   │   │   │   │   ├── nexus_dimensional_tear.c
+│   │   │   │   │   ├── old_highway.c
+│   │   │   │   │   ├── riffys_bar.c
+│   │   │   │   │   ├── rockys_bar.c
+│   │   │   │   │   ├── test_zone.c
+│   │   │   │   │   └── weapons_shop.c
+│   │   │   │   ├── attic
+│   │   │   │   │   ├── class_change.c
+│   │   │   │   │   └── tmp_hos
+│   │   │   │   ├── cemetary
+│   │   │   │   │   ├── mon
+│   │   │   │   │   │   ├── ghost3.c
+│   │   │   │   │   │   ├── ghost4.c
+│   │   │   │   │   │   ├── ghost5.c
+│   │   │   │   │   │   ├── ghost6.c
+│   │   │   │   │   │   ├── ghost8.c
+│   │   │   │   │   │   ├── ghost9.c
+│   │   │   │   │   │   ├── ghosta.c
+│   │   │   │   │   │   └── ghost.c
+│   │   │   │   │   ├── grave_yard2.c
+│   │   │   │   │   ├── grave_yard3.c
+│   │   │   │   │   ├── grave_yard4.c
+│   │   │   │   │   ├── grave_yard5.c
+│   │   │   │   │   ├── grave_yard6.c
+│   │   │   │   │   ├── grave_yard7.c
+│   │   │   │   │   ├── grave_yard8.c
+│   │   │   │   │   └── grave_yard.c
+│   │   │   │   ├── data
+│   │   │   │   │   ├── booth_question
+│   │   │   │   │   ├── booth_votes.o
+│   │   │   │   │   ├── cleric_crypt.o
+│   │   │   │   │   ├── properties.o
+│   │   │   │   │   ├── properties.t
+│   │   │   │   │   └── wall.o
+│   │   │   │   ├── death
+│   │   │   │   │   └── death_room.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   ├── ammo
+│   │   │   │   │   │   ├── e_clip_long.c
+│   │   │   │   │   │   └── e_clip_standard.c
+│   │   │   │   │   ├── cybernetics
+│   │   │   │   │   │   ├── biocomp_implant.c
+│   │   │   │   │   │   ├── clock_calendar.c
+│   │   │   │   │   │   ├── cyber_arm_left.c
+│   │   │   │   │   │   ├── cyber_armor.c
+│   │   │   │   │   │   ├── cyber_arm_right.c
+│   │   │   │   │   │   ├── cyber_ear.c
+│   │   │   │   │   │   ├── cyber_eye_optic.c
+│   │   │   │   │   │   ├── cyber_legs.c
+│   │   │   │   │   │   ├── cyber_lung.c
+│   │   │   │   │   │   ├── gyro_compass_implant.c
+│   │   │   │   │   │   ├── headjack.c
+│   │   │   │   │   │   ├── irmss_kit.c
+│   │   │   │   │   │   ├── language_translator.c
+│   │   │   │   │   │   ├── multi_optic_eye.c
+│   │   │   │   │   │   ├── neural_net_implant.c
+│   │   │   │   │   │   ├── oxygen_cell.c
+│   │   │   │   │   │   ├── radio_implant.c
+│   │   │   │   │   │   └── targeting_eye.c
+│   │   │   │   │   ├── grenades
+│   │   │   │   │   │   ├── frag_grenade.c
+│   │   │   │   │   │   ├── plasma_grenade.c
+│   │   │   │   │   │   └── smoke_grenade.c
+│   │   │   │   │   ├── magic_items
+│   │   │   │   │   │   ├── healing_charm.c
+│   │   │   │   │   │   └── rune_dagger.c
+│   │   │   │   │   ├── power_armor
+│   │   │   │   │   │   ├── CS_Terror_Trooper.c
+│   │   │   │   │   │   ├── GB_Glitter_Boy.c
+│   │   │   │   │   │   ├── kittani_power_armor.c
+│   │   │   │   │   │   ├── NG_EX10_Samson.c
+│   │   │   │   │   │   └── PA-06A_SAMAS.c
+│   │   │   │   │   ├── splynn
+│   │   │   │   │   │   ├── alien_hide.c
+│   │   │   │   │   │   ├── exotic_energy_clip.c
+│   │   │   │   │   │   ├── net_gun.c
+│   │   │   │   │   │   ├── plasma_pistol.c
+│   │   │   │   │   │   ├── predator_armor.c
+│   │   │   │   │   │   ├── psi_sword_hilt.c
+│   │   │   │   │   │   └── splynn_map.c
+│   │   │   │   │   ├── vehicles
+│   │   │   │   │   │   └── ng_wastelander.c
+│   │   │   │   │   ├── alvurron_key.c
+│   │   │   │   │   ├── armor_talisman.c
+│   │   │   │   │   ├── atm_card.c
+│   │   │   │   │   ├── backpack.c
+│   │   │   │   │   ├── bandit_patch.c
+│   │   │   │   │   ├── bone_dust.c
+│   │   │   │   │   ├── boom_gun.c
+│   │   │   │   │   ├── c12_laser_rifle.c
+│   │   │   │   │   ├── c18_pistol.c
+│   │   │   │   │   ├── chain_mail.c
+│   │   │   │   │   ├── coalition_grunt_armor.c
+│   │   │   │   │   ├── computer_pad.c
+│   │   │   │   │   ├── cp30_laser.c
+│   │   │   │   │   ├── cp40_laser.c
+│   │   │   │   │   ├── dead_boy_armor.c
+│   │   │   │   │   ├── e_clip.c
+│   │   │   │   │   ├── environmental_body_armor.c
+│   │   │   │   │   ├── faction_amulet.c
+│   │   │   │   │   ├── field_journal.c
+│   │   │   │   │   ├── first_aid_kit.c
+│   │   │   │   │   ├── flame_hilt.c
+│   │   │   │   │   ├── ghostly_katana.c
+│   │   │   │   │   ├── handcuffs.c
+│   │   │   │   │   ├── hover_cycle.c
+│   │   │   │   │   ├── id_card.c
+│   │   │   │   │   ├── kittani_laser.c
+│   │   │   │   │   ├── knife.c
+│   │   │   │   │   ├── leather_glove.c
+│   │   │   │   │   ├── leather_jacket.c
+│   │   │   │   │   ├── locked_chest.c
+│   │   │   │   │   ├── medical_bag.c
+│   │   │   │   │   ├── military_radio.c
+│   │   │   │   │   ├── ngr_body_armor.c
+│   │   │   │   │   ├── ngr_rail_gun.c
+│   │   │   │   │   ├── obsidian_blade.c
+│   │   │   │   │   ├── personal_radio.c
+│   │   │   │   │   ├── ppe_battery.c
+│   │   │   │   │   ├── purified_water.c
+│   │   │   │   │   ├── rations.c
+│   │   │   │   │   ├── rebreather.c
+│   │   │   │   │   ├── ritual_components.c
+│   │   │   │   │   ├── rope.c
+│   │   │   │   │   ├── salvage_item.c
+│   │   │   │   │   ├── science_kit.c
+│   │   │   │   │   ├── short_sword.c
+│   │   │   │   │   ├── shovel.c
+│   │   │   │   │   ├── spell_components.c
+│   │   │   │   │   ├── supply_crate.c
+│   │   │   │   │   ├── sword_of_atlantis.c
+│   │   │   │   │   ├── tool_kit.c
+│   │   │   │   │   ├── trained_hawk.c
+│   │   │   │   │   ├── vibro_knife.c
+│   │   │   │   │   └── vibro_sword.c
+│   │   │   │   ├── monsters
+│   │   │   │   │   ├── alvurron_champion.c
+│   │   │   │   │   ├── alvurron_dealer.c
+│   │   │   │   │   ├── alvurron_enforcer.c
+│   │   │   │   │   ├── alvurron_overlord_boss.c
+│   │   │   │   │   ├── alvurron_overseer.c
+│   │   │   │   │   ├── alvurron_rift_wisp.c
+│   │   │   │   │   ├── alvurron_trader.c
+│   │   │   │   │   ├── alvurron_watcher.c
+│   │   │   │   │   ├── atlantean_guardian.c
+│   │   │   │   │   ├── brodkil.c
+│   │   │   │   │   ├── brodkil_demon.c
+│   │   │   │   │   ├── catacomb_wight.c
+│   │   │   │   │   ├── clan_recruiter.c
+│   │   │   │   │   ├── coalition_dead_boy.c
+│   │   │   │   │   ├── coalition_grunt.c
+│   │   │   │   │   ├── cutter.c
+│   │   │   │   │   ├── d_bee_wanderer.c
+│   │   │   │   │   ├── deevil_scout.c
+│   │   │   │   │   ├── deserter.c
+│   │   │   │   │   ├── gargoyle.c
+│   │   │   │   │   ├── gargoyle_raider.c
+│   │   │   │   │   ├── general_vendor.c
+│   │   │   │   │   ├── highway_bandit.c
+│   │   │   │   │   ├── hound_demon.c
+│   │   │   │   │   ├── hydra.c
+│   │   │   │   │   ├── jungle_stalker.c
+│   │   │   │   │   ├── kittani_merchant.c
+│   │   │   │   │   ├── kittani_overseer.c
+│   │   │   │   │   ├── kittani_warrior.c
+│   │   │   │   │   ├── kydian_overlord.c
+│   │   │   │   │   ├── magic_bush.c
+│   │   │   │   │   ├── minor_demon.c
+│   │   │   │   │   ├── moxim.c
+│   │   │   │   │   ├── ocean_creature.c
+│   │   │   │   │   ├── ocean_leviathan.c
+│   │   │   │   │   ├── plains_wolf.c
+│   │   │   │   │   ├── preserve_beast.c
+│   │   │   │   │   ├── rat.c
+│   │   │   │   │   ├── rocky_barkeep.c
+│   │   │   │   │   ├── sea_serpent.c
+│   │   │   │   │   ├── splugorth_minion.c
+│   │   │   │   │   ├── splynn_clip_vendor.c
+│   │   │   │   │   ├── splynn_slave.c
+│   │   │   │   │   ├── weapons_vendor.c
+│   │   │   │   │   ├── wild_vampire.c
+│   │   │   │   │   └── xiticix_warrior.c
+│   │   │   │   ├── mountains
+│   │   │   │   │   ├── chamber1.c
+│   │   │   │   │   ├── chamber2.c
+│   │   │   │   │   ├── chamber3.c
+│   │   │   │   │   ├── chamber4.c
+│   │   │   │   │   ├── entrance.c
+│   │   │   │   │   ├── temp.c
+│   │   │   │   │   ├── tunnel1.c
+│   │   │   │   │   ├── tunnel2.c
+│   │   │   │   │   └── tunnel3.c
+│   │   │   │   ├── npcs
+│   │   │   │   │   ├── black_market_vendor.c
+│   │   │   │   │   ├── chargen_guide.c
+│   │   │   │   │   ├── cyber_doc_medic.c
+│   │   │   │   │   ├── falconer.c
+│   │   │   │   │   ├── sal.c
+│   │   │   │   │   ├── tattoo_master.c
+│   │   │   │   │   └── thurtea_hawk.c
+│   │   │   │   ├── obj
+│   │   │   │   │   ├── armour
+│   │   │   │   │   │   └── helm.c
+│   │   │   │   │   ├── magic
+│   │   │   │   │   │   ├── ball.c
+│   │   │   │   │   │   └── invis.c
+│   │   │   │   │   ├── misc
+│   │   │   │   │   │   ├── app_board.c
+│   │   │   │   │   │   ├── bag.c
+│   │   │   │   │   │   ├── chest.c
+│   │   │   │   │   │   ├── cold.c
+│   │   │   │   │   │   ├── deed.c
+│   │   │   │   │   │   ├── donation.c
+│   │   │   │   │   │   ├── easter_egg.c
+│   │   │   │   │   │   ├── fishing_pole.c
+│   │   │   │   │   │   ├── gallows.c
+│   │   │   │   │   │   ├── handcuffs.c
+│   │   │   │   │   │   ├── hood.c
+│   │   │   │   │   │   ├── match.c
+│   │   │   │   │   │   ├── order.c
+│   │   │   │   │   │   ├── pedestal.c
+│   │   │   │   │   │   ├── shovel.c
+│   │   │   │   │   │   ├── stone.c
+│   │   │   │   │   │   ├── stone_pile.c
+│   │   │   │   │   │   ├── torch.c
+│   │   │   │   │   │   ├── vial.c
+│   │   │   │   │   │   └── watchtower.c
+│   │   │   │   │   ├── mon
+│   │   │   │   │   │   ├── armageddon.c
+│   │   │   │   │   │   ├── atmos.c
+│   │   │   │   │   │   ├── balrog.c
+│   │   │   │   │   │   ├── beggar.c
+│   │   │   │   │   │   ├── christmas_bunny.c
+│   │   │   │   │   │   ├── easter_bunny.c
+│   │   │   │   │   │   ├── execution_d.c
+│   │   │   │   │   │   ├── goblin_fighter.c
+│   │   │   │   │   │   ├── guard.c
+│   │   │   │   │   │   ├── horace.c
+│   │   │   │   │   │   ├── knight.c
+│   │   │   │   │   │   ├── lars.c
+│   │   │   │   │   │   ├── mora.c
+│   │   │   │   │   │   ├── orc_shaman.c
+│   │   │   │   │   │   ├── police.c
+│   │   │   │   │   │   ├── receptionist.c
+│   │   │   │   │   │   ├── rift_survivor.c
+│   │   │   │   │   │   ├── spider.c
+│   │   │   │   │   │   ├── unity.c
+│   │   │   │   │   │   ├── veteran_arbiter.c
+│   │   │   │   │   │   └── waitress.c
+│   │   │   │   │   ├── weapon
+│   │   │   │   │   │   ├── bow.c
+│   │   │   │   │   │   ├── dagger.c
+│   │   │   │   │   │   ├── orc_slayer.c
+│   │   │   │   │   │   └── sword.c
+│   │   │   │   │   └── bounty_board.c
+│   │   │   │   ├── orc_valley
+│   │   │   │   │   ├── chamber1.c
+│   │   │   │   │   ├── chamber2.c
+│   │   │   │   │   ├── guard.c
+│   │   │   │   │   ├── open.c
+│   │   │   │   │   ├── passage1.c
+│   │   │   │   │   ├── passage2.c
+│   │   │   │   │   ├── shaman.c
+│   │   │   │   │   └── treasure.c
+│   │   │   │   ├── quests
+│   │   │   │   │   ├── chaucer.c
+│   │   │   │   │   ├── cs_deserter.c
+│   │   │   │   │   ├── dragon.c
+│   │   │   │   │   ├── evil.c
+│   │   │   │   │   ├── hellfire.c
+│   │   │   │   │   ├── honor.c
+│   │   │   │   │   ├── imp_crown.c
+│   │   │   │   │   ├── lost_supplies.c
+│   │   │   │   │   ├── orcslayer.c
+│   │   │   │   │   ├── pyr_quest.c
+│   │   │   │   │   ├── rocky_rumor.c
+│   │   │   │   │   ├── the_blight_of_the_bog.c
+│   │   │   │   │   └── zemoch.c
+│   │   │   │   ├── vehicles
+│   │   │   │   │   ├── ex5
+│   │   │   │   │   │   ├── ex5_cargo.c
+│   │   │   │   │   │   ├── ex5_cockpit.c
+│   │   │   │   │   │   ├── ex5_crew_quarters.c
+│   │   │   │   │   │   ├── ex5_forward_bay.c
+│   │   │   │   │   │   ├── ex5_hull.c
+│   │   │   │   │   │   └── ex5_portside.c
+│   │   │   │   │   └── mountaineer
+│   │   │   │   │       ├── mtn_bunks.c
+│   │   │   │   │       ├── mtn_cab.c
+│   │   │   │   │       ├── mtn_cabin.c
+│   │   │   │   │       └── mtn_cargo.c
+│   │   │   │   ├── adv_inner.c
+│   │   │   │   ├── adv_main.c
+│   │   │   │   ├── alley1.c
+│   │   │   │   ├── alley2.c
+│   │   │   │   ├── app_room.c
+│   │   │   │   ├── arch.c
+│   │   │   │   ├── bank.c
+│   │   │   │   ├── bank_vault.c
+│   │   │   │   ├── booth.c
+│   │   │   │   ├── branches.c
+│   │   │   │   ├── building.c
+│   │   │   │   ├── cache.c
+│   │   │   │   ├── ChangeLog
+│   │   │   │   ├── chapel.c
+│   │   │   │   ├── cleric_hall.c
+│   │   │   │   ├── cleric_join.c
+│   │   │   │   ├── cleric_vote.c
+│   │   │   │   ├── commands
+│   │   │   │   ├── council.c
+│   │   │   │   ├── council_hall.c
+│   │   │   │   ├── council_vote.c
+│   │   │   │   ├── court_room.c
+│   │   │   │   ├── crypt.c
+│   │   │   │   ├── dump.c
+│   │   │   │   ├── east_road1.c
+│   │   │   │   ├── east_road2.c
+│   │   │   │   ├── east_road3.c
+│   │   │   │   ├── e_boc_la1.c
+│   │   │   │   ├── e_boc_la2.c
+│   │   │   │   ├── e_boc_la3.c
+│   │   │   │   ├── farm.c
+│   │   │   │   ├── fighter_hall.c
+│   │   │   │   ├── fighter_join.c
+│   │   │   │   ├── fighter_vote.c
+│   │   │   │   ├── forest1.c
+│   │   │   │   ├── forest2.c
+│   │   │   │   ├── forest3.c
+│   │   │   │   ├── freezer.c
+│   │   │   │   ├── hall2.c
+│   │   │   │   ├── hall3.c
+│   │   │   │   ├── hall4.c
+│   │   │   │   ├── hall5.c
+│   │   │   │   ├── hall.c
+│   │   │   │   ├── highway1.c
+│   │   │   │   ├── highway2.c
+│   │   │   │   ├── highway3.c
+│   │   │   │   ├── hm_chamber.c
+│   │   │   │   ├── hole.c
+│   │   │   │   ├── hospital.c
+│   │   │   │   ├── hotel.c
+│   │   │   │   ├── hotelroom101.c
+│   │   │   │   ├── hotelroom102.c
+│   │   │   │   ├── hotelroom103.c
+│   │   │   │   ├── hotelroom104.c
+│   │   │   │   ├── hotelroom105.c
+│   │   │   │   ├── hotelroom106.c
+│   │   │   │   ├── hotelroom107.c
+│   │   │   │   ├── hotelroom108.c
+│   │   │   │   ├── hotelroom109.c
+│   │   │   │   ├── hotelroom110.c
+│   │   │   │   ├── house.c
+│   │   │   │   ├── idle_storage.c
+│   │   │   │   ├── idle_supply.c
+│   │   │   │   ├── immortal_hall.c
+│   │   │   │   ├── inn101.c
+│   │   │   │   ├── inn102.c
+│   │   │   │   ├── inn103.c
+│   │   │   │   ├── inn104.c
+│   │   │   │   ├── inn105.c
+│   │   │   │   ├── inn106.c
+│   │   │   │   ├── inn107.c
+│   │   │   │   ├── inn108.c
+│   │   │   │   ├── inn109.c
+│   │   │   │   ├── inn110.c
+│   │   │   │   ├── jungle.c
+│   │   │   │   ├── kataan_hall.c
+│   │   │   │   ├── kataan_join.c
+│   │   │   │   ├── kataan_vote.c
+│   │   │   │   ├── legacy_audit_archive.txt
+│   │   │   │   ├── library.c
+│   │   │   │   ├── locked.c
+│   │   │   │   ├── lpc_inner.c
+│   │   │   │   ├── lpmud_room.c
+│   │   │   │   ├── mage_hall.c
+│   │   │   │   ├── mage_join.c
+│   │   │   │   ├── mage_vote.c
+│   │   │   │   ├── medium.c
+│   │   │   │   ├── monastery.c
+│   │   │   │   ├── monk_hall.c
+│   │   │   │   ├── monk_join.c
+│   │   │   │   ├── monk_vote.c
+│   │   │   │   ├── mudlib.c
+│   │   │   │   ├── n_centre1.c
+│   │   │   │   ├── n_centre2.c
+│   │   │   │   ├── ombud_hall.c
+│   │   │   │   ├── party.c
+│   │   │   │   ├── pass1.c
+│   │   │   │   ├── pass2.c
+│   │   │   │   ├── pass3.c
+│   │   │   │   ├── pier1.c
+│   │   │   │   ├── pit.c
+│   │   │   │   ├── planning_room.c
+│   │   │   │   ├── post.c
+│   │   │   │   ├── project_room.c
+│   │   │   │   ├── pub.c
+│   │   │   │   ├── quest_room.c
+│   │   │   │   ├── rain_forest.c
+│   │   │   │   ├── realty.c
+│   │   │   │   ├── restaurant.c
+│   │   │   │   ├── rifts_welcome.c
+│   │   │   │   ├── rogue_hall.c
+│   │   │   │   ├── rogue_join.c
+│   │   │   │   ├── rogue_vote.c
+│   │   │   │   ├── roots.c
+│   │   │   │   ├── sage_room.c
+│   │   │   │   ├── s_centre1.c
+│   │   │   │   ├── s_centre2.c
+│   │   │   │   ├── s_centre3.c
+│   │   │   │   ├── s_centre4.c
+│   │   │   │   ├── setter.c
+│   │   │   │   ├── sewer.c
+│   │   │   │   ├── sewer_ent.c
+│   │   │   │   ├── sheriff.c
+│   │   │   │   ├── spider_pit.c
+│   │   │   │   ├── square.c
+│   │   │   │   ├── stairs.c
+│   │   │   │   ├── storage.c
+│   │   │   │   ├── sun1.c
+│   │   │   │   ├── sun2.c
+│   │   │   │   ├── supply2.c
+│   │   │   │   ├── supply.c
+│   │   │   │   ├── torture_room.c
+│   │   │   │   ├── town_hall.c
+│   │   │   │   ├── trunk.c
+│   │   │   │   ├── unnamed1.c
+│   │   │   │   ├── void.c
+│   │   │   │   ├── wall.c
+│   │   │   │   ├── w_boc_la1.c
+│   │   │   │   ├── w_boc_la2.c
+│   │   │   │   ├── w_boc_la3.c
+│   │   │   │   ├── west_road1.c
+│   │   │   │   ├── west_road2.c
+│   │   │   │   ├── west_road3.c
+│   │   │   │   ├── wild1.c
+│   │   │   │   ├── wild2.c
+│   │   │   │   └── yard.c
+│   │   │   ├── PuertoAngel
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── pa_beach.c
+│   │   │   │   │   ├── pa_cantina.c
+│   │   │   │   │   ├── pa_church.c
+│   │   │   │   │   ├── pa_harbor.c
+│   │   │   │   │   ├── pa_main_street.c
+│   │   │   │   │   ├── pa_outskirts.c
+│   │   │   │   │   └── pa_residential.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   └── silver_cross.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── pa_barkeep.c
+│   │   │   │       ├── pa_dockmaster.c
+│   │   │   │       ├── pa_hunter.c
+│   │   │   │       └── pa_secondary_vampire.c
+│   │   │   ├── tolkeen
+│   │   │   │   ├── areas
+│   │   │   │   │   ├── tolkeen_approach.c
+│   │   │   │   │   ├── tolkeen_armory.c
+│   │   │   │   │   ├── tolkeen_barracks.c
+│   │   │   │   │   ├── tolkeen_clinic.c
+│   │   │   │   │   ├── tolkeen_component_alley.c
+│   │   │   │   │   ├── tolkeen_crypt_depths.c
+│   │   │   │   │   ├── tolkeen_crypt_entrance.c
+│   │   │   │   │   ├── tolkeen_crypt_hall.c
+│   │   │   │   │   ├── tolkeen_crypt_vault.c
+│   │   │   │   │   ├── tolkeen_crypt_ward.c
+│   │   │   │   │   ├── tolkeen_cs_trench.c
+│   │   │   │   │   ├── tolkeen_gate.c
+│   │   │   │   │   ├── tolkeen_inn.c
+│   │   │   │   │   ├── tolkeen_inn_rooms.c
+│   │   │   │   │   ├── tolkeen_library.c
+│   │   │   │   │   ├── tolkeen_mage_quarter.c
+│   │   │   │   │   ├── tolkeen_market.c
+│   │   │   │   │   ├── tolkeen_no_mans_land.c
+│   │   │   │   │   ├── tolkeen_refugee_yard.c
+│   │   │   │   │   ├── tolkeen_ruined_suburb.c
+│   │   │   │   │   ├── tolkeen_scorched_field.c
+│   │   │   │   │   ├── tolkeen_siege_edge.c
+│   │   │   │   │   ├── tolkeen_square.c
+│   │   │   │   │   ├── tolkeen_tower_ne.c
+│   │   │   │   │   ├── tolkeen_tower_nw.c
+│   │   │   │   │   ├── tolkeen_tw_workshop.c
+│   │   │   │   │   ├── tolkeen_wall_e.c
+│   │   │   │   │   ├── tolkeen_wall_n.c
+│   │   │   │   │   └── tolkeen_wall_w.c
+│   │   │   │   ├── equipment
+│   │   │   │   │   └── ward_charm.c
+│   │   │   │   ├── monsters
+│   │   │   │   │   ├── crypt_shade.c
+│   │   │   │   │   ├── cs_siege_scout.c
+│   │   │   │   │   └── tolkeen_ward_golem.c
+│   │   │   │   └── npcs
+│   │   │   │       ├── tolkeen_gate_guard.c
+│   │   │   │       ├── tolkeen_innkeeper.c
+│   │   │   │       ├── tolkeen_mage.c
+│   │   │   │       ├── tolkeen_militia.c
+│   │   │   │       ├── tolkeen_refugee.c
+│   │   │   │       └── tolkeen_tw_vendor.c
+│   │   │   ├── wizards
+│   │   │   │   ├── thurtea_test
+│   │   │   │   │   ├── archivist.c
+│   │   │   │   │   ├── canvas_shirt.c
+│   │   │   │   │   ├── canvas_trousers.c
+│   │   │   │   │   ├── field_cap.c
+│   │   │   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   │   │   ├── quartermaster.c
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   ├── rift_crawler.c
+│   │   │   │   │   ├── signet_ring.c
+│   │   │   │   │   ├── sparring_drone.c
+│   │   │   │   │   ├── test_arena.c
+│   │   │   │   │   ├── test_hall.c
+│   │   │   │   │   ├── travel_boots.c
+│   │   │   │   │   ├── utility_belt.c
+│   │   │   │   │   └── work_gloves.c
+│   │   │   │   ├── admin_chamber.c
+│   │   │   │   ├── coding_workshop.c
+│   │   │   │   ├── combat_test.c
+│   │   │   │   ├── domain_office.c
+│   │   │   │   ├── hallway.c
+│   │   │   │   ├── lounge.c
+│   │   │   │   ├── lounge_eclip_vendor.c
+│   │   │   │   ├── lounge_pet_trader.c
+│   │   │   │   ├── lounge_rifle_vendor.c
+│   │   │   │   ├── lounge_sword_vendor.c
+│   │   │   │   ├── mdc_training_dummy.c
+│   │   │   │   ├── restore_crystal.c
+│   │   │   │   ├── rift_opener.c
+│   │   │   │   ├── rp_study.c
+│   │   │   │   └── training_dummy.c
+│   │   │   ├── HOWTO.md
+│   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   ├── README.md
+│   │   │   └── WHY.md
+│   │   ├── estates
+│   │   ├── ftp
+│   │   ├── include
+│   │   │   ├── chat.h
+│   │   │   └── vehicle.h
+│   │   ├── log
+│   │   │   ├── adm
+│   │   │   │   ├── calls
+│   │   │   │   ├── eval
+│   │   │   │   ├── makewiz
+│   │   │   │   ├── playerwipes
+│   │   │   │   ├── setrole
+│   │   │   │   └── warmboot
+│   │   │   ├── debug
+│   │   │   ├── errors
+│   │   │   │   ├── adm
+│   │   │   │   ├── chitown
+│   │   │   │   ├── cmds
+│   │   │   │   ├── daemon
+│   │   │   │   ├── Examples
+│   │   │   │   ├── LoneStar
+│   │   │   │   ├── obj
+│   │   │   │   ├── Praxis
+│   │   │   │   ├── secure
+│   │   │   │   └── std
+│   │   │   ├── open
+│   │   │   │   ├── adm
+│   │   │   │   │   └── staff_promotions
+│   │   │   │   ├── rp_wizard
+│   │   │   │   │   └── tattoos
+│   │   │   │   ├── faction
+│   │   │   │   ├── illegal
+│   │   │   │   ├── stats
+│   │   │   │   └── stats.old
+│   │   │   ├── personal
+│   │   │   ├── reports
+│   │   │   │   └── ping_q
+│   │   │   ├── rp_wizard
+│   │   │   │   ├── clan
+│   │   │   │   └── tattoos
+│   │   │   ├── secure
+│   │   │   ├── watch
+│   │   │   │   └── logon
+│   │   │   ├── access
+│   │   │   ├── access.old
+│   │   │   ├── advance
+│   │   │   ├── author_stats
+│   │   │   ├── bank
+│   │   │   ├── catch
+│   │   │   ├── combat_round
+│   │   │   ├── crashes
+│   │   │   ├── domain_stats
+│   │   │   ├── enter
+│   │   │   ├── faction
+│   │   │   ├── game_log
+│   │   │   ├── httpd
+│   │   │   ├── intermud
+│   │   │   ├── mudlist_packet
+│   │   │   ├── mudlist_packet.old
+│   │   │   ├── new_players
+│   │   │   ├── runtime
+│   │   │   ├── shutdowns
+│   │   │   ├── start
+│   │   │   ├── stats
+│   │   │   └── ws-bridge.log
+│   │   ├── news
+│   │   │   ├── child
+│   │   │   ├── cleric
+│   │   │   ├── faq
+│   │   │   ├── fighter
+│   │   │   ├── high_mortal
+│   │   │   ├── immortal
+│   │   │   ├── kataan
+│   │   │   ├── locked
+│   │   │   ├── mage
+│   │   │   ├── monk
+│   │   │   ├── news
+│   │   │   ├── registration
+│   │   │   ├── rogue
+│   │   │   └── welcome
+│   │   ├── obj
+│   │   │   ├── items
+│   │   │   │   └── atlantean_text.c
+│   │   │   ├── tattoo_weapons
+│   │   │   │   ├── flaming_arrow.c
+│   │   │   │   ├── flaming_sword.c
+│   │   │   │   ├── tattoo_battle_axe.c
+│   │   │   │   ├── tattoo_dagger.c
+│   │   │   │   └── tattoo_spear.c
+│   │   │   ├── credcard.c
+│   │   │   └── credit_chip.c
+│   │   ├── realms
+│   │   │   ├── splynncryth
+│   │   │   │   ├── area
+│   │   │   │   │   ├── armor
+│   │   │   │   │   ├── npc
+│   │   │   │   │   ├── room
+│   │   │   │   │   └── weap
+│   │   │   │   └── workroom.c
+│   │   │   ├── thurtea
+│   │   │   │   ├── adm
+│   │   │   │   │   └── access.c
+│   │   │   │   ├── area
+│   │   │   │   │   ├── armor
+│   │   │   │   │   │   └── testarmor.c
+│   │   │   │   │   ├── npc
+│   │   │   │   │   │   └── bandit.c
+│   │   │   │   │   ├── room
+│   │   │   │   │   │   └── testroom.c
+│   │   │   │   │   └── weap
+│   │   │   │   │       └── testsword.c
+│   │   │   │   └── workroom.c
+│   │   │   ├── HOWTO.md
+│   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   ├── README.md
+│   │   │   └── WHY.md
+│   │   ├── save
+│   │   ├── secure
+│   │   │   ├── cfg
+│   │   │   │   ├── aliases.cfg
+│   │   │   │   ├── groups.cfg
+│   │   │   │   ├── groups.cfg.example
+│   │   │   │   ├── mudos.cfg
+│   │   │   │   ├── preload.cfg
+│   │   │   │   ├── read.cfg
+│   │   │   │   ├── socket.cfg
+│   │   │   │   └── write.cfg
+│   │   │   ├── cmds
+│   │   │   │   ├── adm
+│   │   │   │   │   ├── _addguest.c
+│   │   │   │   │   ├── _allow.c
+│   │   │   │   │   ├── _arrest.c
+│   │   │   │   │   ├── _currency.c
+│   │   │   │   │   ├── _economy.c
+│   │   │   │   │   ├── _elections.c
+│   │   │   │   │   ├── _godling.c
+│   │   │   │   │   ├── _grant.c
+│   │   │   │   │   ├── _lawlog.c
+│   │   │   │   │   ├── _link.c
+│   │   │   │   │   ├── _register.c
+│   │   │   │   │   ├── _removeguest.c
+│   │   │   │   │   ├── _revoke.c
+│   │   │   │   │   ├── _rid.c
+│   │   │   │   │   ├── _setreboot.c
+│   │   │   │   │   ├── _shutdown.c
+│   │   │   │   │   ├── _snoopers.c
+│   │   │   │   │   ├── _tempban.c
+│   │   │   │   │   ├── _unallow.c
+│   │   │   │   │   ├── _unbanish.c
+│   │   │   │   │   ├── _unlink.c
+│   │   │   │   │   ├── _unregister.c
+│   │   │   │   │   ├── _unwatch.c
+│   │   │   │   │   ├── _watch.c
+│   │   │   │   │   ├── _whoallowed.c
+│   │   │   │   │   ├── _whobanished.c
+│   │   │   │   │   ├── _whoguests.c
+│   │   │   │   │   ├── _whoregistered.c
+│   │   │   │   │   ├── _whowatched.c
+│   │   │   │   │   └── _xmote.c
+│   │   │   │   ├── ambassador
+│   │   │   │   │   ├── _cat.c
+│   │   │   │   │   ├── _cd.c
+│   │   │   │   │   ├── _cp.c
+│   │   │   │   │   ├── _diff.c
+│   │   │   │   │   ├── _ed.c
+│   │   │   │   │   ├── _gauge.c
+│   │   │   │   │   ├── _grep.c
+│   │   │   │   │   ├── _head.c
+│   │   │   │   │   ├── _load.c
+│   │   │   │   │   ├── _ls.c
+│   │   │   │   │   ├── _more.c
+│   │   │   │   │   ├── _pwd.c
+│   │   │   │   │   ├── _sc.c
+│   │   │   │   │   ├── _ss.c
+│   │   │   │   │   └── _tail.c
+│   │   │   │   ├── creator
+│   │   │   │   │   ├── _call.c
+│   │   │   │   │   ├── _changelog.c
+│   │   │   │   │   ├── _clone.c
+│   │   │   │   │   ├── _dbxframe.c
+│   │   │   │   │   ├── _dbxwhere.c
+│   │   │   │   │   ├── _domains.c
+│   │   │   │   │   ├── _dref.c
+│   │   │   │   │   ├── _du.c
+│   │   │   │   │   ├── _eref.c
+│   │   │   │   │   ├── _eval.c
+│   │   │   │   │   ├── _force.c
+│   │   │   │   │   ├── _grant.c
+│   │   │   │   │   ├── _imcp.c
+│   │   │   │   │   ├── _locate.c
+│   │   │   │   │   ├── _log.c
+│   │   │   │   │   ├── _mkdir.c
+│   │   │   │   │   ├── _move.c
+│   │   │   │   │   ├── _mv.c
+│   │   │   │   │   ├── _realms.c
+│   │   │   │   │   ├── _ref.c
+│   │   │   │   │   ├── _refs.c
+│   │   │   │   │   ├── _rm.c
+│   │   │   │   │   ├── _rmdir.c
+│   │   │   │   │   ├── _snoop.c
+│   │   │   │   │   ├── _sponsor.c
+│   │   │   │   │   ├── _tref.c
+│   │   │   │   │   ├── _update.c
+│   │   │   │   │   └── _wizz.c
+│   │   │   │   └── mortal
+│   │   │   │       ├── _bug.c
+│   │   │   │       ├── _chfn.c
+│   │   │   │       ├── _finger.c
+│   │   │   │       ├── _idea.c
+│   │   │   │       ├── _mudidea.c
+│   │   │   │       ├── _passwd.c
+│   │   │   │       ├── _peer.c
+│   │   │   │       ├── _praise.c
+│   │   │   │       ├── _reply.c
+│   │   │   │       ├── _rwho.c
+│   │   │   │       ├── _suicide.c
+│   │   │   │       ├── _tell.c
+│   │   │   │       └── _typo.c
+│   │   │   ├── daemon
+│   │   │   │   ├── account_d.c
+│   │   │   │   ├── advance.c
+│   │   │   │   ├── bank.c
+│   │   │   │   ├── bboard.c
+│   │   │   │   ├── bboard.h
+│   │   │   │   ├── chat.c
+│   │   │   │   ├── events.c
+│   │   │   │   ├── finger.c
+│   │   │   │   ├── folders.c
+│   │   │   │   ├── folders.h
+│   │   │   │   ├── letters.c
+│   │   │   │   ├── letters.h
+│   │   │   │   ├── localpost.c
+│   │   │   │   ├── localpost.h
+│   │   │   │   ├── master.c
+│   │   │   │   ├── master.h
+│   │   │   │   ├── mcp_d.c
+│   │   │   │   ├── mcp_d.h
+│   │   │   │   ├── options.c
+│   │   │   │   ├── options.h
+│   │   │   │   ├── player.c
+│   │   │   │   ├── politics.c
+│   │   │   │   ├── remotepost.c
+│   │   │   │   ├── remotepost.h
+│   │   │   │   ├── shutdown.c
+│   │   │   │   ├── shutdown.h
+│   │   │   │   ├── users.c
+│   │   │   │   ├── users.h
+│   │   │   │   └── wiztools.c
+│   │   │   ├── etc
+│   │   │   │   ├── approval
+│   │   │   │   ├── elections
+│   │   │   │   ├── mudlib
+│   │   │   │   └── quests
+│   │   │   ├── include
+│   │   │   │   ├── astronomy.h
+│   │   │   │   ├── balance.h
+│   │   │   │   ├── bank.h
+│   │   │   │   ├── bboard.h
+│   │   │   │   ├── cfg.h
+│   │   │   │   ├── clock.h
+│   │   │   │   ├── commands.h
+│   │   │   │   ├── config.h
+│   │   │   │   ├── council.h
+│   │   │   │   ├── daemons.h
+│   │   │   │   ├── databases.h
+│   │   │   │   ├── debug2.h
+│   │   │   │   ├── debug.h
+│   │   │   │   ├── deputies.h
+│   │   │   │   ├── dirs.h
+│   │   │   │   ├── dummy.h
+│   │   │   │   ├── files.h
+│   │   │   │   ├── flags.h
+│   │   │   │   ├── global.h
+│   │   │   │   ├── iips.h
+│   │   │   │   ├── living.h
+│   │   │   │   ├── localtime.h
+│   │   │   │   ├── materials.h
+│   │   │   │   ├── money.h
+│   │   │   │   ├── move.h
+│   │   │   │   ├── ncommands.h
+│   │   │   │   ├── network.h
+│   │   │   │   ├── news.h
+│   │   │   │   ├── object.h
+│   │   │   │   ├── objects.h
+│   │   │   │   ├── old_items.h
+│   │   │   │   ├── old_room.h
+│   │   │   │   ├── old_weapon.h
+│   │   │   │   ├── options.h
+│   │   │   │   ├── parse_com.h
+│   │   │   │   ├── party.h
+│   │   │   │   ├── post.h
+│   │   │   │   ├── privs.h
+│   │   │   │   ├── quests.h
+│   │   │   │   ├── rooms.h
+│   │   │   │   ├── save.h
+│   │   │   │   ├── security.h
+│   │   │   │   ├── simul_efun.h
+│   │   │   │   ├── socket.h
+│   │   │   │   ├── soul.h
+│   │   │   │   ├── std.h
+│   │   │   │   ├── stdprops.h
+│   │   │   │   ├── tell.h
+│   │   │   │   ├── user.h
+│   │   │   │   ├── voting.h
+│   │   │   │   └── writef.h
+│   │   │   ├── save
+│   │   │   │   ├── apprentice
+│   │   │   │   │   ├── players
+│   │   │   │   │   └── submissions
+│   │   │   │   ├── binary
+│   │   │   │   ├── boards
+│   │   │   │   ├── daemon
+│   │   │   │   │   └── politics.o
+│   │   │   │   ├── daemons
+│   │   │   │   ├── letters
+│   │   │   │   ├── login_accounts
+│   │   │   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   │   │   └── README.md
+│   │   │   │   ├── postal
+│   │   │   │   │   ├── a
+│   │   │   │   │   ├── c
+│   │   │   │   │   │   └── cabe
+│   │   │   │   │   ├── d
+│   │   │   │   │   │   └── dragonchar
+│   │   │   │   │   ├── f
+│   │   │   │   │   │   └── fear
+│   │   │   │   │   ├── l
+│   │   │   │   │   │   └── leywalker
+│   │   │   │   │   ├── m
+│   │   │   │   │   │   └── merctest
+│   │   │   │   │   ├── p
+│   │   │   │   │   │   ├── percivil
+│   │   │   │   │   │   ├── psistalker
+│   │   │   │   │   │   ├── ptatlana
+│   │   │   │   │   │   ├── ptatlanb
+│   │   │   │   │   │   ├── ptcknight
+│   │   │   │   │   │   ├── ptcoder
+│   │   │   │   │   │   ├── ptdacon
+│   │   │   │   │   │   ├── ptdragona
+│   │   │   │   │   │   ├── ptdragonb
+│   │   │   │   │   │   ├── ptrpwiz
+│   │   │   │   │   │   ├── ptsmoake
+│   │   │   │   │   │   ├── pttitana
+│   │   │   │   │   │   ├── pttitanb
+│   │   │   │   │   │   ├── ptvampa
+│   │   │   │   │   │   └── ptvampb
+│   │   │   │   │   ├── s
+│   │   │   │   │   │   └── splynncryth
+│   │   │   │   │   ├── t
+│   │   │   │   │   │   └── thurtea
+│   │   │   │   │   ├── v
+│   │   │   │   │   │   ├── verifier
+│   │   │   │   │   │   ├── vzzsplynnh
+│   │   │   │   │   │   ├── vzzsplynnk
+│   │   │   │   │   │   └── vzzupdater
+│   │   │   │   │   └── z
+│   │   │   │   │       ├── ztestfive
+│   │   │   │   │       ├── ztestfour
+│   │   │   │   │       ├── ztestrr
+│   │   │   │   │       ├── ztestthree
+│   │   │   │   │       ├── ztesttwo
+│   │   │   │   │       └── zztest
+│   │   │   │   ├── skill_grants
+│   │   │   │   ├── skill_requests
+│   │   │   │   ├── users
+│   │   │   │   │   ├── a
+│   │   │   │   │   ├── d
+│   │   │   │   │   ├── f
+│   │   │   │   │   ├── h
+│   │   │   │   │   ├── m
+│   │   │   │   │   ├── p
+│   │   │   │   │   ├── q
+│   │   │   │   │   ├── s
+│   │   │   │   │   ├── t
+│   │   │   │   │   │   └── thurtea.o
+│   │   │   │   │   ├── v
+│   │   │   │   │   │   ├── vzzsplynnk.o
+│   │   │   │   │   │   └── vzzupdater.o
+│   │   │   │   │   └── z
+│   │   │   │   └── votes
+│   │   │   ├── SimulEfun
+│   │   │   │   ├── absolute_path.c
+│   │   │   │   ├── absolute_value.c
+│   │   │   │   ├── alignment.c
+│   │   │   │   ├── base_name.c
+│   │   │   │   ├── communications.c
+│   │   │   │   ├── convert_name.c
+│   │   │   │   ├── copy.c
+│   │   │   │   ├── creator_file.c
+│   │   │   │   ├── distinct_array.c
+│   │   │   │   ├── domains.c
+│   │   │   │   ├── economy.c
+│   │   │   │   ├── english.c
+│   │   │   │   ├── events.c
+│   │   │   │   ├── exclude_array.c
+│   │   │   │   ├── files.c
+│   │   │   │   ├── format_page.c
+│   │   │   │   ├── format_string.c
+│   │   │   │   ├── get_object.c
+│   │   │   │   ├── identify.c
+│   │   │   │   ├── idle.c
+│   │   │   │   ├── interact.c
+│   │   │   │   ├── interface.c
+│   │   │   │   ├── light.c
+│   │   │   │   ├── load_object.c
+│   │   │   │   ├── log_file.c
+│   │   │   │   ├── magic_class.c
+│   │   │   │   ├── misc.c
+│   │   │   │   ├── mud_info.c
+│   │   │   │   ├── ordinal.c
+│   │   │   │   ├── parse_objects.c
+│   │   │   │   ├── path_file.c
+│   │   │   │   ├── percent.c
+│   │   │   │   ├── personal_log.c
+│   │   │   │   ├── pointers.c
+│   │   │   │   ├── read_database.c
+│   │   │   │   ├── security.c
+│   │   │   │   ├── SimulEfun.c
+│   │   │   │   ├── SimulEfun.h
+│   │   │   │   ├── strings.c
+│   │   │   │   ├── substr.c
+│   │   │   │   ├── time.c
+│   │   │   │   ├── to_object.c
+│   │   │   │   ├── translate.c
+│   │   │   │   ├── user_exists.c
+│   │   │   │   ├── user_path.c
+│   │   │   │   ├── visible.c
+│   │   │   │   ├── wiz_role.c
+│   │   │   │   └── wrap.c
+│   │   │   ├── std
+│   │   │   │   ├── client.c
+│   │   │   │   ├── daemon.c
+│   │   │   │   ├── login.c
+│   │   │   │   ├── login.cnf
+│   │   │   │   ├── login.nm33
+│   │   │   │   ├── post.c
+│   │   │   │   └── post.h
+│   │   │   ├── HOWTO.md
+│   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   ├── README.md
+│   │   │   └── WHY.md
+│   │   ├── std
+│   │   │   ├── hm
+│   │   │   │   ├── castle.c
+│   │   │   │   ├── hm_room.c
+│   │   │   │   └── room_maker.c
+│   │   │   ├── living
+│   │   │   │   ├── body.c
+│   │   │   │   ├── combat.c
+│   │   │   │   ├── env.c
+│   │   │   │   ├── follow.c
+│   │   │   │   ├── messages.c
+│   │   │   │   └── skills.c
+│   │   │   ├── obj
+│   │   │   │   ├── templates
+│   │   │   │   │   ├── qcs_armor.c
+│   │   │   │   │   ├── qcs_npc.c
+│   │   │   │   │   ├── qcs_room.c
+│   │   │   │   │   └── qcs_weapon.c
+│   │   │   │   ├── aura_orb.c
+│   │   │   │   ├── body_part.c
+│   │   │   │   ├── brand.c
+│   │   │   │   ├── coins.c
+│   │   │   │   ├── corpse.c
+│   │   │   │   ├── dark_orb.c
+│   │   │   │   ├── deed.c
+│   │   │   │   ├── dim_pocket_bag.c
+│   │   │   │   ├── ears_orb.c
+│   │   │   │   ├── fresh_blood.c
+│   │   │   │   ├── light_orb.c
+│   │   │   │   ├── magic_net.c
+│   │   │   │   ├── player_list.c
+│   │   │   │   ├── rifts_familiar.c
+│   │   │   │   ├── RoomCreator.c
+│   │   │   │   ├── torch.c
+│   │   │   │   ├── undead.c
+│   │   │   │   ├── wed_ring.c
+│   │   │   │   └── workroom.c
+│   │   │   ├── room
+│   │   │   │   ├── exits.c
+│   │   │   │   ├── exits.h
+│   │   │   │   ├── items.c
+│   │   │   │   └── senses.c
+│   │   │   ├── user
+│   │   │   │   ├── autosave.c
+│   │   │   │   ├── autosave.h
+│   │   │   │   ├── editor.c
+│   │   │   │   ├── editor.h
+│   │   │   │   ├── files.c
+│   │   │   │   ├── files.h
+│   │   │   │   ├── more.c
+│   │   │   │   ├── more.h
+│   │   │   │   ├── nmsh.c
+│   │   │   │   ├── nmsh.h
+│   │   │   │   └── refs.c
+│   │   │   ├── virtual
+│   │   │   │   └── compile.c
+│   │   │   ├── access.c
+│   │   │   ├── armour.c
+│   │   │   ├── barkeep.c
+│   │   │   ├── bboard.c
+│   │   │   ├── bboard.h
+│   │   │   ├── blue_rift_portal.c
+│   │   │   ├── clean_up.c
+│   │   │   ├── clean_up.h
+│   │   │   ├── container.c
+│   │   │   ├── container.h
+│   │   │   ├── daemon.c
+│   │   │   ├── deputy.c
+│   │   │   ├── door.c
+│   │   │   ├── drink.c
+│   │   │   ├── drink.h
+│   │   │   ├── estate.c
+│   │   │   ├── food.c
+│   │   │   ├── food.h
+│   │   │   ├── germ.c
+│   │   │   ├── germ.h
+│   │   │   ├── guild.c
+│   │   │   ├── HOWTO.md
+│   │   │   ├── light.c
+│   │   │   ├── light.h
+│   │   │   ├── living.c
+│   │   │   ├── LLM_BREADCRUMB.md
+│   │   │   ├── money.c
+│   │   │   ├── monster.c
+│   │   │   ├── Object.c
+│   │   │   ├── Object.h
+│   │   │   ├── pier.c
+│   │   │   ├── poison.c
+│   │   │   ├── prop_logic.c
+│   │   │   ├── quest_ob.c
+│   │   │   ├── README.md
+│   │   │   ├── realtor.c
+│   │   │   ├── rift_portal.c
+│   │   │   ├── rifts_ambient.c
+│   │   │   ├── rifts_corpse.c
+│   │   │   ├── rifts_npc.c
+│   │   │   ├── rifts_pet.c
+│   │   │   ├── rifts_radio.c
+│   │   │   ├── rifts_vehicle.c
+│   │   │   ├── rifts_vendor.c
+│   │   │   ├── room.c
+│   │   │   ├── room.h
+│   │   │   ├── sign.c
+│   │   │   ├── storage.c
+│   │   │   ├── storage.h
+│   │   │   ├── test.c
+│   │   │   ├── user.c
+│   │   │   ├── vault.c
+│   │   │   ├── vendor.c
+│   │   │   ├── virtual.c
+│   │   │   ├── vote_login.h
+│   │   │   ├── vote_room.c
+│   │   │   ├── weapon.c
+│   │   │   └── WHY.md
+│   │   ├── www
+│   │   │   ├── errors
+│   │   │   │   ├── access.html
+│   │   │   │   ├── badcmd.html
+│   │   │   │   ├── badgate.html
+│   │   │   │   └── notfound.html
+│   │   │   ├── gateways
+│   │   │   │   ├── efuns.c
+│   │   │   │   ├── finger.c
+│   │   │   │   ├── HomePages.c
+│   │   │   │   ├── mudlist.c
+│   │   │   │   ├── SimulEfuns.c
+│   │   │   │   └── who.c
+│   │   │   └── index.html
+│   │   ├── LLM_BREADCRUMB.md
+│   │   └── README.md
+│   ├── win32
+│   │   ├── driver.exe
+│   │   ├── LLM_BREADCRUMB.md
+│   │   ├── mud.bat
+│   │   └── README.md
+│   ├── INSTALL
+│   ├── LLM_BREADCRUMB.md
+│   ├── README.md
+│   └── RiftsMUD Memories.txt
+├── scripts
+│   ├── check-setup.sh
+│   ├── init-local-config.sh
+│   ├── LLM_BREADCRUMB.md
+│   └── README.md
+├── staff-handbook
+│   ├── ch01-server.md
+│   ├── ch02-gotchas.md
+│   ├── ch03-staff-ranks.md
+│   ├── ch04-wizard-tools.md
+│   ├── ch05-chargen-flow.md
+│   ├── ch06-races.md
+│   ├── ch07-occs.md
+│   ├── ch08-mdc-sdc.md
+│   ├── ch09-combat.md
+│   ├── ch10-skills.md
+│   ├── ch11-spells.md
+│   ├── ch12-psionics.md
+│   ├── ch13-ppe-isp.md
+│   ├── ch14-alignments.md
+│   ├── ch15-insanities.md
+│   ├── ch16-builder.md
+│   ├── HOWTO.md
+│   ├── index.md
+│   ├── LLM_BREADCRUMB.md
+│   ├── README.md
+│   └── WHY.md
+├── tools
+│   ├── LLM_BREADCRUMB.md
+│   ├── migrate-static.pl
+│   ├── playtest_create_chars.py
+│   ├── README.md
+│   ├── section8_verify3.py
+│   ├── section8_verify4.py
+│   ├── section8_verify.py
+│   └── spell_shortcut_verify.py
+├── www
+│   ├── assets
+│   │   ├── aethermud-favicon.ico
+│   │   ├── AetherMUD.jpeg
+│   │   ├── android-chrome-192x192.png
+│   │   ├── android-chrome-512x512.png
+│   │   ├── apple-touch-icon.png
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon.ico
+│   │   ├── invocations.md
+│   │   ├── LLM_BREADCRUMB.md
+│   │   └── README.md
+│   ├── css
+│   │   ├── LLM_BREADCRUMB.md
+│   │   ├── README.md
+│   │   └── site.css
+│   ├── js
+│   │   ├── LLM_BREADCRUMB.md
+│   │   └── README.md
+│   ├── admin-commands.html
+│   ├── admin.html
+│   ├── apprentice.html
+│   ├── chargen.html
+│   ├── coding.html
+│   ├── commands.html
+│   ├── domain.html
+│   ├── HOWTO.md
+│   ├── index.html
+│   ├── LLM_BREADCRUMB.md
+│   ├── occs.html
+│   ├── play.html
+│   ├── qcs.html
+│   ├── races.html
+│   ├── README.md
+│   ├── roadmap.html
+│   ├── roleplay.html
+│   ├── staff-toolkit.html
+│   ├── webclient.html
+│   ├── WHY.md
+│   └── world.html
+├── zip-files
+│   ├── deadsouls
+│   │   └── ds3.8.2
+│   │       ├── bin
+│   │       │   ├── mudos.cfg
+│   │       │   ├── mudos.cfg.orig
+│   │       │   ├── README
+│   │       │   └── startmud
+│   │       ├── extra
+│   │       │   ├── crat
+│   │       │   │   ├── column_parse
+│   │       │   │   ├── d.c
+│   │       │   │   ├── enters
+│   │       │   │   ├── gdbinit
+│   │       │   │   ├── indentall
+│   │       │   │   ├── livepatch
+│   │       │   │   ├── newpatch
+│   │       │   │   ├── newver
+│   │       │   │   └── rr
+│   │       │   ├── creremote
+│   │       │   │   ├── creremote
+│   │       │   │   ├── README.creremote
+│   │       │   │   └── remote.c
+│   │       │   ├── mingw
+│   │       │   │   ├── configuration
+│   │       │   │   └── configure.h
+│   │       │   ├── wolfpaw
+│   │       │   │   ├── configure.h
+│   │       │   │   ├── macros.h
+│   │       │   │   └── system_libs
+│   │       │   ├── README.txt
+│   │       │   └── restore_cfg
+│   │       ├── fluffos-2.23-ds03
+│   │       │   ├── compat
+│   │       │   │   ├── simuls
+│   │       │   │   │   ├── apply.c
+│   │       │   │   │   ├── break_string.c
+│   │       │   │   │   ├── dump_socket_status.c
+│   │       │   │   │   ├── parse_command.c
+│   │       │   │   │   ├── process_string.c
+│   │       │   │   │   └── tail.c
+│   │       │   │   ├── fixstatic
+│   │       │   │   └── parser_error.c
+│   │       │   ├── include
+│   │       │   │   ├── function.h
+│   │       │   │   ├── localtime.h
+│   │       │   │   ├── origin.h
+│   │       │   │   ├── parser_error.h
+│   │       │   │   ├── runtime_config.h
+│   │       │   │   ├── semantic.cache
+│   │       │   │   ├── socket_err.h
+│   │       │   │   └── type.h
+│   │       │   ├── packages
+│   │       │   │   ├── async.c
+│   │       │   │   ├── async.h
+│   │       │   │   ├── async_spec.c
+│   │       │   │   ├── compress.c
+│   │       │   │   ├── compress_spec.c
+│   │       │   │   ├── contrib.c
+│   │       │   │   ├── contrib_spec.c
+│   │       │   │   ├── crypto.c
+│   │       │   │   ├── crypto_spec.c
+│   │       │   │   ├── db.c
+│   │       │   │   ├── db.h
+│   │       │   │   ├── db_spec.c
+│   │       │   │   ├── debug.c
+│   │       │   │   ├── debug.h
+│   │       │   │   ├── debug_spec.c
+│   │       │   │   ├── develop.c
+│   │       │   │   ├── develop_spec.c
+│   │       │   │   ├── dslib.c
+│   │       │   │   ├── dslib_spec.c
+│   │       │   │   ├── dwlib.c
+│   │       │   │   ├── dwlib_spec.c
+│   │       │   │   ├── external.c
+│   │       │   │   ├── external_spec.c
+│   │       │   │   ├── GNUmakefile.pre
+│   │       │   │   ├── Makefile.master
+│   │       │   │   ├── Makefile.pre
+│   │       │   │   ├── math.c
+│   │       │   │   ├── math_spec.c
+│   │       │   │   ├── matrix.c
+│   │       │   │   ├── matrix.h
+│   │       │   │   ├── matrix_spec.c
+│   │       │   │   ├── mudlib_stats.c
+│   │       │   │   ├── mudlib_stats.h
+│   │       │   │   ├── mudlib_stats_spec.c
+│   │       │   │   ├── parser.c
+│   │       │   │   ├── parser.h
+│   │       │   │   ├── parser_spec.c
+│   │       │   │   ├── pcre.c
+│   │       │   │   ├── pcre.h
+│   │       │   │   ├── pcre_spec.c
+│   │       │   │   ├── readme
+│   │       │   │   ├── sha1.c
+│   │       │   │   ├── sha1_spec.c
+│   │       │   │   ├── sockets.c
+│   │       │   │   ├── sockets_spec.c
+│   │       │   │   ├── uids.c
+│   │       │   │   ├── uids.h
+│   │       │   │   └── uids_spec.c
+│   │       │   ├── testsuite
+│   │       │   │   ├── clone
+│   │       │   │   │   ├── login.c
+│   │       │   │   │   ├── readme
+│   │       │   │   │   └── user.c
+│   │       │   │   ├── command
+│   │       │   │   │   ├── codefor.c
+│   │       │   │   │   ├── dest.c
+│   │       │   │   │   ├── ed.c
+│   │       │   │   │   ├── eval.c
+│   │       │   │   │   ├── quit.c
+│   │       │   │   │   ├── readme
+│   │       │   │   │   ├── rm.c
+│   │       │   │   │   ├── say.c
+│   │       │   │   │   ├── shutdown.c
+│   │       │   │   │   ├── speed.c
+│   │       │   │   │   ├── tests.c
+│   │       │   │   │   ├── update.c
+│   │       │   │   │   └── who.c
+│   │       │   │   ├── data
+│   │       │   │   │   └── readme
+│   │       │   │   ├── etc
+│   │       │   │   │   ├── config.test
+│   │       │   │   │   └── motd
+│   │       │   │   ├── include
+│   │       │   │   │   ├── command.h
+│   │       │   │   │   ├── config.h
+│   │       │   │   │   ├── globals.h
+│   │       │   │   │   ├── lpctypes.h
+│   │       │   │   │   ├── readme
+│   │       │   │   │   └── tests.h
+│   │       │   │   ├── inherit
+│   │       │   │   │   ├── master
+│   │       │   │   │   ├── base.c
+│   │       │   │   │   ├── clean_up.c
+│   │       │   │   │   ├── readme
+│   │       │   │   │   └── tests.c
+│   │       │   │   ├── log
+│   │       │   │   │   ├── author_stats
+│   │       │   │   │   ├── domain_stats
+│   │       │   │   │   └── readme
+│   │       │   │   ├── single
+│   │       │   │   │   ├── tests
+│   │       │   │   │   ├── inh.c
+│   │       │   │   │   ├── master.c
+│   │       │   │   │   ├── readme
+│   │       │   │   │   ├── simul_efun.c
+│   │       │   │   │   └── void.c
+│   │       │   │   ├── u
+│   │       │   │   │   └── readme
+│   │       │   │   ├── readme
+│   │       │   │   └── test_control.c
+│   │       │   ├── Win32
+│   │       │   │   ├── ar.c
+│   │       │   │   ├── configure.h
+│   │       │   │   ├── cp.bat
+│   │       │   │   ├── mv.bat
+│   │       │   │   ├── rm.bat
+│   │       │   │   └── touch.c
+│   │       │   ├── windows
+│   │       │   │   ├── addr_server.mak
+│   │       │   │   ├── clean.bat
+│   │       │   │   ├── configure.h
+│   │       │   │   ├── edit_source.mak
+│   │       │   │   ├── mudos.mak
+│   │       │   │   ├── README.win32
+│   │       │   │   ├── step1.bat
+│   │       │   │   ├── stepdbg.bat
+│   │       │   │   └── steprel.bat
+│   │       │   ├── 32bitmalloc.c
+│   │       │   ├── 64bitmalloc.c
+│   │       │   ├── add_action.c
+│   │       │   ├── add_action.h
+│   │       │   ├── addr_server.c
+│   │       │   ├── addr_server.h
+│   │       │   ├── applies
+│   │       │   ├── arch.h
+│   │       │   ├── array.c
+│   │       │   ├── array.h
+│   │       │   ├── Artistic.README
+│   │       │   ├── avltree.c
+│   │       │   ├── avltree.h
+│   │       │   ├── backend.c
+│   │       │   ├── backend.h
+│   │       │   ├── bsdmalloc.c
+│   │       │   ├── bsdmalloc.h
+│   │       │   ├── buffer.c
+│   │       │   ├── buffer.h
+│   │       │   ├── Bugs
+│   │       │   ├── build.FluffOS
+│   │       │   ├── buildMudOS.bat
+│   │       │   ├── call_out.c
+│   │       │   ├── call_out.h
+│   │       │   ├── ChangeLog
+│   │       │   ├── ChangeLog.alpha
+│   │       │   ├── ChangeLog.beta
+│   │       │   ├── ChangeLog.fluffos
+│   │       │   ├── ChangeLog.fluffos-2.x
+│   │       │   ├── class.c
+│   │       │   ├── class.h
+│   │       │   ├── comm.c
+│   │       │   ├── comm.h
+│   │       │   ├── compiler.c
+│   │       │   ├── compiler.h
+│   │       │   ├── Config.example
+│   │       │   ├── config.h
+│   │       │   ├── configure
+│   │       │   ├── console.c
+│   │       │   ├── console.h
+│   │       │   ├── Copyright
+│   │       │   ├── crc32.c
+│   │       │   ├── crc32.h
+│   │       │   ├── crctab.h
+│   │       │   ├── Credits.LPmud
+│   │       │   ├── Credits.MudOS
+│   │       │   ├── crypt.c
+│   │       │   ├── crypt.h
+│   │       │   ├── debug.c
+│   │       │   ├── debug.h
+│   │       │   ├── debugmalloc.c
+│   │       │   ├── debugmalloc.h
+│   │       │   ├── Dependencies
+│   │       │   ├── disassembler.c
+│   │       │   ├── dtrace_compile.c
+│   │       │   ├── dumpstat.c
+│   │       │   ├── dumpstat.h
+│   │       │   ├── ed.c
+│   │       │   ├── ed.h
+│   │       │   ├── edit_source.c
+│   │       │   ├── edit_source.h
+│   │       │   ├── efuns_incl.h
+│   │       │   ├── efuns_main.c
+│   │       │   ├── efuns_main.h
+│   │       │   ├── efuns_port.c
+│   │       │   ├── eoperators.c
+│   │       │   ├── eoperators.h
+│   │       │   ├── eval.c
+│   │       │   ├── eval.h
+│   │       │   ├── Exit_Codes
+│   │       │   ├── file.c
+│   │       │   ├── file.h
+│   │       │   ├── file_incl.h
+│   │       │   ├── fliconv.c
+│   │       │   ├── fliconv.h
+│   │       │   ├── fluffos.d
+│   │       │   ├── func_spec.c
+│   │       │   ├── function.c
+│   │       │   ├── function.h
+│   │       │   ├── generate.c
+│   │       │   ├── generate.h
+│   │       │   ├── GNUmakefile
+│   │       │   ├── GNUmakefile.debug
+│   │       │   ├── GNUmakefile.in
+│   │       │   ├── GNUmakefile.keep
+│   │       │   ├── gnumalloc.c
+│   │       │   ├── gnumalloc.h
+│   │       │   ├── grammar.y.pre
+│   │       │   ├── hash.c
+│   │       │   ├── hash.h
+│   │       │   ├── icode.c
+│   │       │   ├── icode.h
+│   │       │   ├── Ideas
+│   │       │   ├── INSTALL
+│   │       │   ├── interpret.c
+│   │       │   ├── interpret.h
+│   │       │   ├── IT_CRASHED
+│   │       │   ├── lag.d
+│   │       │   ├── lag.stp
+│   │       │   ├── lex.c
+│   │       │   ├── lex.h
+│   │       │   ├── local_options.ds
+│   │       │   ├── local_options.ds.debug
+│   │       │   ├── local_options.dw
+│   │       │   ├── local_options.dwclone
+│   │       │   ├── local_options.foundation
+│   │       │   ├── local_options.foundation2
+│   │       │   ├── local_options.fr
+│   │       │   ├── local_options.lil
+│   │       │   ├── local_options.lima
+│   │       │   ├── local_options.lpuni
+│   │       │   ├── local_options.merentha
+│   │       │   ├── local_options.nm3
+│   │       │   ├── local_options.nm4
+│   │       │   ├── local_options.sapid
+│   │       │   ├── local_options.skylib
+│   │       │   ├── local_options.tmi2
+│   │       │   ├── lpc.h
+│   │       │   ├── lpc_incl.h
+│   │       │   ├── macros.h
+│   │       │   ├── main.c
+│   │       │   ├── main.h
+│   │       │   ├── Makefile
+│   │       │   ├── Makefile.in
+│   │       │   ├── Makefile.in.pre
+│   │       │   ├── make_func.h
+│   │       │   ├── make_func.y
+│   │       │   ├── make_malloc.c
+│   │       │   ├── malloc_incl.h
+│   │       │   ├── mapping.c
+│   │       │   ├── mapping.h
+│   │       │   ├── master.c
+│   │       │   ├── master.h
+│   │       │   ├── md.c
+│   │       │   ├── md.h
+│   │       │   ├── mmalloc.c
+│   │       │   ├── my_malloc.h
+│   │       │   ├── network_incl.h
+│   │       │   ├── NMakefile.in
+│   │       │   ├── NMakefile.in.pre
+│   │       │   ├── object.c
+│   │       │   ├── object.h
+│   │       │   ├── op_spec.c
+│   │       │   ├── options.h
+│   │       │   ├── origin.h
+│   │       │   ├── otable.c
+│   │       │   ├── otable.h
+│   │       │   ├── parse.c
+│   │       │   ├── parse.h
+│   │       │   ├── parse_trees
+│   │       │   ├── patchlevel.h
+│   │       │   ├── Performance
+│   │       │   ├── plainwrapper.c
+│   │       │   ├── Platforms
+│   │       │   ├── portability.h
+│   │       │   ├── portbind.c
+│   │       │   ├── port.c
+│   │       │   ├── port.h
+│   │       │   ├── preprocess.c
+│   │       │   ├── preprocess.h
+│   │       │   ├── program.c
+│   │       │   ├── program.h
+│   │       │   ├── qsort.c
+│   │       │   ├── qsort.h
+│   │       │   ├── rc.c
+│   │       │   ├── rc.h
+│   │       │   ├── README
+│   │       │   ├── reclaim.c
+│   │       │   ├── reclaim.h
+│   │       │   ├── regexp.c
+│   │       │   ├── regexp.h
+│   │       │   ├── replace_program.c
+│   │       │   ├── replace_program.h
+│   │       │   ├── scratchpad.c
+│   │       │   ├── scratchpad.h
+│   │       │   ├── simulate.c
+│   │       │   ├── simulate.h
+│   │       │   ├── simul_efun.c
+│   │       │   ├── simul_efun.h
+│   │       │   ├── smalloc.c
+│   │       │   ├── smalloc.h
+│   │       │   ├── socket_ctrl.c
+│   │       │   ├── socket_ctrl.h
+│   │       │   ├── socket_efuns.c
+│   │       │   ├── socket_efuns.h
+│   │       │   ├── socket_err.c
+│   │       │   ├── socket_err.h
+│   │       │   ├── spec.h
+│   │       │   ├── sprintf.c
+│   │       │   ├── sprintf.h
+│   │       │   ├── std.h
+│   │       │   ├── std_incl.h
+│   │       │   ├── stralloc.c
+│   │       │   ├── stralloc.h
+│   │       │   ├── sysmalloc.c
+│   │       │   ├── telnet.h
+│   │       │   ├── trees.c
+│   │       │   ├── trees.h
+│   │       │   ├── uvalarm.c
+│   │       │   ├── uvalarm.h
+│   │       │   ├── Version
+│   │       │   ├── wrappedmalloc.c
+│   │       │   └── wrappedmalloc.h
+│   │       ├── lib
+│   │       │   ├── cfg
+│   │       │   │   ├── days.cfg
+│   │       │   │   ├── months.cfg
+│   │       │   │   ├── moons.cfg
+│   │       │   │   ├── time.cfg
+│   │       │   │   ├── timezone.cfg
+│   │       │   │   ├── timezones.cfg
+│   │       │   │   └── where.cfg
+│   │       │   ├── cmds
+│   │       │   │   ├── admins
+│   │       │   │   │   ├── arch.c
+│   │       │   │   │   ├── broadcast.c
+│   │       │   │   │   ├── cache.c
+│   │       │   │   │   ├── channel.c
+│   │       │   │   │   ├── dumpallobj.c
+│   │       │   │   │   ├── fdinfo.c
+│   │       │   │   │   └── objload.c
+│   │       │   │   ├── builders
+│   │       │   │   ├── common
+│   │       │   │   │   └── help.c
+│   │       │   │   ├── creators
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── anchor.c
+│   │       │   │   │   ├── anglicize.c
+│   │       │   │   │   ├── ascii.c
+│   │       │   │   │   ├── astar.c
+│   │       │   │   │   ├── boards.c
+│   │       │   │   │   ├── bugs.c
+│   │       │   │   │   ├── callouts.c
+│   │       │   │   │   ├── classblock.c
+│   │       │   │   │   ├── clean.c
+│   │       │   │   │   ├── clone.c
+│   │       │   │   │   ├── codeblock.c
+│   │       │   │   │   ├── cryptogram.c
+│   │       │   │   │   ├── debug.c
+│   │       │   │   │   ├── defines.c
+│   │       │   │   │   ├── domains.c
+│   │       │   │   │   ├── efuns.c
+│   │       │   │   │   ├── elog.c
+│   │       │   │   │   ├── events.c
+│   │       │   │   │   ├── exits.c
+│   │       │   │   │   ├── expel.c
+│   │       │   │   │   ├── file.c
+│   │       │   │   │   ├── find.c
+│   │       │   │   │   ├── findobj.c
+│   │       │   │   │   ├── format.c
+│   │       │   │   │   ├── godmode.c
+│   │       │   │   │   ├── html.c
+│   │       │   │   │   ├── i3who.c
+│   │       │   │   │   ├── inherits.c
+│   │       │   │   │   ├── invis.c
+│   │       │   │   │   ├── lfuns.c
+│   │       │   │   │   ├── lightme.c
+│   │       │   │   │   ├── malloc.c
+│   │       │   │   │   ├── man.c
+│   │       │   │   │   ├── margins.c
+│   │       │   │   │   ├── message.c
+│   │       │   │   │   ├── morse.c
+│   │       │   │   │   ├── mraces.c
+│   │       │   │   │   ├── mstatus.c
+│   │       │   │   │   ├── netstat.c
+│   │       │   │   │   ├── noclip.c
+│   │       │   │   │   ├── notices.c
+│   │       │   │   │   ├── ping.c
+│   │       │   │   │   ├── polyglottize.c
+│   │       │   │   │   ├── praces.c
+│   │       │   │   │   ├── purge.c
+│   │       │   │   │   ├── pwhere.c
+│   │       │   │   │   ├── quell.c
+│   │       │   │   │   ├── realms.c
+│   │       │   │   │   ├── rehash.c
+│   │       │   │   │   ├── replog.c
+│   │       │   │   │   ├── reset.c
+│   │       │   │   │   ├── resolve.c
+│   │       │   │   │   ├── return.c
+│   │       │   │   │   ├── rot.c
+│   │       │   │   │   ├── scan.c
+│   │       │   │   │   ├── sefuns.c
+│   │       │   │   │   ├── shadows.c
+│   │       │   │   │   ├── showgrid.c
+│   │       │   │   │   ├── showtree.c
+│   │       │   │   │   ├── stargate.c
+│   │       │   │   │   ├── tellblock.c
+│   │       │   │   │   ├── trans.c
+│   │       │   │   │   ├── transfer.c
+│   │       │   │   │   ├── types.c
+│   │       │   │   │   ├── unanchor.c
+│   │       │   │   │   ├── unmorse.c
+│   │       │   │   │   ├── unquell.c
+│   │       │   │   │   ├── vis.c
+│   │       │   │   │   ├── whereis.c
+│   │       │   │   │   ├── whomuffed.c
+│   │       │   │   │   ├── wiz.c
+│   │       │   │   │   ├── wizlist.c
+│   │       │   │   │   ├── wizmap.c
+│   │       │   │   │   ├── wizroll.c
+│   │       │   │   │   └── wizvision.c
+│   │       │   │   ├── hm
+│   │       │   │   └── players
+│   │       │   │       ├── annoyblock.c
+│   │       │   │       ├── biography.c
+│   │       │   │       ├── brief.c
+│   │       │   │       ├── chan.c
+│   │       │   │       ├── chancolors.c
+│   │       │   │       ├── charmode.c
+│   │       │   │       ├── colors.c
+│   │       │   │       ├── commandecho.c
+│   │       │   │       ├── consider.c
+│   │       │   │       ├── converse.c
+│   │       │   │       ├── cursefilter.c
+│   │       │   │       ├── customize.c
+│   │       │   │       ├── date.c
+│   │       │   │       ├── deviate.c
+│   │       │   │       ├── earmuff.c
+│   │       │   │       ├── emote.c
+│   │       │   │       ├── enemies.c
+│   │       │   │       ├── env.c
+│   │       │   │       ├── equipment.c
+│   │       │   │       ├── faq.c
+│   │       │   │       ├── flee.c
+│   │       │   │       ├── gag.c
+│   │       │   │       ├── i3locate.c
+│   │       │   │       ├── idle.c
+│   │       │   │       ├── inventory.c
+│   │       │   │       ├── keepalive.c
+│   │       │   │       ├── kills.c
+│   │       │   │       ├── languages.c
+│   │       │   │       ├── mem.c
+│   │       │   │       ├── minimap.c
+│   │       │   │       ├── money.c
+│   │       │   │       ├── mudinfo.c
+│   │       │   │       ├── mudlist.c
+│   │       │   │       ├── mute.c
+│   │       │   │       ├── new.c
+│   │       │   │       ├── nextreboot.c
+│   │       │   │       ├── pk.c
+│   │       │   │       ├── plugh.c
+│   │       │   │       ├── position.c
+│   │       │   │       ├── posting.c
+│   │       │   │       ├── prompt.c
+│   │       │   │       ├── quests.c
+│   │       │   │       ├── queue.c
+│   │       │   │       ├── reprompt.c
+│   │       │   │       ├── rwho.c
+│   │       │   │       ├── save.c
+│   │       │   │       ├── score.c
+│   │       │   │       ├── screen.c
+│   │       │   │       ├── screenlock.c
+│   │       │   │       ├── skills.c
+│   │       │   │       ├── speakcolor.c
+│   │       │   │       ├── spells.c
+│   │       │   │       ├── stat.c
+│   │       │   │       ├── stats.c
+│   │       │   │       ├── status.c
+│   │       │   │       ├── terminal.c
+│   │       │   │       ├── timezone.c
+│   │       │   │       ├── title.c
+│   │       │   │       ├── unmuff.c
+│   │       │   │       ├── uptime.c
+│   │       │   │       ├── users.c
+│   │       │   │       ├── version.c
+│   │       │   │       ├── who.c
+│   │       │   │       ├── wimpy.c
+│   │       │   │       └── xyzzy.c
+│   │       │   ├── daemon
+│   │       │   │   ├── include
+│   │       │   │   │   ├── bugs.h
+│   │       │   │   │   ├── chat.h
+│   │       │   │   │   ├── classes.h
+│   │       │   │   │   ├── command.h
+│   │       │   │   │   ├── ftp_port_tracker.h
+│   │       │   │   │   ├── http.h
+│   │       │   │   │   ├── intermud.h
+│   │       │   │   │   ├── news.h
+│   │       │   │   │   ├── notify.h
+│   │       │   │   │   ├── party.h
+│   │       │   │   │   ├── seasons.h
+│   │       │   │   │   ├── stargate.h
+│   │       │   │   │   ├── statistics.h
+│   │       │   │   │   ├── time.h
+│   │       │   │   │   └── verbs.h
+│   │       │   │   ├── services
+│   │       │   │   │   ├── auth.c
+│   │       │   │   │   ├── channel.c
+│   │       │   │   │   ├── emoteto.c
+│   │       │   │   │   ├── error.c
+│   │       │   │   │   ├── finger.c
+│   │       │   │   │   ├── locate.c
+│   │       │   │   │   ├── oob.c
+│   │       │   │   │   ├── tell.c
+│   │       │   │   │   └── who.c
+│   │       │   │   ├── banish.c
+│   │       │   │   ├── books.c
+│   │       │   │   ├── bugs.c
+│   │       │   │   ├── classes.c
+│   │       │   │   ├── command.c
+│   │       │   │   ├── decay.c
+│   │       │   │   ├── defines.c
+│   │       │   │   ├── deviation.c
+│   │       │   │   ├── disasters.c
+│   │       │   │   ├── domains.c
+│   │       │   │   ├── ftp_port_tracker.c
+│   │       │   │   ├── guard.c
+│   │       │   │   ├── help.c
+│   │       │   │   ├── intermud.c
+│   │       │   │   ├── map.c
+│   │       │   │   ├── meetings.c
+│   │       │   │   ├── news.c
+│   │       │   │   ├── notify.c
+│   │       │   │   ├── party.c
+│   │       │   │   ├── phys.c
+│   │       │   │   ├── races.c
+│   │       │   │   ├── seasons.c
+│   │       │   │   ├── services.c
+│   │       │   │   ├── skills.c
+│   │       │   │   ├── soul.c
+│   │       │   │   ├── spells.c
+│   │       │   │   ├── stargate.c
+│   │       │   │   ├── statistics.c
+│   │       │   │   ├── stats.c
+│   │       │   │   ├── terminal.c
+│   │       │   │   ├── time.c
+│   │       │   │   ├── types.c
+│   │       │   │   ├── unique.c
+│   │       │   │   ├── verbs.c
+│   │       │   │   └── weather.c
+│   │       │   ├── doc
+│   │       │   │   ├── applies
+│   │       │   │   │   ├── interactive
+│   │       │   │   │   ├── master
+│   │       │   │   │   ├── parsing
+│   │       │   │   │   ├── author_file
+│   │       │   │   │   ├── catch_tell
+│   │       │   │   │   ├── clean_up
+│   │       │   │   │   ├── compile_object
+│   │       │   │   │   ├── connect
+│   │       │   │   │   ├── crash
+│   │       │   │   │   ├── create
+│   │       │   │   │   ├── creator_file
+│   │       │   │   │   ├── domain_file
+│   │       │   │   │   ├── epilog
+│   │       │   │   │   ├── error_handler
+│   │       │   │   │   ├── flag
+│   │       │   │   │   ├── get_bb_uid
+│   │       │   │   │   ├── get_root_uid
+│   │       │   │   │   ├── get_save_file_name
+│   │       │   │   │   ├── heart_beat
+│   │       │   │   │   ├── id
+│   │       │   │   │   ├── __INIT
+│   │       │   │   │   ├── init
+│   │       │   │   │   ├── log_error
+│   │       │   │   │   ├── logon
+│   │       │   │   │   ├── make_path_absolute
+│   │       │   │   │   ├── move_or_destruct
+│   │       │   │   │   ├── net_dead
+│   │       │   │   │   ├── object_name
+│   │       │   │   │   ├── parse_command
+│   │       │   │   │   ├── parse_command_adjectiv_id_list
+│   │       │   │   │   ├── parse_command_all_word
+│   │       │   │   │   ├── parse_command_id_list
+│   │       │   │   │   ├── parse_command_plural_id_list
+│   │       │   │   │   ├── parse_command_prepos_list
+│   │       │   │   │   ├── preload
+│   │       │   │   │   ├── privs_file
+│   │       │   │   │   ├── process_input
+│   │       │   │   │   ├── receive_message
+│   │       │   │   │   ├── receive_snoop
+│   │       │   │   │   ├── reset
+│   │       │   │   │   ├── retrieve_ed_setup
+│   │       │   │   │   ├── save_ed_setup
+│   │       │   │   │   ├── slow_shutdown
+│   │       │   │   │   ├── telnet_suboption
+│   │       │   │   │   ├── terminal_type
+│   │       │   │   │   ├── valid_bind
+│   │       │   │   │   ├── valid_compile_to_c
+│   │       │   │   │   ├── valid_hide
+│   │       │   │   │   ├── valid_link
+│   │       │   │   │   ├── valid_object
+│   │       │   │   │   ├── valid_override
+│   │       │   │   │   ├── valid_read
+│   │       │   │   │   ├── valid_save_binary
+│   │       │   │   │   ├── valid_seteuid
+│   │       │   │   │   ├── valid_shadow
+│   │       │   │   │   ├── valid_socket
+│   │       │   │   │   ├── valid_write
+│   │       │   │   │   ├── window_size
+│   │       │   │   │   └── write_prompt
+│   │       │   │   ├── bguide
+│   │       │   │   │   ├── chapter01
+│   │       │   │   │   ├── chapter02
+│   │       │   │   │   ├── chapter03
+│   │       │   │   │   ├── chapter04
+│   │       │   │   │   ├── chapter05
+│   │       │   │   │   ├── chapter06
+│   │       │   │   │   ├── chapter07
+│   │       │   │   │   └── chapter08
+│   │       │   │   ├── build
+│   │       │   │   │   ├── Armours
+│   │       │   │   │   ├── Barkeeps
+│   │       │   │   │   ├── Climates
+│   │       │   │   │   ├── Doors
+│   │       │   │   │   ├── ed.hup
+│   │       │   │   │   ├── Guidelines
+│   │       │   │   │   ├── Introduction
+│   │       │   │   │   ├── Items
+│   │       │   │   │   ├── Meals
+│   │       │   │   │   ├── NPC
+│   │       │   │   │   ├── Properties
+│   │       │   │   │   ├── Quests
+│   │       │   │   │   ├── Rooms
+│   │       │   │   │   ├── Sentients
+│   │       │   │   │   ├── Towns
+│   │       │   │   │   ├── Vendors
+│   │       │   │   │   └── Weapons
+│   │       │   │   ├── efun
+│   │       │   │   │   ├── all
+│   │       │   │   │   ├── arrays
+│   │       │   │   │   ├── buffers
+│   │       │   │   │   ├── calls
+│   │       │   │   │   ├── compile
+│   │       │   │   │   ├── filesystem
+│   │       │   │   │   ├── floats
+│   │       │   │   │   ├── functions
+│   │       │   │   │   ├── general
+│   │       │   │   │   ├── interactive
+│   │       │   │   │   ├── internals
+│   │       │   │   │   ├── mappings
+│   │       │   │   │   ├── mixed
+│   │       │   │   │   ├── mudlib
+│   │       │   │   │   ├── numbers
+│   │       │   │   │   ├── objects
+│   │       │   │   │   ├── parsing
+│   │       │   │   │   ├── sockets
+│   │       │   │   │   ├── strings
+│   │       │   │   │   └── system
+│   │       │   │   ├── faq
+│   │       │   │   ├── guide
+│   │       │   │   │   ├── chapter01
+│   │       │   │   │   ├── chapter02
+│   │       │   │   │   ├── chapter03
+│   │       │   │   │   ├── chapter04
+│   │       │   │   │   ├── chapter05
+│   │       │   │   │   ├── chapter06
+│   │       │   │   │   ├── chapter07
+│   │       │   │   │   ├── chapter08
+│   │       │   │   │   └── chapter09
+│   │       │   │   ├── hbook
+│   │       │   │   │   ├── chapter01
+│   │       │   │   │   ├── chapter02
+│   │       │   │   │   ├── chapter03
+│   │       │   │   │   ├── chapter04
+│   │       │   │   │   ├── chapter05
+│   │       │   │   │   ├── chapter06
+│   │       │   │   │   ├── chapter07
+│   │       │   │   │   ├── chapter08
+│   │       │   │   │   └── chapter09
+│   │       │   │   ├── help
+│   │       │   │   │   ├── avatars
+│   │       │   │   │   ├── classes
+│   │       │   │   │   ├── creators
+│   │       │   │   │   ├── hm
+│   │       │   │   │   ├── law
+│   │       │   │   │   ├── players
+│   │       │   │   │   ├── races
+│   │       │   │   │   └── religion
+│   │       │   │   ├── lfun
+│   │       │   │   │   ├── all
+│   │       │   │   │   ├── lib
+│   │       │   │   │   └── README
+│   │       │   │   ├── lpc
+│   │       │   │   │   ├── advanced
+│   │       │   │   │   ├── basic
+│   │       │   │   │   ├── concepts
+│   │       │   │   │   ├── constructs
+│   │       │   │   │   ├── etc
+│   │       │   │   │   ├── intermediate
+│   │       │   │   │   └── types
+│   │       │   │   ├── manual
+│   │       │   │   │   ├── chapter01
+│   │       │   │   │   ├── chapter02
+│   │       │   │   │   ├── chapter03
+│   │       │   │   │   ├── chapter04
+│   │       │   │   │   ├── chapter05
+│   │       │   │   │   ├── chapter06
+│   │       │   │   │   ├── chapter07
+│   │       │   │   │   ├── chapter08
+│   │       │   │   │   ├── chapter09
+│   │       │   │   │   ├── chapter10
+│   │       │   │   │   ├── chapter11
+│   │       │   │   │   ├── chapter12
+│   │       │   │   │   ├── chapter13
+│   │       │   │   │   ├── chapter14
+│   │       │   │   │   ├── chapter15
+│   │       │   │   │   ├── chapter16
+│   │       │   │   │   ├── chapter17
+│   │       │   │   │   ├── chapter18
+│   │       │   │   │   ├── chapter19
+│   │       │   │   │   ├── chapter20
+│   │       │   │   │   ├── chapter21
+│   │       │   │   │   ├── chapter22
+│   │       │   │   │   ├── chapter23
+│   │       │   │   │   ├── chapter24
+│   │       │   │   │   ├── chapter25
+│   │       │   │   │   ├── chapter26
+│   │       │   │   │   ├── chapter27
+│   │       │   │   │   ├── chapter28
+│   │       │   │   │   ├── chapter29
+│   │       │   │   │   ├── chapter30
+│   │       │   │   │   ├── chapter31
+│   │       │   │   │   ├── chapter32
+│   │       │   │   │   ├── chapter33
+│   │       │   │   │   ├── chapter34
+│   │       │   │   │   ├── chapter35
+│   │       │   │   │   ├── chapter36
+│   │       │   │   │   ├── chapter37
+│   │       │   │   │   ├── chapter38
+│   │       │   │   │   ├── chapter39
+│   │       │   │   │   └── chapter40
+│   │       │   │   ├── misc
+│   │       │   │   │   └── ed.txt
+│   │       │   │   ├── old
+│   │       │   │   │   ├── CHANGES
+│   │       │   │   │   ├── README
+│   │       │   │   │   ├── RELEASE_NOTES.old
+│   │       │   │   │   └── the_beginning.txt
+│   │       │   │   ├── phints
+│   │       │   │   │   ├── chapter01
+│   │       │   │   │   ├── chapter02
+│   │       │   │   │   ├── chapter03
+│   │       │   │   │   ├── chapter04
+│   │       │   │   │   └── chapter05
+│   │       │   │   ├── sefun
+│   │       │   │   │   ├── absolute_path
+│   │       │   │   │   ├── absolute_value
+│   │       │   │   │   ├── add_sky_event
+│   │       │   │   │   ├── alignment_ok
+│   │       │   │   │   ├── alignment_string
+│   │       │   │   │   ├── ambassadorp
+│   │       │   │   │   ├── answers_to
+│   │       │   │   │   ├── architecture
+│   │       │   │   │   ├── archp
+│   │       │   │   │   ├── arrange_string
+│   │       │   │   │   ├── base_name
+│   │       │   │   │   ├── cardinal
+│   │       │   │   │   ├── center
+│   │       │   │   │   ├── check_privs
+│   │       │   │   │   ├── conjunction
+│   │       │   │   │   ├── consolidate
+│   │       │   │   │   ├── convert_ascii
+│   │       │   │   │   ├── convert_name
+│   │       │   │   │   ├── copy
+│   │       │   │   │   ├── currency_inflation
+│   │       │   │   │   ├── currency_mass
+│   │       │   │   │   ├── currency_rate
+│   │       │   │   │   ├── currency_value
+│   │       │   │   │   ├── damerau_levenshtein_distance
+│   │       │   │   │   ├── date
+│   │       │   │   │   ├── day
+│   │       │   │   │   ├── debug
+│   │       │   │   │   ├── destruct
+│   │       │   │   │   ├── distinct_array
+│   │       │   │   │   ├── domain
+│   │       │   │   │   ├── domain_exists
+│   │       │   │   │   ├── domain_master
+│   │       │   │   │   ├── effective_light
+│   │       │   │   │   ├── event
+│   │       │   │   │   ├── event_pending
+│   │       │   │   │   ├── exclude_array
+│   │       │   │   │   ├── exec
+│   │       │   │   │   ├── false
+│   │       │   │   │   ├── file_exists
+│   │       │   │   │   ├── file_privs
+│   │       │   │   │   ├── first
+│   │       │   │   │   ├── first_string_element
+│   │       │   │   │   ├── flat_map
+│   │       │   │   │   ├── format_page
+│   │       │   │   │   ├── format_string
+│   │       │   │   │   ├── generate_tmp
+│   │       │   │   │   ├── get_cmds
+│   │       │   │   │   ├── get_livings
+│   │       │   │   │   ├── get_object
+│   │       │   │   │   ├── get_random_living
+│   │       │   │   │   ├── get_verbs
+│   │       │   │   │   ├── grepp
+│   │       │   │   │   ├── hiddenp
+│   │       │   │   │   ├── high_mortalp
+│   │       │   │   │   ├── hour
+│   │       │   │   │   ├── identify
+│   │       │   │   │   ├── indent_file
+│   │       │   │   │   ├── last
+│   │       │   │   │   ├── last_string_element
+│   │       │   │   │   ├── leaderp
+│   │       │   │   │   ├── levenshtein_distance
+│   │       │   │   │   ├── livings
+│   │       │   │   │   ├── load_object
+│   │       │   │   │   ├── local_time
+│   │       │   │   │   ├── log_file
+│   │       │   │   │   ├── member_group
+│   │       │   │   │   ├── memberp
+│   │       │   │   │   ├── minutes
+│   │       │   │   │   ├── month
+│   │       │   │   │   ├── moon_light
+│   │       │   │   │   ├── mud_currencies
+│   │       │   │   │   ├── mudlib
+│   │       │   │   │   ├── mudlib_version
+│   │       │   │   │   ├── mud_name
+│   │       │   │   │   ├── nominative
+│   │       │   │   │   ├── objective
+│   │       │   │   │   ├── ordinal
+│   │       │   │   │   ├── path_file
+│   │       │   │   │   ├── path_prefix
+│   │       │   │   │   ├── percent
+│   │       │   │   │   ├── pluralize
+│   │       │   │   │   ├── possessive
+│   │       │   │   │   ├── possessive_noun
+│   │       │   │   │   ├── query_custom_command
+│   │       │   │   │   ├── query_custom_path
+│   │       │   │   │   ├── query_host_port
+│   │       │   │   │   ├── query_night
+│   │       │   │   │   ├── query_snoop
+│   │       │   │   │   ├── query_snooping
+│   │       │   │   │   ├── read_database
+│   │       │   │   │   ├── reap_dummies
+│   │       │   │   │   ├── reflexive
+│   │       │   │   │   ├── remove_matching_line
+│   │       │   │   │   ├── remove_sky_event
+│   │       │   │   │   ├── replace_line
+│   │       │   │   │   ├── replace_matching_line
+│   │       │   │   │   ├── reverse_string
+│   │       │   │   │   ├── say
+│   │       │   │   │   ├── season
+│   │       │   │   │   ├── set_eval_limit
+│   │       │   │   │   ├── set_privs
+│   │       │   │   │   ├── shout
+│   │       │   │   │   ├── shutdown
+│   │       │   │   │   ├── snoop
+│   │       │   │   │   ├── starts_with
+│   │       │   │   │   ├── strip_colours
+│   │       │   │   │   ├── tail
+│   │       │   │   │   ├── tell_object
+│   │       │   │   │   ├── tell_player
+│   │       │   │   │   ├── total_light
+│   │       │   │   │   ├── translate
+│   │       │   │   │   ├── true
+│   │       │   │   │   ├── unguarded
+│   │       │   │   │   ├── user_exists
+│   │       │   │   │   ├── user_path
+│   │       │   │   │   ├── version
+│   │       │   │   │   ├── wrap
+│   │       │   │   │   ├── write
+│   │       │   │   │   └── year
+│   │       │   │   ├── BASICS
+│   │       │   │   ├── CREDITS
+│   │       │   │   ├── RELEASE_NOTES
+│   │       │   │   ├── RELEASE_NOTES_HTTP
+│   │       │   │   └── SUPPORT
+│   │       │   ├── domains
+│   │       │   │   ├── campus
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── armor
+│   │       │   │   │   ├── chamber
+│   │       │   │   │   ├── doors
+│   │       │   │   │   ├── etc
+│   │       │   │   │   ├── meals
+│   │       │   │   │   ├── npc
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── room
+│   │       │   │   │   ├── save
+│   │       │   │   │   ├── txt
+│   │       │   │   │   └── weap
+│   │       │   │   ├── cave
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── armor
+│   │       │   │   │   ├── doors
+│   │       │   │   │   ├── etc
+│   │       │   │   │   ├── meals
+│   │       │   │   │   ├── npc
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── room
+│   │       │   │   │   ├── save
+│   │       │   │   │   ├── txt
+│   │       │   │   │   ├── virtual
+│   │       │   │   │   └── weap
+│   │       │   │   ├── default
+│   │       │   │   │   ├── armor
+│   │       │   │   │   ├── chamber
+│   │       │   │   │   ├── creator
+│   │       │   │   │   ├── doors
+│   │       │   │   │   ├── etc
+│   │       │   │   │   ├── npc
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── room
+│   │       │   │   │   ├── save
+│   │       │   │   │   ├── vehicle
+│   │       │   │   │   ├── virtual
+│   │       │   │   │   └── weap
+│   │       │   │   ├── examples
+│   │       │   │   │   └── room
+│   │       │   │   ├── learning
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── armor
+│   │       │   │   │   ├── chamber
+│   │       │   │   │   ├── doors
+│   │       │   │   │   ├── etc
+│   │       │   │   │   ├── meals
+│   │       │   │   │   ├── npc
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── room
+│   │       │   │   │   ├── save
+│   │       │   │   │   ├── txt
+│   │       │   │   │   ├── vehicle
+│   │       │   │   │   ├── virtual
+│   │       │   │   │   └── weap
+│   │       │   │   ├── Praxis
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── attic
+│   │       │   │   │   ├── cemetery
+│   │       │   │   │   ├── data
+│   │       │   │   │   ├── death
+│   │       │   │   │   ├── mountains
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── orc_valley
+│   │       │   │   │   ├── quests
+│   │       │   │   │   ├── adv_inner.c
+│   │       │   │   │   ├── adv_main.c
+│   │       │   │   │   ├── alley1.c
+│   │       │   │   │   ├── alley2.c
+│   │       │   │   │   ├── app_room.c
+│   │       │   │   │   ├── arch.c
+│   │       │   │   │   ├── bank.c
+│   │       │   │   │   ├── bank_vault.c
+│   │       │   │   │   ├── booth.c
+│   │       │   │   │   ├── branches.c
+│   │       │   │   │   ├── building.c
+│   │       │   │   │   ├── cache.c
+│   │       │   │   │   ├── chapel.c
+│   │       │   │   │   ├── cleric_hall.c
+│   │       │   │   │   ├── cleric_join.c
+│   │       │   │   │   ├── cleric_vote.c
+│   │       │   │   │   ├── commands
+│   │       │   │   │   ├── council.c
+│   │       │   │   │   ├── council_hall.c
+│   │       │   │   │   ├── council_vote.c
+│   │       │   │   │   ├── court_room.c
+│   │       │   │   │   ├── crypt.c
+│   │       │   │   │   ├── dump.c
+│   │       │   │   │   ├── east_road1.c
+│   │       │   │   │   ├── east_road2.c
+│   │       │   │   │   ├── east_road3.c
+│   │       │   │   │   ├── e_boc_la1.c
+│   │       │   │   │   ├── e_boc_la2.c
+│   │       │   │   │   ├── e_boc_la3.c
+│   │       │   │   │   ├── farm.c
+│   │       │   │   │   ├── fighter_hall.c
+│   │       │   │   │   ├── fighter_join.c
+│   │       │   │   │   ├── fighter_vote.c
+│   │       │   │   │   ├── forest1.c
+│   │       │   │   │   ├── forest2.c
+│   │       │   │   │   ├── forest3.c
+│   │       │   │   │   ├── freezer.c
+│   │       │   │   │   ├── hall2.c
+│   │       │   │   │   ├── hall3.c
+│   │       │   │   │   ├── hall4.c
+│   │       │   │   │   ├── hall5.c
+│   │       │   │   │   ├── hall.c
+│   │       │   │   │   ├── highway1.c
+│   │       │   │   │   ├── highway2.c
+│   │       │   │   │   ├── highway3.c
+│   │       │   │   │   ├── hm_chamber.c
+│   │       │   │   │   ├── hole.c
+│   │       │   │   │   ├── hospital.c
+│   │       │   │   │   ├── hotel.c
+│   │       │   │   │   ├── house.c
+│   │       │   │   │   ├── idle_storage.c
+│   │       │   │   │   ├── idle_supply.c
+│   │       │   │   │   ├── immortal_hall.c
+│   │       │   │   │   ├── inn101.c
+│   │       │   │   │   ├── inn102.c
+│   │       │   │   │   ├── inn103.c
+│   │       │   │   │   ├── inn104.c
+│   │       │   │   │   ├── inn105.c
+│   │       │   │   │   ├── inn106.c
+│   │       │   │   │   ├── inn107.c
+│   │       │   │   │   ├── inn108.c
+│   │       │   │   │   ├── inn109.c
+│   │       │   │   │   ├── inn110.c
+│   │       │   │   │   ├── jungle.c
+│   │       │   │   │   ├── kataan_hall.c
+│   │       │   │   │   ├── kataan_join.c
+│   │       │   │   │   ├── kataan_vote.c
+│   │       │   │   │   ├── library.c
+│   │       │   │   │   ├── locked.c
+│   │       │   │   │   ├── lpc_inner.c
+│   │       │   │   │   ├── lpmud_room.c
+│   │       │   │   │   ├── mage_hall.c
+│   │       │   │   │   ├── mage_join.c
+│   │       │   │   │   ├── mage_vote.c
+│   │       │   │   │   ├── medium.c
+│   │       │   │   │   ├── monastery.c
+│   │       │   │   │   ├── monk_hall.c
+│   │       │   │   │   ├── monk_join.c
+│   │       │   │   │   ├── monk_vote.c
+│   │       │   │   │   ├── mudlib.c
+│   │       │   │   │   ├── n_centre1.c
+│   │       │   │   │   ├── n_centre2.c
+│   │       │   │   │   ├── ombud_hall.c
+│   │       │   │   │   ├── party.c
+│   │       │   │   │   ├── pass1.c
+│   │       │   │   │   ├── pass2.c
+│   │       │   │   │   ├── pass3.c
+│   │       │   │   │   ├── pier1.c
+│   │       │   │   │   ├── pit.c
+│   │       │   │   │   ├── planning_room.c
+│   │       │   │   │   ├── post.c
+│   │       │   │   │   ├── project_room.c
+│   │       │   │   │   ├── pub.c
+│   │       │   │   │   ├── quest_room.c
+│   │       │   │   │   ├── rain_forest.c
+│   │       │   │   │   ├── README
+│   │       │   │   │   ├── realty.c
+│   │       │   │   │   ├── restaurant.c
+│   │       │   │   │   ├── rogue_hall.c
+│   │       │   │   │   ├── rogue_join.c
+│   │       │   │   │   ├── rogue_vote.c
+│   │       │   │   │   ├── roots.c
+│   │       │   │   │   ├── sage_room.c
+│   │       │   │   │   ├── s_centre1.c
+│   │       │   │   │   ├── s_centre2.c
+│   │       │   │   │   ├── s_centre3.c
+│   │       │   │   │   ├── s_centre4.c
+│   │       │   │   │   ├── setter.c
+│   │       │   │   │   ├── sewer.c
+│   │       │   │   │   ├── sewer_ent.c
+│   │       │   │   │   ├── sheriff.c
+│   │       │   │   │   ├── spider_pit.c
+│   │       │   │   │   ├── square.c
+│   │       │   │   │   ├── stairs.c
+│   │       │   │   │   ├── storage.c
+│   │       │   │   │   ├── sun1.c
+│   │       │   │   │   ├── sun2.c
+│   │       │   │   │   ├── supply2.c
+│   │       │   │   │   ├── supply.c
+│   │       │   │   │   ├── torture_room.c
+│   │       │   │   │   ├── town_hall.c
+│   │       │   │   │   ├── trunk.c
+│   │       │   │   │   ├── unnamed1.c
+│   │       │   │   │   ├── void.c
+│   │       │   │   │   ├── wall.c
+│   │       │   │   │   ├── w_boc_la1.c
+│   │       │   │   │   ├── w_boc_la2.c
+│   │       │   │   │   ├── w_boc_la3.c
+│   │       │   │   │   ├── west_road1.c
+│   │       │   │   │   ├── west_road2.c
+│   │       │   │   │   ├── west_road3.c
+│   │       │   │   │   ├── wild1.c
+│   │       │   │   │   ├── wild2.backup
+│   │       │   │   │   ├── wild2.c
+│   │       │   │   │   └── yard.c
+│   │       │   │   ├── town
+│   │       │   │   │   ├── armor
+│   │       │   │   │   ├── doors
+│   │       │   │   │   ├── meals
+│   │       │   │   │   ├── npc
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── room
+│   │       │   │   │   ├── save
+│   │       │   │   │   ├── txt
+│   │       │   │   │   ├── virtual
+│   │       │   │   │   └── weap
+│   │       │   │   ├── Ylsrim
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── armor
+│   │       │   │   │   ├── broken
+│   │       │   │   │   ├── etc
+│   │       │   │   │   ├── fish
+│   │       │   │   │   ├── meal
+│   │       │   │   │   ├── npc
+│   │       │   │   │   ├── obj
+│   │       │   │   │   ├── room
+│   │       │   │   │   ├── save
+│   │       │   │   │   ├── virtual
+│   │       │   │   │   ├── weapon
+│   │       │   │   │   ├── README
+│   │       │   │   │   └── README.old
+│   │       │   │   └── README
+│   │       │   ├── estates
+│   │       │   │   ├── c
+│   │       │   │   │   └── cratylus
+│   │       │   │   ├── g
+│   │       │   │   │   └── guest
+│   │       │   │   ├── s
+│   │       │   │   │   └── slymenstra
+│   │       │   │   ├── t
+│   │       │   │   │   └── testylus
+│   │       │   │   └── foo.txt
+│   │       │   ├── ftp
+│   │       │   │   └── foo.txt
+│   │       │   ├── include
+│   │       │   │   ├── armor_types.h
+│   │       │   │   ├── assessment.h
+│   │       │   │   ├── astar.h
+│   │       │   │   ├── body_types.h
+│   │       │   │   ├── boobytraps.h
+│   │       │   │   ├── build_types.h
+│   │       │   │   ├── climb.h
+│   │       │   │   ├── combat_messages.h
+│   │       │   │   ├── damage_types.h
+│   │       │   │   ├── gossip.h
+│   │       │   │   ├── graphics.h
+│   │       │   │   ├── jump.h
+│   │       │   │   ├── magic.h
+│   │       │   │   ├── magic_protection.h
+│   │       │   │   ├── marriage.h
+│   │       │   │   ├── materials.h
+│   │       │   │   ├── meal_types.h
+│   │       │   │   ├── medium.h
+│   │       │   │   ├── message_class.h
+│   │       │   │   ├── motion.h
+│   │       │   │   ├── mouth_types.h
+│   │       │   │   ├── position.h
+│   │       │   │   ├── race.h
+│   │       │   │   ├── respiration_types.h
+│   │       │   │   ├── rounds.h
+│   │       │   │   ├── size_types.h
+│   │       │   │   ├── soul.h
+│   │       │   │   ├── stargate.h
+│   │       │   │   ├── talk_type.h
+│   │       │   │   ├── terrain_types.h
+│   │       │   │   ├── vendor_types.h
+│   │       │   │   └── vision.h
+│   │       │   ├── lib
+│   │       │   │   ├── comp
+│   │       │   │   │   ├── container.c
+│   │       │   │   │   ├── holder.c
+│   │       │   │   │   ├── object.c
+│   │       │   │   │   ├── seal.c
+│   │       │   │   │   ├── surface.c
+│   │       │   │   │   └── weapon.c
+│   │       │   │   ├── daemons
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── player_stub.c
+│   │       │   │   │   └── verb.c
+│   │       │   │   ├── events
+│   │       │   │   │   ├── activate.c
+│   │       │   │   │   ├── aim.c
+│   │       │   │   │   ├── apply.c
+│   │       │   │   │   ├── bait.c
+│   │       │   │   │   ├── bait_with.c
+│   │       │   │   │   ├── bury.c
+│   │       │   │   │   ├── buy.c
+│   │       │   │   │   ├── climb.c
+│   │       │   │   │   ├── close.c
+│   │       │   │   │   ├── consult.c
+│   │       │   │   │   ├── crawl.c
+│   │       │   │   │   ├── describe.c
+│   │       │   │   │   ├── dig.c
+│   │       │   │   │   ├── dig_with.c
+│   │       │   │   │   ├── disarm.c
+│   │       │   │   │   ├── drink.c
+│   │       │   │   │   ├── drop.c
+│   │       │   │   │   ├── fall.c
+│   │       │   │   │   ├── fly.c
+│   │       │   │   │   ├── get.c
+│   │       │   │   │   ├── get_from.c
+│   │       │   │   │   ├── give.c
+│   │       │   │   │   ├── install.c
+│   │       │   │   │   ├── jump.c
+│   │       │   │   │   ├── knock.c
+│   │       │   │   │   ├── lie.c
+│   │       │   │   │   ├── listen.c
+│   │       │   │   │   ├── load.c
+│   │       │   │   │   ├── lock.c
+│   │       │   │   │   ├── lock_with.c
+│   │       │   │   │   ├── look.c
+│   │       │   │   │   ├── look_in.c
+│   │       │   │   │   ├── manipulate.c
+│   │       │   │   │   ├── poison.c
+│   │       │   │   │   ├── press.c
+│   │       │   │   │   ├── pull.c
+│   │       │   │   │   ├── put.c
+│   │       │   │   │   ├── read.c
+│   │       │   │   │   ├── rock.c
+│   │       │   │   │   ├── roll.c
+│   │       │   │   │   ├── scratch.c
+│   │       │   │   │   ├── search.c
+│   │       │   │   │   ├── sell.c
+│   │       │   │   │   ├── shake.c
+│   │       │   │   │   ├── shoot.c
+│   │       │   │   │   ├── show.c
+│   │       │   │   │   ├── sink.c
+│   │       │   │   │   ├── sit.c
+│   │       │   │   │   ├── smell.c
+│   │       │   │   │   ├── smoke.c
+│   │       │   │   │   ├── stop.c
+│   │       │   │   │   ├── swim.c
+│   │       │   │   │   ├── swivel.c
+│   │       │   │   │   ├── touch.c
+│   │       │   │   │   ├── turn.c
+│   │       │   │   │   ├── wear.c
+│   │       │   │   │   └── wield.c
+│   │       │   │   ├── include
+│   │       │   │   │   ├── abilities.h
+│   │       │   │   │   ├── armor.h
+│   │       │   │   │   ├── autosave.h
+│   │       │   │   │   ├── bait.h
+│   │       │   │   │   ├── bank.h
+│   │       │   │   │   ├── barkeep.h
+│   │       │   │   │   ├── bboard.h
+│   │       │   │   │   ├── body.h
+│   │       │   │   │   ├── burn.h
+│   │       │   │   │   ├── carry.h
+│   │       │   │   │   ├── chapel.h
+│   │       │   │   │   ├── chat.h
+│   │       │   │   │   ├── clan.h
+│   │       │   │   │   ├── classes.h
+│   │       │   │   │   ├── client.h
+│   │       │   │   │   ├── clip.h
+│   │       │   │   │   ├── close.h
+│   │       │   │   │   ├── combatmsg.h
+│   │       │   │   │   ├── command.h
+│   │       │   │   │   ├── container.h
+│   │       │   │   │   ├── corpse.h
+│   │       │   │   │   ├── creator.h
+│   │       │   │   │   ├── currency.h
+│   │       │   │   │   ├── detect.h
+│   │       │   │   │   ├── digging.h
+│   │       │   │   │   ├── donate.h
+│   │       │   │   │   ├── door.h
+│   │       │   │   │   ├── drop.h
+│   │       │   │   │   ├── editor.h
+│   │       │   │   │   ├── exits.h
+│   │       │   │   │   ├── files.h
+│   │       │   │   │   ├── firearm.h
+│   │       │   │   │   ├── fish.h
+│   │       │   │   │   ├── fishing.h
+│   │       │   │   │   ├── follow.h
+│   │       │   │   │   ├── fuel.h
+│   │       │   │   │   ├── genetics.h
+│   │       │   │   │   ├── get.h
+│   │       │   │   │   ├── help.h
+│   │       │   │   │   ├── history.h
+│   │       │   │   │   ├── holder.h
+│   │       │   │   │   ├── interactive.h
+│   │       │   │   │   ├── interface.h
+│   │       │   │   │   ├── item.h
+│   │       │   │   │   ├── items.h
+│   │       │   │   │   ├── jump.h
+│   │       │   │   │   ├── key.h
+│   │       │   │   │   ├── lamp.h
+│   │       │   │   │   ├── leader.h
+│   │       │   │   │   ├── lead.h
+│   │       │   │   │   ├── light.h
+│   │       │   │   │   ├── limb.h
+│   │       │   │   │   ├── listen.h
+│   │       │   │   │   ├── living.h
+│   │       │   │   │   ├── lock.h
+│   │       │   │   │   ├── match.h
+│   │       │   │   │   ├── meal.h
+│   │       │   │   │   ├── messages.h
+│   │       │   │   │   ├── money.h
+│   │       │   │   │   ├── nmsh.h
+│   │       │   │   │   ├── npc.h
+│   │       │   │   │   ├── pager.h
+│   │       │   │   │   ├── persist.h
+│   │       │   │   │   ├── pile.h
+│   │       │   │   │   ├── pistol.h
+│   │       │   │   │   ├── player.h
+│   │       │   │   │   ├── poison.h
+│   │       │   │   │   ├── pole.h
+│   │       │   │   │   ├── post_office.h
+│   │       │   │   │   ├── press.h
+│   │       │   │   │   ├── put.h
+│   │       │   │   │   ├── race.h
+│   │       │   │   │   ├── read.h
+│   │       │   │   │   ├── room.h
+│   │       │   │   │   ├── round.h
+│   │       │   │   │   ├── scroll.h
+│   │       │   │   │   ├── search.h
+│   │       │   │   │   ├── shell.h
+│   │       │   │   │   ├── smell.h
+│   │       │   │   │   ├── stargate.h
+│   │       │   │   │   ├── steal.h
+│   │       │   │   │   ├── storage.h
+│   │       │   │   │   ├── talk.h
+│   │       │   │   │   ├── teacher.h
+│   │       │   │   │   ├── teller.h
+│   │       │   │   │   ├── torch.h
+│   │       │   │   │   ├── touch.h
+│   │       │   │   │   ├── trainer.h
+│   │       │   │   │   ├── trap.h
+│   │       │   │   │   ├── vendor.h
+│   │       │   │   │   ├── virtual.h
+│   │       │   │   │   └── weapon.h
+│   │       │   │   ├── lvs
+│   │       │   │   │   ├── abilities.c
+│   │       │   │   │   ├── level.c
+│   │       │   │   │   └── position.c
+│   │       │   │   ├── props
+│   │       │   │   │   ├── addstuff.c
+│   │       │   │   │   ├── ambiance.c
+│   │       │   │   │   ├── body_mass.c
+│   │       │   │   │   ├── carry.c
+│   │       │   │   │   ├── clean.c
+│   │       │   │   │   ├── cost.txt
+│   │       │   │   │   ├── damage.c
+│   │       │   │   │   ├── description.c
+│   │       │   │   │   ├── deterioration.c
+│   │       │   │   │   ├── equip.c
+│   │       │   │   │   ├── id.c
+│   │       │   │   │   ├── inventory.c
+│   │       │   │   │   ├── mass.c
+│   │       │   │   │   ├── move.c
+│   │       │   │   │   ├── properties.c
+│   │       │   │   │   ├── radiance.c
+│   │       │   │   │   ├── save.c
+│   │       │   │   │   ├── uniqueness.c
+│   │       │   │   │   └── value.c
+│   │       │   │   ├── std
+│   │       │   │   │   ├── armor.c
+│   │       │   │   │   ├── bane.c
+│   │       │   │   │   ├── barkeep.c
+│   │       │   │   │   ├── base_armor.c
+│   │       │   │   │   ├── base_dummy.c
+│   │       │   │   │   ├── base_storage.c
+│   │       │   │   │   ├── bed.c
+│   │       │   │   │   ├── boobytrap_object.c
+│   │       │   │   │   ├── boobytrap_shadow.c
+│   │       │   │   │   ├── book.c
+│   │       │   │   │   ├── bot_corpse.c
+│   │       │   │   │   ├── bot_limb.c
+│   │       │   │   │   ├── chair.c
+│   │       │   │   │   ├── corpse.c
+│   │       │   │   │   ├── daemon.c
+│   │       │   │   │   ├── dummy.c
+│   │       │   │   │   ├── furnace.c
+│   │       │   │   │   ├── germ.c
+│   │       │   │   │   ├── item.c
+│   │       │   │   │   ├── limb.c
+│   │       │   │   │   ├── lockpick.c
+│   │       │   │   │   ├── room.c
+│   │       │   │   │   ├── storage.c
+│   │       │   │   │   ├── story.c
+│   │       │   │   │   ├── table.c
+│   │       │   │   │   ├── vendor.c
+│   │       │   │   │   ├── worn_storage.c
+│   │       │   │   │   └── wound.c
+│   │       │   │   ├── user
+│   │       │   │   │   └── autosave.c
+│   │       │   │   ├── virtual
+│   │       │   │   │   ├── virt_land.c
+│   │       │   │   │   ├── virt_map.c
+│   │       │   │   │   ├── virt_sky.c
+│   │       │   │   │   ├── virt_std.c
+│   │       │   │   │   ├── virt_subsurface.c
+│   │       │   │   │   └── virtual.c
+│   │       │   │   ├── bank.c
+│   │       │   │   ├── base_trainer.c
+│   │       │   │   ├── battery.c
+│   │       │   │   ├── bboard.c
+│   │       │   │   ├── blank.c
+│   │       │   │   ├── blank_pile.c
+│   │       │   │   ├── body.c
+│   │       │   │   ├── bonus.c
+│   │       │   │   ├── bot.c
+│   │       │   │   ├── burn.c
+│   │       │   │   ├── cedit.c
+│   │       │   │   ├── cgi.c
+│   │       │   │   ├── chamber.c
+│   │       │   │   ├── chapel.c
+│   │       │   │   ├── chario.c
+│   │       │   │   ├── chat.c
+│   │       │   │   ├── cigar.c
+│   │       │   │   ├── clan.c
+│   │       │   │   ├── classes.c
+│   │       │   │   ├── clay.c
+│   │       │   │   ├── clerk.c
+│   │       │   │   ├── clip.c
+│   │       │   │   ├── combat.c
+│   │       │   │   ├── combatmsg.c
+│   │       │   │   ├── command.c
+│   │       │   │   ├── creator.c
+│   │       │   │   ├── currency.c
+│   │       │   │   ├── cylinder.c
+│   │       │   │   ├── detect.c
+│   │       │   │   ├── die.c
+│   │       │   │   ├── domesticate.c
+│   │       │   │   ├── donate.c
+│   │       │   │   ├── door.c
+│   │       │   │   ├── editor.c
+│   │       │   │   ├── elevator_button.c
+│   │       │   │   ├── elevator.c
+│   │       │   │   ├── enter.c
+│   │       │   │   ├── exits.c
+│   │       │   │   ├── files.c
+│   │       │   │   ├── firearm.c
+│   │       │   │   ├── fish.c
+│   │       │   │   ├── fishing.c
+│   │       │   │   ├── flashlight.c
+│   │       │   │   ├── flask.c
+│   │       │   │   ├── flow.c
+│   │       │   │   ├── follow.c
+│   │       │   │   ├── fuel.c
+│   │       │   │   ├── genetics.c
+│   │       │   │   ├── guard.c
+│   │       │   │   ├── help.c
+│   │       │   │   ├── history.c
+│   │       │   │   ├── interactive.c
+│   │       │   │   ├── interface.c
+│   │       │   │   ├── lamp.c
+│   │       │   │   ├── language.c
+│   │       │   │   ├── lead.c
+│   │       │   │   ├── leader.c
+│   │       │   │   ├── learn.c
+│   │       │   │   ├── light.c
+│   │       │   │   ├── living.c
+│   │       │   │   ├── magic.c
+│   │       │   │   ├── manycoins.c
+│   │       │   │   ├── match.c
+│   │       │   │   ├── mayor.c
+│   │       │   │   ├── meal.c
+│   │       │   │   ├── messages.c
+│   │       │   │   ├── missile.c
+│   │       │   │   ├── money.c
+│   │       │   │   ├── mount.c
+│   │       │   │   ├── nmsh.c
+│   │       │   │   ├── npc.c
+│   │       │   │   ├── pager.c
+│   │       │   │   ├── persist.c
+│   │       │   │   ├── pile.c
+│   │       │   │   ├── pipe.c
+│   │       │   │   ├── pistol.c
+│   │       │   │   ├── player.c
+│   │       │   │   ├── poison.c
+│   │       │   │   ├── pole.c
+│   │       │   │   ├── post_office.c
+│   │       │   │   ├── potion.c
+│   │       │   │   ├── quest.c
+│   │       │   │   ├── race.c
+│   │       │   │   ├── rifle.c
+│   │       │   │   ├── round.c
+│   │       │   │   ├── sentient.c
+│   │       │   │   ├── shadow.c
+│   │       │   │   ├── shadow_hook.c
+│   │       │   │   ├── shell.c
+│   │       │   │   ├── shop.c
+│   │       │   │   ├── spell.c
+│   │       │   │   ├── stargate.c
+│   │       │   │   ├── steal.c
+│   │       │   │   ├── talk.c
+│   │       │   │   ├── teach.c
+│   │       │   │   ├── teacher.c
+│   │       │   │   ├── teller.c
+│   │       │   │   ├── torch.c
+│   │       │   │   ├── trainer.c
+│   │       │   │   ├── trap.c
+│   │       │   │   ├── undead.c
+│   │       │   │   ├── used_meal.c
+│   │       │   │   └── vehicle.c
+│   │       │   ├── log
+│   │       │   │   ├── adm
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── archive
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── chan
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── errors
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── imc2_server
+│   │       │   │   ├── law
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── email
+│   │       │   │   │   ├── names
+│   │       │   │   │   ├── sites-misc
+│   │       │   │   │   ├── sites-register
+│   │       │   │   │   ├── sites-tempban
+│   │       │   │   │   └── sites-watch
+│   │       │   │   ├── open
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── reports
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── router
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── secure
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── watch
+│   │       │   │   │   └── foo.txt
+│   │       │   │   ├── author_stats
+│   │       │   │   └── domain_stats
+│   │       │   ├── news
+│   │       │   │   ├── admin
+│   │       │   │   ├── avatar
+│   │       │   │   ├── creator
+│   │       │   │   ├── deadsouls
+│   │       │   │   ├── fighter
+│   │       │   │   ├── ftpd
+│   │       │   │   ├── general
+│   │       │   │   ├── hints.txt
+│   │       │   │   ├── hm
+│   │       │   │   ├── locked
+│   │       │   │   ├── moved
+│   │       │   │   ├── newbie
+│   │       │   │   ├── priest
+│   │       │   │   ├── register
+│   │       │   │   ├── reminders.txt
+│   │       │   │   └── welcome
+│   │       │   ├── obj
+│   │       │   │   ├── book_source
+│   │       │   │   │   ├── chapter1
+│   │       │   │   │   └── chapter2
+│   │       │   │   ├── include
+│   │       │   │   │   └── portal.h
+│   │       │   │   ├── area_room.c
+│   │       │   │   ├── armor.c
+│   │       │   │   ├── barkeep.c
+│   │       │   │   ├── bed.c
+│   │       │   │   ├── book.c
+│   │       │   │   ├── burning_orb.c
+│   │       │   │   ├── chair.c
+│   │       │   │   ├── container.c
+│   │       │   │   ├── deed.c
+│   │       │   │   ├── door.c
+│   │       │   │   ├── drink.c
+│   │       │   │   ├── friend.c
+│   │       │   │   ├── light.c
+│   │       │   │   ├── magic_scroll.c
+│   │       │   │   ├── meal.c
+│   │       │   │   ├── npc.c
+│   │       │   │   ├── order.c
+│   │       │   │   ├── portal.c
+│   │       │   │   ├── quest_ob.c
+│   │       │   │   ├── README
+│   │       │   │   ├── room.c
+│   │       │   │   ├── shield.c
+│   │       │   │   ├── stargate.c
+│   │       │   │   ├── stargate.example
+│   │       │   │   ├── sword.c
+│   │       │   │   ├── table.c
+│   │       │   │   ├── thing.c
+│   │       │   │   ├── trainer.c
+│   │       │   │   ├── vendor.c
+│   │       │   │   ├── weapon.c
+│   │       │   │   ├── wed_ring.c
+│   │       │   │   ├── whip.c
+│   │       │   │   └── worn_storage.c
+│   │       │   ├── open
+│   │       │   ├── powers
+│   │       │   │   ├── feats
+│   │       │   │   ├── prayers
+│   │       │   │   │   └── healing.c
+│   │       │   │   ├── psionics
+│   │       │   │   ├── spells
+│   │       │   │   │   ├── buffer.c
+│   │       │   │   │   ├── fireball.c
+│   │       │   │   │   ├── greater_buffer.c
+│   │       │   │   │   ├── greater_fireball.c
+│   │       │   │   │   ├── light.c
+│   │       │   │   │   ├── meditate.c
+│   │       │   │   │   ├── missile.c
+│   │       │   │   │   └── whip.c
+│   │       │   │   └── trades
+│   │       │   ├── realms
+│   │       │   │   └── template
+│   │       │   │       ├── adm
+│   │       │   │       ├── area
+│   │       │   │       ├── bak
+│   │       │   │       ├── cmds
+│   │       │   │       ├── log
+│   │       │   │       ├── evaldefs.h
+│   │       │   │       ├── plan
+│   │       │   │       ├── profile
+│   │       │   │       ├── workroom.bak
+│   │       │   │       ├── workroom_builder.c
+│   │       │   │       └── workroom.c
+│   │       │   ├── save
+│   │       │   │   ├── kills
+│   │       │   │   │   └── o
+│   │       │   │   ├── banish.o
+│   │       │   │   ├── books.o
+│   │       │   │   ├── classes.o
+│   │       │   │   ├── economy.o
+│   │       │   │   ├── events.o
+│   │       │   │   ├── map.o
+│   │       │   │   ├── notify.o
+│   │       │   │   ├── portal.o
+│   │       │   │   ├── races.o
+│   │       │   │   ├── rooms.o
+│   │       │   │   ├── services.o
+│   │       │   │   ├── soul.o
+│   │       │   │   └── stargate.o
+│   │       │   ├── secure
+│   │       │   │   ├── cfg
+│   │       │   │   │   ├── classes
+│   │       │   │   │   ├── races
+│   │       │   │   │   ├── aliases.cfg
+│   │       │   │   │   ├── flashpolicy.cfg
+│   │       │   │   │   ├── global_template.cfg
+│   │       │   │   │   ├── groups.cfg
+│   │       │   │   │   ├── instance_template.cfg
+│   │       │   │   │   ├── ip_blacklist.cfg
+│   │       │   │   │   ├── ip_unrestrict.cfg
+│   │       │   │   │   ├── mudos.autobak
+│   │       │   │   │   ├── mudos.cfg
+│   │       │   │   │   ├── mudos.orig
+│   │       │   │   │   ├── mudos.win32
+│   │       │   │   │   ├── preload.cfg
+│   │       │   │   │   ├── read.cfg
+│   │       │   │   │   ├── runmud_template.bat
+│   │       │   │   │   └── write.cfg
+│   │       │   │   ├── cmds
+│   │       │   │   │   ├── admins
+│   │       │   │   │   ├── builders
+│   │       │   │   │   ├── common
+│   │       │   │   │   ├── creators
+│   │       │   │   │   ├── hm
+│   │       │   │   │   └── players
+│   │       │   │   ├── daemon
+│   │       │   │   │   ├── i3router
+│   │       │   │   │   ├── imc2server
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── alchemist.c
+│   │       │   │   │   ├── autoexec.c
+│   │       │   │   │   ├── bboard.c
+│   │       │   │   │   ├── bboard.h
+│   │       │   │   │   ├── character.c
+│   │       │   │   │   ├── chat.c
+│   │       │   │   │   ├── economy.c
+│   │       │   │   │   ├── estates.c
+│   │       │   │   │   ├── events.c
+│   │       │   │   │   ├── events.h
+│   │       │   │   │   ├── file.c
+│   │       │   │   │   ├── filter.c
+│   │       │   │   │   ├── finger.c
+│   │       │   │   │   ├── finger.h
+│   │       │   │   │   ├── flash_policy.c
+│   │       │   │   │   ├── folders.c
+│   │       │   │   │   ├── folders.h
+│   │       │   │   │   ├── function.c
+│   │       │   │   │   ├── imc2.c
+│   │       │   │   │   ├── inet.c
+│   │       │   │   │   ├── instances.c
+│   │       │   │   │   ├── letters.c
+│   │       │   │   │   ├── letters.h
+│   │       │   │   │   ├── localpost.c
+│   │       │   │   │   ├── localpost.h
+│   │       │   │   │   ├── log.c
+│   │       │   │   │   ├── luget.c
+│   │       │   │   │   ├── master.c
+│   │       │   │   │   ├── master.h
+│   │       │   │   │   ├── mudinfo.c
+│   │       │   │   │   ├── oob.c
+│   │       │   │   │   ├── options.c
+│   │       │   │   │   ├── options.h
+│   │       │   │   │   ├── persistence.c
+│   │       │   │   │   ├── ping.c
+│   │       │   │   │   ├── players.c
+│   │       │   │   │   ├── politics.c
+│   │       │   │   │   ├── portal.c
+│   │       │   │   │   ├── preload_check.c
+│   │       │   │   │   ├── reaper.c
+│   │       │   │   │   ├── reload.c
+│   │       │   │   │   ├── remotepost.c
+│   │       │   │   │   ├── remotepost.h
+│   │       │   │   │   ├── resolv.c
+│   │       │   │   │   ├── rooms.c
+│   │       │   │   │   ├── secrets.c
+│   │       │   │   │   ├── snoop.c
+│   │       │   │   │   ├── tracker.c
+│   │       │   │   │   ├── translation.c
+│   │       │   │   │   ├── update.blank
+│   │       │   │   │   ├── update.c
+│   │       │   │   │   ├── update.patch
+│   │       │   │   │   ├── voting.c
+│   │       │   │   │   ├── web_sessions.c
+│   │       │   │   │   └── wget.c
+│   │       │   │   ├── include
+│   │       │   │   │   ├── bboard.h
+│   │       │   │   │   ├── cfg.h
+│   │       │   │   │   ├── cgi.h
+│   │       │   │   │   ├── clean_up.h
+│   │       │   │   │   ├── clock.h
+│   │       │   │   │   ├── commands.h
+│   │       │   │   │   ├── compat.h
+│   │       │   │   │   ├── comp.h
+│   │       │   │   │   ├── config.h
+│   │       │   │   │   ├── council.h
+│   │       │   │   │   ├── daemons.h
+│   │       │   │   │   ├── deputies.h
+│   │       │   │   │   ├── dirs.h
+│   │       │   │   │   ├── domains.h
+│   │       │   │   │   ├── events.h
+│   │       │   │   │   ├── files.h
+│   │       │   │   │   ├── flags.h
+│   │       │   │   │   ├── function.h
+│   │       │   │   │   ├── global.h
+│   │       │   │   │   ├── iips.h
+│   │       │   │   │   ├── lib.h
+│   │       │   │   │   ├── link.h
+│   │       │   │   │   ├── localtime.h
+│   │       │   │   │   ├── logs.h
+│   │       │   │   │   ├── lvs.h
+│   │       │   │   │   ├── modules.h
+│   │       │   │   │   ├── mssp.h
+│   │       │   │   │   ├── mudlib.h
+│   │       │   │   │   ├── network.h
+│   │       │   │   │   ├── news.h
+│   │       │   │   │   ├── object.h
+│   │       │   │   │   ├── objects.h
+│   │       │   │   │   ├── origin.h
+│   │       │   │   │   ├── parse_com.h
+│   │       │   │   │   ├── parser_error.h
+│   │       │   │   │   ├── post.h
+│   │       │   │   │   ├── pov.h
+│   │       │   │   │   ├── privs.h
+│   │       │   │   │   ├── props.h
+│   │       │   │   │   ├── rcp.h
+│   │       │   │   │   ├── rooms.h
+│   │       │   │   │   ├── runtime_config.h
+│   │       │   │   │   ├── save.h
+│   │       │   │   │   ├── secrets.h
+│   │       │   │   │   ├── socket_err.h
+│   │       │   │   │   ├── socket.h
+│   │       │   │   │   ├── sockets.h
+│   │       │   │   │   ├── std.h
+│   │       │   │   │   ├── type.h
+│   │       │   │   │   ├── user.h
+│   │       │   │   │   ├── virtual.h
+│   │       │   │   │   └── voting.h
+│   │       │   │   ├── lib
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── net
+│   │       │   │   │   ├── std
+│   │       │   │   │   ├── bboard.c
+│   │       │   │   │   ├── connect.c
+│   │       │   │   │   ├── connect.first.c
+│   │       │   │   │   ├── connect.real
+│   │       │   │   │   └── file.c
+│   │       │   │   ├── log
+│   │       │   │   │   ├── adm
+│   │       │   │   │   ├── bak
+│   │       │   │   │   ├── intermud
+│   │       │   │   │   └── network
+│   │       │   │   ├── modules
+│   │       │   │   │   ├── armor.c
+│   │       │   │   │   ├── create.c
+│   │       │   │   │   ├── door.c
+│   │       │   │   │   ├── file.c
+│   │       │   │   │   ├── generic.c
+│   │       │   │   │   ├── mapping.c
+│   │       │   │   │   ├── money.c
+│   │       │   │   │   ├── read.c
+│   │       │   │   │   └── room.c
+│   │       │   │   ├── npc
+│   │       │   │   │   ├── arch_wraith.c
+│   │       │   │   │   ├── cambot.c
+│   │       │   │   │   └── drone.c
+│   │       │   │   ├── obj
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── arch_board.c
+│   │       │   │   │   ├── control.c
+│   │       │   │   │   ├── floodmapper.c
+│   │       │   │   │   ├── glasses.c
+│   │       │   │   │   ├── key.c
+│   │       │   │   │   ├── machine.c
+│   │       │   │   │   ├── meditate_mojo.c
+│   │       │   │   │   ├── medtric.c
+│   │       │   │   │   ├── memo.c
+│   │       │   │   │   ├── mojo.c
+│   │       │   │   │   ├── pingy.c
+│   │       │   │   │   ├── portal_blue.c
+│   │       │   │   │   ├── portal_orange.c
+│   │       │   │   │   ├── post.c
+│   │       │   │   │   ├── replacer.c
+│   │       │   │   │   ├── robot.c
+│   │       │   │   │   ├── snooper.c
+│   │       │   │   │   ├── staff.c
+│   │       │   │   │   ├── tc.c
+│   │       │   │   │   └── weirder.c
+│   │       │   │   ├── room
+│   │       │   │   │   ├── arch.c
+│   │       │   │   │   ├── network.c
+│   │       │   │   │   └── router.c
+│   │       │   │   ├── save
+│   │       │   │   │   ├── backup
+│   │       │   │   │   ├── binaries
+│   │       │   │   │   ├── boards
+│   │       │   │   │   ├── creators
+│   │       │   │   │   ├── decre
+│   │       │   │   │   ├── letters
+│   │       │   │   │   ├── players
+│   │       │   │   │   ├── postal
+│   │       │   │   │   ├── rid
+│   │       │   │   │   ├── suicide
+│   │       │   │   │   ├── votes
+│   │       │   │   │   ├── files.o
+│   │       │   │   │   ├── functions.o
+│   │       │   │   │   └── inet.o
+│   │       │   │   ├── scripts
+│   │       │   │   │   ├── bedlam.src
+│   │       │   │   │   ├── crat2.src
+│   │       │   │   │   ├── crat3.src
+│   │       │   │   │   ├── crat.src
+│   │       │   │   │   ├── distclean.src
+│   │       │   │   │   ├── general_check.txt
+│   │       │   │   │   ├── grid.src
+│   │       │   │   │   ├── indent.src
+│   │       │   │   │   ├── killflow.src
+│   │       │   │   │   ├── ligana.src
+│   │       │   │   │   ├── mass_update.src
+│   │       │   │   │   ├── mayhem.src
+│   │       │   │   │   ├── missile.src
+│   │       │   │   │   ├── native_version.proto
+│   │       │   │   │   ├── nm3.lsed
+│   │       │   │   │   ├── oldcrat2.src
+│   │       │   │   │   ├── powerbots.src
+│   │       │   │   │   ├── qcs_check.txt
+│   │       │   │   │   ├── qgreset.src
+│   │       │   │   │   ├── resetgrid.src
+│   │       │   │   │   ├── ruckus.src
+│   │       │   │   │   ├── sky.lsed
+│   │       │   │   │   ├── testmud.src
+│   │       │   │   │   ├── update.src
+│   │       │   │   │   ├── upgrades.txt
+│   │       │   │   │   ├── walkabout.src
+│   │       │   │   │   └── wtf.src
+│   │       │   │   ├── sefun
+│   │       │   │   │   ├── absolute_path.c
+│   │       │   │   │   ├── absolute_value.c
+│   │       │   │   │   ├── arrays.c
+│   │       │   │   │   ├── ascii.c
+│   │       │   │   │   ├── astar.c
+│   │       │   │   │   ├── atomize.c
+│   │       │   │   │   ├── communications.c
+│   │       │   │   │   ├── compare_array.c
+│   │       │   │   │   ├── copy.c
+│   │       │   │   │   ├── custom_path.c
+│   │       │   │   │   ├── disable.c
+│   │       │   │   │   ├── domains.c
+│   │       │   │   │   ├── dummy.c
+│   │       │   │   │   ├── duplicates.c
+│   │       │   │   │   ├── economy.c
+│   │       │   │   │   ├── english.c
+│   │       │   │   │   ├── events.c
+│   │       │   │   │   ├── expand_keys.c
+│   │       │   │   │   ├── files.c
+│   │       │   │   │   ├── findobs.c
+│   │       │   │   │   ├── flat_map.c
+│   │       │   │   │   ├── format_page.c
+│   │       │   │   │   ├── fuzzymatch.c
+│   │       │   │   │   ├── generic.c
+│   │       │   │   │   ├── get_cmds.c
+│   │       │   │   │   ├── get_livings.c
+│   │       │   │   │   ├── get_object.c
+│   │       │   │   │   ├── get_stack.c
+│   │       │   │   │   ├── get_verbs.c
+│   │       │   │   │   ├── identify.c
+│   │       │   │   │   ├── interface.c
+│   │       │   │   │   ├── inventory.c
+│   │       │   │   │   ├── legacy.c
+│   │       │   │   │   ├── light.c
+│   │       │   │   │   ├── load_object.c
+│   │       │   │   │   ├── local_time.c
+│   │       │   │   │   ├── log_file.c
+│   │       │   │   │   ├── make_workroom.c
+│   │       │   │   │   ├── mappings.c
+│   │       │   │   │   ├── messaging.c
+│   │       │   │   │   ├── minimap.c
+│   │       │   │   │   ├── morality.c
+│   │       │   │   │   ├── mud_info.c
+│   │       │   │   │   ├── names.c
+│   │       │   │   │   ├── native_version.c
+│   │       │   │   │   ├── numbers.c
+│   │       │   │   │   ├── ordinal.c
+│   │       │   │   │   ├── parse_objects.c
+│   │       │   │   │   ├── path_file.c
+│   │       │   │   │   ├── percent.c
+│   │       │   │   │   ├── persist.c
+│   │       │   │   │   ├── pointers.c
+│   │       │   │   │   ├── query_invis.c
+│   │       │   │   │   ├── query_time_of_day.c
+│   │       │   │   │   ├── reaper.c
+│   │       │   │   │   ├── reload.c
+│   │       │   │   │   ├── rooms.c
+│   │       │   │   │   ├── security.c
+│   │       │   │   │   ├── sefun.c
+│   │       │   │   │   ├── sefun.h
+│   │       │   │   │   ├── sockets.c
+│   │       │   │   │   ├── strings.c
+│   │       │   │   │   ├── tail.c
+│   │       │   │   │   ├── this_agent.c
+│   │       │   │   │   ├── time.c
+│   │       │   │   │   ├── timestamp.c
+│   │       │   │   │   ├── to_object.c
+│   │       │   │   │   ├── translate.c
+│   │       │   │   │   ├── users.c
+│   │       │   │   │   ├── values.c
+│   │       │   │   │   ├── visible.c
+│   │       │   │   │   ├── wild_card.c
+│   │       │   │   │   └── wipe_inv.c
+│   │       │   │   ├── upgrades
+│   │       │   │   │   ├── files
+│   │       │   │   │   └── txt
+│   │       │   │   └── verbs
+│   │       │   │       └── creators
+│   │       │   ├── shadows
+│   │       │   │   ├── arbiter.c
+│   │       │   │   ├── bear.c
+│   │       │   │   ├── breather.c
+│   │       │   │   ├── diag.c
+│   │       │   │   ├── drone.c
+│   │       │   │   ├── explosive_trap.c
+│   │       │   │   ├── needle_trap2.c
+│   │       │   │   ├── needle_trap.c
+│   │       │   │   ├── pscout.c
+│   │       │   │   ├── ring.c
+│   │       │   │   ├── rocketpack.c
+│   │       │   │   ├── scout.c
+│   │       │   │   └── zombie.c
+│   │       │   ├── std
+│   │       │   │   ├── board
+│   │       │   │   │   └── bboard.c
+│   │       │   │   ├── lib
+│   │       │   │   │   └── pile.c
+│   │       │   │   ├── death.c
+│   │       │   │   ├── estate.c
+│   │       │   │   ├── freezer.c
+│   │       │   │   ├── furnace.c
+│   │       │   │   ├── monster.c
+│   │       │   │   ├── pod.c
+│   │       │   │   ├── prop_logic.c
+│   │       │   │   ├── quest_ob.c
+│   │       │   │   ├── README
+│   │       │   │   ├── room.c
+│   │       │   │   ├── server.txt
+│   │       │   │   ├── virtual_void.txt
+│   │       │   │   ├── void.c
+│   │       │   │   └── wiz_hall.c
+│   │       │   ├── verbs
+│   │       │   │   ├── admins
+│   │       │   │   │   └── include
+│   │       │   │   ├── builders
+│   │       │   │   │   ├── add.c
+│   │       │   │   │   ├── copy.c
+│   │       │   │   │   ├── createfix.c
+│   │       │   │   │   ├── delete.c
+│   │       │   │   │   ├── dest.c
+│   │       │   │   │   ├── initfix.c
+│   │       │   │   │   ├── modify.c
+│   │       │   │   │   ├── pulsecheck.c
+│   │       │   │   │   └── reload.c
+│   │       │   │   ├── common
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── ask.c
+│   │       │   │   │   ├── body.c
+│   │       │   │   │   ├── channels.c
+│   │       │   │   │   ├── mail.c
+│   │       │   │   │   ├── say.c
+│   │       │   │   │   ├── shout.c
+│   │       │   │   │   ├── speak.c
+│   │       │   │   │   ├── whisper.c
+│   │       │   │   │   └── yell.c
+│   │       │   │   ├── creators
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── codesay.c
+│   │       │   │   │   ├── echo.c
+│   │       │   │   │   ├── resurrect.c
+│   │       │   │   │   ├── wizlock.c
+│   │       │   │   │   ├── wizunlock.c
+│   │       │   │   │   └── zap.c
+│   │       │   │   ├── items
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── activate.c
+│   │       │   │   │   ├── apply.c
+│   │       │   │   │   ├── bait.c
+│   │       │   │   │   ├── balance.c
+│   │       │   │   │   ├── boobytrap.c
+│   │       │   │   │   ├── bury.c
+│   │       │   │   │   ├── buy.c
+│   │       │   │   │   ├── capture.c
+│   │       │   │   │   ├── close.c
+│   │       │   │   │   ├── consult.c
+│   │       │   │   │   ├── deactivate.c
+│   │       │   │   │   ├── dig.c
+│   │       │   │   │   ├── disarm.c
+│   │       │   │   │   ├── donate.c
+│   │       │   │   │   ├── drink.c
+│   │       │   │   │   ├── drop.c
+│   │       │   │   │   ├── eat.c
+│   │       │   │   │   ├── empty.c
+│   │       │   │   │   ├── equate.c
+│   │       │   │   │   ├── extinguish.c
+│   │       │   │   │   ├── fill.c
+│   │       │   │   │   ├── free.c
+│   │       │   │   │   ├── get.c
+│   │       │   │   │   ├── give.c
+│   │       │   │   │   ├── install.c
+│   │       │   │   │   ├── judge1.c
+│   │       │   │   │   ├── judge.c
+│   │       │   │   │   ├── knock.c
+│   │       │   │   │   ├── light.c
+│   │       │   │   │   ├── listen.c
+│   │       │   │   │   ├── load.c
+│   │       │   │   │   ├── lock.c
+│   │       │   │   │   ├── look.c
+│   │       │   │   │   ├── move.c
+│   │       │   │   │   ├── open.c
+│   │       │   │   │   ├── pick.c
+│   │       │   │   │   ├── poison.c
+│   │       │   │   │   ├── pour.c
+│   │       │   │   │   ├── press.c
+│   │       │   │   │   ├── pull.c
+│   │       │   │   │   ├── put.c
+│   │       │   │   │   ├── read.c
+│   │       │   │   │   ├── remove.c
+│   │       │   │   │   ├── ring.c
+│   │       │   │   │   ├── rock.c
+│   │       │   │   │   ├── roll.c
+│   │       │   │   │   ├── scratch.c
+│   │       │   │   │   ├── search.c
+│   │       │   │   │   ├── sell.c
+│   │       │   │   │   ├── shake.c
+│   │       │   │   │   ├── shoot.c
+│   │       │   │   │   ├── show.c
+│   │       │   │   │   ├── skin.c
+│   │       │   │   │   ├── smell.c
+│   │       │   │   │   ├── smoke.c
+│   │       │   │   │   ├── steal.c
+│   │       │   │   │   ├── strike.c
+│   │       │   │   │   ├── swivel.c
+│   │       │   │   │   ├── throw.c
+│   │       │   │   │   ├── touch.c
+│   │       │   │   │   ├── turn.c
+│   │       │   │   │   ├── uninstall.c
+│   │       │   │   │   ├── unload.c
+│   │       │   │   │   ├── unlock.c
+│   │       │   │   │   ├── unwield.c
+│   │       │   │   │   ├── use.c
+│   │       │   │   │   ├── wear.c
+│   │       │   │   │   ├── weigh.c
+│   │       │   │   │   └── wield.c
+│   │       │   │   ├── players
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── abandon.c
+│   │       │   │   │   ├── attack.c
+│   │       │   │   │   ├── backstab.c
+│   │       │   │   │   ├── befriend.c
+│   │       │   │   │   ├── bump.c
+│   │       │   │   │   ├── cast.c
+│   │       │   │   │   ├── crawl.c
+│   │       │   │   │   ├── describe.c
+│   │       │   │   │   ├── dismount.c
+│   │       │   │   │   ├── drive.c
+│   │       │   │   │   ├── evade.c
+│   │       │   │   │   ├── follow.c
+│   │       │   │   │   ├── ignore.c
+│   │       │   │   │   ├── kneel.c
+│   │       │   │   │   ├── lead.c
+│   │       │   │   │   ├── learn.c
+│   │       │   │   │   ├── lie.c
+│   │       │   │   │   ├── marry.c
+│   │       │   │   │   ├── mount.c
+│   │       │   │   │   ├── news.c
+│   │       │   │   │   ├── nominate.c
+│   │       │   │   │   ├── party.c
+│   │       │   │   │   ├── pray.c
+│   │       │   │   │   ├── request.c
+│   │       │   │   │   ├── ride.c
+│   │       │   │   │   ├── sink.c
+│   │       │   │   │   ├── sit.c
+│   │       │   │   │   ├── sleep.c
+│   │       │   │   │   ├── stand.c
+│   │       │   │   │   ├── stealth.c
+│   │       │   │   │   ├── target.c
+│   │       │   │   │   ├── teach.c
+│   │       │   │   │   ├── vote.c
+│   │       │   │   │   ├── wake.c
+│   │       │   │   │   └── withdraw.c
+│   │       │   │   ├── rooms
+│   │       │   │   │   ├── include
+│   │       │   │   │   ├── climb.c
+│   │       │   │   │   ├── enter.c
+│   │       │   │   │   ├── fish.c
+│   │       │   │   │   ├── fly.c
+│   │       │   │   │   ├── go.c
+│   │       │   │   │   ├── jump.c
+│   │       │   │   │   ├── stop.c
+│   │       │   │   │   └── swim.c
+│   │       │   │   ├── spells
+│   │       │   │   └── undead
+│   │       │   └── www
+│   │       │       ├── articles
+│   │       │       │   ├── old
+│   │       │       │   ├── copyright.html
+│   │       │       │   ├── favicon.ico
+│   │       │       │   ├── newcomer.html
+│   │       │       │   ├── olc.html
+│   │       │       │   ├── renaissance.html
+│   │       │       │   ├── router_controversy.html
+│   │       │       │   └── why_ds.html
+│   │       │       ├── cgi
+│   │       │       │   ├── chanlogs.c
+│   │       │       │   ├── connect.c
+│   │       │       │   ├── creweb.c
+│   │       │       │   ├── edit.c
+│   │       │       │   ├── edit_script.js
+│   │       │       │   ├── finger.c
+│   │       │       │   ├── index.html
+│   │       │       │   ├── login.c
+│   │       │       │   ├── logout.c
+│   │       │       │   ├── new.c
+│   │       │       │   ├── save.c
+│   │       │       │   ├── showlog.c
+│   │       │       │   ├── upload.c
+│   │       │       │   └── who.c
+│   │       │       ├── client
+│   │       │       │   └── client.html
+│   │       │       ├── doc
+│   │       │       ├── errors
+│   │       │       │   ├── badcmd.html
+│   │       │       │   ├── badgate.html
+│   │       │       │   ├── denied.html
+│   │       │       │   └── notfound.html
+│   │       │       ├── images
+│   │       │       │   ├── lpuni_afiliated.png
+│   │       │       │   └── Thumbs.db
+│   │       │       ├── logs
+│   │       │       ├── lpmuds
+│   │       │       │   ├── alternate_router.html
+│   │       │       │   ├── arren_router.html
+│   │       │       │   ├── dead_souls.png
+│   │       │       │   ├── discworld-faq.html
+│   │       │       │   ├── downloads.html
+│   │       │       │   ├── fader.js
+│   │       │       │   ├── favico.ico
+│   │       │       │   ├── favicon.ico
+│   │       │       │   ├── fonts-compat.css
+│   │       │       │   ├── forum-faq.html
+│   │       │       │   ├── forums.html
+│   │       │       │   ├── help.css
+│   │       │       │   ├── index.html
+│   │       │       │   ├── index.php
+│   │       │       │   ├── intermud.html
+│   │       │       │   ├── links.html
+│   │       │       │   ├── lpmud_faq.html
+│   │       │       │   ├── lpmud_list.html
+│   │       │       │   ├── lp_versus_diku.html
+│   │       │       │   ├── maintenance.html
+│   │       │       │   ├── merentha-faq.html
+│   │       │       │   ├── mudfarm.html
+│   │       │       │   ├── parch.jpg
+│   │       │       │   ├── print.css
+│   │       │       │   ├── router_debate.html
+│   │       │       │   ├── script.js
+│   │       │       │   ├── sha1.js
+│   │       │       │   ├── sitefaq.html
+│   │       │       │   ├── skylib-faq.html
+│   │       │       │   ├── smflogo.gif
+│   │       │       │   ├── spellcheck.js
+│   │       │       │   ├── style.css
+│   │       │       │   ├── tmi2-faq.html
+│   │       │       │   ├── wireless.css
+│   │       │       │   ├── xml_board.js
+│   │       │       │   └── xml_topic.js
+│   │       │       ├── articles.html
+│   │       │       ├── barrel.html
+│   │       │       ├── debugging.html
+│   │       │       ├── demo.html
+│   │       │       ├── downloads.html
+│   │       │       ├── ds-admin-faq.html
+│   │       │       ├── ds-charmode-faq.html
+│   │       │       ├── ds-creator-faq.html
+│   │       │       ├── ds-faq.html
+│   │       │       ├── ds.html
+│   │       │       ├── ds-II-faq.html
+│   │       │       ├── ds-inst-faq.html
+│   │       │       ├── editor.html
+│   │       │       ├── example.html
+│   │       │       ├── favicon.ico
+│   │       │       ├── function.jpg
+│   │       │       ├── index.html
+│   │       │       ├── mudlist.txt
+│   │       │       ├── news.html
+│   │       │       ├── print.css
+│   │       │       ├── reference.jpg
+│   │       │       ├── router.html
+│   │       │       ├── router_rules.html
+│   │       │       ├── smflogo.gif
+│   │       │       ├── style.css
+│   │       │       ├── value.jpg
+│   │       │       ├── verbs.html
+│   │       │       └── versions.html
+│   │       ├── win32
+│   │       │   └── driver.exe
+│   │       ├── License.txt
+│   │       ├── README.txt
+│   │       ├── runmud.bat
+│   │       ├── UNIX_INSTRUCTIONS.txt
+│   │       └── WINDOWS_INSTRUCTIONS.txt
+│   ├── deadsouls.zip
+│   ├── ldmud.zip
+│   ├── lil.zip
+│   ├── lima.zip
+│   ├── lpuni.zip
+│   └── nightmare3.zip
+├── aethermud.code-workspace
+├── aethermud-directory.md
+├── backups-prompt.md
+├── CLAUDE.md
+├── commit.sh
+├── HOWTO.md
+├── LLM_BREADCRUMB.md
+├── mud.sh
+├── README.md
+└── WHY.md
+
+657 directories, 5421 files
+
+
+Generated on Mon 20 Jul 2026 02:31:06 PM ADT
