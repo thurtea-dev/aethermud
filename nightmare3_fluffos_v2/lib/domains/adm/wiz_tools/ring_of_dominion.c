@@ -1,27 +1,17 @@
 /* /domains/adm/wiz_tools/ring_of_dominion.c
    A plain gold ring that stands in for the full admin wiz-tool set.
-   While worn by an admin (admin_wizp), it clones and hands over four
-   of the five tools /secure/daemon/wiztools.c gives a head arch/arch:
-   staff_of_demotion, staff_of_dominion, rp_skill_tool, and tattoo_gun.
-   Removing the ring strips only the copies it granted; tools the
-   wearer already had before putting the ring on are left alone.
-
-   The fifth tool, staff of creation, is provided natively instead of
-   cloned: this file directly inherits tanstaafl_base, so build/clone/
-   purge work while the ring is worn (see the query_worn() gate on each
-   command below, and the coding_tool_ok() override, which drops
-   tanstaafl_base's normal has_wiz_tool("staff_of_creation") self-check
-   since the ring itself is the capability here, not a separately
-   carried copy).
-
-   Also answers askring <question> with a canned admin Q&A lookup while
-   worn. No_drop/no_give: this is a one-off personal item, not
-   something meant to circulate. */
+   While worn by an admin (admin_wizp), it clones and hands over the
+   same five tools /secure/daemon/wiztools.c gives a head arch/arch:
+   staff_of_demotion, staff_of_dominion, staff_of_creation, rp_skill_tool,
+   and tattoo_gun. Removing the ring strips only the copies it granted;
+   tools the wearer already had before putting the ring on are left
+   alone. Also answers askring <question> with a canned admin Q&A
+   lookup while worn. No_drop/no_give: this is a one-off personal item,
+   not something meant to circulate. */
 
 #include <std.h>
 
 inherit ARMOUR;
-inherit "/domains/adm/wiz_tools/tanstaafl_base";
 
 #define TOOL_DIR "/domains/adm/wiz_tools/"
 
@@ -30,19 +20,14 @@ int on_ring_worn();
 int on_ring_removed();
 int cmd_askring(string str);
 private string ring_answer(string question);
-static int coding_tool_ok(object player);
-int cmd_build(string str);
-int cmd_clone_ob(string str);
-int cmd_purge_ob(string str);
 
 private string *tool_names = ({
-    "staff_of_demotion", "staff_of_dominion",
+    "staff_of_demotion", "staff_of_dominion", "staff_of_creation",
     "rp_skill_tool", "tattoo_gun"
 });
 
 void create() {
-    tanstaafl_base::create();
-    armour::create();
+    ::create();
     set_name("gold ring");
     set_id( ({ "ring", "gold ring", "plain gold ring", "ring of dominion" }) );
     set_short("a plain gold ring");
@@ -63,50 +48,9 @@ void create() {
 }
 
 void init() {
-    armour::init();
-    tanstaafl_base::init();
+    ::init();
     if(environment(this_object()) != this_player()) return;
     add_action("cmd_askring", "askring");
-}
-
-/* Drop tanstaafl_base's normal has_wiz_tool("staff_of_creation") check:
-   the ring itself provides build/clone/purge natively, so there is no
-   separately carried staff of creation object to find. Rank check
-   only. */
-static int coding_tool_ok(object player) {
-    if(!player) return 0;
-    if(!admin_wizp(player) && !coding_wizp(player)) {
-        write("This tool only works for coding wizards.\n");
-        return 0;
-    }
-    return 1;
-}
-
-/* build/clone/purge only work while the ring is worn, matching
-   askring's existing gate and the ring's own "nothing unusual until
-   worn" theming. */
-int cmd_build(string str) {
-    if(query_worn() != this_player()) {
-        write("The ring is inert. It only answers to your will while worn.\n");
-        return 1;
-    }
-    return tanstaafl_base::cmd_build(str);
-}
-
-int cmd_clone_ob(string str) {
-    if(query_worn() != this_player()) {
-        write("The ring is inert. It only answers to your will while worn.\n");
-        return 1;
-    }
-    return tanstaafl_base::cmd_clone_ob(str);
-}
-
-int cmd_purge_ob(string str) {
-    if(query_worn() != this_player()) {
-        write("The ring is inert. It only answers to your will while worn.\n");
-        return 1;
-    }
-    return tanstaafl_base::cmd_purge_ob(str);
 }
 
 private object find_carried_tool(object player, string name) {
@@ -198,11 +142,11 @@ private string ring_answer(string question) {
                "shutdown). It requires admin_wizp.\n";
     if(strsrch(question, "build") != -1 || strsrch(question, "qcs") != -1 ||
        strsrch(question, "clone") != -1 || strsrch(question, "purge") != -1)
-        return "The ring itself handles this while worn: build <verb> ...\n"
-               "for QCS building (same as the qcs command), clone <path> to\n"
-               "clone a file into your inventory, purge <id> to remove a\n"
-               "non-living object from the room. review opens the\n"
-               "apprentice coding queue.\n";
+        return "The staff of creation handles this: build <verb> ... for QCS\n"
+               "building (same as the qcs command), clone <path> to clone a\n"
+               "file into your inventory, purge <id> to remove a non-living\n"
+               "object from the room. review opens the apprentice coding\n"
+               "queue.\n";
     if(strsrch(question, "domain") != -1)
         return "The staff of dominion handles this: type domain to create\n"
                "or list domains, set a description, reset loaded rooms, and\n"

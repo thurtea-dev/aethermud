@@ -416,6 +416,27 @@ as a valid empty group by design - do not "fix" that fallback by
 requiring a trailing space in groups.cfg lines again (fixed
 2026-07-15).
 
+### 19. Directory naming: all-lowercase, no new underscores
+
+Every new directory anywhere in this project - under `domains/`,
+`std/`, `cmds/`, `docs/`, or anywhere else - must be all-lowercase.
+Before creating or naming any new directory, check this rule first.
+
+- No underscores in a new directory name unless the exact same word
+  already has an established underscore precedent elsewhere in the
+  tree (e.g. `demon_plane` is grandfathered; do not add further
+  underscored names by analogy to it).
+- This applies going forward only. `domains/Horton`, `domains/Lazlo`,
+  `domains/LoneStar`, `domains/NGR`, `domains/Praxis`, and
+  `domains/PuertoAngel` are known, already-existing violations,
+  grandfathered until their own dedicated rename pass (see
+  `docs/` for the casing-audit findings; do not rename them as a side
+  effect of unrelated work). Do not add a seventh.
+- If you are about to `mkdir` or otherwise create a new top-level
+  directory and its name has any uppercase letter or an underscore not
+  already grandfathered above, stop and pick a compliant name instead
+  (e.g. `newcamelot`, not `NewCamelot` or `new_camelot`).
+
 ## Rifts-Specific Architecture
 
 ### Race/OCC system
