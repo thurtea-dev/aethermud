@@ -61,6 +61,7 @@ int query_invis();
 string query_party();
 string query_long(string unused);
 string query_display_name(object viewer);
+string query_race();
 string query_apparent_race(object viewer);
 void tell_room_living(object env, object speaker, object exclude, string text);
 static void init_path();
@@ -357,6 +358,13 @@ void add_stat_bonus(string stat, int amount) {
 string query_display_name(object viewer) {
     return query_cap_name();
 }
+
+/* Base fallback only. std/user.c (race property) and std/monster.c
+   (__Race) both override this with the real value; this copy exists
+   so living.c compiles standalone, since query_apparent_race() below
+   calls query_race() unqualified and the compiler cannot see a child
+   file's override at the time living.c itself is compiled. */
+string query_race() { return "unknown"; }
 
 /* Base case for NPCs/monsters: no disguise layer, always the true race.
    std/user.c overrides this for players with the visible_race/
