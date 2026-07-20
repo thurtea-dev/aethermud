@@ -32,9 +32,9 @@ private void write_skill_columns(string *names) {
 }
 
 int cmd_sskills(string str) {
-    string *all_skills, *base_skills, *secondary;
+    string *all_skills, *base_skills, *norm_base, *secondary;
     mapping occ_data;
-    string occ, sname;
+    string occ, sname, norm;
     int i, j, found;
 
     if(this_player()->query_ghost()) {
@@ -59,13 +59,23 @@ int cmd_sskills(string str) {
             base_skills = (string *)occ_data["base_skills"];
     }
 
+    /* Normalize each raw OCC skill string the same way apply_occ_skills()
+       does before granting, so the exclusion match actually lines up with
+       the player's real (normalized) granted skill keys. */
+    norm_base = ({});
+    for(i = 0; i < sizeof(base_skills); i++) {
+        norm = (string)RIFTS_SKILLS_D->normalize_skill(base_skills[i]);
+        if(!norm || !sizeof(norm)) continue;
+        norm_base += ({ norm });
+    }
+
     secondary = ({});
     for(i = 0; i < sizeof(all_skills); i++) {
         sname = all_skills[i];
         if(sname == "melee" || sname == "attack" || sname == "defense") continue;
         found = 0;
-        for(j = 0; j < sizeof(base_skills); j++) {
-            if(lower_case(base_skills[j]) == lower_case(sname)) {
+        for(j = 0; j < sizeof(norm_base); j++) {
+            if(lower_case(norm_base[j]) == lower_case(sname)) {
                 found = 1;
                 break;
             }

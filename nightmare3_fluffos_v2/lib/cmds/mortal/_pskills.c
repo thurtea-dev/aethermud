@@ -44,8 +44,8 @@ private void write_skill_columns(string *names) {
 }
 
 int cmd_pskills(string str) {
-    string occ, sname, cat, hth;
-    string *base_skills, *ordered_cats, *cat_skills;
+    string occ, sname, cat, hth, norm;
+    string *base_skills, *norm_skills, *ordered_cats, *cat_skills;
     mapping occ_data, cat_map, sdata;
     int i, j;
 
@@ -76,9 +76,19 @@ int cmd_pskills(string str) {
     base_skills = (string *)occ_data["base_skills"];
     hth = (string)this_player()->getenv("rifts_hth");
 
-    cat_map = ([]);
+    /* Normalize each raw OCC skill string the same way apply_occ_skills()
+       does before granting, so display matches what was actually granted.
+       Flavor-only entries (Language:, Basic Math, etc.) normalize to "". */
+    norm_skills = ({});
     for(i = 0; i < sizeof(base_skills); i++) {
-        sname = base_skills[i];
+        norm = (string)RIFTS_SKILLS_D->normalize_skill(base_skills[i]);
+        if(!norm || !sizeof(norm)) continue;
+        norm_skills += ({ norm });
+    }
+
+    cat_map = ([]);
+    for(i = 0; i < sizeof(norm_skills); i++) {
+        sname = norm_skills[i];
         if(sname == "melee" || sname == "attack" || sname == "defense") continue;
         sdata = (mapping)RIFTS_SKILLS_D->query_rifts_skill(sname);
         cat = sdata ? (string)sdata["category"] : "other";
@@ -109,7 +119,7 @@ int cmd_pskills(string str) {
         write("");
     }
 
-    write("Total primary skills: " + sizeof(base_skills));
+    write("Total primary skills: " + sizeof(norm_skills));
     return 1;
 }
 
