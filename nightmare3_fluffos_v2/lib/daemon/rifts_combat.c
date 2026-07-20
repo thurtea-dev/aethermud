@@ -338,8 +338,8 @@ int query_apm(object player) {
     pp          = (int)player->query_stats("PP");
     level_bonus = (int)player->query_property("rifts_apm_bonus");
 
-    /* Godling: base APM 4, +1 at PP 16-20, +2 at PP 21+. */
-    if(lower_case(race) == "godling") {
+    /* Wizard: base APM 4, +1 at PP 16-20, +2 at PP 21+. */
+    if(lower_case(race) == "wizard") {
         apm = 4;
         if(pp >= 21) pp_bonus = 2;
         else if(pp >= 16) pp_bonus = 1;

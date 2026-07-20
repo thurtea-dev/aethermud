@@ -1694,9 +1694,9 @@ void write_psionic_list(object pl, string mode) {
         (int)pl->query_stats("ISP"), (int)pl->query_stats("max_ISP")));
     write(repeat_string("-", 60));
 
-    if(race == "godling" && !show_all) {
+    if(race == "wizard" && !show_all) {
         known_list = query_all_psionics();
-        write("[Master] Godling: full psionic spectrum (" +
+        write("[Master] Wizard: full psionic spectrum (" +
             sizeof(known_list) + " powers)");
         write("  Type 'psionics all' for the grouped list.");
         write("  Type 'psionics verbose' for descriptions.");
@@ -1705,7 +1705,7 @@ void write_psionic_list(object pl, string mode) {
         return;
     }
 
-    if(race == "godling")
+    if(race == "wizard")
         known_list = query_all_psionics();
     else {
         known = (string)pl->getenv("known_psionics");
@@ -1721,7 +1721,7 @@ void write_psionic_list(object pl, string mode) {
     race_grants = (string *)RIFTS_START_D->query_race_psionic_grant(race);
     occ_grants = (string *)RIFTS_START_D->query_occ_psionic_grant(occ);
 
-    if(race == "godling") {
+    if(race == "wizard") {
         write("[Master]");
         write_psionic_group(known_list, verbose);
         write(repeat_string("-", 60));

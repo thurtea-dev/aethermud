@@ -14,7 +14,7 @@ Code here can touch player saves, accounts, and driver-level hooks.
   (privilege groups; thurtea is in SECURE and ASSIST).
 - `save/users/<letter>/<name>.o` - player save files. THE canonical
   path (never `/save/players/`).
-- `cmds/` - privileged commands by rank (`adm/` rid, xmote, godling;
+- `cmds/` - privileged commands by rank (`adm/` rid, xmote, wizard;
   `creator/` update, clone; `mortal/` tell, reply - historical
   placement).
 - `std/`, `include/`, `etc/`, `tmp/` - secure-side bases (login

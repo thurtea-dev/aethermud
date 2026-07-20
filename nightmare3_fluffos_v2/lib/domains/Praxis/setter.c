@@ -741,7 +741,7 @@ private int do_race_pick(string str) {
         write("You must be female to be a nymph.\nPick again.");
         return 1;
     }
-    // Admin races (godling, etc.) require creator rank
+    // Admin races (wizard, etc.) require creator rank
     if((int)RIFTS_D->is_admin_race(str) && !creatorp(this_player())) {
         write("That is not a valid race.\nType list to see available races.\n");
         return 1;

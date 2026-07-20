@@ -1110,7 +1110,7 @@ private void fx_net(object target) {
         write("They are already caught in a magic net!\n");
         return;
     }
-    if(lower_case((string)caster->query_race()) != "godling") {
+    if(lower_case((string)caster->query_race()) != "wizard") {
         me_save = (int)target->query_stats("ME") + random(20) + 1;
         if(me_save >= 14) {
             tell_object(target, "Glowing strands reach for you but you resist!\n");
@@ -3879,9 +3879,9 @@ void write_spell_list(object pl, string mode) {
         (int)pl->query_stats("PPE"), (int)pl->query_stats("max_PPE")));
     write(repeat_string("-", 60));
 
-    if(race == "godling" && !show_all) {
+    if(race == "wizard" && !show_all) {
         known_list = query_all_spells();
-        write("[Master] Godling: full spell spectrum (" +
+        write("[Master] Wizard: full spell spectrum (" +
             sizeof(known_list) + " powers)");
         write("  Type 'spells all' for the grouped list.");
         write("  Type 'spells verbose' for descriptions.");
@@ -3890,7 +3890,7 @@ void write_spell_list(object pl, string mode) {
         return;
     }
 
-    if(race == "godling")
+    if(race == "wizard")
         known_list = query_all_spells();
     else {
         known = (string)pl->getenv("known_spells");
@@ -3906,7 +3906,7 @@ void write_spell_list(object pl, string mode) {
     race_grants = (string *)RIFTS_START_D->query_race_spell_grant(race);
     occ_grants = (string *)RIFTS_START_D->query_occ_spell_grant(occ);
 
-    if(race == "godling") {
+    if(race == "wizard") {
         write("[Master]");
         write_spell_group(known_list, verbose);
         write(repeat_string("-", 60));

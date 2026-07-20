@@ -4,7 +4,7 @@
 // into the users daemon, applies staff_of_demotion's
 // apply_demote_restore, and writes the save back) on a named OFFLINE
 // player. Use for saves demoted before the offline restore path
-// existed: they may still carry Godling race, wizard skills at 98%,
+// existed: they may still carry Wizard race, its 98% skill package,
 // or /domains/Praxis/rifts_welcome as their start room.
 
 #include <std.h>
@@ -51,12 +51,12 @@ void help() {
         "Syntax: fixdemote <player>\n\n"
         "Repairs the save file of an offline player whose demotion "
         "predates the offline restore path. Such saves can still carry "
-        "Godling race, the full 98% wizard skill package, or the wizard "
+        "Wizard race, its full 98% skill package, or the wizard "
         "welcome room as their start room.\n\n"
         "Runs the same restore as the staff of demotion's demote option "
         "for offline players: position set to player, race/class/level/"
         "stats restored from the premote snapshot (or rerolled as human "
-        "when no snapshot exists), Godling skills stripped, mortal race "
+        "when no snapshot exists), Wizard race skills stripped, mortal race "
         "and OCC packages rebuilt, and a safe mortal start room chosen. "
         "The save file is rewritten immediately.\n\n"
         "The target must be offline. For online players use the staff "

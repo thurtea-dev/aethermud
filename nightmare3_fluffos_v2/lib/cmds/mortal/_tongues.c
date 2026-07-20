@@ -32,7 +32,7 @@ int help() {
         "Syntax: tongues [at <target>]\n\n"
         "Casts the tongues spell if you know it, opening the target's\n"
         "mind to understand and speak all languages for a time.\n"
-        "If you already understand all languages (godlings, or anyone\n"
+        "If you already understand all languages (wizards, or anyone\n"
         "under an active tongues effect), this reports that instead.\n\n"
         "See also: languages, language, cast, say\n"
     );

@@ -17,7 +17,7 @@ void do_player_action();
 private void apply_promote_position();
 private void demote_restore(object ob);
 void apply_demote_restore(object ob);
-private void strip_godling_package(object ob);
+private void strip_wizard_package(object ob);
 private void demote_force_quit(object ob);
 private int is_mortal_start_room(string room);
 private string pick_mortal_start(object ob);
@@ -158,7 +158,7 @@ void do_player_action() {
     case "demote":
         if(ob) {
             if(!creatorp(ob) &&
-               lower_case((string)ob->query_race()) != "godling") {
+               lower_case((string)ob->query_race()) != "wizard") {
                 write(capitalize(pending_sub) + " is not a wizard.");
                 break;
             }
@@ -208,10 +208,10 @@ private void apply_promote_position() {
         pending_promote_ob->set_position(pending_promote_pos);
 }
 
-/* Strip Godling spells/psionics/skills granted by makewiz, then rebuild
+/* Strip Wizard spells/psionics/skills granted by makewiz, then rebuild
    mortal race/OCC packages from the restored identity. */
-private void strip_godling_package(object ob) {
-    string *godling_skills;
+private void strip_wizard_package(object ob) {
+    string *wizard_skills;
     string *have;
     string val;
     int i;
@@ -219,7 +219,7 @@ private void strip_godling_package(object ob) {
     if(!ob) return;
 
     /* Restore pre-promotion spell/psi lists when snapshotted; otherwise
-       clear the all-spells/all-psionics Godling dump. */
+       clear the all-spells/all-psionics Wizard dump. */
     val = (string)ob->getenv("premote_spells");
     if(val && sizeof(val)) ob->setenv("known_spells", val);
     else ob->remove_env("known_spells");
@@ -227,7 +227,7 @@ private void strip_godling_package(object ob) {
     if(val && sizeof(val)) ob->setenv("known_psionics", val);
     else ob->remove_env("known_psionics");
 
-    godling_skills = ({
+    wizard_skills = ({
         "wp energy pistol", "wp energy rifle", "wp heavy weapons",
         "wp knife", "wp sword", "wp vibroblade", "wp blunt", "wp chain",
         "wp paired weapons", "wp rifle", "wp archery",
@@ -255,14 +255,14 @@ private void strip_godling_package(object ob) {
         "identify plants", "barter", "appraise goods", "black market",
         "fly"
     });
-    /* Godling package grants these at 98. Only strip that tier so a
+    /* Wizard package grants these at 98. Only strip that tier so a
        mortal who already had the skill at a normal starting % keeps it. */
     have = (string *)ob->query_all_skills();
     if(have) {
-        for(i = 0; i < sizeof(godling_skills); i++) {
-            if(member_array(godling_skills[i], have) == -1) continue;
-            if((int)ob->query_base_skill(godling_skills[i]) < 98) continue;
-            catch(ob->delete_skill(godling_skills[i]));
+        for(i = 0; i < sizeof(wizard_skills); i++) {
+            if(member_array(wizard_skills[i], have) == -1) continue;
+            if((int)ob->query_base_skill(wizard_skills[i]) < 98) continue;
+            catch(ob->delete_skill(wizard_skills[i]));
         }
     }
 
@@ -342,10 +342,10 @@ private void demote_restore(object ob) {
     ob->remove_env("wiz_role");
 
     race = (string)ob->getenv("premote_race");
-    if(!race || !sizeof(race) || lower_case(race) == "godling")
+    if(!race || !sizeof(race) || lower_case(race) == "wizard")
         race = "human";
     cls = (string)ob->getenv("premote_class");
-    if(!cls || !sizeof(cls) || lower_case(cls) == "godling")
+    if(!cls || !sizeof(cls) || lower_case(cls) == "wizard")
         cls = race;
     ob->set_race(race);
     ob->set_class(cls);
@@ -445,10 +445,10 @@ private void demote_restore(object ob) {
     ob->set_primary_start(start_room);
     ob->setenv("start", start_room);
 
-    strip_godling_package(ob);
+    strip_wizard_package(ob);
 
-    /* Defense in depth: never leave a demoted player as Godling. */
-    if(lower_case((string)ob->query_race()) == "godling") {
+    /* Defense in depth: never leave a demoted player as Wizard. */
+    if(lower_case((string)ob->query_race()) == "wizard") {
         ob->set_race("human");
         race = "human";
     }

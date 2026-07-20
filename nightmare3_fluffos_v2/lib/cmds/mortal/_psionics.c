@@ -34,6 +34,6 @@ void help() {
     write(
         "Syntax: psionics [all|verbose]\n\n"
         "Lists your known psionic powers grouped by source.\n"
-        "Godlings see a summary unless you type 'psionics all' or 'verbose'.\n"
+        "Wizards see a summary unless you type 'psionics all' or 'verbose'.\n"
     );
 }

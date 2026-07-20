@@ -1,6 +1,6 @@
-// /secure/cmds/adm/_godling.c
-// Admin command: apply the Godling race/RCC to a player.
-// Usage: godling <playername>
+// /secure/cmds/adm/_wizard.c
+// Admin command: apply the Wizard race/RCC to a player.
+// Usage: wizard <playername>
 // Requires arch or higher rank.
 
 #include <std.h>
@@ -9,7 +9,7 @@
 
 inherit DAEMON;
 
-int cmd_godling(string str) {
+int cmd_wizard(string str) {
     object target;
     mapping rolls;
     string *rflags;
@@ -19,7 +19,7 @@ int cmd_godling(string str) {
         return 0;
     }
     if(!str || !strlen(str)) {
-        notify_fail("Usage: godling <playername>\n");
+        notify_fail("Usage: wizard <playername>\n");
         return 0;
     }
     target = find_player(lower_case(str));
@@ -28,8 +28,8 @@ int cmd_godling(string str) {
         return 0;
     }
 
-    // Apply godling stats
-    rolls = (mapping)RIFTS_D->do_rifts_rolls("godling");
+    // Apply wizard stats
+    rolls = (mapping)RIFTS_D->do_rifts_rolls("wizard");
     if(rolls) {
         string *keys_arr;
         int i, tmp;
@@ -54,8 +54,8 @@ int cmd_godling(string str) {
     target->set_stats("max_ISP",      2000);
 
     // Race and class
-    target->set_race("godling");
-    target->set_class("godling");
+    target->set_race("wizard");
+    target->set_class("wizard");
 
     // Rifts env vars
     target->remove_env("awaiting_occ");
@@ -66,7 +66,7 @@ int cmd_godling(string str) {
     target->setenv("rifts_flags",      "");
 
     // Race ability flags
-    rflags = (string *)RIFTS_D->query_race_flags("godling");
+    rflags = (string *)RIFTS_D->query_race_flags("wizard");
     target->setenv("rifts_flags", implode(rflags, ","));
 
     // Max level and exp
@@ -81,20 +81,20 @@ int cmd_godling(string str) {
     catch(LANGUAGE_D->grant_native_languages(target));
     target->setenv("active_language", "American");
 
-    write("Godling transformation applied to " + capitalize(str) + ".");
+    write("Wizard transformation applied to " + capitalize(str) + ".");
     message("info",
-        "\nA wave of divine energy cascades through your being.  You have\n"
-        "transcended mortal limits.  You are a Godling.",
+        "\nArcane power cascades through your being.  You have transcended\n"
+        "mortal limits.  You are a Wizard.",
         target);
     return 1;
 }
 
 void help() {
     write(
-        "Syntax: godling <playername>\n\n"
-        "Transforms the target player into a Godling, the admin race.\n"
+        "Syntax: wizard <playername>\n\n"
+        "Transforms the target player into a Wizard, the admin race.\n"
         "Sets all Palladium attributes to 30, grants 5000 MDC, 1000 rifts HP,\n"
-        "2000 PPE and ISP, and applies all divine ability flags.\n"
+        "2000 PPE and ISP, and applies all archmage ability flags.\n"
         "Requires arch rank.  Target must be online.\n"
     );
 }

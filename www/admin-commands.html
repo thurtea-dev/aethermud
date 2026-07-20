@@ -126,7 +126,7 @@
   <table>
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>acheck</code> / <code>wcheck</code> / <code>roomcheck</code></td><td>Sanity-check an armor, weapon, or room object against the standard conventions.</td></tr>
-    <tr><td><code>ac</code> / <code>wc</code></td><td>Display an object's Armor Class and protected limbs, or its Weapon Class.</td></tr>
+    <tr><td><code>ac</code> / <code>wc</code></td><td>Display an object's Armor Class and wear/limb list (legacy AC helper; Rifts damage uses armor pools and <code>whole_body</code>, not per-limb HP), or its Weapon Class.</td></tr>
   </table>
 
   <h3>QCS content creation</h3>
@@ -173,6 +173,7 @@
     <tr><td><code>call</code></td><td>Call an arbitrary function on an object by reference.</td></tr>
     <tr><td><code>cref</code> / <code>dref</code> / <code>eref</code> / <code>ref</code> / <code>refs</code> / <code>unref</code> / <code>tref</code></td><td>Clone, destruct, or otherwise operate on a referenced object.</td></tr>
     <tr><td><code>dbxframe</code> / <code>dbxwhere</code></td><td>Inspect a stack frame, or print the last uncaught error trace for a player.</td></tr>
+    <tr><td><code>eval</code></td><td>Execute arbitrary LPC inline. Extremely powerful; see callout below.</td></tr>
   </table>
   <div class="callout">
     <p><strong>eval executes arbitrary LPC code inline.</strong> It is the single most powerful command in the

@@ -26,8 +26,9 @@
 
   <h1>Commands</h1>
   <p class="lead">
-    Every mortal command in AetherMUD, one line each, grouped by what it's
-    for. Type <code>commands</code> in game for a plain column list, or
+    Common mortal commands in AetherMUD, one line each, grouped by what
+    they are for (aliases and a few niche utilities omitted). Type
+    <code>commands</code> in game for a plain column list, or
     <code>help &lt;topic&gt;</code> for detail on any one of these.
   </p>
 
@@ -42,6 +43,7 @@
     <tr><td><code>push</code></td><td>Push an object. Some pushes trigger a hidden result.</td></tr>
     <tr><td><code>dig</code></td><td>Dig at certain Splynn locations with a wielded shovel.</td></tr>
     <tr><td><code>face</code></td><td>Turn to face a direction or a person.</td></tr>
+    <tr><td><code>follow</code></td><td>Allow someone to follow you (<code>follow allow &lt;who&gt;</code>), or follow a player who has allowed you.</td></tr>
     <tr><td><code>left</code> / <code>right</code></td><td>Set your active hand, for dual-wielding and directional actions.</td></tr>
     <tr><td><code>where</code></td><td>Site-based location lookup.</td></tr>
     <tr><td><code>sites</code></td><td>Manage or view your allowed login sites.</td></tr>
@@ -52,6 +54,7 @@
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>say</code></td><td>Speak aloud. Routes through the language system.</td></tr>
     <tr><td><code>shout</code></td><td>Shout to the whole domain. Five second cooldown, no language filter.</td></tr>
+    <tr><td><code>party</code></td><td>Form, join, leave, add, remove, list, or talk on a party line.</td></tr>
     <tr><td><code>whisper</code></td><td>Send a private message to someone in the same room.</td></tr>
     <tr><td><code>tell</code></td><td>Send a private message to any player, local or intermud (<code>user@mud</code>).</td></tr>
     <tr><td><code>reply</code></td><td>Reply to your last tell.</td></tr>
@@ -95,6 +98,7 @@
     <tr><td><code>wimpy</code></td><td>Set your auto-flee HP percent threshold.</td></tr>
     <tr><td><code>wimpydir</code></td><td>Set the direction you flee toward when wimpy triggers.</td></tr>
     <tr><td><code>sneak</code> / <code>hide</code></td><td>Roll Prowl to move silently.</td></tr>
+    <tr><td><code>prowl</code></td><td>Toggle Prowl mode: hide move messages on successful Prowl rolls until you attack or speak.</td></tr>
     <tr><td><code>treat</code> / <code>bandage</code></td><td>Roll First Aid to heal a target 1d6 HP or SDC.</td></tr>
     <tr><td><code>body</code></td><td>Show your damage pools (MDC, or HP/SDC) and any narratively missing limbs.</td></tr>
     <tr><td><code>saving_throws</code></td><td>Show your saving throw values.</td></tr>
@@ -125,6 +129,7 @@
     <tr><td><code>advance</code></td><td>Advance a level: rolls HP/MDC gain, grants PPE/ISP per your OCC table.</td></tr>
     <tr><td><code>improve</code></td><td>Spend a pending skill slot to raise a known skill.</td></tr>
     <tr><td><code>skills</code></td><td>List all your known skills, grouped by category.</td></tr>
+    <tr><td><code>pskills</code> / <code>sskills</code></td><td>List primary OCC package skills, or secondary/elective skills.</td></tr>
     <tr><td><code>skillrequest</code></td><td>Numbered skill picker for your OCC; request or cancel a pending grant.</td></tr>
     <tr><td><code>roll &lt;skill&gt;</code></td><td>Roll d100 against a named skill.</td></tr>
     <tr><td><code>bionics</code></td><td>Display your installed cybernetics.</td></tr>
@@ -163,6 +168,7 @@
     <tr><td><code>eject</code></td><td>Eject from a vehicle, or quickly remove power armor.</td></tr>
     <tr><td><code>store</code> / <code>retrieve</code></td><td>Store or retrieve items in an active dimensional pocket.</td></tr>
     <tr><td><code>rest</code> / <code>wake</code></td><td>Rest to heal at Rifts tabletop rates, in rooms that allow it. Wake to stand up.</td></tr>
+    <tr><td><code>pray</code></td><td>While dead in the death chamber, shorten auto-resurrect wait (2 minutes down to 30 seconds).</td></tr>
     <tr><td><code>meditate</code></td><td>Restore PPE on a ley line, or ISP anywhere. Ten minute cooldown.</td></tr>
     <tr><td><code>setrespawn</code></td><td>Set your respawn point to the current room. Room must allow it.</td></tr>
   </table>
@@ -179,10 +185,14 @@
     <tr><td><code>nextreboot</code></td><td>Show time until the next scheduled reboot.</td></tr>
     <tr><td><code>cls</code></td><td>Clear an ANSI terminal screen.</td></tr>
     <tr><td><code>color</code> / <code>colorize</code></td><td>Toggle ANSI color on or off.</td></tr>
+    <tr><td><code>testcolor</code></td><td>Print a color-tag sample after <code>colorize</code>.</td></tr>
     <tr><td><code>brief</code></td><td>Toggle short room descriptions.</td></tr>
     <tr><td><code>prompt</code></td><td>View or set a custom command prompt.</td></tr>
     <tr><td><code>sbar</code></td><td>Toggle a post-move HP/SDC/MDC/PPE/ISP status bar.</td></tr>
     <tr><td><code>password</code> / <code>passwd</code></td><td>Interactively change your password.</td></tr>
+    <tr><td><code>save</code></td><td>Force a character save now.</td></tr>
+    <tr><td><code>lineecho</code> / <code>lines</code> / <code>setenv</code></td><td>Line-echo toggle; list channel block state; set a limited personal env var (SCREEN, LINES, TZONE, TERM).</td></tr>
+    <tr><td><code>posting</code></td><td>Show who is currently in an editor or mailer.</td></tr>
     <tr><td><code>idle</code></td><td>Show how long a player has been idle.</td></tr>
     <tr><td><code>who</code></td><td>Player list. Mortals see staff tags and a population count.</td></tr>
     <tr><td><code>users</code></td><td>Simple list of connected, non-invisible player names.</td></tr>

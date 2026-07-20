@@ -3,7 +3,7 @@ Generated from: /daemon/rifts.c
 Date: 2026-06-22
 
 ADMIN RACE (not shown to players):
-  godling    MDC  All stats fixed at 30.  5000 MDC, 1000 HP, 2000 PPE, 2000 ISP.
+  wizard     MDC  All stats fixed at 30.  5000 MDC, 1000 HP, 2000 PPE, 2000 ISP.
              Master psionic + full magic.  Immortal.  Not OCC eligible.
 
 PLAYABLE RACES (55 total):
@@ -70,7 +70,7 @@ PLAYABLE RACES (55 total):
   wild vampire        MDC (4d6*10+60)   Feral undead, most powerful vampire.
 
 DATA STATUS:
-  All 56 races (55 playable + godling) have:
+  All 56 races (55 playable + wizard) have:
     - Attribute rolls in do_rifts_rolls()
     - SDC or MDC init values
     - HP init values

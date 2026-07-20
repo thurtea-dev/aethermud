@@ -115,7 +115,7 @@ int is_cs_enemy(object player) {
     if(race == "human")          return 0;
     if(race == "dog boy")        return 0;
     if(race == "cs psi-stalker") return 0;
-    if(race == "godling")        return 0;
+    if(race == "wizard")         return 0;
     return 1;
 }
 

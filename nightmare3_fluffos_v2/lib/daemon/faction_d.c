@@ -288,10 +288,10 @@ void apply_race_defaults(object player) {
         modify_standing(name, "bandits",      100, "predatory kin");
     }
 
-    if(race == "godling") {
+    if(race == "wizard") {
         modify_standing(name, "coalition",   -200, "supernatural threat");
-        modify_standing(name, "lazlo",        300, "divine ally");
-        modify_standing(name, "new_camelot",  200, "divine ally");
+        modify_standing(name, "lazlo",        300, "archmage ally");
+        modify_standing(name, "new_camelot",  200, "archmage ally");
     }
 }
 

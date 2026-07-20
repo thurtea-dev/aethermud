@@ -937,7 +937,7 @@ private void do_occ_skills(object player, string occ, string race) {
             RIFTS_SKILLS_D->grant_skill(player, "lore magic",       55);
             RIFTS_SKILLS_D->grant_skill(player, "prowl",            60);
             do_hth(player, "basic");
-        } else if(s == "godling") {
+        } else if(s == "wizard") {
             RIFTS_SKILLS_D->grant_skill(player, "wp energy pistol",           98);
             RIFTS_SKILLS_D->grant_skill(player, "wp energy rifle",            98);
             RIFTS_SKILLS_D->grant_skill(player, "wp heavy weapons",           98);
@@ -1489,7 +1489,7 @@ string *query_race_spell_grant(string race) {
 
     r = lower_case(race ? race : "");
     switch(r) {
-    case "godling":
+    case "wizard":
         return (string *)RIFTS_SPELLS_D->query_all_spells();
     case "great horned dragon":
         return explode(";",
@@ -1530,7 +1530,7 @@ string *query_race_psionic_grant(string race) {
 
     r = lower_case(race ? race : "");
     switch(r) {
-    case "godling":
+    case "wizard":
         return (string *)RIFTS_PSIONICS_D->query_all_psionics();
     case "mind melter":
         return explode(";",
@@ -1561,7 +1561,7 @@ private void do_race_spells(object player, string race) {
     if(!grants || !sizeof(grants)) return;
     ppe_base = 0;
     switch(lower_case(race)) {
-    case "godling":
+    case "wizard":
         ppe_base = 2000;
         break;
     case "great horned dragon":
@@ -1621,7 +1621,7 @@ private void do_race_psionics(object player, string race) {
     if(!existing) existing = "";
     isp_bonus = 0;
     switch(lower_case(race)) {
-    case "godling":
+    case "wizard":
         isp_bonus = 2000;
         break;
     case "mind melter":

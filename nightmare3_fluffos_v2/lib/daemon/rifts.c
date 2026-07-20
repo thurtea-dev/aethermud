@@ -23,7 +23,7 @@ private string *occ_races_list;
 private mapping race_idle_strings;
 
 void create() {
-    admin_races_list = ({ "godling" });
+    admin_races_list = ({ "wizard" });
 
     rifts_races_list = ({
         "algor frost giant", "atlantean", "basilisk", "bearman", "bogie",
@@ -46,7 +46,7 @@ void create() {
     });
 
     race_idle_strings = ([
-        "godling" : "stands here, watching.",
+        "wizard" : "stands here, watching.",
 
         "wolf" : "prowls nearby.",
         "animal" : "prowls nearby.",
@@ -199,10 +199,10 @@ mapping do_rifts_rolls(string race) {
     if(!race || race == "") return ([]);
     switch(lower_case(race)) {
 
-    /* ── Admin-only: Godling ──────────────────────────────────────────────── */
+    /* ── Admin-only: Wizard ──────────────────────────────────────────────── */
 
-    case "godling":
-        /* Fixed max-stat divine being.  Never rolled randomly. */
+    case "wizard":
+        /* Fixed max-stat archmage.  Never rolled randomly. */
         iq = 30; me = 30; ma = 30; ps = 30;
         pp = 30; pe = 30; pb = 30; spd = 30;
         break;
@@ -552,7 +552,7 @@ mapping do_rifts_rolls(string race) {
 int is_mdc_race(string race) {
     if(!race || race == "") return 0;
     switch(lower_case(race)) {
-    case "godling":
+    case "wizard":
     case "fire dragon":
     case "ice dragon":
     case "great horned dragon":
@@ -642,7 +642,7 @@ int init_sdc(string race, int pe) {
 int init_mdc(string race, int pe) {
     if(!race || race == "") return 0;
     switch(lower_case(race)) {
-    case "godling":   return 5000;
+    case "wizard":    return 5000;
     case "atlantean": return (roll(1,6) * 10) + pe;  /* approx */
     case "gargoyle":          return (roll(3,6) * 10);           /* approx */
     case "gurgoyle":          return (roll(4,6) * 10);           /* approx */
@@ -669,7 +669,7 @@ int init_mdc(string race, int pe) {
 int init_hp(string race, int pe) {
     if(!race || race == "") return pe + roll(1,6);
     switch(lower_case(race)) {
-    case "godling":  return 1000;
+    case "wizard":   return 1000;
     case "dog boy":
     case "cs psi-stalker":
     case "wild psi-stalker":
@@ -699,7 +699,7 @@ int init_hp(string race, int pe) {
 string *query_race_flags(string race) {
     if(!race || race == "") return ({});
     switch(lower_case(race)) {
-    case "godling":
+    case "wizard":
         return ({
             "supernatural_ps", "supernatural_pe", "mdc_body",
             "master_psionic", "magic_ability", "divine_aura",
@@ -894,10 +894,10 @@ mapping query_race_data(string race) {
 
     switch(lower_case(race)) {
 
-    case "godling":
+    case "wizard":
         return ([
             "abilities": ({
-                "All attributes fixed at 30: divine maximum",
+                "All attributes fixed at 30: archmage maximum",
                 "MDC body: 5000 MDC",
                 "1000 rifts HP (inner life force)",
                 "2000 starting PPE (magical power reserve)",
@@ -909,7 +909,7 @@ mapping query_race_data(string race) {
                 "Natural flight, nightvision, enhanced senses",
                 "Sense Rifts and ley lines",
                 "Telemechanics: understand any machine",
-                "Divine aura: all aligned beings sense your nature",
+                "Arcane aura: all aligned beings sense your power",
                 "Immortal: cannot die of old age"
             }),
             "penalties": ({}),
@@ -917,7 +917,7 @@ mapping query_race_data(string race) {
                 "IQ": 30, "ME": 30, "MA": 30, "PS": 30,
                 "PP": 30, "PE": 30, "PB": 30, "Spd": 30
             ]),
-            "body_type":  "divine",
+            "body_type":  "arcane",
             "is_psychic": 1,
             "is_magical": 1,
             "is_mdc":     1,
@@ -1262,12 +1262,13 @@ string *query_race_penalties(string race) {
 string query_race_description(string race) {
     if(!race || race == "") return "";
     switch(lower_case(race)) {
-    case "godling":
+    case "wizard":
         return
-            "You are a Godling: a transcendent divine being beyond the limits\n"
-            "of mortal existence.  Your attributes are fixed at their absolute maximum.\n"
-            "You command the full spectrum of psionic and magical power, an MDC body\n"
-            "of 5000, and immortality.  This state is not chosen: it is earned.\n"
+            "You are a Wizard: an archmage whose mastery of magic and psionics\n"
+            "has carried you beyond the limits of mortal existence.  Your attributes\n"
+            "are fixed at their absolute maximum.  You command the full spectrum of\n"
+            "psionic and magical power, an MDC body of 5000, and immortality.\n"
+            "This state is not chosen: it is earned.\n"
             "Not OCC eligible.";
 
     case "human":
@@ -1606,7 +1607,7 @@ int player_has_magic_access(object who) {
     if(!who) return 0;
     if(!(int)is_rifts_race((string)who->query_race())) return 0;
     race = query_race_string(who);
-    if(race == "godling") return 1;
+    if(race == "wizard") return 1;
     rdata = query_race_data(race);
     if(rdata && (int)rdata["is_magical"]) return 1;
     flags = (string)who->getenv("rifts_occ_flags");
@@ -1638,7 +1639,7 @@ int player_has_psi_access(object who) {
     if(!who) return 0;
     if(!(int)is_rifts_race((string)who->query_race())) return 0;
     race = query_race_string(who);
-    if(race == "godling") return 1;
+    if(race == "wizard") return 1;
     rdata = query_race_data(race);
     if(rdata && (int)rdata["is_psychic"]) return 1;
     flags = (string)who->getenv("rifts_occ_flags");
@@ -1667,7 +1668,7 @@ int player_knows_spell(object who, string spell) {
     if(!who || !spell || !sizeof(spell)) return 0;
     spell = (string)RIFTS_SPELLS_D->normalize_spell_name(spell);
     race = query_race_string(who);
-    if(race == "godling")
+    if(race == "wizard")
         return (mapping)RIFTS_SPELLS_D->query_spell(spell) != 0;
     known = (string)who->getenv("known_spells");
     if(!known || !sizeof(known)) return 0;
@@ -1683,7 +1684,7 @@ int player_knows_psionic(object who, string psi) {
     if(!who || !psi || !sizeof(psi)) return 0;
     psi = (string)RIFTS_PSIONICS_D->normalize_psionic_name(psi);
     race = query_race_string(who);
-    if(race == "godling")
+    if(race == "wizard")
         return (mapping)RIFTS_PSIONICS_D->query_psionic(psi) != 0;
     known = (string)who->getenv("known_psionics");
     if(!known || !sizeof(known)) return 0;

@@ -90,8 +90,8 @@ int cmd_makewiz(string str) {
         return 1;
     }
 
-    /* Apply Godling RCC on wizard promotion. */
-    rolls = (mapping)RIFTS_D->do_rifts_rolls("godling");
+    /* Apply Wizard RCC on wizard promotion. */
+    rolls = (mapping)RIFTS_D->do_rifts_rolls("wizard");
     if(rolls) {
         keys_arr = keys(rolls);
         for(gi = 0, gtmp = sizeof(keys_arr); gi < gtmp; gi++)
@@ -108,14 +108,14 @@ int cmd_makewiz(string str) {
     target->set_stats("max_PPE",      2000);
     target->set_stats("ISP",          2000);
     target->set_stats("max_ISP",      2000);
-    target->set_race("godling");
-    target->set_class("godling");
+    target->set_race("wizard");
+    target->set_class("wizard");
     target->remove_env("awaiting_occ");
     target->remove_env("awaiting_alignment");
     target->setenv("rifts_occ",         "none");
     target->setenv("rifts_occ_flags",   "magic,psychic,borg,cybernetic");
     target->setenv("rifts_alignment",   "Principled");
-    rflags = (string *)RIFTS_D->query_race_flags("godling");
+    rflags = (string *)RIFTS_D->query_race_flags("wizard");
     target->setenv("rifts_flags", implode(rflags, ","));
     target->setenv("always_known",        "1");
     target->setenv("speak_all_languages", "1");
@@ -129,17 +129,17 @@ int cmd_makewiz(string str) {
 
     target->save_player((string)target->query_name());
     write("Promoted " + (string)target->query_cap_name() +
-          " to Apprentice wizard and applied Godling RCC.\n"
+          " to Apprentice wizard and applied Wizard RCC.\n"
           "Use setrole when they are ready for a full staff role.\n");
     tell_object(target,
         "%^YELLOW%^You have been promoted to Apprentice wizard by " +
         (string)this_player()->query_cap_name() +
-        " and transformed into a Godling.%^RESET%^\n"
+        " and transformed into a Wizard.%^RESET%^\n"
         "You are temporary staff until you complete apprenticeship tasks\n"
         "and an admin assigns your role with setrole.\n");
     log_file("adm/makewiz",
         ctime(time()) + " " + (string)this_player()->query_name() +
-        " promoted " + pname + " to apprentice (godling)\n");
+        " promoted " + pname + " to apprentice (wizard)\n");
     return 1;
 }
 
@@ -147,7 +147,7 @@ void help() {
     write(
         "Syntax: makewiz <player>\n\n"
         "Promotes an online mortal to Apprentice wizard and applies the\n"
-        "Godling RCC.  Apprentices are temporary staff: they get a workroom\n"
+        "Wizard RCC.  Apprentices are temporary staff: they get a workroom\n"
         "and basic wizard access, but no role staff tools until setrole\n"
         "assigns admin, domain, coding, or rp.\n\n"
         "Typical sequence:\n"
@@ -155,6 +155,6 @@ void help() {
         "  (apprentice completes tasks)\n"
         "  setrole splynncryth coding\n\n"
         "Restricted to admin-level wizards.  All promotions are logged.\n\n"
-        "See also: setrole, godling, staff\n"
+        "See also: setrole, wizard, staff\n"
     );
 }

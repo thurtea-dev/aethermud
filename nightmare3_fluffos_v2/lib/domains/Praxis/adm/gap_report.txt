@@ -9,7 +9,7 @@ truth for open work.
 RACES (RCCs)
 ================================================================================
 
-IMPLEMENTED: 55 playable + 1 admin (godling) = 56 total
+IMPLEMENTED: 55 playable + 1 admin (wizard) = 56 total
   All have: stat rolls, SDC/MDC init, HP init, ability flags, descriptions.
   16 MDC races, 39 SDC races.
   18 races are OCC-eligible.

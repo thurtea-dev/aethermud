@@ -34,6 +34,6 @@ void help() {
     write(
         "Syntax: spells [all|verbose]\n\n"
         "Lists your known spells grouped by source (race, OCC, learned).\n"
-        "Godlings see a summary unless you type 'spells all' or 'verbose'.\n"
+        "Wizards see a summary unless you type 'spells all' or 'verbose'.\n"
     );
 }
