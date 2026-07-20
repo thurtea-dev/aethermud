@@ -20,5 +20,6 @@ these are standalone pages, not LPC.
 - `roadmap.html` - public-facing development roadmap.
 - `css/`, `js/` - static assets for these pages.
 
-See HOWTO.md for editing/publishing these pages, and WHY.md for why the
+See HOWTO.md for editing/publishing these pages (including how to create
+staff Basic Auth users for the gated guides), and WHY.md for why the
 site is static HTML rather than served from the mudlib.

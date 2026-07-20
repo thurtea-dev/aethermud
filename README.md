@@ -25,20 +25,21 @@ psionics, techno-wizardry, and rift travel between continents.
 
 ## Features
 
-Measured from the live code (2026-07-17):
+Measured from the live code (2026-07-20):
 
 - **62 playable races**, from human to Great Horned Dragon, secondary
   vampire, psi-stalker, Atlantean, and mutant animals
-- **66 OCCs** (Occupational Character Classes): Coalition military,
-  Juicers, Crazies, Cyber-Knights, Glitter Boy pilots, Ley Line Walkers,
-  Techno-Wizards, Mind Melters, and more
-- **158 skills**, **115 spells**, **~50 psionic powers**
+- **66 Classes** (Occupational Character Classes / OCCs in the
+  mudlib): Coalition military, Juicers, Crazies, Cyber-Knights,
+  Glitter Boy pilots, Ley Line Walkers, Techno-Wizards, Mind Melters,
+  and more
+- **158 skills**, **115 spells**, **51 psionic powers**
 - **~430 playable rooms** across Praxis, Chi-Town, Tolkeen, Horton,
   New Camelot, and NGR Germany, plus stub/placeholder zones (Lazlo,
   Lone Star, Puerto Angel, demon plane). Splynn, Alvurron, and
   Atlantis content lives under `domains/Praxis/areas/splynn/`, not as
   separate top-level domains
-- **173 player commands**, MDC/SDC combat with attacks-per-melee,
+- **174 player commands**, MDC/SDC combat with attacks-per-melee,
   rift travel between continents via the NPC Moxim, radios, banking,
   slave markets, black markets, and a two-level in-game help system
 

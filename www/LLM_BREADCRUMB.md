@@ -13,6 +13,9 @@
 
 - This is plain static HTML, not templated/generated - edits are direct
   file edits, no build step.
+- Staff page Basic Auth is Apache-only (see HOWTO.md "Staff page login");
+  usernames are not wired to MUD accounts. Password file lives on the
+  VPS at `/home/thurtea/domains/aethermud.com/.htpasswd`, never in git.
 - Content here should track the actual mudlib behavior (chargen flow,
   staff commands, class/race lists). When you change chargen, staff ranks,
   races, or classes in the LPC code, check whether the matching page here
