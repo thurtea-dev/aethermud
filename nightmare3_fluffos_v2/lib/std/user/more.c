@@ -53,7 +53,8 @@ static void do_more(string cmd) {
     string args;
     int i, x;
 
-    if(!cmd || cmd == "" || cmd == "\r" || cmd == "\n" || cmd[0] == 10) cmd = " ";
+    if(!cmd || cmd == "" || cmd == "\r" || cmd == "\n" ||
+       cmd[0] == 10 || cmd[0] == 13) cmd = " ";
     if((x = strlen(cmd)) > 1) {
         args = cmd[1..x-1];
         cmd = cmd[0..0];

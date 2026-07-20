@@ -21,6 +21,7 @@ void set_limbs(mixed *borg);
 void set_wear(mixed val);
 void set_remove(mixed val);
 void set_type(string str);
+void set_armour_type(string str);
 int query_ac();
 mixed *query_limbs();
 string query_wear_string();
@@ -28,6 +29,7 @@ object query_wear_func();
 string query_remove_string();
 object query_remove_func();
 string query_type();
+string query_armour_type();
 object query_worn();
 void set_appearance_name(string str);
 string query_appearance_name();
@@ -277,17 +279,24 @@ void set_remove(mixed val) {
 }
  
 void set_type(string str) { armour_save["type"] = str; }
- 
+
+/* Alias for set_type()/query_type(). CLAUDE.md protects this name --
+   several equipment files (rebreather.c, faction_amulet.c, and the
+   thurtea_test cosmetic-slot samples) call set_armour_type() directly. */
+void set_armour_type(string str) { set_type(str); }
+
 int query_ac() { return armour_save["ac"] + query_property("enchantment"); }
- 
+
 mixed *query_limbs() { return armour_save["possible limbs"]; }
- 
+
 mixed query_wear() { return armour_static["wear"]; }
- 
+
 mixed query_unwear() { return armour_static["unwear"]; }
- 
+
 string query_type() { return armour_save["type"]; }
- 
+
+string query_armour_type() { return query_type(); }
+
 object query_worn() { return armour_static["worn by"]; }
  
  
