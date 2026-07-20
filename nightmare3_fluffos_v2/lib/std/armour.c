@@ -38,6 +38,7 @@ int is_protective_armour();
 mixed query_wear();
 private string resolve_cosmetic_slot();
 private string assign_cosmetic_slot(string cos);
+private string slot_display_name(string cos);
 private object find_worn_slot_item(object wearer, string slot);
 
 private int armour_fits_wearer(object wearer) {
@@ -312,8 +313,8 @@ string query_long(string str) {
     else {
         ret = ::query_long(str);
         i = sizeof(armour_static["actual limbs"]);
-        ret += "Worn on: "+armour_static["actual limbs"][--i];
-        if(i>-1) while(i--) ret += ", "+armour_static["actual limbs"][i];
+        ret += "Worn on: "+slot_display_name(armour_static["actual limbs"][--i]);
+        if(i>-1) while(i--) ret += ", "+slot_display_name(armour_static["actual limbs"][i]);
         ret += ".\n";
         return ret;
     }
@@ -341,9 +342,11 @@ int is_protective_armour() {
 
 /*  Map the rifts_slot property (or, failing that, the armour type) to
     one of the cosmetic wear slots: head, neck, shirt, back, belt,
-    legs, hands, feet, ring (ring fills ring1 then ring2).  Returns 0
-    when the piece does not fit the slot system (shields, legacy NM3
-    armour types), which falls through to the old limb-based path.  */
+    legs, hands, feet, ring (left/right finger, see assign_cosmetic_slot),
+    admin_ring (Ring of Dominion's own dedicated slot, independent of the
+    mortal ring pair). Returns 0 when the piece does not fit the slot
+    system (shields, legacy NM3 armour types), which falls through to
+    the old limb-based path.  */
 private string resolve_cosmetic_slot() {
     string slot, type;
 
@@ -363,31 +366,58 @@ private string resolve_cosmetic_slot() {
     case "legs": case "pants": return "legs";
     case "hands": case "gloves": return "hands";
     case "feet": case "shoes": case "boots": case "boot": return "feet";
-    case "ring": case "ring1": case "ring2": return slot;
+    case "ring": case "ring1": case "ring2":
+    case "ring_left": case "ring_right": return "ring";
+    case "admin_ring": return "admin_ring";
     default: return 0;
     }
 }
 
-/*  Pick the concrete slot for this piece, checking occupancy.  Rings
-    fill ring1 then ring2.  Messages the player and returns 0 when the
-    slot is taken.  */
+/*  Pick the concrete slot for this piece, checking occupancy.
+    Ring family: an item marked wedding_band claims ring_left
+    exclusively (no overflow either way -- refused outright if
+    ring_left is taken). A regular ring claims ring_right first,
+    then overflows to ring_left if ring_right is occupied and
+    ring_left is free. admin_ring (Ring of Dominion) is a distinct,
+    single-occupant slot that never competes with the ring pair.  */
 private string assign_cosmetic_slot(string cos) {
-    if(cos == "ring" || cos == "ring1" || cos == "ring2") {
-        if(cos != "ring2" && !find_worn_slot_item(this_player(), "ring1"))
-            return "ring1";
-        if(cos != "ring1" && !find_worn_slot_item(this_player(), "ring2"))
-            return "ring2";
+    if(cos == "ring") {
+        if((int)query_property("wedding_band")) {
+            if(find_worn_slot_item(this_player(), "ring_left")) {
+                message("my_action", "You are already wearing a wedding band.",
+                  this_player());
+                return 0;
+            }
+            return "ring_left";
+        }
+        if(!find_worn_slot_item(this_player(), "ring_right"))
+            return "ring_right";
+        if(!find_worn_slot_item(this_player(), "ring_left"))
+            return "ring_left";
         message("my_action", "You are already wearing two rings.",
           this_player());
         return 0;
     }
     if(find_worn_slot_item(this_player(), cos)) {
         message("my_action", "You are already wearing something on your " +
-          cos + ". Remove it first.",
+          slot_display_name(cos) + ". Remove it first.",
           this_player());
         return 0;
     }
     return cos;
+}
+
+/*  Human-readable label for a cosmetic slot token, used in "Worn on:"
+    and the "already wearing something" refusal. Falls through
+    unchanged for real anatomical limb names (head, torso, ...) from
+    the old limb-based path, and for any slot not listed here.  */
+private string slot_display_name(string cos) {
+    switch(cos) {
+    case "ring_left": return "left ring finger";
+    case "ring_right": return "right ring finger";
+    case "admin_ring": return "signet hand";
+    default: return cos;
+    }
 }
 
 private object find_worn_slot_item(object wearer, string slot) {

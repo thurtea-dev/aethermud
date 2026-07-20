@@ -14,9 +14,21 @@ void create() {
     set_short("an ID card");
     set_mass(10);
     set_value(0);
-    set_property("no_drop", 0);
+    set_property("no_drop", 1);
     set_property("id_card", 1);
+    set_prevent_drop("You cannot drop your ID card.");
+    set_prevent_get("You cannot take that.");
 }
+
+/* Persistent: skipped by the death->corpse transfer (std/user.c) and by
+   normal save serialization (std/user/autosave.c pre_save()); recloned
+   fresh via this recipe instead. No stored state needed -- query_long()
+   reads owner info live. */
+mixed *query_auto_load() {
+    return ({ "/domains/Praxis/equipment/id_card", ({}) });
+}
+
+void init_arg(mixed args) {}
 
 string query_long(string str) {
     object owner;

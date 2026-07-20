@@ -36,7 +36,7 @@ void create() {
         "looks unusual, until it is worn.\n"
     );
     set_type("ring");
-    set_property("rifts_slot", "ring");
+    set_property("rifts_slot", "admin_ring");
     set_ac(0);
     set_mass(1);
     set_value(0);

@@ -41,6 +41,7 @@ void create() {
     set_long("A solid %^YELLOW%^gold%^RESET%^ band.  There is an inscription on it.\n");
     set_ac(1);
     set_type("ring");
+    set_property("wedding_band", 1);
     set_limbs( ({ "left hand" }) );
     set_mass(0);
     set_prevent_get("You cannot get that!");
