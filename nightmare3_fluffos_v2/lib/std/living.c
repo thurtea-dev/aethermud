@@ -61,6 +61,7 @@ int query_invis();
 string query_party();
 string query_long(string unused);
 string query_display_name(object viewer);
+string query_apparent_race(object viewer);
 void tell_room_living(object env, object speaker, object exclude, string text);
 static void init_path();
 void refresh_command_path();
@@ -357,6 +358,13 @@ string query_display_name(object viewer) {
     return query_cap_name();
 }
 
+/* Base case for NPCs/monsters: no disguise layer, always the true race.
+   std/user.c overrides this for players with the visible_race/
+   metamorphed/vampire precedence chain. */
+string query_apparent_race(object viewer) {
+    return query_race();
+}
+
 void tell_room_living(object env, object speaker, object exclude, string text) {
     object *inv;
     int i;
@@ -387,7 +395,8 @@ string query_long(string unused) {
 
     if(this_object()->query_ghost()) return "An ethereal presence.\n";
     reg = "";
-    pre = "You look over the "+query_gender()+" "+(string)this_object()->query_race()+".\n";
+    pre = "You look over the "+query_gender()+" "+
+        (string)this_object()->query_apparent_race(viewer)+".\n";
    if(combat::query_long("junk")) pre += ::query_long("junk")+"\n";
     if(description) pre += shown+" "+description+"\n";
     /* Missing limbs show for players and NPCs alike (2026-07-19);

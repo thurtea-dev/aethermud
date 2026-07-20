@@ -109,6 +109,7 @@ int knows_player(string name);
 string query_display_name(object viewer);
 string query_visible_name(object viewer);
 string query_appearance_override();
+string query_apparent_race(object viewer);
 void rifts_death_pvp_check();
 private void ensure_wiz_tools();
 void set_primary_start(string str);
@@ -2066,6 +2067,36 @@ string query_appearance_override() {
     return 0;
 }
 
+/*  Race-only counterpart to query_display_name(): resolves the same
+    visible_race/metamorphed/vampire precedence chain but returns just
+    the bare race word for VIEWER, with no article and no name/appearance
+    -override branch (appearance override replaces a whole identity, not
+    a race word, and stays out of scope here). Callers that describe a
+    target's race inline in a sentence (living.c query_long()'s "You look
+    over the ... " line) should call this instead of query_race()
+    directly, so that line shows the same disguised race a stranger
+    would infer everywhere else, instead of leaking the true race.  */
+string query_apparent_race(object viewer) {
+    string my_race;
+
+    if(!viewer || viewer == this_object() || creatorp(viewer) ||
+       creatorp(this_object()) || (int)viewer->knows_player(query_name()))
+        return query_race();
+
+    my_race = (string)query_property("visible_race");
+    if((!my_race || my_race == "") && (int)query_property("metamorphed")) {
+        my_race = (string)query_property("apparent_race");
+        if(!my_race || my_race == "")
+            my_race = (string)query_property("current_form");
+    }
+    if(!my_race || my_race == "") my_race = query_race();
+    /* secondary vampires appear human; wild vampires remain visibly monstrous */
+    if(my_race && lower_case(my_race) == "secondary vampire" &&
+       !archp(viewer))
+        my_race = "human";
+    return my_race;
+}
+
 string query_display_name(object viewer) {
     string my_race;
     string ap_override;
@@ -2080,17 +2111,7 @@ string query_display_name(object viewer) {
     if(!(int)viewer->knows_player(query_name())) {
         ap_override = query_appearance_override();
         if(ap_override && ap_override != "") return ap_override;
-        my_race = (string)query_property("visible_race");
-        if((!my_race || my_race == "") && (int)query_property("metamorphed")) {
-            my_race = (string)query_property("apparent_race");
-            if(!my_race || my_race == "")
-                my_race = (string)query_property("current_form");
-        }
-        if(!my_race || my_race == "") my_race = query_race();
-        /* secondary vampires appear human; wild vampires remain visibly monstrous */
-        if(my_race && lower_case(my_race) == "secondary vampire" &&
-           !archp(viewer))
-            my_race = "human";
+        my_race = query_apparent_race(viewer);
         if(!my_race || my_race == "") return "A stranger";
         switch(my_race[0]) {
         case 'a': case 'e': case 'i': case 'o': case 'u':

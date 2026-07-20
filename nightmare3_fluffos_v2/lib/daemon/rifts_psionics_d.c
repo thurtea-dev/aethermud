@@ -62,6 +62,9 @@ string normalize_psionic_name(string name) {
     case "remote view":
     case "remote-viewing":
         return "remote viewing";
+    case "readaura":
+    case "read-aura":
+        return "read aura";
     default:
         return n;
     }
@@ -75,6 +78,7 @@ string query_psionic_alias_hint(string name) {
     case "bio-regeneration":    return "bio regen";
     case "bio regeneration psi": return "bio regeneration";
     case "remote viewing":         return "remoteview";
+    case "read aura":            return "readaura";
     default:                    return "";
     }
 }
@@ -212,6 +216,10 @@ mapping query_psionic(string name) {
         return ([ "isp_cost":6, "duration":0, "range":"remote",
                   "effect":"remote_viewing",
                   "desc":"Psychically observe a distant place or person." ]);
+    case "read aura":
+        return ([ "isp_cost":8, "duration":0, "range":"remote",
+                  "effect":"read_aura",
+                  "desc":"Pierce a target's disguise to perceive their true race and power level." ]);
     case "accelerate healing":
         return ([ "isp_cost":8, "duration":0, "range":"touch",
                   "effect":"accelerate_healing",
@@ -313,6 +321,48 @@ object find_psi_remote_target(object caster, string str) {
             continue;
         if(!creatorp(caster) &&
            !(int)caster->knows_player((string)online[i]->query_name()))
+            continue;
+        return online[i];
+    }
+    return 0;
+}
+
+/* Global lookup for read_aura. Unlike find_psi_remote_target() above,
+   this deliberately does NOT require caster->knows_player() - the whole
+   point of aura reading is to reveal a stranger's true nature despite
+   the introduction system hiding their name and race from the caster.
+   Matches against the real name/cap name (in case the caster already
+   knows the target, or happens to type it) as well as the target's
+   currently DISPLAYED race noun (what a stranger sees, e.g. "human"),
+   so "readaura human" can find someone showing as "A human" even
+   though the caster has never introduced, remembered, or been
+   introduced to them. This never consults or changes the face_list -
+   see fx_read_aura() for the one-time-read guarantee. */
+object find_psi_aura_target(object caster, string str) {
+    object *online;
+    int i;
+    string name, cap, seen;
+
+    if(!caster || !str || !sizeof(str)) return 0;
+    str = lower_case(str);
+    if(str == "me" || str == "self" ||
+       str == lower_case((string)caster->query_name()))
+        return caster;
+    online = users();
+    for(i = 0; i < sizeof(online); i++) {
+        if(!online[i] || online[i] == caster) continue;
+        if(!userp(online[i])) continue;
+        name = lower_case((string)online[i]->query_name());
+        cap = lower_case((string)online[i]->query_cap_name());
+        seen = (string)online[i]->query_display_name(caster);
+        if(seen) {
+            seen = lower_case(seen);
+            if(strlen(seen) > 2 && seen[0..1] == "a ") seen = seen[2..];
+            else if(strlen(seen) > 3 && seen[0..2] == "an ") seen = seen[3..];
+        }
+        if(str != name && str != cap && (!seen || str != seen) &&
+           strsrch(name, str) == -1 && strsrch(cap, str) == -1 &&
+           (!seen || strsrch(seen, str) == -1))
             continue;
         return online[i];
     }
@@ -1158,6 +1208,36 @@ private void fx_remote_viewing(object target) {
     }
 }
 
+/* Reveals TARGET's true race and level to the caster only, regardless
+   of any disguise (visible_race, metamorphed/apparent_race, the
+   secondary-vampire-appears-human hardcode, or worn appearance-override
+   armor). Reads query_race()/query_level() directly, bypassing
+   query_display_name()/knows_player() entirely by design.
+
+   This is a one-time read, not a relationship change: it never calls
+   add_to_face_list() or anything else that alters the face_list, so it
+   does not introduce the caster to the target, does not change what
+   the caster (or anyone else) sees of the target afterward, and output
+   goes only to the caster via write() - no room broadcast, no notice
+   to the target. */
+private void fx_read_aura(object target) {
+    string seen_as;
+    string race;
+    int level;
+
+    if(!target) {
+        write("Read whose aura?  Syntax: readaura <name>\n");
+        return;
+    }
+    seen_as = (string)target->query_display_name(this_player());
+    if(!seen_as || seen_as == "") seen_as = "the target";
+    race = (string)target->query_race();
+    level = (int)target->query_level();
+    write("You focus your mind and read the aura of " + seen_as + "...\n");
+    write("True race: " + capitalize(race) + "\n");
+    write("Power level: " + level + "\n");
+}
+
 private void fx_accelerate_healing(object target) {
     int heal;
     int cur;
@@ -1540,6 +1620,7 @@ void apply_psionic_effect(string psi_name, object target) {
     case "tk_punch":        fx_tk_punch(target);        break;
     case "telemechanics":   fx_telemechanics(target);   break;
     case "remote_viewing":  fx_remote_viewing(target);  break;
+    case "read_aura":       fx_read_aura(target);       break;
     case "accelerate_healing": fx_accelerate_healing(target); break;
     case "group_mind_block": fx_group_mind_block(target); break;
     case "psychic_purification": fx_psychic_purification(target); break;
@@ -1575,7 +1656,7 @@ string *query_all_psionics() {
         "deaden pain", "psychic surgery", "induce sleep",
         "bio regeneration psi", "nightvision", "see the invisible",
         "bio-manipulation", "clairvoyance", "precognition", "psi-shield",
-        "telekinetic punch", "telemechanics", "remote viewing",
+        "telekinetic punch", "telemechanics", "remote viewing", "read aura",
         "accelerate healing", "group mind block", "psychic purification",
         "ectoplasm", "electrokinesis", "hypnotic suggestion", "sense time",
         "empathic transmission", "bio-feedback",

@@ -16,7 +16,7 @@ inherit DAEMON;
     "psych_surgery", "induce_sleep", "clairvoyance", "remote_viewing", \
     "bio_manipulation", "tk_punch", "accelerate_healing", \
     "psychic_purification", "electrokinesis", "hypnotic_suggestion", \
-    "psychic_locator", "mental_stun", "mind_wipe" })
+    "psychic_locator", "mental_stun", "mind_wipe", "read_aura" })
 
 /* Auto-target the caster's current combat opponent when no target was
    given and the effect requires one. Duplicated from _magicnet.c's

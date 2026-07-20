@@ -1381,7 +1381,7 @@ private void do_occ_spells(object player, string occ) {
         break;
 
     case "palmer2":
-        psionics = "telepathy;empathy;object read;sixth sense;detect psionics;mind block;clairvoyance;remote viewing;precognition";
+        psionics = "telepathy;empathy;object read;sixth sense;detect psionics;mind block;clairvoyance;remote viewing;precognition;read aura";
         isp_bonus = 60;
         break;
 
