@@ -2,16 +2,20 @@ COMMANDS INDEX
 
 Syntax: commands
 
-Lists all player commands in five columns. Type help to open the
-categorized help menu for topics and policies.
+Lists every player command, grouped by category. The staff / wizard
+section is listed for everyone but only usable by staff.
 
-Common commands:
-  Movement: north, south, east, west, up, down, look
-  Character: score, eq, worn, inventory, advance, improve
-  Combat: kill, flee, dodge, parry, stance, rest
-  Social: say, emote, whisper, introduce, greet, ooc
-  Communication: radio, telepathy, tell, mail
+  ================= PLAYER COMMANDS =================
 
-Type help <command> for any command that exists in the game.
+  skills & abilities    Spells, psionics, skills, abilities
+  combat & movement      Combat, movement, and survival
+  communication & social Says, channels, radio, mail, social
+  systems                Score, advancement, game systems
+  commands                Other player commands
+  staff / wizard          Staff and wizard commands
+
+  =====================================================
+
+Type help <command> for details on any command in the list.
 
 SEE ALSO: getting-started, syntax, help

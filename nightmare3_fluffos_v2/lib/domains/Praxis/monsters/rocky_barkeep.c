@@ -1,6 +1,6 @@
-// /d/Praxis/monsters/rocky_barkeep.c
-// Rocky's Bar barkeep.
-// Serves drinks, shares rumors, runs talisman mini-quest, triggers Dead Signal quest.
+/* /d/Praxis/monsters/rocky_barkeep.c
+   Rocky's Bar barkeep.
+   Serves drinks, shares rumors, runs talisman mini-quest, triggers Dead Signal quest. */
 
 #include <std.h>
 #include <daemons.h>
@@ -103,7 +103,7 @@ void catch_tell(string str) {
     string a, b;
     object tp;
 
-    if(sscanf(str, "%s says: %s", a, b) != 2) return;
+    if(sscanf(str, "%s says, \"%s\"", a, b) != 2) return;
     b = lower_case(b);
 
     if(strsrch(b, "rumor") != -1 || strsrch(b, "news") != -1) {
