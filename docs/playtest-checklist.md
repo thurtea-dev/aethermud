@@ -80,9 +80,9 @@ Use the section 1 throwaway (call it TESTCHAR below).
        `eval find_player("TESTCHAR")->query_primary_start()` shows
        the square, not the workroom).
 7. [ ] As TESTCHAR, type `start here` in an ordinary room. Expected:
-       "You will now login here". Then try it inside any staff room
-       (if reachable at all). Expected: "You cannot set this as your
-       login location."
+       the command no longer exists for mortals (removed 2026-07-19;
+       an ordinary unknown-command response, no syntax help). As
+       thurtea, `start here` still works (staff command).
 
 ## 3. Moxim rift destinations
 
@@ -165,8 +165,10 @@ Mortal gating:
         workroom and through `wing`, or `trans` them into the hall).
         Expected: the containment ward ejects them to Praxis square
         in both cases.
-17. [ ] As TESTCHAR, `start here` anywhere inside the wing (if they
-        can even stand there long enough). Expected: refused.
+17. [ ] As TESTCHAR, quit while inside the wing (if they can even
+        stand there long enough before the ward ejects them).
+        Expected: on next login they resume at their previous valid
+        start, never inside the wing.
 
 ## 5. repairchar and makechar reference
 

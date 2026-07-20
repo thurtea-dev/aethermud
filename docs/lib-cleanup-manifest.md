@@ -57,6 +57,26 @@ expands to it, plus a check of the command daemon's rehash list
 - Note: untracked in git, so this move is local-only and will not
   propagate to the VPS via pull.
 
+### cmds/mortal/_start.c (moved 2026-07-19, retirement decision)
+- Why: mortal "start here" (self-set login start) retired by owner
+  decision after three playtest false alarms. Quit and link-death
+  both resume the player at their logout room now (std/user.c), so
+  the command's only residual value was pinning a start different
+  from the logout room. Staff keep the ability via cmds/hm/_start.c
+  (untouched).
+- Checked: zero references in lib *.c/*.h/*.cfg (setter.c's chargen
+  "start" verb is its own add_action, unrelated); no doc/help topic
+  or mention; no www/ mention; user.c set_start_here() and
+  save_logout_start()/staff_area_start()/valid_start_room() are
+  callee-side only and keep working for quit, link-death, and the
+  hm command. docs/playtest-checklist.md had two steps invoking the
+  mortal command; both rewritten the same day to test the removal
+  instead.
+- Cache note: daemon/command.c's rehash table lists the command
+  until the daemon reloads; clean immediately after pull with
+  `update /daemon/command.c`, or let the pending full reboot (for
+  the same-day std/user.c change) handle it.
+
 ## 2. Flagged but NOT moved - needs your decision
 
 ### cmds/skills/ - all 66 legacy NM3 class-ability commands
