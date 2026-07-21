@@ -27,41 +27,41 @@ int cmd_lockpick(string str) {
 	notify_fail("You cannot lockpick that.\n");
 	return 0;
     }
-    ob->set_disable();
+    this_player()->set_disable();
     if(!ob->query_locked(str)) {
 	notify_fail("The "+str+" is not locked!\n");
 	return 0;
     }
-    locks = (int)this_player()->query_skill("locks");
+    locks = (int)this_player()->query_skill("pick locks");
     inv = all_inventory(this_player());
     for(i=0; i<sizeof(inv); i++) {
 	locks += (int)inv[i]->query_property("lockpicking tool");
     }
     resist = (int)ob->query_property("magic hold");
     if(locks < (random(101) + resist)) {
-	this_player()->add_hp(-5);
+	RIFTS_COMBAT_D->apply_direct_damage(this_player(), 5);
 	write("You fail to pick the lock.\n");
 	if((int)this_player()->query_stats("dexterity") < random(101)) {
 	    write("You cut yourself on the lock!\n");
 	    RIFTS_COMBAT_D->apply_direct_damage(this_player(), random(10));
 	    say(this_player()->query_cap_name()+" gets cut picking the lock.\n");
-	    this_player()->add_skill_points("locks", random(5));
+	    this_player()->add_skill_points("pick locks", random(5));
 	    return 1;
   	}
-        this_player()->add_skill_points("locks", random(7));
+        this_player()->add_skill_points("pick locks", random(7));
 	say(this_player()->query_cap_name()+" fails to pick the lock.\n", this_player());
 	return 1;
     }
     if(!ob->pick_lock(str)) {
-	this_player()->add_hp(-5);
+	RIFTS_COMBAT_D->apply_direct_damage(this_player(), 5);
 	write("A magic force prevents you from picking the lock.\n");
 	say("A magic force prevents "+this_player()->query_cap_name()+" from the picking the lock.\n");
-	this_player()->add_skill_points("locks", random(resist));
+	this_player()->add_skill_points("pick locks", random(resist));
 	return 1;
     }
     write("You pick the lock.\n");
     say(this_player()->query_name()+" successfully picks the lock.\n", this_player());
-    this_player()->add_skill_points("locks", 10 + resist);
+    this_player()->add_skill_points("pick locks", 10 + resist);
     return 1;
 }
 
