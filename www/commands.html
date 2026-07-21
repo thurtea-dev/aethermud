@@ -28,7 +28,7 @@
   <p class="lead">
     Common mortal commands in AetherMUD, one line each, grouped by what
     they are for (aliases and a few niche utilities omitted). Type
-    <code>commands</code> in game for a plain column list, or
+    <code>commands</code> in game for a column list grouped by category, or
     <code>help &lt;topic&gt;</code> for detail on any one of these.
   </p>
 
@@ -99,7 +99,10 @@
     <tr><td><code>wimpydir</code></td><td>Set the direction you flee toward when wimpy triggers.</td></tr>
     <tr><td><code>sneak</code> / <code>hide</code></td><td>Roll Prowl to move silently.</td></tr>
     <tr><td><code>prowl</code></td><td>Toggle Prowl mode: hide move messages on successful Prowl rolls until you attack or speak.</td></tr>
+    <tr><td><code>lockpick</code></td><td>Attempt to pick a lock on an item or in the room. Uses the Pick Locks skill; failed picks can injure you.</td></tr>
     <tr><td><code>treat</code> / <code>bandage</code></td><td>Roll First Aid to heal a target 1d6 HP or SDC.</td></tr>
+    <tr><td><code>limbs</code></td><td>Medical Doctor: examine a living target's overall condition and any narratively missing limbs.</td></tr>
+    <tr><td><code>replace</code></td><td>Medical Doctor: restore a narratively severed limb (<code>replace &lt;player&gt; &lt;limb&gt;</code>).</td></tr>
     <tr><td><code>body</code></td><td>Show your damage pools (MDC, or HP/SDC) and any narratively missing limbs.</td></tr>
     <tr><td><code>saving_throws</code></td><td>Show your saving throw values.</td></tr>
   </table>
@@ -177,7 +180,7 @@
   <table>
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>help</code></td><td>Category and topic help menu.</td></tr>
-    <tr><td><code>commands</code></td><td>List available commands in columns.</td></tr>
+    <tr><td><code>commands</code></td><td>List available commands in columns, grouped by category (skills, combat, communication, systems, other, staff/wizard).</td></tr>
     <tr><td><code>faq</code></td><td>Page through the FAQ.</td></tr>
     <tr><td><code>news</code></td><td>Replay global login news.</td></tr>
     <tr><td><code>date</code></td><td>Show the current mud time.</td></tr>

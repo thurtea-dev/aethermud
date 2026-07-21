@@ -67,13 +67,14 @@
 
   <h2>Legacy skill commands</h2>
   <div class="callout">
-    <p><strong><code>cmds/skills/</code> (about 70 files: <code>fireball</code>, <code>backstab</code>,
-    <code>heal</code>, <code>lockpick</code>, and the rest) is entirely unreachable Nightmare III legacy content.</strong>
-    Every command in that directory checks for an old fantasy class (mage, cleric, monk, kataan, fighter, rogue)
-    that no Rifts character build ever has, since Rifts characters use races and classes instead. If a player asks
-    why <code>cast fireball</code> or a skill-style attack command "does nothing," it's not a bug: those commands
-    are live in the search path but permanently inert. The real Rifts spell and psionic systems are
-    <code>cast</code> and <code>psi</code>, covered on the <a href="commands.html">Commands</a> page.</p>
+    <p><strong>Most of <code>cmds/skills/</code> is still Nightmare III legacy</strong>
+    (about 70 files such as <code>fireball</code>, <code>backstab</code>, and <code>heal</code>):
+    those verbs still gate on old fantasy classes (mage, cleric, monk, kataan, fighter, rogue)
+    that no Rifts build has, so they stay live in the search path but inert for Rifts characters.
+    Exceptions already converted to Rifts skills: <code>limbs</code> and <code>replace</code>
+    (Medical Doctor), and <code>lockpick</code> (Pick Locks). Spell and psionic play for Rifts
+    characters is still <code>cast</code> and <code>psi</code>, covered on the
+    <a href="commands.html">Commands</a> page.</p>
   </div>
 </body>
 </html>
