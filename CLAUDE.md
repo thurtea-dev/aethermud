@@ -126,7 +126,7 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
 - `tongues` command no longer prints the legacy NM3 fantasy language
   table (Eltherian/Tlinghan/etc); it casts the tongues spell when the
   player knows it, else reports comprehension. New
-  `LANGUAGE_D->understands_all()` (godling race, tongues_active
+  `LANGUAGE_D->understands_all()` (wizard race, tongues_active
   property, or active_language "All tongues") gates `languages` and
   score, which now say "You understand all languages."
 - Skill help files are a systemic gap: 0 of the 158 skills in
@@ -165,7 +165,7 @@ Parallel sprint batches 1-4 plus stability fixes. Summary:
   Investigated a reported auth bug (thurtea login had no admin/wizard
   privileges); found no bug. `/secure/cfg/groups.cfg` already has
   `thurtea` in SECURE and ASSIST, and `secure/save/users/t/thurtea.o`
-  is a level 15 godling with `position "head arch"` and
+  is a level 15 wizard with `position "head arch"` and
   `wiz_role":"admin"`. Live login test confirmed the staff listing
   shows `[Admin-Wiz] Thurtea` and `score` matches the save file. No
   fix needed; closed out.

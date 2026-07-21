@@ -39,23 +39,23 @@ alone will not do it.
 - There should be no "is here." or "are here." suffix on either line, and
   no combined "X and Y" line joining them.
 
-### 4. Magic net (Godling only, needs full reboot to be trusted for the
+### 4. Magic net (Wizard only, needs full reboot to be trusted for the
    room listing part)
 
-- As a Godling, cast magic net (or use the magicnet command) on a normal
+- As a Wizard, cast magic net (or use the magicnet command) on a normal
   living target.
 - The net should catch immediately. No "resists the magic net!" roll.
 - Look in the room while the target is netted. There should be no
   standalone "A glowing magic net is here." line. The net reads as
   attached to the victim, not as a room object.
-- As a non-Godling caster, confirm the resist roll still happens as
-  before. This change is Godling-only.
+- As a non-Wizard caster, confirm the resist roll still happens as
+  before. This change is Wizard-only.
 
 ### 5. Full block combat
 
 - Attack a plains wolf (race "wolf", not a registered Rifts race) and
-  confirm: 6 consecutive "You ..." player attack lines (Godling, PP
-  dependent, see ch13-ppe-isp.md or the Godling APM formula in
+  confirm: 6 consecutive "You ..." player attack lines (Wizard, PP
+  dependent, see ch13-ppe-isp.md or the Wizard APM formula in
   daemon/rifts_combat.c query_apm()), then exactly 1 wolf attack line, not
   a long uncontrolled stream. Plains wolf's attack count is 1 by code
   (std/living/combat.c execute_attack(), legacy branch, melee skill 0), not

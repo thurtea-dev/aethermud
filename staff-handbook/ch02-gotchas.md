@@ -428,7 +428,7 @@ unless explicitly asked to fix a reported bug or add a described feature:
 - GHD body pools, spells, PPE, psionics, metamorph
 - Alignment storage and display (rifts_alignment env var)
 - Score MDC/SDC split and PPE/ISP conditional display
-- Godling race package
+- Wizard race package
 - Psionic shortcuts (telepathy, mindblock, telekinesis, empathy, etc.)
 - NPC language filter bypass
 - Addiction system daemon and its hooks

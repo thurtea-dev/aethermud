@@ -90,7 +90,7 @@ expands to it, plus a check of the command daemon's rehash list
   every player. Retiring them requires a code change (remove
   DIR_CLASS_CMDS from the rehash + living search path), which is a
   behavior change, not a zero-reference move.
-- This is also the answer to the Godling skill question - see
+- This is also the answer to the Wizard skill question - see
   section 4.
 
 ### std/hm/castle.c
@@ -176,7 +176,7 @@ expands to it, plus a check of the command daemon's rehash list
 - realms/splynncryth/, realms/thurtea/: live wizard sandboxes
   (gitignored by design except thurtea/workroom.c); not touched.
 
-## 4. Godling / head-arch "You do not have the skill to do that"
+## 4. Wizard / head-arch "You do not have the skill to do that"
 
 Verdict: NOT a skill-grant scoping limitation and NOT a privilege
 bug - it is the unconverted legacy command layer.
@@ -191,10 +191,10 @@ That exact string occurs in exactly one file: cmds/skills/_heal.c
 query_skill() (std/living/skills.c) reads the same skills mapping
 the Rifts system uses, but no Rifts race/OCC package ever grants a
 skill literally named "healing" - that is an NM3 class skill. So
-every Rifts character, from a fresh vagabond to a level-15 Godling
+every Rifts character, from a fresh vagabond to a level-15 Wizard
 head arch, gets healing == 0 and the refusal. Creator/arch status is
 irrelevant: the check is a skill-points check with no creatorp()
-bypass, and being a Godling grants racial abilities, not NM3 class
+bypass, and being a Wizard grants racial abilities, not NM3 class
 skills. All 66 commands in cmds/skills/ share this pattern (zero are
 Rifts-aware), so any of them will refuse everyone the same way.
 

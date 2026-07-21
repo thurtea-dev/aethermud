@@ -20,7 +20,7 @@ testing -- everything below is a claim to verify, not a confirmed result.
       (`cmds/mortal/_who.c` `get_role_tag()`: `wiz_role` env var
       `"admin"` maps to this exact tag).
 - [ ] `score` reflects arch-level stats consistent with your level 15
-      godling account (per prior session verification, 2026-07-15).
+      wizard account (per prior session verification, 2026-07-15).
 
 ## 2. Staff Movement & Areas
 
