@@ -1,5 +1,5 @@
 /* /cmds/skills/_limbs.c
-   A cleric, monk, kataan prayer to sense the body condition of others.
+   A medical skill to sense the body condition of others.
    Rewritten 2026-07-19 for the whole_body damage model: limbs no
    longer carry damage, so this senses overall condition and any
    missing (severed) limbs instead of per-limb damage. */
@@ -22,7 +22,7 @@ int cmd_limbs(string str){
    string name, race;
    string *missing;
    object ob, tp;
-   int x, cur, max, pct, i;
+   int cur, max, pct, i;
 
    if(!str){
      notify_fail("Correct syntax: limbs [whom]\n");
@@ -31,19 +31,8 @@ int cmd_limbs(string str){
 
    tp=this_player();
 
-   if((string)tp->query_class()!="kataan" && (string)tp->query_class()!="monk"
-      && (string)tp->query_class()!="cleric"){
-        notify_fail("Only people of high faith may perform this action.\n");
-        return 0;
-   }
-
-   x=(int)this_player()->query_skill("faith");
-   if(x<20){
-     notify_fail("You are not yet faithful enough to do that.\n");
-     return 0;}
-
-   if((int)tp->query_mp()<20){
-     notify_fail("You do not have the magic strength to do that right now.\n");
+   if((int)tp->query_skill("medical doctor") < 1){
+     notify_fail("You do not have the medical skill to do that.\n");
      return 0;
    }
 
@@ -58,17 +47,9 @@ int cmd_limbs(string str){
      return 0;
    }
 
-   tp->add_mp(-20);
-   if((string)tp->query_class()=="kataan")
-     say(tp->query_cap_name()+" begins to pray to the demons of the "
-         "underworld for guidance.");
-   else say(tp->query_cap_name()+" utters a request for divine guidance.");
+   say(tp->query_cap_name()+" examines the injuries carefully.");
 
-   if(x-random(51)<0){
-     write("Your prayers for guidance are not heard.");
-     return 1;
-   }
-   tp->add_skill_points("faith",10);
+   tp->add_skill_points("medical doctor",10);
    name=(string)ob->query_cap_name();
    race=(string)ob->query_race();
    if((int)RIFTS_D->is_mdc_race(race) ||
@@ -98,7 +79,7 @@ int cmd_limbs(string str){
 }
 
 void help(){
-    write("syntax: limbs [whom]\nThis allows the faithful to offer a prayer "
-          "for guidance in determining the condition of another's body, "
-          "including any limbs they are missing.");
+    write("syntax: limbs [whom]\nThis allows a medical professional to "
+          "examine another's body condition, including any limbs they "
+          "are missing.");
 }
