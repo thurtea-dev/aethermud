@@ -1,4 +1,4 @@
-# Playtest checklist: PLAYER round - 2026-07-19
+# Playtest checklist: PLAYER round - 2026-07-19 (updated 2026-07-21)
 
 Every test in this file is run as a normal mortal character. Nothing
 here needs creatorp() or any admin command; where a step needs an
@@ -14,8 +14,10 @@ player accounts created in section 1. Mismatches go to
 
 1. [ ] At the zone prompt, type `look` first. Expected: normal
        command works; the prompt is not consumed (news-pager fix).
-2. [ ] Type `americas`. Expected: "The Americas. You will begin on
-       the outskirts of Praxis." and the STEP 2 attribute banner.
+2. [ ] Type `americas`. Expected: "The Americas. You will begin at
+       the edge of Chi-Town." and the STEP 2 attribute banner. (Text
+       changed 2026-07-21 with the new zone start rooms; it no
+       longer says "outskirts of Praxis".)
 3. [ ] Type `human` (out of order). Expected: refused; you are told
        to roll, not silently advanced.
 4. [ ] Type `roll`. Expected: an 8-attribute block (IQ ME MA PS PP
@@ -39,12 +41,50 @@ player accounts created in section 1. Mismatches go to
         this whole flow should any elective or secondary skill menu
         appear.
 12. [ ] Type `vagabond`. Expected: OCC applied, starting package
-        granted, rift-arrival text, you land outside Praxis, score
-        sheet prints, and only then does unread news appear.
+        granted, rift-arrival text, you land in `chitown_start`
+        ("Waystation, Praxis-Chi-Town Corridor") - not Praxis proper -
+        score sheet prints, and only then does unread news appear.
+        See section 2 for the full start-room check.
 13. [ ] Type `score` and `skills`. Expected: OCC package skills are
         present without you ever picking one.
 
-## 2. Logout and reconnect behavior
+## 2. Zone start rooms and orientation NPCs (Phase 1 naming pass, 2026-07-21)
+
+Run this once per zone with a fresh throwaway character; you do not
+need to complete all three in one session.
+
+1. [ ] Americas: finish chargen with `americas`. Expected: you land in
+       `chitown_start` ("Waystation, Praxis-Chi-Town Corridor"), with
+       `rift_survivor` ("survivor") and `chargen_guide` ("Gamemaster")
+       both present. `say hello` to each.
+2. [ ] From `chitown_start`, go `north`. Expected: `chitown_gate`
+       ("Chi-Town, Main Gate"). Go `waystation` (not `south`, which is
+       claimed by `chitown_burbs`). Expected: back at `chitown_start`.
+       This exit was missing before 2026-07-21 - a real one-way dead
+       end - so confirm it actually works, not just that it exists.
+3. [ ] From `chitown_start`, go `south`. Expected: back at
+       `rifts_welcome`, unaffected by this pass.
+4. [ ] Europe: finish chargen with `europe`. Expected: you land in
+       `newcamelot_start` ("New Camelot, Gatehouse Interior"), with
+       two `royal_knight_guard`s and a `camelot_guide` ("Gamemaster",
+       New Camelot-flavored appearance text) present. `say hello` to
+       the guide.
+5. [ ] From `newcamelot_start`, confirm `north`/`south`/`east` reach
+       `camelot_square`/`europe_road`/`camelot_gate`, and each of
+       those has a working exit back.
+6. [ ] Infamy/ambush gate at `newcamelot_start` (needs an admin to
+       push a throwaway character's infamy above 300 or coalition
+       standing above 500, then re-enter the room): expected "You are
+       not welcome within these walls," followed about a second later
+       by two knights spawning and attacking. A normal-standing
+       character should instead get "Hail, traveler. Welcome to New
+       Camelot." and a one-time-per-day `new_camelot` faction bump on
+       first entry.
+7. [ ] Atlantis: finish chargen with `atlantis`. Expected: you land in
+       `splynn_entry`, unaffected by this pass (still the same room it
+       always was).
+
+## 3. Logout and reconnect behavior
 
 1. [ ] Walk a few rooms away from the start room (any ordinary
        Praxis room). Type `quit`, then log back in. Expected: you
@@ -63,7 +103,7 @@ player accounts created in section 1. Mismatches go to
        The mortal self-set-start command was removed 2026-07-19;
        there should be no "Syntax: start here" output.
 
-## 3. Moxim rift network (six hops)
+## 4. Moxim rift network (six hops)
 
 Costs 500 credits per hop (200 to Praxis); make sure the character
 has funds, or run this round with whatever credits chargen granted
@@ -105,7 +145,7 @@ Ocean access (added 2026-07-19):
         later reset the shelf stays empty; the sword never respawns
         for anyone once first taken.
 
-## 4. Combat, armor pools, and cosmetic wear (player gear)
+## 5. Combat, armor pools, and cosmetic wear (player gear)
 
 Use ordinary shops (Praxis outfitter/arms dealers, or the Chi-Town
 arcade) and a weak zone enemy (a lone highway bandit or similar
@@ -125,7 +165,7 @@ low-level target outside Praxis).
 5. [ ] Confirm no attack ever reports hitting a named limb of yours;
        damage is whole-body only.
 
-## 5. Spellcasting and psionics (common OCC sample)
+## 6. Spellcasting and psionics (common OCC sample)
 
 Create (or reuse) one caster and one psychic through normal chargen,
 e.g. a Ley Line Walker and a Mystic.
@@ -142,7 +182,7 @@ e.g. a Ley Line Walker and a Mystic.
 5. [ ] Repeat the no-target check with a targeted psionic. Expected:
        no ISP spent on the failed attempt.
 
-## 6. General command sweep
+## 7. General command sweep
 
 1. [ ] `score` - all pools shown, no zero attributes, alignment and
        OCC correct.
@@ -156,16 +196,18 @@ e.g. a Ley Line Walker and a Mystic.
 7. [ ] `smell` and `listen` in a room that sets them - text appears
        ONLY on explicit command, never in the room description.
 
-## 7. Tone spot-check (player-visible strings)
+## 8. Tone spot-check (player-visible strings)
 
 Professional tone, no slang, no long dashes, American spelling:
 
 1. [ ] Chargen STEP 1-5 banners and accept/reroll prompts.
-2. [ ] "<Name> has rejoined our reality." (section 2).
-3. [ ] The quit-time refusal line (section 2 step 3).
-4. [ ] Moxim's six flavor lines (section 3).
+2. [ ] "<Name> has rejoined our reality." (section 3).
+3. [ ] The quit-time refusal line (section 3 step 3).
+4. [ ] Moxim's six flavor lines (section 4).
+5. [ ] The Gamemaster/`camelot_guide`, `rift_survivor`, and New
+       Camelot gate-check lines (section 2).
 
-## 8. Backlog: zone eyeball walk-throughs (carried forward)
+## 9. Backlog: zone eyeball walk-throughs (carried forward)
 
 - [ ] Chi-Town: arcade shops, ISS checkpoint, maintenance hatch,
       sewer hydra, D-bee hostility without fake ID.
@@ -174,7 +216,7 @@ Professional tone, no slang, no long dashes, American spelling:
 - [ ] Horton: hovertrain, Main Street, outskirts spokes, quarry
       lurker, hermit cabin, forest ley glade and wolf den.
 
-## 9. After the pass
+## 10. After the pass
 
 Bugs to `master_gap_report.txt`. When both this and the wizard round
 pass locally: commit, pull on the VPS, full-reboot the VPS.

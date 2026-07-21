@@ -1,4 +1,4 @@
-# Playtest checklist: WIZARD round - 2026-07-19
+# Playtest checklist: WIZARD round - 2026-07-19 (updated 2026-07-21)
 
 Every test in this file needs staff rank (creatorp or archp) or acts
 on staff-only content. Run as thurtea (or a throwaway wizard account)
@@ -8,7 +8,7 @@ call it TESTCHAR below. Player-side tests live in
 
 Prerequisites: server running, FULL REBOOT since the last pull of any
 `/std/` file (user.c, living.c, room.c, armour.c, combat.c, and
-everything else under `/std/`) — `update` or `warmboot` is not enough;
+everything else under `/std/`) - `update` or `warmboot` is not enough;
 see section 3 for what happens when this gets skipped. Mismatches go to
 `/domains/Praxis/adm/master_gap_report.txt`.
 
@@ -36,8 +36,11 @@ Copy-paste tests (TESTCHAR online):
 2. [ ] `repairchar TESTCHAR setstat PS 20` - expected: confirmation;
        `repairchar TESTCHAR` shows PS 20.
 3. [ ] `makechar TESTCHAR human vagabond scrupulous zone=americas` -
-       expected: full rebuild summary, TESTCHAR moved to the Praxis
-       welcome area with gear, and a rebuild notice shown to them.
+       expected: full rebuild summary, TESTCHAR moved to
+       `chitown_start` (the Chi-Town waystation, not "the Praxis
+       welcome area" - that wording is stale since the 2026-07-21
+       zone start room pass) with gear, and a rebuild notice shown
+       to them.
 4. [ ] `makechar TESTCHAR titan none anarchist gear=none` -
        expected: RCC-only rebuild, no equipment granted, zone
        unchanged.
@@ -109,13 +112,30 @@ limb-based refusal instead of silently destructing/dropping the item.
 
 **This is exactly the failure mode the FULL REBOOT prerequisite at the
 top of this file exists to prevent. Any `/std/` file change needs a real
-`mud.sh stop && mud.sh start`, never just `update` or `warmboot` — those
+`mud.sh stop && mud.sh start`, never just `update` or `warmboot` - those
 only reload the blueprint, not the code already baked into
 already-connected sessions and already-loaded objects. If you're ever
 unsure whether a reboot actually happened after a `/std/` edit, check
 `log/runtime`'s timestamp against the most recent commit touching that
 file (`git log -1 -- std/<file>.c`); if the commit is newer than the
 last boot, the running driver has not picked it up yet.**
+
+**Refactored since (daemon delegation, current code as of 2026-07-21):**
+the ring no longer clones the five physical tool items into inventory
+when worn. `domain`/`promote`/`demote`/`tool`/`rptool`/`inscribe`/
+`review` now delegate directly into the same shared menu daemons the
+physical staff/tool/gun items use (`dominion_menu_d.c`,
+`demotion_menu_d.c`, `rp_skill_menu_d.c`, `tattoo_menu_d.c`,
+`creation_review_menu_d.c`), so there is exactly one copy of each
+menu's logic regardless of whether it is reached by staff, tool, gun,
+or ring. `build`/`clone`/`purge` call QCS directly
+(`/cmds/creator/_qcs.c`), gated on `admin_wizp()` rather than
+requiring a physically carried staff of creation. This supersedes the
+original 2026-07-19 wording of steps 3 and 6 below: nothing is cloned
+on wear, and there is nothing to strip on removal. `query_auto_load()`/
+`init_arg()` also now restore the ring to its worn state automatically
+on reconnect (step 9) - the previous behavior required manually
+re-wearing after every relog.
 
 1. [ ] Confirm the ring is present, unworn, in inventory (`inventory`
        or `i`).
@@ -124,10 +144,12 @@ last boot, the running driver has not picked it up yet.**
        "The ring stays cold and inert on your hand." if not). The ring
        must still be listed afterward as "a plain gold ring (worn)" -
        not vanished.
-3. [ ] Confirm the five wiz-tools were cloned into inventory (staff of
-       demotion, staff of dominion, staff of creation, RP-Wiz skill
-       tool, tattoo-gun) - skip any you already had before wearing the
-       ring.
+3. [ ] Confirm NO tool items are cloned into inventory. `inventory`/`i`
+       before and after `wear ring` should be identical except for the
+       ring's own "(worn)" tag - no staff of demotion, staff of
+       dominion, staff of creation, RP-Wiz skill tool, or tattoo-gun
+       appears. The ten verbs below work directly off the worn ring;
+       nothing physical is created.
 4. [ ] `eq` or `look` at yourself: confirm the ring shows on its own
        slot, distinct from `ring_left`/`ring_right`.
 5. [ ] While the ring is worn, also wear a regular ring (e.g. the test
@@ -136,14 +158,26 @@ last boot, the running driver has not picked it up yet.**
        occupies `admin_ring`, never `ring_left`/`ring_right`, so both
        should be wearable together with no refusal message from
        either side.
-6. [ ] `remove ring`. Expected: "The ring cools, and the tools it
-       granted fade from your hands." Tools freshly cloned by the ring
-       are stripped; any tool you already had before wearing it
-       remains.
+6. [ ] `remove ring`. Expected exact message: "The ring cools, and its
+       powers fade from your hand." (not "hands", not "the tools it
+       granted" - that wording described the old tool-cloning
+       behavior and no longer applies). Immediately after removal,
+       `domain`/`promote`/`demote`/`tool`/`rptool`/`inscribe`/`review`/
+       `build`/`clone`/`purge` should all stop working (ordinary
+       unknown-command response) UNLESS you separately carry a
+       physical tool granting that same verb, which should keep
+       working undisturbed.
 7. [ ] `askring <question>` while worn (try "promote", "build",
        "domain", "tattoo", "skill", "reboot", "save"). Expected: a
        relevant canned answer for each. `askring` while NOT worn:
        "The ring is silent. It only answers while worn."
+8. [ ] While worn, exercise at least three of the ten delegated verbs
+       directly (e.g. `domain`, `tool`, `review`). Expected: each
+       opens the exact same menu the equivalent physical staff/tool/
+       gun would, since they share the same menu daemon.
+9. [ ] With the ring worn, `quit` and log back in. Expected: the ring
+       shows "(worn)" again immediately, with no need to `wear ring`
+       a second time (the reconnect auto-rewear fix).
 
 ## 4. Gating: mortals must reach none of this
 

@@ -135,7 +135,7 @@ do_start() {
     echo "[mud] Clearing any processes squatting on port $PORT..."
     kill_port_squatters "$PORT"
     prepare_runtime_dirs
-    echo "[mud] Starting Nightmare 3 on port $PORT..."
+    echo "[mud] Starting AetherMUD Driver on port $PORT..."
     cd "$BIN_DIR" || { echo "[mud] ERROR: cannot cd to $BIN_DIR"; exit 1; }
 
     # Start addr_server if not already running
