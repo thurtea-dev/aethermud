@@ -21,7 +21,7 @@ void create() {
     set_exits( ([
         "north" : "/domains/PuertoAngel/areas/pa_main_street",
         "east"  : "/domains/PuertoAngel/areas/pa_beach",
-        "south" : "/domains/chitown/areas/illinois_road"
+        "south" : "/domains/ChiTown/areas/illinois_road"
     ]) );
     set_listen("default",
         "Waves. Wind. Nothing else. No dogs, no birds, no voices.");

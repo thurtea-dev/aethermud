@@ -27,7 +27,7 @@ void create() {
     set_exits( ([
         "south" : "/domains/Praxis/areas/test_zone",
         "north" : "/domains/Praxis/areas/highway_ruins",
-        "east"  : "/domains/chitown/areas/illinois_road"
+        "east"  : "/domains/ChiTown/areas/illinois_road"
     ]) );
     set_listen("default",
         "Wind across flat ground. A distant crack of dimensional energy, like thunder without rain.");

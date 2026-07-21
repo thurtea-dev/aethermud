@@ -31,7 +31,8 @@ void create() {
         (["south" : "/domains/Praxis/areas/monument_square",
           "east" : "/domains/Praxis/east_road1",
           "west" : "/domains/Praxis/west_road1",
-          "north" : "/domains/Praxis/areas/test_zone"]) );
+          "north" : "/domains/Praxis/areas/test_zone",
+          "shelter" : "/domains/ChiTown/areas/chitown_start"]) );
     set_listen("default",
         "Wind whips through torn steel. Somewhere in the distance "
         "a ley line hums with barely contained power.");

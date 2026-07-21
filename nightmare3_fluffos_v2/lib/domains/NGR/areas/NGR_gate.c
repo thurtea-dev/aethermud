@@ -28,7 +28,7 @@ void create() {
         "The road west leads back toward the European wilderness. Through the\n"
         "gate to the east is the NGR market district.");
     set_exits( ([
-        "west"  : "/domains/newcamelot/areas/europe_road",
+        "west"  : "/domains/NewCamelot/areas/europe_road",
         "east"  : "/domains/NGR/areas/NGR_market_district",
         "north" : "/domains/NGR/areas/ngr_checkpoint"
     ]) );

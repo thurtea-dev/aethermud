@@ -253,7 +253,7 @@ SESSION CHANGES (2026-06-30) - combat verification + NPC equipment audit:
   DONE: cs_dog_boy_guard.c (domains/LoneStar/npcs/) now actually equips the
         CP-40 rifle and Dead Boy armor its own set_long() already described;
         it previously spawned unarmed.
-  NOTE: dead_boy_guard.c and cs_patrol.c (domains/chitown/npcs/) were
+  NOTE: dead_boy_guard.c and cs_patrol.c (domains/ChiTown/npcs/) were
         checked against an earlier audit that flagged set_mdc()/missing
         create_equipment() bugs. Both are already fixed on disk (proper
         set_property("mdc_creature",1), create_equipment() defined and
@@ -861,8 +861,8 @@ COLOR SCHEME:
 --- SECTION 5: ZONES/AREAS ---
 
   Chi-Town         DONE (2026-06-30: interior expansion)
-    Files: /domains/chitown/areas/, /domains/chitown/npcs/,
-           /domains/chitown/monsters/, /domains/chitown/equipment/
+    Files: /domains/ChiTown/areas/, /domains/ChiTown/npcs/,
+           /domains/ChiTown/monsters/, /domains/ChiTown/equipment/
     HAS:   chitown_gate.c, chitown_burbs.c, chitown_boulevard.c,
            chitown_alley.c, chitown_clinic.c, chitown_market.c,
            chitown_officer_row.c, chitown_burb_row.c, chitown_burb_shanty.c,
@@ -913,7 +913,7 @@ COLOR SCHEME:
              more patrol routes, Triax R&D facility
 
   New Camelot/Europe  PARTIAL
-    Files: /domains/newcamelot/areas/
+    Files: /domains/NewCamelot/areas/
     HAS:   camelot_gate.c, camelot_armoury.c, camelot_square.c,
            camelot_tavern.c, camelot_wizard_tower.c, europe_road.c,
            black_forest.c

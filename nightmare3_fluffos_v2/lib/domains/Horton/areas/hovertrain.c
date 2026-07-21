@@ -6,7 +6,7 @@
 #include <rooms.h>
 
 #define HORTON_STATION  "/domains/Horton/areas/horton_station"
-#define CHITOWN_BURBS   "/domains/chitown/areas/chitown_burbs"
+#define CHITOWN_BURBS   "/domains/ChiTown/areas/chitown_burbs"
 #define TICKET_PRICE    50
 #define CYCLE_TIME      300
 #define TRANSIT_SECS    15

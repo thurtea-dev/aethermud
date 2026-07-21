@@ -78,6 +78,20 @@ private int valid_domain_name(string name) {
     return 1;
 }
 
+// Rule 19: domains/ top-level names should be CamelCase (start uppercase,
+// no underscores). This only warns, it does not block -- adm and NGR are
+// documented, grandfathered exceptions and a hard block risks wrongly
+// catching a legitimate future one too.
+private int is_camelcase_domain(string name) {
+    int c;
+
+    if(!name || !sizeof(name)) return 0;
+    c = name[0];
+    if(!(c >= 'A' && c <= 'Z')) return 0;
+    if(strsrch(name, "_") != -1) return 0;
+    return 1;
+}
+
 private void show_menu() {
     write("\n=== Domain Menu ===");
     write(" 1. Create new domain directory");
@@ -153,6 +167,11 @@ void get_domain(string name) {
 
             if(resolve_domain(pending_sub[player])) {
                 write("Domain already exists.\n"); return;
+            }
+            if(!is_camelcase_domain(pending_sub[player])) {
+                write("Warning: domain names should be CamelCase per project\n"
+                      "convention (e.g. NewDomain, not newdomain or new_domain).\n"
+                      "Creating '" + pending_sub[player] + "' anyway.\n");
             }
             dpath = "/domains/" + pending_sub[player];
             mkdir(dpath);

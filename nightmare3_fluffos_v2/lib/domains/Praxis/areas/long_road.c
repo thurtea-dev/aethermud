@@ -24,7 +24,7 @@ void create() {
     set_exits( ([
         "west"  : "/domains/Praxis/areas/weapons_shop",
         "east"  : "/domains/Praxis/areas/splynn/splynn_market",
-        "north" : "/domains/newcamelot/areas/europe_road"
+        "north" : "/domains/NewCamelot/areas/europe_road"
     ]) );
     set_listen("default",
         "Wind across empty asphalt, and a distant mechanical groan from the east.");

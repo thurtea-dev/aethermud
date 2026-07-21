@@ -75,7 +75,7 @@ int cmd_wizard(string str) {
     target->set_alignment(900);
 
     // Fix primary_start
-    target->set_primary_start("/domains/Praxis/rifts_welcome");
+    target->set_primary_start("/domains/ChiTown/areas/chitown_start");
 
     catch(RIFTS_START_D->grant_race_package(target));
     catch(LANGUAGE_D->grant_native_languages(target));

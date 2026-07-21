@@ -416,26 +416,34 @@ as a valid empty group by design - do not "fix" that fallback by
 requiring a trailing space in groups.cfg lines again (fixed
 2026-07-15).
 
-### 19. Directory naming: all-lowercase, no new underscores
+### 19. Directory naming: domains/ top-level is CamelCase; everywhere else lowercase
 
-Every new directory anywhere in this project - under `domains/`,
-`std/`, `cmds/`, `docs/`, or anywhere else - must be all-lowercase.
-Before creating or naming any new directory, check this rule first.
+Top-level directories directly under `domains/` name a narrative game
+zone and must be CamelCase: `Horton`, `Lazlo`, `LoneStar`, `Praxis`,
+`PuertoAngel`, `ChiTown`, `NewCamelot`, `Tolkeen`, `DemonPlane`,
+`Wizards`. No underscores in a domain name; use CamelCase
+word-splitting instead.
 
-- No underscores in a new directory name unless the exact same word
-  already has an established underscore precedent elsewhere in the
-  tree (e.g. `demon_plane` is grandfathered; do not add further
-  underscored names by analogy to it).
-- This applies going forward only. `domains/Horton`, `domains/Lazlo`,
-  `domains/LoneStar`, `domains/NGR`, `domains/Praxis`, and
-  `domains/PuertoAngel` are known, already-existing violations,
-  grandfathered until their own dedicated rename pass (see
-  `docs/` for the casing-audit findings; do not rename them as a side
-  effect of unrelated work). Do not add a seventh.
-- If you are about to `mkdir` or otherwise create a new top-level
-  directory and its name has any uppercase letter or an underscore not
-  already grandfathered above, stop and pick a compliant name instead
-  (e.g. `newcamelot`, not `NewCamelot` or `new_camelot`).
+Exceptions: `domains/adm/` stays lowercase (admin tooling, not a
+narrative zone). `domains/NGR/` stays all-caps (an intentional
+acronym, not a CamelCase word).
+
+Everywhere else in the project - `std/`, `cmds/`, `docs/`, or any
+directory not directly under `domains/` - the old rule still applies:
+all-lowercase, no underscores unless the exact word already has a
+grandfathered underscore precedent elsewhere in the tree. Check which
+rule applies based on where the new directory lives before naming it.
+
+If you are about to `mkdir` a new top-level directory under `domains/`
+whose name is not CamelCase, or a new directory anywhere else with an
+uppercase letter or a new underscore, stop and pick a compliant name
+instead.
+
+Status (updated 2026-07-21): `chitown` -> `ChiTown` and `newcamelot` ->
+`NewCamelot` are done. `tolkeen`, `wizards`, and `demon_plane` are
+still on disk under their old lowercase/underscored names, pending
+their own dedicated rename pass (see the reference audit before
+running one - `wizards` touches `/std/user.c` and needs a full reboot).
 
 ### 20. No player chat channels of any kind
 All player-to-player communication is room-local (same reach as say),
@@ -514,7 +522,7 @@ lib/
   secure/cmds/creator/   <- update, clone (room-safe update logic here)
   domains/Praxis/        <- main Rifts game world
   domains/adm/           <- admin domain (wiz tools, etc.)
-  domains/chitown/       <- Chi-Town zone
+  domains/ChiTown/       <- Chi-Town zone
   daemon/                <- game daemons (rifts, occ, skills, spells, etc.)
 ```
 

@@ -120,7 +120,7 @@ int cmd_makewiz(string str) {
     target->setenv("always_known",        "1");
     target->setenv("speak_all_languages", "1");
     target->set_alignment(900);
-    target->set_primary_start("/domains/Praxis/rifts_welcome");
+    target->set_primary_start("/domains/ChiTown/areas/chitown_start");
     catch(RIFTS_START_D->grant_race_package(target));
     catch(LANGUAGE_D->grant_native_languages(target));
     target->setenv("active_language", "American");

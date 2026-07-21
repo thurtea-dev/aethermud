@@ -23,7 +23,7 @@ void create() {
         "like boots on gravel.\n\n"
         "The Rift arrival zone lies back to the south.");
     set_exits( ([
-        "south" : "/domains/Praxis/rifts_welcome",
+        "south" : "/domains/ChiTown/areas/chitown_start",
         "north" : "/domains/Praxis/areas/old_highway"
     ]) );
     set_listen("default",

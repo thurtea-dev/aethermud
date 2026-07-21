@@ -28,13 +28,13 @@ private string resolve_zone(string zone) {
         return 0;
     }
     if(z == "americas" || z == "praxis")
-        dest = "/domains/Praxis/rifts_welcome";
+        dest = "/domains/ChiTown/areas/chitown_start";
     else if(z == "atlantis" || z == "splynn")
         dest = "/domains/Praxis/areas/splynn/splynn_entry";
     else if(z == "europe" || z == "camelot" || z == "newcamelot")
-        dest = "/domains/newcamelot/areas/camelot_gate";
+        dest = "/domains/NewCamelot/areas/newcamelot_start";
     else if(z == "chitown" || z == "chi-town")
-        dest = "/domains/chitown/areas/chitown_gate";
+        dest = "/domains/ChiTown/areas/chitown_gate";
     else if(z == "lazlo")
         dest = "/domains/Lazlo/lazlo_welcome";
     else if(z == "tolkeen")

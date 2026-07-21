@@ -48,10 +48,10 @@ void create() {
        arrive beside that zone's Moxim - not the zone gate/welcome room.
        ({ room_path, display_name, cost, faction_key, flavor }) */
     __dests = ([
-        "americas" : ({ "/domains/chitown/areas/chitown_boulevard",
+        "americas" : ({ "/domains/ChiTown/areas/chitown_boulevard",
                          "Chi-Town", 500, "",
                          "Moxim mutters, 'Iron and propaganda. Safe travels, if you can manage it.'" }),
-        "chitown" : ({ "/domains/chitown/areas/chitown_boulevard",
+        "chitown" : ({ "/domains/ChiTown/areas/chitown_boulevard",
                          "Chi-Town", 500, "",
                          "Moxim mutters, 'Iron and propaganda. Safe travels, if you can manage it.'" }),
         "atlantis" : ({ "/domains/Praxis/areas/splynn/splynn_market",
@@ -60,10 +60,10 @@ void create() {
         "splynn" : ({ "/domains/Praxis/areas/splynn/splynn_market",
                          "Splynn", 500, "splugorth",
                          "Moxim mutters, 'The shores of Atlantis. Mind the Splugorth.'" }),
-        "europe" : ({ "/domains/newcamelot/areas/camelot_square",
+        "europe" : ({ "/domains/NewCamelot/areas/camelot_square",
                          "New Camelot", 500, "new_camelot",
                          "Moxim mutters, 'Old magic and older stones. Europe awaits.'" }),
-        "camelot" : ({ "/domains/newcamelot/areas/camelot_square",
+        "camelot" : ({ "/domains/NewCamelot/areas/camelot_square",
                          "New Camelot", 500, "new_camelot",
                          "Moxim mutters, 'Old magic and older stones. Europe awaits.'" }),
         "lazlo" : ({ "/domains/Lazlo/areas/lazlo_market",

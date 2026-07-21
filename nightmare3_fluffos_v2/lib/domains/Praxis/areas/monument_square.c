@@ -22,7 +22,7 @@ void create() {
         "through constantly. The smell of cook fires and machine oil hangs\n"
         "in the air. The hum of a nearby ley line is faint but constant.");
     set_exits( ([
-        "north"     : "/domains/Praxis/rifts_welcome",
+        "north"     : "/domains/ChiTown/areas/chitown_start",
         "east"      : "/domains/Praxis/areas/market_street",
         "west"      : "/domains/Praxis/areas/rockys_bar",
         "south"     : "/domains/Praxis/areas/coalition_checkpoint",

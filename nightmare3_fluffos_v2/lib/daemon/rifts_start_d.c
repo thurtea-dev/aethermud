@@ -166,7 +166,7 @@ private void give_equip(object player, string occ) {
     case "knight (europe)":
     case "royal knight":
         give_item(player, "short_sword.c");
-        give_item_path(player, "/domains/newcamelot/equipment/knight_shield.c");
+        give_item_path(player, "/domains/NewCamelot/equipment/knight_shield.c");
         give_item(player, "environmental_body_armor.c");
         give_item(player, "c18_pistol.c");
         give_item(player, "knife.c");

@@ -121,7 +121,7 @@ void creation_prompt(string step) {
     if(step == "region") {
         write("\n=== STEP 1: CHOOSE YOUR STARTING ZONE ===");
         write("Where does your story begin on Rifts Earth?\n");
-        write(" americas   The Americas (outskirts of Praxis)");
+        write(" americas   The Americas (Chi-Town)");
         write(" europe     Europe (New Camelot)");
         write(" atlantis   Atlantis (Splynn market shores)\n");
         write("Type your choice: americas, europe, or atlantis.\n");
@@ -1049,8 +1049,8 @@ int start_cmd(string str) {
     str = lower_case(str);
     if(str == "americas" || str == "chitown") {
         region = "americas";
-        dest_room = "/domains/Praxis/rifts_welcome";
-        write("The Americas. You will begin on the outskirts of Praxis.");
+        dest_room = "/domains/ChiTown/areas/chitown_start";
+        write("The Americas. You will begin at the edge of Chi-Town.");
     } else if(str == "atlantis" || str == "splynn") {
         region = "atlantis";
         dest_room = "/domains/Praxis/areas/splynn/splynn_entry";
@@ -1059,7 +1059,7 @@ int start_cmd(string str) {
         write("Atlantis. The alien shores of Splynn await.");
     } else if(str == "europe" || str == "camelot") {
         region = "europe";
-        dest_room = "/domains/newcamelot/areas/camelot_gate";
+        dest_room = "/domains/NewCamelot/areas/newcamelot_start";
         if(file_size(dest_room + ".c") <= 0)
             dest_room = "/domains/Praxis/rifts_welcome";
         write("Europe. New Camelot and the old world's magic await.");
@@ -1122,11 +1122,11 @@ void finish_creation() {
         if(!region || !strlen(region)) region = "americas";
         if(!dest || !strlen(dest)) {
             if(region == "americas")
-                dest = "/domains/Praxis/rifts_welcome";
+                dest = "/domains/ChiTown/areas/chitown_start";
             else if(region == "atlantis")
                 dest = "/domains/Praxis/areas/splynn/splynn_entry";
             else if(region == "europe")
-                dest = "/domains/newcamelot/areas/camelot_gate";
+                dest = "/domains/NewCamelot/areas/newcamelot_start";
             else
                 dest = "/domains/Praxis/rifts_welcome";
         }

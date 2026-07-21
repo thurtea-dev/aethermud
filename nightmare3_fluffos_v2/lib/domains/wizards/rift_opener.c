@@ -39,8 +39,8 @@ void create() {
         "/domains/Praxis/areas/monument_square",
         "/domains/Praxis/areas/splynn/splynn_entry",
         "/domains/Praxis/areas/riffys_bar",
-        "/domains/chitown/areas/chitown_gate",
-        "/domains/newcamelot/areas/camelot_gate",
+        "/domains/ChiTown/areas/chitown_gate",
+        "/domains/NewCamelot/areas/newcamelot_start",
         "/domains/Lazlo/lazlo_welcome",
         "/domains/wizards/hallway"
     });

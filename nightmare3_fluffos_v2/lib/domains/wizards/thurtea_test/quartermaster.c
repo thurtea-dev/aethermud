@@ -52,7 +52,7 @@ void create() {
                              "C-12 heavy assault laser rifle (weapon)" }),
         /* Whole-body protective armor sample (appearance override) */
         "dead boy"      : ({ EQ_PATH+"dead_boy_armor.c", 50,
-                             "Coalition Dead Boy armor (protective, whole body)" }),
+                             "Coalition Dead Boy armor (protective, body)" }),
         /* Cybernetics sample */
         "optic eye"     : ({ EQ_PATH+"cybernetics/cyber_eye_optic.c", 50,
                              "cybernetic optic eye (implant)" }),

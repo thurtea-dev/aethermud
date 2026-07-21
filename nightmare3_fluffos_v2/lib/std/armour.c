@@ -414,6 +414,7 @@ private string assign_cosmetic_slot(string cos) {
     the old limb-based path, and for any slot not listed here.  */
 private string slot_display_name(string cos) {
     switch(cos) {
+    case "whole_body": return "body";
     case "ring_left": return "left ring finger";
     case "ring_right": return "right ring finger";
     case "admin_ring": return "signet hand";
