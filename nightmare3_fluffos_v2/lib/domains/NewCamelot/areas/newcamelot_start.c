@@ -91,4 +91,6 @@ void reset() {
         clone_object("/domains/NewCamelot/npcs/royal_knight_guard")->move(this_object());
         clone_object("/domains/NewCamelot/npcs/royal_knight_guard")->move(this_object());
     }
+    if(!present("gamemaster", this_object()))
+        clone_object("/domains/NewCamelot/npcs/camelot_guide")->move(this_object());
 }

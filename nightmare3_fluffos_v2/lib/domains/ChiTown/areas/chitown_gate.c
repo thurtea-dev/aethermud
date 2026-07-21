@@ -1,5 +1,8 @@
 // /domains/ChiTown/areas/chitown_gate.c
 // Chi-Town main gate. Coalition starting room for new Americas characters.
+// "waystation" exit (2026-07-21) returns to chitown_start -- north/south
+// were already claimed by chitown_boulevard/chitown_burbs, so this follows
+// the same named-exit pattern rifts_welcome.c uses for its "shelter" link.
 
 #include <std.h>
 #include <rooms.h>
@@ -23,7 +26,8 @@ void create() {
         "standby.");
     set_exits( ([
         "north" : "/domains/ChiTown/areas/chitown_boulevard",
-        "south" : "/domains/ChiTown/areas/chitown_burbs"
+        "south" : "/domains/ChiTown/areas/chitown_burbs",
+        "waystation" : "/domains/ChiTown/areas/chitown_start"
     ]) );
     set_listen("default",
         "The hum of weapon systems, the tramp of boots, and Coalition anthems "
@@ -45,7 +49,8 @@ private void ensure_exits() {
     if(sizeof(query_exits()) > 0) return;
     set_exits( ([
         "north" : "/domains/ChiTown/areas/chitown_boulevard",
-        "south" : "/domains/ChiTown/areas/chitown_burbs"
+        "south" : "/domains/ChiTown/areas/chitown_burbs",
+        "waystation" : "/domains/ChiTown/areas/chitown_start"
     ]) );
 }
 
