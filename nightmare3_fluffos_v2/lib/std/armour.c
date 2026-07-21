@@ -203,7 +203,8 @@ glow.\n");
 void unwear() {
     if(stringp(armour_static["unwear"]))
       message("my_action", armour_static["unwear"], armour_static["worn by"]);
-    else message("my_action", "You remove your "+query_short()+".",
+    else if(!functionp(armour_static["unwear"]))
+      message("my_action", "You remove your "+query_short()+".",
       armour_static["worn by"]);
     /* Cosmetic slot items never registered on a limb, so skip the limb
        unhook (slot names can collide with real limb names like head). */

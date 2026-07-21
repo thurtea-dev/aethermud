@@ -43,8 +43,8 @@ void create() {
     set_value(0);
     set_property("no_drop", 1);
     set_property("no_give", 1);
-    set_wear( (: this_object(), "on_ring_worn" :) );
-    set_remove( (: this_object(), "on_ring_removed" :) );
+    set_wear( (: on_ring_worn :) );
+    set_remove( (: on_ring_removed :) );
 }
 
 void init() {
