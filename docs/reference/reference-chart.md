@@ -79,7 +79,7 @@ Note: Most OCCs appear only in XP tables in this source. Full skill/gear detail 
 
 #### Cyber-Knight (from rifts_start_d.c)
 - **Skills**: WP Sword 65%, WP Vibroblade 55%, Horsemanship 55%, H2H Cyber-Knight (melee/attack +6)
-- **Starting Gear**: short_sword, knight_shield (newcamelot domain), chain_mail, knife, backpack
+- **Starting Gear**: short_sword, knight_shield (NewCamelot domain), chain_mail, knife, backpack
 - **Credits**: 2D6 x 100 (200-1200)
 - **PPE/ISP**: No bonus in daemon (N/A)
 

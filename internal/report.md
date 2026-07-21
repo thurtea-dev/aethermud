@@ -256,9 +256,21 @@ files after folding anything useful into `archive/driver-upgrade-notes.md`.
 > daemon/http.c for what data is already exposed). Restart, check log/runtime
 > and log/catch, tick report.md checkboxes, note in master_gap_report.txt.
 
-### 10. Driver upgrade track (paused, archived)
+### 10. Driver upgrade track (ABANDONED 2026-07-21 note: `archive/` deleted)
 
-Status: paused and moved to `archive/` (bin-modern/, fluffos-modern/,
+**The `archive/` directory described below no longer exists.** It was
+removed entirely in commit `099ce07` ("restructuring of project",
+2026-07-12) and is now gitignored - this was an intentional removal,
+not an accidental loss, so there is nothing to restore and the modern-
+driver port track below is abandoned, not paused. The checkboxes and
+"PROMPT FOR CLAUDE" block that follow are historical record of what was
+attempted before the removal; do not act on the prompt as written, it
+references a directory that is gone. `RUNNING.md`'s "Modern driver
+trial" section (which pointed at this same `archive/` layout) was
+removed 2026-07-21 for the same reason.
+
+Status (as of 2026-07-07, before the abandonment above): paused and
+moved to `archive/` (bin-modern/, fluffos-modern/,
 lib-modern/, mud-modern.sh, driver-upgrade-notes.md) to keep the project root
 clean. Not needed for the live game. One real bug was found and fixed while
 archiving: `archive/lib-modern/std/room/senses.c` used `status` as a function

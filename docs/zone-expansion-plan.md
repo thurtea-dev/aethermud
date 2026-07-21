@@ -8,18 +8,21 @@ reach from existing hubs (Praxis, Splynn, Camelot, Chi-Town).
 
 Earlier versions of this table counted files (rooms + NPCs + items),
 which overstated rooms. These are actual room-inheriting files, per
-ASSESSMENT.md section 4. Total 583 room files, ~430 playable (excluding
-standardOld and admin/example rooms).
+ASSESSMENT.md section 4. Total at original measurement: 583 room files
+(included the 133 standardOld rooms, since moved to `attic/` 2026-07-19
+and no longer part of the live tree). Current total ~450, of which ~432
+are playable (excluding standardOld and admin/example rooms; the +2 over
+the original ~430 is the pair of 2026-07-21 zone start rooms).
 
 | Zone | Rooms | Role today |
 |------|------:|------------|
 | Praxis hub (top level) | 143 | Chargen arrival, bank, shops, Moxim |
 | Praxis/areas (CS territory, market, nexus, catacombs) | ~35 | Complete |
 | Praxis sub-areas (cemetery, mountains, orc valley, vehicles) | 37 | Complete, some legacy-flavored |
-| Praxis/standardOld | 133 | Legacy NM3 rooms, erroring; players should never see |
-| Chi-Town | 51 | CS military / burbs + fortified city |
+| Praxis/standardOld | 0 (moved) | Moved to `attic/` 2026-07-19, outside the lib root; no longer live, counted, or reachable |
+| Chi-Town | 52 | CS military / burbs + fortified city (+1: `chitown_start.c`, 2026-07-21 zone start room) |
 | Splynn / Alvurron / ocean / Preserves | ~34 | Atlantis market + gargoyle city; Preserves partial |
-| New Camelot | 30 | Europe magic capital |
+| New Camelot | 31 | Europe magic capital (+1: `newcamelot_start.c`, 2026-07-21 zone start room) |
 | Tolkeen | 29 | Free city: mage quarter, siege edge, crypt |
 | Horton + wilderness ring | 27 | Small town + wilderness ring |
 | NGR Germany | 14 | Triax tech pocket |
@@ -175,6 +178,8 @@ content project, not a blocker for playtesting.
 
 ## What not to do yet
 
-- Modern FluffOS cutover (archive/) - parallel track only
+- Modern FluffOS cutover - abandoned 2026-07-12 (the `archive/` porting
+  copy was intentionally deleted, not paused; see `internal/report.md`
+  section 10). Not a live parallel track.
 - Africa/Japan/Australia before Stormshire and Tolkeen
 - Mass-generating empty room grids without NPCs, shops, or threats

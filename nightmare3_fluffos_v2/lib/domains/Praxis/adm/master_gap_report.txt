@@ -1,6 +1,14 @@
 === AETHERMUD - MASTER GAP REPORT ===
 Generated: 2026-06-22
-Last updated: 2026-07-17
+Last updated: 2026-07-21
+
+SESSION CHANGES (2026-07-21) - docs audit fixes:
+  RESOLVED: standardOld/ reset errors. The 133-room legacy NM3 tree was
+            moved 2026-07-19 to nightmare3_fluffos_v2/attic/domains/Praxis/
+            standardOld/, outside the driver's lib root, after confirming
+            zero code/config/save-file references. It is no longer loaded,
+            no longer reachable in-game, and can no longer error on reset.
+            The OPEN entry below (2026-07-17) is corrected to drop it.
 
 SESSION CHANGES (2026-07-17) - chargen/security audit fixes:
   FIXED: setter.c do_plain_rolls() reroll warning now fires BEFORE the
@@ -31,9 +39,10 @@ SESSION CHANGES (2026-07-13) - fixes + docs currency:
          snapshots from their dated sections; do not treat as current.
   NOTE:  2026-07-12 player wipe deleted all pt* playtest accounts; only
          thurtea.o survives. playtest-roster.md rosters must be recreated.
-  OPEN:  standardOld/ reset errors, events daemon destructed-callback
-         guard, coalition_grunt_armor message() error (std/armour.c:129
-         via monsters/coalition_grunt.c equip).
+  OPEN:  events daemon destructed-callback guard, coalition_grunt_armor
+         message() error (std/armour.c:129 via monsters/coalition_grunt.c
+         equip). (standardOld/ reset errors resolved 2026-07-21, see top
+         of file - the tree was moved out of the lib root 2026-07-19.)
 
 Prior update 2026-07-07 (bug-audit pass: _password/I_NOECHO, GHD armor
 size enforcement, and radio transmit all verified already working on

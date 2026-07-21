@@ -155,7 +155,7 @@ expands to it, plus a check of the command daemon's rehash list
 
 ## 3. Checked and confirmed ACTIVE (not candidates, do not move)
 
-- domains/newcamelot, tolkeen, Lazlo: live Rifts zones, reachable
+- domains/NewCamelot, tolkeen, Lazlo: live Rifts zones, reachable
   via cmds/mortal/_rift.c, daemon/rifts_start_d.c, and the NGR gate.
 - domains/demon_plane: reachable from domains/Praxis/areas/
   nexus_dimensional_tear.c (by design, "placeholder sliver").

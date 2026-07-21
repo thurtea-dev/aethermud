@@ -156,9 +156,9 @@ Camelot is listed as ~54 but has 30 actual rooms; NGR listed ~25, actual 14.
 | Praxis/areas (CS territory, market, nexus, catacombs) | ~35 | Complete |
 | Splynn + Alvurron + ocean + Preserves | ~34 | Partial (see Sprint 4) |
 | Praxis sub-areas (cemetery 8, mountains 9, orc valley 8, vehicles 10, misc 2) | 37 | Complete but some still legacy-flavored |
-| Praxis/standardOld | 133 | **Legacy NM3 rooms, not Rifts content, throwing runtime errors** |
-| Chi-Town (burbs + fortified city) | 51 | Complete per Sprint 1 |
-| New Camelot | 30 | Complete stub-plus |
+| Praxis/standardOld | 0 (moved) | **Moved 2026-07-19 to `attic/domains/Praxis/standardOld/`, outside the lib root - no longer live, no longer erroring. The 133 legacy NM3 rooms below are historical, not part of the current tree.** |
+| Chi-Town (burbs + fortified city) | 52 | Complete per Sprint 1 (+1 for `chitown_start.c`, the 2026-07-21 zone start room) |
+| New Camelot | 31 | Complete stub-plus (+1 for `newcamelot_start.c`, the 2026-07-21 zone start room) |
 | Tolkeen | 29 | Complete per Sprint 2 |
 | Horton + wilderness ring | 27 | Complete per Sprint 3 |
 | NGR Germany | 14 | Partial (plan calls for connectors) |
@@ -168,8 +168,12 @@ Camelot is listed as ~54 but has 30 actual rooms; NGR listed ~25, actual 14.
 | Puerto Angel | 7 | Stub |
 | adm / Examples / wizards | ~20 | Non-play infrastructure |
 
-Total room files: **583**, of which ~430 are playable Rifts content (excluding
-standardOld and admin/example rooms).
+Total room files at original measurement: **583** (this figure included the
+133 standardOld rooms, since gone). Current total: **~450** (583 minus the
+133 standardOld rooms, moved out of the lib root 2026-07-19), of which
+**~432 are playable Rifts content** (~430 at original measurement, plus the
+two 2026-07-21 zone start rooms `chitown_start.c`/`newcamelot_start.c`,
+excluding admin/example rooms).
 
 Against the sprint table in `zone-expansion-plan.md`:
 
@@ -181,19 +185,19 @@ Against the sprint table in `zone-expansion-plan.md`:
   This is the plan's own "biggest feel gap" item.
 - **Sprint 6 (Europe connectors + Lone Star, +40): not started.**
 
-**Next:** finish the Preserves loop to ~30 rooms, then Stormshire core. Decide
-the fate of `standardOld/` (see section 7) - it is 133 rooms of the total that
-players should probably never see.
+**Next:** finish the Preserves loop to ~30 rooms, then Stormshire core.
+`standardOld/`'s fate (see section 7) is decided and done: moved to
+`attic/` 2026-07-19, no longer part of the live tree.
 
 ## 5. Commands - ~90%
 
-- **173 mortal commands** in `cmds/mortal/` - all classic original-game verbs
+- **174 mortal commands** in `cmds/mortal/` - all classic original-game verbs
   the gap report tracked (cast, psi, breath, fly, metamorph, psisword, radio,
   store/retrieve, remoteview, assassinate, card/chat/assist, sbar, slave,
   stance, position, customize, suicide, pemote, etc.). The gap report's
   2026-07-07 pass concluded "GENUINELY MISSING, deferred: (none)" with the
   sole exception of `email` (covered by `mail`).
-- **29 admin commands** (`cmds/adm/`): makewiz, setrole, setocc, setrcc,
+- **33 admin commands** (`cmds/adm/`): makewiz, setrole, setocc, setrcc,
   grantrace, grantskills, setskill, playerwipe, force, trans, warmboot, etc.
 - **74 creator commands** across `secure/cmds/creator/` (28, including the
   room-safe `_update.c`) and `cmds/creator/` (46: qcs suite, roomcheck,
@@ -244,12 +248,13 @@ skill_request end to end.
 
 Ranked by risk:
 
-1. **`domains/Praxis/standardOld/` (133 legacy NM3 rooms) is live and
-   erroring.** `log/runtime` shows recurring `Bad argument 1 to call_other()`
-   in `reset()` for `standardOld/pit`, `spider_pit`, `app_room`, and `crypt`.
-   These are pre-Rifts fantasy rooms; players reaching them breaks theme, and
-   the errors spam the log every reset cycle. Fix the resets or unlink and
-   archive the tree.
+1. **RESOLVED 2026-07-19.** `domains/Praxis/standardOld/` (133 legacy NM3
+   rooms) was live and erroring (`log/runtime` showed recurring `Bad
+   argument 1 to call_other()` in `reset()` for `standardOld/pit`,
+   `spider_pit`, `app_room`, and `crypt`). Fixed by moving the tree to
+   `nightmare3_fluffos_v2/attic/domains/Praxis/standardOld/`, outside the
+   driver's lib root, after confirming zero code/config/save-file
+   references. It is no longer loaded, reachable, or erroring.
 2. **`/secure/daemon/events` destructed function-pointer errors** referencing
    `domains/Praxis/supply2` (`change_sky` at line 190): an object registered
    an event callback and was destructed. Needs a liveness guard in the events
@@ -288,9 +293,11 @@ Ranked by risk:
 The systems layer is in strong shape and matches the "faithful recreation"
 brief; scripted verification and the July playtest push clearly paid off.
 The honest gaps are: world scale (Sprints 4-6 unstarted or 1/3 done, no
-Stormshire), the ritual-magic tail of the spell list, the erroring legacy
-standardOld tree, the casting resource-loss ordering, and documentation that
-has fallen behind a codebase moving faster than its own trackers.
+Stormshire), the ritual-magic tail of the spell list, the casting
+resource-loss ordering, and documentation that has fallen behind a codebase
+moving faster than its own trackers. (The standardOld legacy tree, also
+listed here at original write time, was resolved 2026-07-19 - see the
+addendum below and section 7 item 1.)
 
 ---
 

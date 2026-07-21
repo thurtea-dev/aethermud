@@ -48,23 +48,6 @@ After editing `groups.cfg` or `mudos.cfg`: `./mud.sh restart`.
 
 HTTP and MCP/intermud are disabled in this build.
 
-## Modern driver trial (porting only, archived)
-
-Experimental FluffOS v2025 build for a future upgrade. Does not affect the live game.
-Paused and moved out of the project root to keep it clean; not needed for AetherMUD
-to run on the live 2.9 driver.
-
-```bash
-cd archive/
-./mud-modern.sh start    # telnet port in bin-modern/fluffos.cfg (currently 1124)
-./mud-modern.sh stop
-./mud-modern.sh status
-./mud-modern.sh log
-```
-
-Uses `archive/lib-modern/` (porting copy) and `archive/bin-modern/fluffos.cfg`. See
-`archive/driver-upgrade-notes.md` and `internal/report.md` section 10.
-
 ## Logs
 
 ```

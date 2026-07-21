@@ -8,7 +8,7 @@ against `/domains/Praxis/equipment/`.
 
 ## How gear is granted
 
-- All gear is keyed on OCC in `give_equip()`. Every one of the 62 OCCs
+- All gear is keyed on OCC in `give_equip()`. Every one of the 66 OCCs
   in `daemon/occ.c` has a case; nothing falls through by accident.
 - Races got no gear of their own before this audit. Only 19 of the 62
   races are OCC-eligible, so the other 43 (dog boy, both psi-stalkers,

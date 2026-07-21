@@ -18,7 +18,7 @@ lib/
   daemon/           Game daemons (rifts, combat, spells, psionics, quests)
   cmds/mortal/      Player commands
   cmds/adm/         Admin commands
-  domains/          World zones (Praxis hub, chitown, newcamelot, Lazlo, etc.)
+  domains/          World zones (Praxis hub, ChiTown, NewCamelot, Lazlo, etc.)
   doc/help/         Player and wizard help files (no extension)
   include/          Shared LPC headers
 ```
@@ -73,7 +73,7 @@ Do not automate login or read player credential saves.
 
 - Equipment: `lib/domains/Praxis/equipment/` (and subdirs)
 - Admin tools: `lib/domains/adm/wiz_tools/`
-- Chi-Town: `lib/domains/chitown/`
+- Chi-Town: `lib/domains/ChiTown/`
 - Help files: `lib/doc/help/user/<topic>` (no `.hlp` extension)
 
 ## Color conventions (match the original game)

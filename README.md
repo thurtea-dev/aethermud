@@ -89,13 +89,17 @@ CLAUDE.md                  Mandatory coding rules for the mudlib
 | [docs/INSTALL.md](docs/INSTALL.md) | First-time setup on a fresh Linux box |
 | [docs/RUNNING.md](docs/RUNNING.md) | Start/stop, ports, logs, reload vs reboot |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Contributor workflow and LPC rules |
+| [docs/STYLE.md](docs/STYLE.md) | Tone and voice for player-facing strings |
 | [docs/SHARING.md](docs/SHARING.md) | Local config vs tracked files |
 | [docs/PUBLISHING.md](docs/PUBLISHING.md) | Pre-publication checklist |
 | [docs/ASSESSMENT.md](docs/ASSESSMENT.md) | Measured state-of-the-project audit |
 | [docs/zone-expansion-plan.md](docs/zone-expansion-plan.md) | Zone growth priorities |
 | [docs/mercenary-groups-plan.md](docs/mercenary-groups-plan.md) | Mercenary group system design (planning only) |
 | [docs/legacy-riftsmud-reference.md](docs/legacy-riftsmud-reference.md) | Legacy RiftsMUD design memories (reference) |
-| [docs/playtest-checklist.md](docs/playtest-checklist.md) | Playtest passes and roster |
+| [docs/starting-equipment-audit.md](docs/starting-equipment-audit.md) | OCC/race starting-gear gap audit |
+| [docs/lib-cleanup-manifest.md](docs/lib-cleanup-manifest.md) | Dead-file and stale-directory tracking |
+| [docs/admin-thurtea-checklist.md](docs/admin-thurtea-checklist.md) | Admin/staff-tool regression checklist |
+| [docs/playtest-checklist-players.md](docs/playtest-checklist-players.md) / [-wizards.md](docs/playtest-checklist-wizards.md) | Playtest passes and roster |
 | [staff-handbook/](staff-handbook/index.md) | Internal staff reference |
 | [CLAUDE.md](CLAUDE.md) | Coding rules for the lib |
 

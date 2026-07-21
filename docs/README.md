@@ -23,7 +23,15 @@ tracked, maintained docs referenced from the repo-root README.md.
 - `legacy-riftsmud-reference.md` - design memories from the original
   RiftsMUD (items, Moxim rift travel, falconry pets, UI conventions,
   future feature brainstorm). Reference material, not a task list.
-- `playtest-checklist.md` / `playtest-roster.md` - playtest process and
-  who's covered what.
+- `starting-equipment-audit.md` - OCC/race starting-gear gap audit
+  against `daemon/rifts_start_d.c` and `daemon/occ.c`.
+- `lib-cleanup-manifest.md` - dead-file and stale-directory tracking for
+  the mudlib tree (what's safe to move/archive, what's still active).
+- `admin-thurtea-checklist.md` - thurtea's personal admin/staff-tool
+  regression checklist.
+- `playtest-checklist.md` - pointer file only; the actual checklists are
+  `playtest-checklist-players.md` and `playtest-checklist-wizards.md`,
+  with `playtest-roster.md` for expected-value snapshots of rebuilt
+  test characters.
 - `reference/` - bulk Rifts reference material for developers (see its
   own README.md).
