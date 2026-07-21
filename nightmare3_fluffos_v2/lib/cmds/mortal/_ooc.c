@@ -1,48 +1,33 @@
 // /cmds/mortal/_ooc.c
-// OOC: global out-of-character channel.
-// Bypasses language and location. Type "ooc off" to stop receiving.
+// OOC: out-of-character chat, room-local only (like say). Skips
+// language checks -- understood by everyone in the room regardless of
+// active language. Not a global channel; no toggle, since there is
+// nothing to opt in or out of beyond being in the room.
 
 #include <std.h>
 
 inherit DAEMON;
 
 int cmd_ooc(string str) {
-    object *all_players;
-    string msg;
-    int i;
-
     if(!str || str == "") {
-        notify_fail("Usage: ooc <message>   (or: ooc off / ooc on)\n");
+        notify_fail("Usage: ooc <message>\n");
         return 0;
     }
-    if(lower_case(str) == "off") {
-        this_player()->setenv("ooc_deaf", "1");
-        write("OOC channel disabled. Type 'ooc on' to re-enable.\n");
-        return 1;
-    }
-    if(lower_case(str) == "on") {
-        this_player()->remove_env("ooc_deaf");
-        write("OOC channel enabled.\n");
-        return 1;
-    }
-    all_players = users();
-    for(i = 0; i < sizeof(all_players); i++) {
-        if(!all_players[i]) continue;
-        if((string)all_players[i]->getenv("ooc_deaf") == "1") continue;
-        msg = sprintf("[OOC] %s: %s\n",
-            (string)this_player()->query_display_name(all_players[i]), str);
-        message("ooc", msg, all_players[i]);
-    }
+
+    write("(ooc) You say, \"" + str + "\"\n");
+    this_player()->tell_room_living(environment(this_player()),
+        this_player(), 0, " (ooc) says, \"" + str + "\"\n");
     return 1;
 }
 
 void help() {
     write(
-        "Syntax: ooc <message>\n"
-        "        ooc off    stop receiving OOC messages\n"
-        "        ooc on     resume receiving OOC messages\n\n"
-        "Sends a message to all players on the global out-of-character channel.\n"
-        "OOC bypasses language barriers and in-game location.\n\n"
+        "Syntax: ooc <message>\n\n"
+        "Speaks out-of-character to everyone in your current room, the\n"
+        "same reach as say. Unlike say, ooc skips the language system --\n"
+        "everyone in the room understands it -- and is tagged (ooc) so it\n"
+        "reads as out-of-character rather than in-fiction speech.\n\n"
+        "There is no global OOC channel; ooc is heard only in your room.\n\n"
         "See also: say, tell, shout\n"
     );
 }

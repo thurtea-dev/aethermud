@@ -92,8 +92,6 @@ int cmd_touch(string str) {
     target = 0;
     if(target_name) {
         target = present(target_name, environment(player));
-        if(!target)
-            target = find_player(target_name);
         if(!target || !living(target)) {
             write("You don't see '" + target_name + "' here.\n");
             return 1;

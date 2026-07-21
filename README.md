@@ -11,7 +11,7 @@ endorsed by Palladium Books.
 
 **A MUD** (Multi-User Dungeon) is a shared, persistent game world you play
 entirely in text, over telnet or a client like Mudlet. You type commands
-(`look`, `cast energy bolt at grunt`, `rift splynn`), the world answers in
+(`look`, `go north`, `rift splynn`), the world answers in
 prose, and other players inhabit the same rooms with you.
 
 **Rifts** is a tabletop RPG set on a post-apocalyptic Earth where a golden

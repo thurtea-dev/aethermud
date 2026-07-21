@@ -437,6 +437,21 @@ Before creating or naming any new directory, check this rule first.
   already grandfathered above, stop and pick a compliant name instead
   (e.g. `newcamelot`, not `NewCamelot` or `new_camelot`).
 
+### 20. No player chat channels of any kind
+All player-to-player communication is room-local (same reach as say),
+except the radio system, which requires a carried radio item tuned to
+a matching frequency (std/rifts_radio.c). There are no global,
+domain-wide, or otherwise bare cross-room channels for players, and no
+channel on/off toggles, because there is no channel to toggle.
+Before adding or editing any player-facing command: if it loops
+users(), or uses find_player()/tell_object() to reach a player who is
+not present() in the room, that is a bug, not a feature. Convert it to
+room-local scope (see cmds/mortal/_say.c, _ooc.c) or route it through
+a carried radio item instead. This applies even to system
+notifications (invites, requests), not just open chat -- if a command
+reaches a player outside the room without a radio, it needs a decision
+before it ships, not an assumption that it's fine.
+
 ## Rifts-Specific Architecture
 
 ### Race/OCC system

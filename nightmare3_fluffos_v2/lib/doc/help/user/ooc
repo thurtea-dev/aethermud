@@ -1,28 +1,25 @@
-OOC (Out-Of-Character) CHANNEL
+OOC (OUT-OF-CHARACTER SPEECH)
 
 Syntax: ooc <message>
-        ooc off
-        ooc on
 
-The OOC channel is a global out-of-character communication channel.
-Messages sent via OOC are heard by all players on the MUD regardless of
-location or language.  It is explicitly for player-to-player communication
-outside the game's fiction.
+Speaks out-of-character to everyone in your current room -- the same
+reach as say. Unlike say, ooc skips the language system entirely, so
+everyone in the room understands it regardless of active language, and
+your message is tagged (ooc) so it reads as out-of-character rather
+than in-fiction speech.
 
 Use OOC for:
   - Questions about game mechanics
   - Asking for help finding something
-  - Casual conversation between players
+  - Casual conversation with people in your room
   - Reporting bugs or issues to staff
 
 Do NOT use OOC for:
   - In-character roleplay (use 'say', 'tell', or 'shout' instead)
   - Harassment or abuse
 
-TOGGLE
-  ooc off      stops you from receiving OOC messages (you go deaf to the channel)
-  ooc on       re-enables OOC reception
-
-You can still SEND on OOC while deaf; you just will not receive others' replies.
+There is no global OOC channel. OOC is heard only by others physically
+in your room. To reach players elsewhere, use tell (private,
+one-to-one) or a carried radio tuned to a shared frequency.
 
 See also: say, tell, shout, radio

@@ -14,7 +14,6 @@ int add_member(string str);
 int sub(string str);
 int leader(string str);
 int list();
-int party_line(string str);
 void help();
 
 int cmd_party(string str) {
@@ -34,7 +33,6 @@ int cmd_party(string str) {
             case "remove": return sub(extra); break;
             case "leader": return leader(extra); break;
             case "list": return list(); break;
-            case "line": return party_line(extra); break;
             default: help(); return 1; break;
         }
     }
@@ -225,7 +223,6 @@ void help() {
         "        <party remove [player]>\n"+
         "        <party leave>\n"+
         "        <party list>\n"+
-        "        <party line [message]>\n"+
         "        <party leader [player]>\n\n"+
         "This command accesses the various party enabling functions.\n"+
         "The person who forms any party is automatically the leader of\n"+
@@ -237,20 +234,9 @@ void help() {
 	"on the individual's level with respect to the rest of the party.\n"+
 	"Once you have been invited to join the party, you must type\n"+
  "<party join [name]> (where name is the name of the party).\n"
- "See also: follow, kill\n"
+ "There is no party-wide chat line. To talk with members who are not\n"
+ "in your room, use tell or a carried radio tuned to a shared\n"
+ "frequency.\n"
+ "See also: follow, kill, radio, tell\n"
   );
-}
-
-int party_line(string str) {
-    string party, pl_name;
-
-    party = (string)this_player()->query_party();
-    if(!party) {
-        notify_fail("You are not a member of a party.\n");
-        return 0;
-    }
-    if(!(pl_name = (string)this_player()->query_CapName()))
-      pl_name = capitalize((string)this_player()->query_name());
-    PARTY_OB->notify_party(party, pl_name+" <"+party+">: "+str);
-    return 1;
 }

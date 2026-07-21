@@ -182,13 +182,9 @@ int cmd_trade(string str) {
             write("You are already in a trade. Type 'trade cancel' first.\n");
             return 1;
         }
-        partner = find_player(partner_name);
-        if(!partner || !objectp(partner) || !interactive(partner)) {
-            write("That player is not here.\n");
-            return 1;
-        }
-        if(environment(partner) != environment(this_player())) {
-            write("That player is not in the room.\n");
+        partner = present(partner_name, environment(this_player()));
+        if(!partner || !userp(partner)) {
+            write("They aren't here.\n");
             return 1;
         }
         if(__trades[partner_name]) {
@@ -370,6 +366,12 @@ int cmd_trade(string str) {
 
             pob    = find_player(pname);
             ppob   = find_player(partner_name);
+            if(!pob || !ppob || environment(pob) != environment(ppob)) {
+                if(pob)  tell_object(pob,  "Trade cancelled: you are no longer in the same room.\n");
+                if(ppob) tell_object(ppob, "Trade cancelled: you are no longer in the same room.\n");
+                do_cancel(pname, partner_name, 0);
+                return 1;
+            }
             a_items   = (mixed *)my_data["items"];
             b_items   = (mixed *)partner_data["items"];
             a_credits = (int)my_data["credits"];
