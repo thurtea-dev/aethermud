@@ -40,6 +40,7 @@
    meant to circulate. */
 
 #include <std.h>
+#include <move.h>
 
 inherit ARMOUR;
 
