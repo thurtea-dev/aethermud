@@ -32,6 +32,10 @@ int begin_menu(object player) {
         write("Only coding wizards can review the apprenticeship queue.\n");
         return 1;
     }
+    if(!has_wiz_tool(player, "staff_of_creation")) {
+        write("You need the staff of creation.\n");
+        return 1;
+    }
     pending_action[player] = "";
     pending_id[player] = "";
     show_review_menu();

@@ -174,7 +174,10 @@ int cmd_build(string str) {
     string rest;
 
     if(!worn_by_me()) return 0;
-    if(!admin_wizp(this_player())) return 0;
+    if(!admin_wizp(this_player())) {
+        write("This tool only works for admins.\n");
+        return 1;
+    }
     if(!str || !sizeof(str))
         return (int)"/cmds/creator/_qcs"->qcs_dispatch("", "");
     verb = "";
@@ -210,7 +213,10 @@ int cmd_clone_ob(string str) {
     int placed;
 
     if(!worn_by_me()) return 0;
-    if(!admin_wizp(this_player())) return 0;
+    if(!admin_wizp(this_player())) {
+        write("This tool only works for admins.\n");
+        return 1;
+    }
     if(!str || !sizeof(str)) {
         notify_fail("Clone what?\n");
         return 0;
@@ -247,7 +253,10 @@ int cmd_purge_ob(string str) {
     object ob;
 
     if(!worn_by_me()) return 0;
-    if(!admin_wizp(this_player())) return 0;
+    if(!admin_wizp(this_player())) {
+        write("This tool only works for admins.\n");
+        return 1;
+    }
     if(!str || !sizeof(str)) {
         notify_fail("Purge what?\n");
         return 0;
