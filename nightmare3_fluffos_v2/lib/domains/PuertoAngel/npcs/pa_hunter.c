@@ -7,7 +7,9 @@
 #include <std.h>
 #include <daemons.h>
 
-inherit "/std/rifts_npc";
+#define EQ_PATH "/domains/PuertoAngel/equipment/"
+
+inherit "/std/rifts_vendor";
 
 void create() {
     ::create();
@@ -35,6 +37,17 @@ void create() {
     set_alignment(200);
     set_body_type("human");
     set_property("position_str", "sits at a corner table, watching the room.");
+
+    set_shop_items(([
+        "silver cross"  : ({ EQ_PATH+"silver_cross.c",     250, "a heavy silver cross" }),
+        "cross"         : ({ EQ_PATH+"silver_cross.c",     250, "a heavy silver cross" }),
+        "wooden stake"  : ({ EQ_PATH+"wooden_stake.c",       25, "a sharpened wooden stake" }),
+        "stake"         : ({ EQ_PATH+"wooden_stake.c",       25, "a sharpened wooden stake" }),
+        "silver dagger" : ({ EQ_PATH+"silver_dagger.c",     350, "a silver dagger" }),
+        "dagger"        : ({ EQ_PATH+"silver_dagger.c",     350, "a silver dagger" }),
+        "holy water"    : ({ EQ_PATH+"holy_water_vial.c",    60, "a vial of holy water" }),
+        "vial"          : ({ EQ_PATH+"holy_water_vial.c",    60, "a vial of holy water" })
+    ]));
 
     add_response("hello",
         "Elena says: 'Sit down. If you are here it means you came through "
