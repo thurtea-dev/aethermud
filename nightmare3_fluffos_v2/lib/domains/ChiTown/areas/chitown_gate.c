@@ -59,7 +59,10 @@ void init() {
     ::init();
     if(!this_player() || !(int)this_player()->is_player()) return;
     if(WANTED_D->is_cs_enemy(this_player())) {
-        call_out("spawn_guard_attack", 1);
+        /* find_call_out guard matches hovertrain.c / forest_lake_far_shore.c
+           so repeated commands in the same tick don't stack the alarm. */
+        if(find_call_out("spawn_guard_attack") == -1)
+            call_out("spawn_guard_attack", 1);
     } else {
         write("A guard glances at you. \"Move along, citizen.\"\n");
         if((string)this_player()->getenv("cs_gate_visited") != ctime(time())[0..9]) {
@@ -74,12 +77,27 @@ void init() {
 void spawn_guard_attack() {
     object guard1;
     object guard2;
+    object *inv;
+    int i;
 
     if(!environment(this_player())) return;
+    /* Skip if a previous alarm's guards are still here (tagged
+       "gate_alarm_charging"), so a second trigger while they're still
+       engaged does not pile on more guards or repeat the alarm line. */
+    inv = all_inventory(this_object());
+    for(i = 0; i < sizeof(inv); i++) {
+        if(inv[i] && (int)inv[i]->query_property("gate_alarm_charging")) return;
+    }
     guard1 = clone_object("/domains/ChiTown/npcs/dead_boy_guard");
     guard2 = clone_object("/domains/ChiTown/npcs/dead_boy_guard");
-    if(guard1) guard1->move(this_object());
-    if(guard2) guard2->move(this_object());
+    if(guard1) {
+        guard1->set_property("gate_alarm_charging", 1);
+        guard1->move(this_object());
+    }
+    if(guard2) {
+        guard2->set_property("gate_alarm_charging", 1);
+        guard2->move(this_object());
+    }
     tell_room(this_object(),
         "An alarm sounds. Two Dead Boy guards charge toward you!\n", ({}));
     if(guard1 && this_player()) guard1->kill_ob(this_player(), 0);

@@ -100,6 +100,13 @@ int is_cs_enemy(object player) {
     string faction;
 
     if(!player || !objectp(player)) return 0;
+    /* Staff exemption: matches the invis-gated creatorp() precedent in
+       std/monster.c's default aggro path, but applies regardless of
+       visibility -- promotion never changes race/OCC (see std/user.c
+       set_position()), so relying on the "wizard" race entry below to
+       protect staff does not work for a promoted character who kept
+       their mortal race. */
+    if(creatorp(player)) return 0;
     name = lower_case((string)player->query_name());
 
     if(query_infamy(name) >= 100) return 1;
