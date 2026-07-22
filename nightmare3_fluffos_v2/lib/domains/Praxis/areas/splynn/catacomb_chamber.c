@@ -3,6 +3,7 @@
 
 #include <std.h>
 #include <rooms.h>
+#include <daemons.h>
 
 #define EQ_PATH "/domains/Praxis/equipment/"
 
@@ -49,7 +50,11 @@ void create() {
 }
 
 void reset() {
+    int taken;
+
     ::reset();
-    if(!present("katana", this_object()))
+    taken = 0;
+    catch(taken = (int)UNIQUE_ITEMS_D->query_taken("ghostly_katana"));
+    if(!taken && !present("katana", this_object()))
         clone_object(EQ_PATH+"ghostly_katana.c")->move(this_object());
 }

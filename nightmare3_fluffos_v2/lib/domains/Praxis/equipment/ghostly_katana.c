@@ -4,6 +4,8 @@
    Cannot be seen by undead enemies. */
 
 #include <std.h>
+#include <daemons.h>
+#include <move.h>
 
 inherit WEAPON;
 
@@ -31,4 +33,15 @@ void create() {
     set_property("invisible_to_undead", 1);
     set_property("magical", 1);
     set_value(0);
+}
+
+int move(mixed dest) {
+    int ret;
+
+    ret = ::move(dest);
+    if(ret == MOVE_OK && environment(this_object()) &&
+       userp(environment(this_object())) &&
+       !creatorp(environment(this_object())))
+        catch(UNIQUE_ITEMS_D->mark_taken("ghostly_katana"));
+    return ret;
 }

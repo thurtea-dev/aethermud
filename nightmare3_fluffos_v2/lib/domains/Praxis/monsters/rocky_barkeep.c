@@ -4,9 +4,13 @@
 
 #include <std.h>
 #include <daemons.h>
+#include <clock.h>
 
 #define DRINK_PRICE 50
 #define DRINK_HEAL 5
+/* Matches flame_hilt.c's cooldown convention: defined identically at
+   each armor_talisman spawn site since neither inherits the item file. */
+#define ARMOR_TALISMAN_COOLDOWN (3 * DAY)
 
 inherit "/std/rifts_npc";
 
@@ -224,7 +228,16 @@ int receive_object(object ob, object giver) {
                 "Rocky takes the salvage and tucks it away. \"That's " +
                 count + " of 3. Keep going.\"\n");
         } else {
+            int on_cooldown;
             __salvage_count[giver_name] = 0;
+            on_cooldown = 0;
+            catch(on_cooldown = (int)UNIQUE_ITEMS_D->query_taken_within(
+                "armor_talisman", ARMOR_TALISMAN_COOLDOWN));
+            if(on_cooldown) {
+                tell_object(giver,
+                    "Rocky shrugs. \"Already gave one of those out. Not making two.\"\n");
+                return 1;
+            }
             tell_object(giver,
                 "Rocky nods approvingly. \"Good work. A deal's a deal.\"\n");
             tell_room(environment(this_object()),

@@ -2,6 +2,8 @@
    Dragonfire lance: treasure of the Camelot Order. MDC weapon. */
 
 #include <std.h>
+#include <daemons.h>
+#include <move.h>
 
 inherit "/std/weapon";
 
@@ -25,4 +27,15 @@ void create() {
     set_property("damage_sides", 6);
     set_property("damage_bonus", 0);
     set_property("damage_string", "4d6 MD (dragonfire)");
+}
+
+int move(mixed dest) {
+    int ret;
+
+    ret = ::move(dest);
+    if(ret == MOVE_OK && environment(this_object()) &&
+       userp(environment(this_object())) &&
+       !creatorp(environment(this_object())))
+        catch(UNIQUE_ITEMS_D->mark_taken("dragonfire_lance"));
+    return ret;
 }

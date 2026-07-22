@@ -4,6 +4,7 @@
 
 #include <std.h>
 #include <daemons.h>
+#include <move.h>
 
 inherit OBJECT;
 
@@ -27,6 +28,17 @@ void create() {
 
 int query_talisman_mdc() { return __talisman_mdc; }
 void set_talisman_mdc(int v) { __talisman_mdc = (v < 0) ? 0 : v; }
+
+int move(mixed dest) {
+    int ret;
+
+    ret = ::move(dest);
+    if(ret == MOVE_OK && environment(this_object()) &&
+       userp(environment(this_object())) &&
+       !creatorp(environment(this_object())))
+        catch(UNIQUE_ITEMS_D->mark_taken("armor_talisman"));
+    return ret;
+}
 
 int absorb_damage(object bearer, int dmg) {
     string race;

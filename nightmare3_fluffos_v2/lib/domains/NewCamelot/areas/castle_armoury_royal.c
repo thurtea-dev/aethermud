@@ -3,6 +3,7 @@
 
 #include <std.h>
 #include <rooms.h>
+#include <daemons.h>
 
 inherit ROOM;
 
@@ -32,9 +33,13 @@ void create() {
 }
 
 void reset() {
+    int taken;
+
     ::reset();
+    taken = 0;
+    catch(taken = (int)UNIQUE_ITEMS_D->query_taken("dragonfire_lance"));
     if(!present("quartermaster knight", this_object()))
         new("/domains/NewCamelot/npcs/quartermaster_knight")->move(this_object());
-    if(!present("dragonfire lance", this_object()))
+    if(!taken && !present("dragonfire lance", this_object()))
         new("/domains/NewCamelot/equipment/dragonfire_lance")->move(this_object());
 }

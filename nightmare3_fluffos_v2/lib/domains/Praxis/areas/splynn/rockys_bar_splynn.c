@@ -4,9 +4,14 @@
 
 #include <std.h>
 #include <rooms.h>
+#include <daemons.h>
+#include <clock.h>
 
 #define MONSTER_PATH "/domains/Praxis/monsters/"
 #define EQ_PATH "/domains/Praxis/equipment/"
+/* Matches flame_hilt.c's cooldown convention: defined identically at
+   each armor_talisman spawn site since neither inherits the item file. */
+#define ARMOR_TALISMAN_COOLDOWN (3 * DAY)
 
 inherit ROOM;
 
@@ -46,9 +51,14 @@ void create() {
 }
 
 void reset() {
+    int on_cooldown;
+
     ::reset();
     if(!present("rocky", this_object()))
         clone_object(MONSTER_PATH+"rocky_barkeep.c")->move(this_object());
-    if(!present("armor talisman", this_object()))
+    on_cooldown = 0;
+    catch(on_cooldown = (int)UNIQUE_ITEMS_D->query_taken_within(
+        "armor_talisman", ARMOR_TALISMAN_COOLDOWN));
+    if(!on_cooldown && !present("armor talisman", this_object()))
         clone_object(EQ_PATH+"armor_talisman.c")->move(this_object());
 }
