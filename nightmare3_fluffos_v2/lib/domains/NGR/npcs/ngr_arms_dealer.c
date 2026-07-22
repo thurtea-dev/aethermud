@@ -80,8 +80,8 @@ void create() {
         "e-clip"        : ({ EQ_PATH+"e_clip.c",         320, "standard e-clip (30 shots)" }),
         "eclip"         : ({ EQ_PATH+"e_clip.c",         320, "standard e-clip (30 shots)" }),
         "clip"          : ({ EQ_PATH+"e_clip.c",         320, "standard e-clip (30 shots)" }),
-        "long e-clip"   : ({ EQ_PATH+"e_clip_long.c", 520, "long e-clip (60 shots)" }),
-        "long clip"     : ({ EQ_PATH+"e_clip_long.c", 520, "long e-clip (60 shots)" }),
+        "long e-clip"   : ({ EQ_PATH+"ammo/e_clip_long.c", 520, "long e-clip (60 shots)" }),
+        "long clip"     : ({ EQ_PATH+"ammo/e_clip_long.c", 520, "long e-clip (60 shots)" }),
         "first aid kit" : ({ EQ_PATH+"first_aid_kit.c",  220, "first aid kit" }),
         "medkit"        : ({ EQ_PATH+"first_aid_kit.c",  220, "first aid kit" })
     ]));
