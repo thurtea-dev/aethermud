@@ -1,72 +1,28 @@
-Before doing anything else, read CLAUDE.md and confirm you are following the rules there.
+# Tomorrow Prompt Rewrites
 
-I need you to figure out why /home/thurtea/aethermud/nightmare3_fluffos_v2/lib/domains/wizards/thurtea/workroom.c keeps coming back on the SSH: vineyard machine after repo updates.
+Use the following three prompts as the active versions of the investigation request. Each one begins with the CLAUDE.md check and keeps the original constraints intact.
 
-This is not a local Fedora-only question. I know the path, and I know it is showing up on vineyard as an untracked file in VS Code Source Control even after I push/pull the repo. I need a real root-cause investigation, not a guess.
+## Prompt 1
 
-Investigate and report:
+Before doing anything else read CLAUDE.md and confirm you are following the rules there.
 
-Provenance of the file. Find the exact code path, script, hook, or editor-side action that creates or recreates domains/wizards/thurtea/workroom.c on vineyard. If the repo code does not create it, say so clearly and identify the most likely non-repo source.
+I need you to figure out why the file nightmare3_fluffos_v2/lib/domains/wizards/thurtea/workroom.c keeps coming back on the SSH vineyard machine after repo updates. This is not a local Fedora only question. I know the path and that it shows up as an untracked file in VS Code Source Control even after push and pull. Perform a real root cause investigation.
 
-Why git pull doesn’t remove it. Explain whether the file is untracked, ignored, generated locally, or copied from somewhere outside git. Confirm whether it exists in any commit, branch, stash, or generated artifact path.
+Investigate and report: provenance of the file. Find the exact code path script hook or editor side action that creates or recreates domains/wizards/thurtea/workroom.c on vineyard. If the repo code does not create it say so clearly and identify the most likely non repo source. Why git pull does not remove it. Explain whether the file is untracked ignored generated locally or copied from somewhere outside git. Confirm whether it exists in any commit branch stash or generated artifact path. What is triggering regeneration. Determine whether this happens on login reboot deployment VS Code Remote a shell hook an MUD command or an external sync task. What changed recently. Trace whether the recent wizard home realms work the Phase 1 NewCamelot ChiTown rename or any docs tooling change could have caused the old path to be recreated instead of removed. Whether it is safe to delete. Tell me plainly if the file is dead and can be removed or if something still depends on it and it should be migrated instead. Next actionable step. After the investigation tell me the next thing we actually need to work on in priority order based on the current repo state. Do not fix anything yet. Do not ask me to SSH anywhere. Do not give me manual commands to run unless you have identified the exact root cause and the command is the direct cleanup step. I want the report first then the next prompt if code changes are needed.
 
-What is triggering regeneration. Determine whether this happens on login, reboot, deployment, VS Code Remote, a shell hook, an MUD command, or an external sync task.
+## Prompt 2
 
-What changed recently. Trace whether the recent wizard-home / /realms work, the Phase 1 NewCamelot/ChiTown rename, or any docs/tooling change could have caused the old path to be recreated instead of removed.
+Before doing anything else read CLAUDE.md and confirm you are following the rules there.
 
-Whether it is safe to delete. Tell me plainly if the file is dead and can be removed, or if something still depends on it and it should be migrated instead.
+Do a full audit of the current state of the mudlib under nightmare3_fluffos_v2/lib/. The goal is a prioritized work list of what is broken incomplete or rough enough to block or frustrate a player during a playtest session. Start by specifically investigating why nightmare3_fluffos_v2/lib/domains/wizards/thurtea/workroom.c keeps appearing on the SSH vineyard checkout as an untracked file even after repo updates. Determine whether anything in the mudlib login flow wiz tools sponsor promotion flow startup scripts or deployment flow recreates it. If repo code does not recreate it say that plainly and identify the most likely non repo source. Confirm why git pull does not remove it. State whether it is safe to delete and whether it is a dead legacy domains wizards artifact now that the real workroom is under realms thurtea. Then continue the broader audit in this order: Known broken start with rocky_barkeep.c:233 undefined cmd_buy confirmed syntax error. Economy gaps e-clip recharge and Splynn rifle/e-clip shop. Audit other vendor gaps across Splynn Chi-Town Tolkeen Lazlo NGR New Camelot Puerto Angel for weapons armor ammo and consumables. Respawn reset correctness check Camelot flame hilt and other unique quest items. Chargen completeness setter.c skip-OCC paths and rifts_occ_flags. Help and docs check doc/help/user for stale files such as sirname. Skill combat gaps legacy heal skills. Anything else with TODO broken include undefined reference or obvious play problems. For each finding report file severity one-line description rough effort. Do not fix anything. End with a prioritized top 10 list and a separate short section for the next best task. Use the RiftsMUD Memories section as background reference only.
 
-Next actionable step. After the investigation, tell me the next thing we actually need to work on, in priority order, based on the current repo state.
+## Prompt 3
 
-Do not fix anything yet. Do not ask me to SSH anywhere. Do not give me manual commands to run unless you’ve identified the exact root cause and the command is the direct cleanup step. I want the report first, then the next prompt if code changes are needed.
+Before doing anything else read CLAUDE.md and confirm you are following the rules there.
 
-Before doing anything else, read CLAUDE.md and confirm you are following the rules there.
+I need a focused investigation on the combat logs from domains/Praxis/areas/monument_square and the Chi Town gate encounter that followed. The log excerpt shows Thurtea in monument_square Moxim hawk present moving to chitown_start then chitown_gate CS sergeant and Dead Boy guards spawning attacking You are attacked ambush detects MDC armor bounces and the fight devolves into repeated misses peace call. Investigate and report only do not fix yet. Identify the exact code path that produced the CS sergeant guard behavior at chitown_gate in this encounter. Confirm whether this was intended for a normal gate entry a rep infamy gate or a bug caused by the recent NewCamelot Chi Town work. Explain the repeated spawn stacking behavior if multiple guards sergeants are being created or re created during the same encounter. Check reset logic call_outs present guards and any ambush or alarm triggers. Check whether the hawk arrival is relevant or just a side effect of teleport move_player timing. Determine if the combat is actually broken or just the expected outcome of a high MDC low attack level 1 character hitting Coalition armor with ineffective damage. Look for any visible bug in the gate room that would frustrate a player during normal playtest especially if the ambush logic can chain duplicate or fail to clear properly. Use the log excerpt as the primary clue and trace the actual room NPC code in nightmare3_fluffos_v2/lib to explain what happened. Give me a clear findings report with what is intended what is accidental what is broken or risky and whether this needs a fix before playtest. Do not change anything yet. Also address the web client connection issue on aethermud.com port 1122 or websocket 1129 and whether gitignore is contributing to deployment problems.
 
-Do a full audit of the current state of the mudlib under nightmare3_fluffos_v2/lib/. The goal is a prioritized work list: what is broken, incomplete, or rough enough to block or frustrate a player during a playtest session.
-
-Start by specifically investigating why nightmare3_fluffos_v2/lib/domains/wizards/thurtea/workroom.c keeps appearing on the SSH:vineyard checkout as an untracked file even after repo updates. I already know the path and that it is happening on vineyard. I want the actual cause, not a guess:
-
-Determine whether anything in the mudlib, login flow, wiz tools, sponsor/promotion flow, startup scripts, or deployment flow recreates it.
-
-If repo code does not recreate it, say that plainly and identify the most likely non-repo source.
-
-Confirm why git pull does not remove it.
-
-State whether it is safe to delete, and whether it is a dead legacy /domains/wizards/ artifact now that the real workroom is under /realms/thurtea/.
-
-Then continue the broader audit in this order:
-
-Known broken — start with rocky_barkeep.c:233 (undefined cmd_buy, confirmed syntax error, oldest broken player-facing content). Confirm the error, identify the fix pattern, and note it.
-
-Economy gaps — e-clip recharge and Splynn rifle/e-clip shop are confirmed missing. Audit what other vendor gaps exist across the six rift-destination zones (Splynn, Chi-Town, Tolkeen, Lazlo, NGR, New Camelot, Puerto Angel) — weapons, armor, ammo, consumables. Flag anything a new character would need but can't buy.
-
-Respawn / reset correctness — Camelot flame hilt currently respawns on driver reset (~30–60 min) instead of once per in-game day (~6h40m real time). Check all unique/quest items for similar respawn issues.
-
-Chargen completeness — setter.c's skip-OCC paths don't set rifts_occ_flags. Confirm scope and whether it causes any visible player-facing symptom.
-
-Help and docs in-game — check doc/help/user/ for stale files describing removed systems (for example the sirname help file describing the removed sirname system). List all files that need rewriting or removal.
-
-Skill/combat gaps — legacy heal skills (_mheal, _mend, _heal, _rot) have dead limb-targeting branches. Note which still have a live player-facing path and which are entirely inert.
-
-Anything else — any file you open that has a clear TODO, broken #include, undefined reference, dead code path, or obvious content bug that would cause a visible problem during play.
-
-For each finding, report:
-
-file
-
-severity (blocks play / degrades play / cosmetic)
-
-one-line description
-
-rough effort (trivial / small / medium / large)
-
-Do not fix anything in this pass. Report only.
-
-End with:
-
-a prioritized top 10 list of what to tackle first
-
-a separate short section: “Next best task for the very next coding pass”
+## Background reference
 
 Use the below info as background reference only, not as an active task list:
 
