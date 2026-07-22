@@ -431,3 +431,46 @@ ability to get an O.C.C.
   armors that make you invisible, net guns, etc.
 - Nothing further mapped yet; add to this section as more of Splynn's
   layout is recalled.
+Before doing anything else, read CLAUDE.md and confirm you are following the rules there.
+
+I need a focused investigation on the combat logs from domains/Praxis/areas/monument_square and the Chi-Town gate encounter that followed.
+
+The log excerpt shows:
+
+Thurtea in monument_square
+
+Moxim / hawk present
+
+moving to chitown_start, then chitown_gate
+
+CS sergeant and Dead Boy guards spawning/attacking
+
+You are attacked!, ambush detects, MDC armor bounces, and the fight devolves into repeated misses / peace call
+
+Investigate and report only, don’t fix yet:
+
+Identify the exact code path that produced the CS sergeant / guard behavior at chitown_gate in this encounter.
+
+Confirm whether this was intended for a normal gate entry, a rep/infamy gate, or a bug caused by the recent NewCamelot/Chi-Town work.
+
+Explain the repeated spawn/stacking behavior if multiple guards/sergeants are being created or re-created during the same encounter. Check reset logic, call_outs, present() guards, and any ambush or alarm triggers.
+
+Check whether the hawk arrival is relevant or just a side effect of teleport/move_player timing.
+
+Determine if the combat is actually broken or just the expected outcome of a high-MDC, low-attack level 1 character hitting Coalition armor with ineffective damage.
+
+Look for any visible bug in the gate room that would frustrate a player during normal playtest, especially if the ambush logic can chain, duplicate, or fail to clear properly.
+
+Use the log excerpt as the primary clue, and trace the actual room/NPC code in nightmare3_fluffos_v2/lib/ to explain what happened.
+
+Give me a clear findings report with:
+
+what is intended,
+
+what is accidental,
+
+what is broken or risky,
+
+and whether this needs a fix before playtest.
+
+Do not change anything yet.
