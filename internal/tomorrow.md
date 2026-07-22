@@ -1,26 +1,76 @@
 Before doing anything else, read CLAUDE.md and confirm you are following the rules there.
 
-Do a full audit of the current state of the mudlib under nightmare3_fluffos_v2/lib/. The goal is a prioritized work list — what is broken, incomplete, or rough enough to block or frustrate a player during a playtest session.
+I need you to figure out why /home/thurtea/aethermud/nightmare3_fluffos_v2/lib/domains/wizards/thurtea/workroom.c keeps coming back on the SSH: vineyard machine after repo updates.
 
-Audit these areas in order:
+This is not a local Fedora-only question. I know the path, and I know it is showing up on vineyard as an untracked file in VS Code Source Control even after I push/pull the repo. I need a real root-cause investigation, not a guess.
+
+Investigate and report:
+
+Provenance of the file. Find the exact code path, script, hook, or editor-side action that creates or recreates domains/wizards/thurtea/workroom.c on vineyard. If the repo code does not create it, say so clearly and identify the most likely non-repo source.
+
+Why git pull doesn’t remove it. Explain whether the file is untracked, ignored, generated locally, or copied from somewhere outside git. Confirm whether it exists in any commit, branch, stash, or generated artifact path.
+
+What is triggering regeneration. Determine whether this happens on login, reboot, deployment, VS Code Remote, a shell hook, an MUD command, or an external sync task.
+
+What changed recently. Trace whether the recent wizard-home / /realms work, the Phase 1 NewCamelot/ChiTown rename, or any docs/tooling change could have caused the old path to be recreated instead of removed.
+
+Whether it is safe to delete. Tell me plainly if the file is dead and can be removed, or if something still depends on it and it should be migrated instead.
+
+Next actionable step. After the investigation, tell me the next thing we actually need to work on, in priority order, based on the current repo state.
+
+Do not fix anything yet. Do not ask me to SSH anywhere. Do not give me manual commands to run unless you’ve identified the exact root cause and the command is the direct cleanup step. I want the report first, then the next prompt if code changes are needed.
+
+Before doing anything else, read CLAUDE.md and confirm you are following the rules there.
+
+Do a full audit of the current state of the mudlib under nightmare3_fluffos_v2/lib/. The goal is a prioritized work list: what is broken, incomplete, or rough enough to block or frustrate a player during a playtest session.
+
+Start by specifically investigating why nightmare3_fluffos_v2/lib/domains/wizards/thurtea/workroom.c keeps appearing on the SSH:vineyard checkout as an untracked file even after repo updates. I already know the path and that it is happening on vineyard. I want the actual cause, not a guess:
+
+Determine whether anything in the mudlib, login flow, wiz tools, sponsor/promotion flow, startup scripts, or deployment flow recreates it.
+
+If repo code does not recreate it, say that plainly and identify the most likely non-repo source.
+
+Confirm why git pull does not remove it.
+
+State whether it is safe to delete, and whether it is a dead legacy /domains/wizards/ artifact now that the real workroom is under /realms/thurtea/.
+
+Then continue the broader audit in this order:
 
 Known broken — start with rocky_barkeep.c:233 (undefined cmd_buy, confirmed syntax error, oldest broken player-facing content). Confirm the error, identify the fix pattern, and note it.
 
 Economy gaps — e-clip recharge and Splynn rifle/e-clip shop are confirmed missing. Audit what other vendor gaps exist across the six rift-destination zones (Splynn, Chi-Town, Tolkeen, Lazlo, NGR, New Camelot, Puerto Angel) — weapons, armor, ammo, consumables. Flag anything a new character would need but can't buy.
 
-Respawn / reset correctness — Camelot flame hilt currently respawns on driver reset (~30-60 min) instead of once per in-game day (~6h40m real time). Check all unique/quest items for similar respawn issues.
+Respawn / reset correctness — Camelot flame hilt currently respawns on driver reset (~30–60 min) instead of once per in-game day (~6h40m real time). Check all unique/quest items for similar respawn issues.
 
 Chargen completeness — setter.c's skip-OCC paths don't set rifts_occ_flags. Confirm scope and whether it causes any visible player-facing symptom.
 
-Help and docs in-game — check doc/help/user/ for any stale files that describe removed systems (e.g. the sirname help file describing the removed sirname system). List all that need rewriting or removal.
+Help and docs in-game — check doc/help/user/ for stale files describing removed systems (for example the sirname help file describing the removed sirname system). List all files that need rewriting or removal.
 
-Skill/combat gaps — legacy heal skills (_mheal, _mend, _heal, _rot) have dead limb-targeting branches. Note which skills still have a live player-facing path and which are entirely inert.
+Skill/combat gaps — legacy heal skills (_mheal, _mend, _heal, _rot) have dead limb-targeting branches. Note which still have a live player-facing path and which are entirely inert.
 
-Anything else — any file you open that has a clear TODO, broken #include, undefined reference, or dead code path that would cause a visible bug during play.
+Anything else — any file you open that has a clear TODO, broken #include, undefined reference, dead code path, or obvious content bug that would cause a visible problem during play.
 
-For each finding: file, severity (blocks play / degrades play / cosmetic), one-line description, and rough effort (trivial / small / medium / large). Do not fix anything — report only. End with a prioritized top-10 list of what to tackle first.
+For each finding, report:
 
-Use the below info as reference: # RiftsMUD Memories and Brainstormed Ideas
+file
+
+severity (blocks play / degrades play / cosmetic)
+
+one-line description
+
+rough effort (trivial / small / medium / large)
+
+Do not fix anything in this pass. Report only.
+
+End with:
+
+a prioritized top 10 list of what to tackle first
+
+a separate short section: “Next best task for the very next coding pass”
+
+Use the below info as background reference only, not as an active task list:
+
+# RiftsMUD Memories and Brainstormed Ideas
 
 **This is reference material only. Nothing in this file is an active
 task.** It is a record of raw player/staff memories about the original
