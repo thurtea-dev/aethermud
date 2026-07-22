@@ -16,27 +16,26 @@ inherit DAEMON;
 
 int cmd_peace() {
     object *inv, who;
-    string Class;
-    int faith, i, agg, level;
-  
+    string flags;
+    int isp, i, agg, level;
+
     who = this_player();
-    if(creatorp(who)) Class = "cleric";
-    else Class = who->query_class();
-    if(Class != "mage" && Class != "monk" && Class != "kataan" && Class != "cleric")
-        return notify_fail("You mumble in confusion.\n");
-  if((string)who->query_class() == "kataan") {
-    notify_fail("It is not in your nature to desire peace.\n");
-    return 0;
-  }
-    if (!creatorp(who) && (int)who->query_mp() < 10) {
-	notify_fail("Too low on magic power.\n");
+    if(!creatorp(who)) {
+        flags = (string)who->getenv("rifts_occ_flags");
+        if(!stringp(flags)) flags = "";
+        if(strsrch(lower_case(flags), "psychic") == -1)
+            return notify_fail("Your training doesn't include psychic pacification.\n");
+    }
+    isp = (int)who->query_stats("ISP");
+    if (!creatorp(who) && isp < 10) {
+	notify_fail("Not enough ISP to project a calming field.\n");
 	return 0;
     }
   if(!creatorp(who) && !alignment_ok(who)) {
     notify_fail("You have betrayed the source of your power.\n");
     return 0;
   }
-  faith = (int)who->query_skill("faith");
+  if (!creatorp(who)) who->set_stats("ISP", isp - 10);
   if (!creatorp(who)) who->add_alignment(5);
   inv = all_inventory(environment(who));
   write("You call for peace.");
@@ -48,9 +47,7 @@ int cmd_peace() {
     if(inv[i] == who) continue;
     agg = 10;
     level = (int)inv[i]->query_level();
-    if(!creatorp(who) && (random(agg) + level) > random(faith)) continue;
-    if (!creatorp(who)) who->add_mp(-level);
-    if (!creatorp(who)) who->add_skill_points("faith", 5);
+    if(!creatorp(who) && (random(agg) + level) > random(isp)) continue;
     inv[i]->cease_all_attacks();
   }
   return 1;
@@ -58,7 +55,8 @@ int cmd_peace() {
 
 void help() {
   write("Syntax: <peace>\n"
-        "This prayer attempts to bring full peace to all beings in "
-	"an area. The chance of the spell working and its cost "
-	"vary.\n");
+        "Projects a psychic calming field over the area, urging nearby "
+	"combatants to break off their attacks. Costs 10 ISP. Each "
+	"opponent's chance to respond depends on your ISP reserve "
+	"against their level.\n");
 }
