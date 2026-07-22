@@ -216,11 +216,13 @@ do_restart() {
 
 do_status() {
     local pid
+    local conn_count
     pid=$(get_pid)
     if [ -n "$pid" ]; then
         echo "[mud] RUNNING - PID $pid, port $PORT"
         echo "[mud] Uptime: $(ps -o etime= -p "$pid" 2>/dev/null | tr -d ' ')"
-        echo "[mud] Connections: $(ss -tnp 2>/dev/null | grep ":$PORT" | grep -c ESTAB || echo "unknown")"
+        conn_count=$(ss -tnp 2>/dev/null | grep ":$PORT" | grep -c ESTAB)
+        echo "[mud] Connections: ${conn_count:-unknown}"
         verify_ports "$pid"
     else
         echo "[mud] STOPPED"
