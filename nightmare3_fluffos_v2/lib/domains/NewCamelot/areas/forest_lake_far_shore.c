@@ -7,6 +7,11 @@
 #include <daemons.h>
 #include <clock.h>
 
+/* "A few days" per the design brief: 3 game days. Defined identically
+   at each flame_hilt spawn site (hydra_lair.c, collapsed_building.c,
+   chitown_hydra_treasure.c) since none of them inherit flame_hilt.c. */
+#define FLAME_HILT_COOLDOWN (3 * DAY)
+
 inherit ROOM;
 
 private int __hilt_seeded;
@@ -121,8 +126,19 @@ int hilt_present() {
 
 void spawn_flame_hilt() {
     object hilt;
+    int on_cooldown;
 
     if(hilt_present()) {
+        __hilt_seeded = 1;
+        return;
+    }
+    /* World-wide dedup: skip if a hilt (from here or any other spawn
+       site) was picked up too recently. reset()'s own daily retry
+       will check again later, so this just quietly waits. */
+    on_cooldown = 0;
+    catch(on_cooldown = (int)UNIQUE_ITEMS_D->query_taken_within(
+        "flame_hilt", FLAME_HILT_COOLDOWN));
+    if(on_cooldown) {
         __hilt_seeded = 1;
         return;
     }

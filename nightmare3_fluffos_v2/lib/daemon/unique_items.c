@@ -26,6 +26,23 @@ int query_taken(string key) {
     return __taken[key] ? 1 : 0;
 }
 
+/* Timed variant for renewable uniques (at most one copy of an item
+   loose in the world at a time, but it should come back after a
+   cooldown rather than being gone forever like the Sword of Atlantis).
+   mark_taken() already stores time() as the map value; query_taken()
+   just never looked at it. This reads it back and compares elapsed
+   time instead of pure existence. Additive only -- query_taken() and
+   mark_taken() are unchanged, so existing permanent-lock callers are
+   unaffected. */
+int query_taken_within(string key, int seconds) {
+    int stamp;
+
+    if(!key || !stringp(key) || !strlen(key)) return 0;
+    stamp = __taken[key];
+    if(!stamp) return 0;
+    return (time() - stamp) < seconds;
+}
+
 void mark_taken(string key) {
     if(!key || !stringp(key) || !strlen(key)) return;
     if(__taken[key]) return;

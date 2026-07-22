@@ -4,6 +4,12 @@
 
 #include <std.h>
 #include <rooms.h>
+#include <daemons.h>
+#include <clock.h>
+
+/* "A few days" per the design brief: 3 game days. Defined identically
+   at each flame_hilt spawn site -- see forest_lake_far_shore.c. */
+#define FLAME_HILT_COOLDOWN (3 * DAY)
 
 inherit ROOM;
 
@@ -50,6 +56,7 @@ void reset() {
     object *inv;
     object chest;
     int i, vcount;
+    int on_cooldown;
 
     inv = all_inventory(this_object());
     i = sizeof(inv);
@@ -68,14 +75,24 @@ void reset() {
         new("/domains/Praxis/equipment/salvage_item")->move(this_object());
         new("/domains/Praxis/equipment/salvage_item")->move(this_object());
     }
-    if(!present("chest", this_object())) {
+    chest = present("chest", this_object());
+    if(!chest) {
         chest = clone_object("/domains/Praxis/equipment/locked_chest");
-        if(chest) {
-            chest->set_chest_contents(
-                ({ "/domains/Praxis/equipment/flame_hilt" })
-            );
-            chest->move(this_object());
-        }
+        if(chest) chest->move(this_object());
+    }
+    /* locked_chest.c only clones its content list at pick-lock time, not
+       at spawn time (see cmd_pick()), so re-set the content list on every
+       reset() rather than once at chest creation -- otherwise a chest that
+       spawned during a cooldown would keep an empty content list forever
+       even after the cooldown clears. Only touch it while still locked:
+       once picked, __content_files is already consumed/cleared and
+       re-stocking a looted chest would defeat the dedup entirely. */
+    if(chest && (int)chest->query_locked()) {
+        on_cooldown = 0;
+        catch(on_cooldown = (int)UNIQUE_ITEMS_D->query_taken_within(
+            "flame_hilt", FLAME_HILT_COOLDOWN));
+        chest->set_chest_contents(on_cooldown ? ({}) :
+            ({ "/domains/Praxis/equipment/flame_hilt" }));
     }
 }
 

@@ -4,8 +4,13 @@
 
 #include <std.h>
 #include <rooms.h>
+#include <daemons.h>
+#include <clock.h>
 
 #define EQ_PATH "/domains/Praxis/equipment/"
+/* "A few days" per the design brief: 3 game days. Defined identically
+   at each flame_hilt spawn site -- see forest_lake_far_shore.c. */
+#define FLAME_HILT_COOLDOWN (3 * DAY)
 
 inherit ROOM;
 
@@ -68,11 +73,19 @@ void init() {
 
 void reset() {
     object hilt;
+    int on_cooldown;
     ::reset();
     if(!present("hydra", this_object()))
         clone_object("/domains/Praxis/monsters/hydra")->move(this_object());
     if(!present("hilt", this_object()) && !random(3)) {
-        hilt = clone_object(EQ_PATH + "flame_hilt");
-        if(hilt) hilt->move(this_object());
+        /* World-wide dedup: another spawn site's hilt may already be
+           loose. See forest_lake_far_shore.c for the pattern. */
+        on_cooldown = 0;
+        catch(on_cooldown = (int)UNIQUE_ITEMS_D->query_taken_within(
+            "flame_hilt", FLAME_HILT_COOLDOWN));
+        if(!on_cooldown) {
+            hilt = clone_object(EQ_PATH + "flame_hilt");
+            if(hilt) hilt->move(this_object());
+        }
     }
 }

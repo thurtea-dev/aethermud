@@ -1,8 +1,19 @@
 /* /domains/Praxis/equipment/flame_hilt.c
-   Metal hilt. Charge with PPE to manifest a blade of pure flame for 5 minutes. */
+   Metal hilt. Charge with PPE to manifest a blade of pure flame for 5 minutes.
+
+   Renewable unique: at most one hilt loose in the world at a time, but
+   unlike the Sword of Atlantis it comes back after a cooldown rather
+   than being gone forever. UNIQUE_ITEMS_D's query_taken_within("flame_hilt",
+   FLAME_HILT_COOLDOWN) is checked by each spawn site before cloning a
+   new one; mark_taken() below (mirroring sword_of_atlantis.c's move()
+   override) starts that cooldown on first mortal pickup. Cooldown
+   length: see FLAME_HILT_COOLDOWN, defined identically at each spawn
+   site (hydra_lair.c, collapsed_building.c, forest_lake_far_shore.c,
+   chitown_hydra_treasure.c) since none of them inherit this file. */
 
 #include <std.h>
 #include <daemons.h>
+#include <move.h>
 
 inherit WEAPON;
 
@@ -32,6 +43,19 @@ void create() {
 }
 
 int query_charged() { return __charged; }
+
+/* Start the world cooldown on first mortal pickup. Creators handling
+   it for tests do not burn the flag (matches sword_of_atlantis.c). */
+int move(mixed dest) {
+    int ret;
+
+    ret = ::move(dest);
+    if(ret == MOVE_OK && environment(this_object()) &&
+       userp(environment(this_object())) &&
+       !creatorp(environment(this_object())))
+        catch(UNIQUE_ITEMS_D->mark_taken("flame_hilt"));
+    return ret;
+}
 
 int cmd_charge(string str) {
     int ppe;
