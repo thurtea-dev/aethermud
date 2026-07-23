@@ -416,34 +416,44 @@ as a valid empty group by design - do not "fix" that fallback by
 requiring a trailing space in groups.cfg lines again (fixed
 2026-07-15).
 
-### 19. Directory naming: domains/ top-level is CamelCase; everywhere else lowercase
+### 19. Directory and file naming under domains/ (updated 2026-07-23)
 
-Top-level directories directly under `domains/` name a narrative game
-zone and must be CamelCase: `Horton`, `Lazlo`, `LoneStar`, `Praxis`,
-`PuertoAngel`, `ChiTown`, `NewCamelot`, `Tolkeen`, `DemonPlane`,
-`Wizards`. No underscores in a domain name; use CamelCase
-word-splitting instead.
+Top-level directories directly under `lib/domains/` name a narrative
+game zone. They may keep their established canonical name, whatever
+style that is:
 
-Exceptions: `domains/adm/` stays lowercase (admin tooling, not a
-narrative zone). `domains/NGR/` stays all-caps (an intentional
-acronym, not a CamelCase word).
+- CamelCase proper-name domains: `Horton`, `Lazlo`, `LoneStar`,
+  `Praxis`, `PuertoAngel`, `ChiTown`, `NewCamelot`.
+- Lowercase/snake_case legacy domains: `adm` (admin tooling, not a
+  narrative zone), `demon_plane`, `tolkeen`, `wizards`.
+- `NGR` stays all-caps (an intentional acronym, not a CamelCase word).
 
-Everywhere else in the project - `std/`, `cmds/`, `docs/`, or any
-directory not directly under `domains/` - the old rule still applies:
-all-lowercase, no underscores unless the exact word already has a
-grandfathered underscore precedent elsewhere in the tree. Check which
-rule applies based on where the new directory lives before naming it.
+Do not invent new mixed naming styles arbitrarily (no
+`Demon_Plane`, no `newCamelot`, no `LONEstar`).
 
-If you are about to `mkdir` a new top-level directory under `domains/`
-whose name is not CamelCase, or a new directory anywhere else with an
-uppercase letter or a new underscore, stop and pick a compliant name
-instead.
+For a NEW top-level domain directory, prefer matching the canonical
+style of the setting/proper noun if it names a place: CamelCase is
+appropriate for a multi-word proper name (`NewCamelot` is the model
+to follow). A single lowercase word or an existing acronym follows
+its own natural casing instead of being forced into CamelCase.
 
-Status (updated 2026-07-21): `chitown` -> `ChiTown` and `newcamelot` ->
-`NewCamelot` are done. `tolkeen`, `wizards`, and `demon_plane` are
-still on disk under their old lowercase/underscored names, pending
-their own dedicated rename pass (see the reference audit before
-running one - `wizards` touches `/std/user.c` and needs a full reboot).
+File names beneath `domains/` (and elsewhere in the project - `std/`,
+`cmds/`, `docs/`, etc.) use lowercase_with_underscores:
+`bandit_camp.c`, `burb_chop_shop.c`. Avoid introducing CamelCase file
+names.
+
+When touching existing content for an unrelated reason, do not rename
+legacy paths just to make them style-consistent unless the user has
+explicitly asked for that rename. If a naming inconsistency turns up
+while working on something else, flag it in the session report
+instead of renaming it - renames need explicit approval before they
+happen (see the reference audit before running one; `wizards`, for
+example, touches `/std/user.c` and needs a full reboot).
+
+Status: `chitown` -> `ChiTown` and `newcamelot` -> `NewCamelot` were
+renamed 2026-07-21. `tolkeen`, `wizards`, and `demon_plane` are
+grandfathered under their existing lowercase/underscored names per
+this policy and are not pending a rename.
 
 ### 20. No player chat channels of any kind
 All player-to-player communication is room-local (same reach as say),
