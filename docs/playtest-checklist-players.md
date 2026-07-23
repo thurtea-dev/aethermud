@@ -1,4 +1,4 @@
-# Playtest checklist: PLAYER round - 2026-07-19 (updated 2026-07-21)
+# Playtest checklist: PLAYER round - 2026-07-19 (updated 2026-07-23)
 
 Every test in this file is run as a normal mortal character. Nothing
 here needs creatorp() or any admin command; where a step needs an
@@ -145,6 +145,38 @@ Ocean access (added 2026-07-19):
         later reset the shelf stays empty; the sword never respawns
         for anyone once first taken.
 
+Other unique-item locks (added 2026-07-22):
+
+13. [ ] Ghostly katana: in the Catacomb Side Chamber (Splynn
+        catacombs), take the katana from the pedestal. Expected: on
+        every later reset the pedestal stays empty; the katana never
+        respawns for anyone once first taken.
+14. [ ] Dragonfire lance: in Camelot Castle - Royal Armory (New
+        Camelot), take the lance from the iron stand. Expected: on
+        every later reset the stand stays empty; the lance never
+        respawns for anyone once first taken.
+15. [ ] Armor talisman (Rocky's Bar, Splynn): give Rocky 3 items with
+        "salvage" in the name. Expected: on the 3rd, Rocky hands over
+        an armor talisman. Immediately repeat with 3 more salvage
+        items. Expected: Rocky refuses ("Already gave one of those
+        out. Not making two.") - this one is a 3-day cooldown, not a
+        permanent lock like the katana and lance above.
+
+Vendor fixes (added 2026-07-22):
+
+16. [ ] At Lone Star's Supply Depot, `buy long e-clip` (500 credits)
+        and `buy long clip`. Expected: both succeed and hand over a
+        long e-clip (60 shots). Before the fix, both words resolved
+        to a broken item path and the vendor said "I'm out of that
+        right now" even though `list` showed it for sale.
+17. [ ] At the NGR Triax Equipment Depot, repeat with `buy long
+        e-clip` / `buy long clip` (520 credits). Expected: same
+        success as above.
+18. [ ] At La Cantina in Puerto Angel, `list` at Elena. Expected: she
+        now sells silver cross, wooden stake, silver dagger, and holy
+        water vial (she was a plain non-vendor NPC before). `buy holy
+        water` (60 credits) and confirm you receive a vial.
+
 ## 5. Combat, armor pools, and cosmetic wear (player gear)
 
 Use ordinary shops (Praxis outfitter/arms dealers, or the Chi-Town
@@ -182,6 +214,19 @@ e.g. a Ley Line Walker and a Mystic.
 5. [ ] Repeat the no-target check with a targeted psionic. Expected:
        no ISP spent on the failed attempt.
 
+Peace skill (ISP-gated, added 2026-07-22):
+
+6. [ ] As the psychic (Mystic), with at least 10 ISP and hostile
+       NPCs attacking you, type `peace`. Expected: "You call for
+       peace," 10 ISP spent, and each attacker's chance to break off
+       depends on your ISP against their level.
+7. [ ] As the caster (Ley Line Walker - "magic" flag only, no
+       "psychic" flag), type `peace`. Expected: "Your training
+       doesn't include psychic pacification." No ISP spent.
+8. [ ] As the psychic with fewer than 10 ISP, type `peace`. Expected:
+       "Not enough ISP to project a calming field." No ISP spent, no
+       attackers affected.
+
 ## 7. General command sweep
 
 1. [ ] `score` - all pools shown, no zero attributes, alignment and
@@ -195,6 +240,11 @@ e.g. a Ley Line Walker and a Mystic.
        correctly; `help index` shows the flat list.
 7. [ ] `smell` and `listen` in a room that sets them - text appears
        ONLY on explicit command, never in the room description.
+8. [ ] `ooc <message>` in a room with another player present.
+       Expected: you see "You [OOC]: <message>" and they see
+       "<Name> [OOC]: <message>", the [OOC] tag in red and the
+       message in white (changed 2026-07-22 from the old plain
+       "(ooc)" tag).
 
 ## 8. Tone spot-check (player-visible strings)
 

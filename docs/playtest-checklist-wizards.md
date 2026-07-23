@@ -1,4 +1,4 @@
-# Playtest checklist: WIZARD round - 2026-07-19 (updated 2026-07-21)
+# Playtest checklist: WIZARD round - 2026-07-19 (updated 2026-07-23)
 
 Every test in this file needs staff rank (creatorp or archp) or acts
 on staff-only content. Run as thurtea (or a throwaway wizard account)
@@ -205,6 +205,19 @@ re-wearing after every relog.
        Praxis square, and
        `eval find_player("TESTCHAR")->query_primary_start()` now
        shows the square, not the workroom.
+
+Unique-item lock check (added 2026-07-22):
+
+3. [ ] After a mortal has taken the ghostly katana, dragonfire
+       lance, or armor talisman (player checklist section 4),
+       confirm the lock: `eval UNIQUE_ITEMS_D->query_taken(
+       "ghostly_katana")` (swap the key for `dragonfire_lance` /
+       `armor_talisman`) returns 1.
+4. [ ] `eval UNIQUE_ITEMS_D->clear_taken("ghostly_katana")` as an
+       archwizard. Expected: returns cleanly; the Catacomb Side
+       Chamber's next reset respawns the katana. Use this to reset
+       state between playtest passes instead of editing the save
+       file directly.
 
 ## 6. Tone spot-check (staff-side strings)
 
