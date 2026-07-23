@@ -579,6 +579,24 @@ Never allow player-accessible commands to:
 
 - Help files have no extension: use `/doc/help/user/score`, not `score.hlp`.
 - Before creating a new help entry, check existing files in the same directory and match that format.
+- Multi-word topic filenames use lowercase_with_underscores (`armor_of_ithan`,
+  `holistic_medicine`), matching the project's general file-naming convention
+  and the order `find_user_help_file()` in `daemon/help.c` already tries
+  (literal name, then the underscored slug, before falling back to full
+  squash matching). This is a consistency convention only, not a functional
+  requirement: `squash_topic()` strips every separator before matching, so
+  `help holistic medicine`, `help holistic_medicine`, and `help
+  holisticmedicine` all resolve identically regardless of which separator
+  the on-disk filename uses.
+- Two small legacy exceptions, not the pattern to follow: a few files
+  hyphenate because that's the correct English spelling of the term itself
+  (`half-elf`, `half-orc`, `rahu-man`, `getting-started`, `multi-playing`) -
+  keep hyphenating a naturally-hyphenated word if you touch one of these;
+  and eight older psionic/skill-system files (`psisword`, `objectread`,
+  `readaura`, `senseevil`, `mindblock`, `pskills`, `sskills`,
+  `skillrequest`) squash two words together with no separator at all.
+  Both groups are grandfathered, not renamed without explicit approval -
+  same policy as the domain-directory naming rule.
 
 ## Position System
 

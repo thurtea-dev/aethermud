@@ -705,7 +705,20 @@ string *query_skills_by_category(string cat) {
         "find contraband", "scuba", "wrestling",
         "botany", "anthropology", "archaeology",
         "cook", "sew", "preserve food",
-        "skin and prepare animal hides", "spelunking"
+        "skin and prepare animal hides", "spelunking",
+
+        /* Array-drift fix (2026-07-23): these 12 have a valid switch
+           case above but were never added here, making them invisible
+           to query_skills_by_category() -- and, via daemon/help.c's
+           is_skills_topic(), to the "help skills" category listing --
+           even though query_rifts_skill() resolves them fine directly.
+           One representative alias per skill, matching this array's
+           existing convention (see "wp vibroblade" above, which is
+           likewise the sole array entry for a 3-alias switch block). */
+        "wp chain", "wp paired weapons", "wp two ancient", "wp two modern",
+        "pilot ground vehicles", "pilot two vehicles of choice",
+        "holistic medicine", "chemistry", "falconry", "safe-cracking",
+        "body building", "lore spirits"
     });
     result = ({});
     cat    = lower_case(cat);

@@ -1,0 +1,15 @@
+TRAP DETECTION: Spotting mundane traps before they trigger
+
+Category: Rogue
+Base skill: 35% (+5%/level, cap 98%)
+
+Noticing tripwires, pressure plates, and other mechanical traps set
+by people, not magic or military ordnance, before they go off. A
+rogue's situational awareness skill, distinct from the more technical
+Trap and Mine Detection used by soldiers and demolitions experts.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, trap and mine detection, detect ambush

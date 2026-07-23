@@ -1,0 +1,15 @@
+APPRAISE GOODS: Estimating an item's fair value
+
+Category: Trade
+Base skill: 30% (+5%/level, cap 98%)
+
+Looking over an item and judging what it is actually worth, rather
+than what a seller claims it is worth. Covers general goods rather
+than a specialist's narrow expertise (see Recognize Gems and
+Recognize Weapon Quality for those).
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, barter, recognize gems, recognize weapon quality
