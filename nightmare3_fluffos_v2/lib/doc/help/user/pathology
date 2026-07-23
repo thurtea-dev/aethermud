@@ -1,0 +1,15 @@
+PATHOLOGY: Study of disease and cause of death
+
+Category: Medical
+Base skill: 30% (+5%/level, cap 98%)
+
+The study of disease and injury well enough to diagnose illness,
+perform an autopsy, and determine a cause of death. Common training
+for medical examiners, coroners, and Body Fixers who need to know
+exactly what killed a patient, or what is still trying to.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, biology, medical doctor

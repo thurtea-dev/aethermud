@@ -316,13 +316,34 @@ static int is_alignment_topic(string topic) {
 
 static int is_skills_topic(string topic) {
     string norm;
+    string *cats;
+    string *names;
+    int i;
+    int j;
 
     norm = lower_case(topic);
-    return member_array(norm, ({
+    if(member_array(norm, ({
         "skills", "psionics", "bionics", "abilities", "improve", "spells",
         "cast", "languages", "language", "pskills", "sskills", "magic",
         "deception"
-    })) != -1;
+    })) != -1) return 1;
+
+    cats = (string *)RIFTS_SKILLS_D->query_skill_categories();
+    for(i = 0; i < sizeof(cats); i++) {
+        names = (string *)RIFTS_SKILLS_D->query_skills_by_category(cats[i]);
+        for(j = 0; j < sizeof(names); j++)
+            if(name_matches(topic, names[j])) return 1;
+    }
+
+    names = (string *)RIFTS_SPELLS_D->query_all_spells();
+    for(i = 0; i < sizeof(names); i++)
+        if(name_matches(topic, names[i])) return 1;
+
+    names = (string *)RIFTS_PSIONICS_D->query_all_psionics();
+    for(i = 0; i < sizeof(names); i++)
+        if(name_matches(topic, names[i])) return 1;
+
+    return 0;
 }
 
 static int is_combat_topic(string topic) {

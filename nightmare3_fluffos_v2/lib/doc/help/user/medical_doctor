@@ -1,0 +1,19 @@
+MEDICAL DOCTOR: Advanced trauma care and surgery
+
+Category: Medical
+Base skill: 55% (+5%/level, cap 98%)
+
+Palladium's top-tier medical skill: surgery, advanced trauma care,
+diagnosis, and treatment beyond what First Aid or Paramedic training
+covers. Body Fixers, Cyber-Docs, and other dedicated medical OCCs
+build their whole profession around it.
+
+Commands: limbs <target> / replace <target> <limb>
+  Knowing any level of Medical Doctor is enough to use both commands;
+  neither rolls your percentage. "limbs" senses a target's overall
+  condition and any narratively severed limbs. "replace" regenerates
+  one severed limb. Limb severing in AetherMUD is narrative only: it
+  never changes stats or damage, so replace restores appearance and
+  story state, not a combat effect.
+
+SEE ALSO: skills, first aid, paramedic, body fixer, cyber-doc
