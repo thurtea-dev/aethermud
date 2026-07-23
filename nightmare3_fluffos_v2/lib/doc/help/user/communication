@@ -1,43 +1,54 @@
 COMMUNICATION: How to talk to other players and staff
 
-IN-ROOM
-  say <message>       Speak to everyone in the room.
-  whisper <who> <msg> Private in-room message.
-  emote <action>      Perform an action (visible to room).
-  converse            Auto-say mode; everything you type is spoken.
-                      Type ** to exit converse mode.
+IN-ROOM (everyone in your current room hears these)
+  say <message>        Speak, subject to the language system.
+  ooc <message>        Speak out-of-character. Skips the language
+                        system -- everyone in the room understands --
+                        and is tagged (ooc). Room-local only: there
+                        is no global OOC channel anywhere in the game.
+  shout <message>      Speak loudly. Skips the language system.
+                        5-second cooldown between shouts.
+  whisper <who> <msg>  Private in-room message; only the named player
+                        hears it, everyone else sees that you
+                        whispered to someone.
+  emote <action>       Perform an action (visible to room).
+  converse             Auto-say mode; everything you type is spoken.
+                        Type ** to exit converse mode.
 
-PLAYER-TO-PLAYER
-  telepathy <who> <msg>  Psionic mind contact. Both players must be
-                         online. Requires introduction first (see:
-                         introduce). Costs ISP.
-  radio <message>        Broadcast on your radio frequency (see:
-                         radio). Other players tuned to the same
-                         frequency hear you.
+CROSS-ROOM
+  radio <message>        Broadcast on your radio's tuned frequency
+                          (see: radio). Requires a carried radio
+                          item. Only other radios on the same
+                          frequency hear you.
+  telepathy <who> <msg>  Psionic mind contact. Requires the telepathy
+                          psionic power, ISP, and both players
+                          online. Requires introduction first (see:
+                          introduce). Not available to characters
+                          without psionic ability.
 
 STAFF CONTACT
   tell <staff> <msg>  Send a private message to online wizard staff.
-                      Mortals cannot tell other mortals; use telepathy
-                      after introducing yourself.
+                      Mortals cannot tell other mortals; use
+                      telepathy after introducing yourself instead.
   reply <msg>         Reply to the last tell you received.
 
-GLOBAL
-  ooc <message>       Out-of-character channel, visible to all online.
+INTRODUCTION SYSTEM
+  introduce <player>  Introduce yourself to a player in the same
+                      room. Both parties learn each other's names.
+                      Required before telepathy can target another
+                      player.
 
 WIZARD STAFF ONLY
-  newbie, cre, admin, gossip, and legacy guild lines (fighter, mage,
-  etc.) are restricted to wizard staff. Mortals do not have these
-  lines. See: channels, wiz.
-
-INTRODUCTION SYSTEM
-  introduce <player>  Introduce yourself to a player in the same room.
-                      Both parties learn each other's names. Required
-                      before telepathy or remote psionics can target
-                      another player.
+  wiz <message>  Broadcast to every online wizard regardless of
+                 room. Restricted to staff; mortals cannot use it.
 
 NOTES
-  shout and yell are not available to players.
+  There is no global OOC channel and no other player-facing chat
+  channels of any kind (no newbie/guild/gossip lines, no channel
+  toggles). Radio and telepathy are the only two ways to reach
+  someone who is not in your room.
+  shout is available to players; yell is not (staff only).
   Type 'help <command>' for details on any specific command.
 
-SEE ALSO: say, whisper, telepathy, radio, tell, ooc, introduce,
+SEE ALSO: say, whisper, shout, telepathy, radio, tell, ooc, introduce,
 channels

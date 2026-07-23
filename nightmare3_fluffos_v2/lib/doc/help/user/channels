@@ -1,35 +1,37 @@
 CHANNELS: Communication lines for staff and players
 
-The following chat lines exist for wizard staff only. Mortals do not
-receive any of these lines. Player communication uses in-game radios,
-telepathy (after introduction), say/whisper in a room, and tell to
-staff.
+AetherMUD has no player-facing chat channels. All player-to-player
+communication is room-local (the same reach as say), with two
+exceptions: the radio system and psionic telepathy, both below.
+There is no global OOC channel, no newbie/guild/gossip lines, and no
+channel toggles, because there is no channel to toggle.
 
-WIZARD STAFF LINES
-  newbie          fighter
-  kataan          cleric
-  mage            monk
-  rogue           hm
-  cre             admin (arch wizards only)
-  gossip          council (council members)
+ROOM-LOCAL (everyone in your current room)
+  say <message>          speak, subject to the language system
+  ooc <message>          speak out-of-character, skips language checks
+  shout <message>        speak loudly, skips language checks,
+                          5-second cooldown
+  whisper <who> <msg>    private, only the named player hears it
+  emote <action>         perform an action
 
-  The command to use each line is the name of the line. You may also
-  send emotes over the chat lines by appending "emote" onto the command
-  name. Example:
+CROSS-ROOM (the only two ways to reach someone not in your room)
+  radio <message>        broadcast on your radio's tuned frequency;
+                          only other radios on the same frequency
+                          hear it (see: radio)
+  telepathy <who> <msg>  psionic power; requires the telepathy
+                          psionic, ISP, and a prior introduction to
+                          the target (see: introduce)
 
-    newbieemote smiles at everyone.
+STAFF CONTACT
+  tell <staff> <msg>     contact online wizard staff; mortals cannot
+                          tell other mortals this way
+  reply <msg>            reply to the last tell you received
 
-  Would show to people:
+WIZARD STAFF ONLY (genuinely restricted, not channels mortals are
+missing out on)
+  wiz <message>           broadcasts to every online wizard,
+                          regardless of room
+  yell <message>          the command exists but reports "does not
+                          exist" to non-staff
 
-    <newbie> Descartes smiles at everyone.
-
-  To see who all is online on a line, use the command "list". Example:
-  "list newbie".
-
-PLAYER CHANNELS
-  radio <message>         in-game radio on your frequency
-  telepathy <who> <msg>   psionic contact (requires introduction)
-  tell <staff> <msg>      contact online wizard staff
-  ooc <message>           global out-of-character channel
-
-SEE ALSO: communication, radio, telepathy, introduce, wiz, ooc
+SEE ALSO: communication, radio, telepathy, introduce, tell
