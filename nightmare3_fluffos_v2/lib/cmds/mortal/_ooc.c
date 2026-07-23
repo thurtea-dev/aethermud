@@ -14,9 +14,10 @@ int cmd_ooc(string str) {
         return 0;
     }
 
-    write("(ooc) You say, \"" + str + "\"\n");
+    write("You %^RED%^[OOC]%^RESET%^: %^WHITE%^" + str + "%^RESET%^\n");
     this_player()->tell_room_living(environment(this_player()),
-        this_player(), 0, " (ooc) says, \"" + str + "\"\n");
+        this_player(), 0,
+        " %^RED%^[OOC]%^RESET%^: %^WHITE%^" + str + "%^RESET%^\n");
     return 1;
 }
 
@@ -25,7 +26,7 @@ void help() {
         "Syntax: ooc <message>\n\n"
         "Speaks out-of-character to everyone in your current room, the\n"
         "same reach as say. Unlike say, ooc skips the language system --\n"
-        "everyone in the room understands it -- and is tagged (ooc) so it\n"
+        "everyone in the room understands it -- and is tagged [OOC] so it\n"
         "reads as out-of-character rather than in-fiction speech.\n\n"
         "There is no global OOC channel; ooc is heard only in your room.\n\n"
         "See also: say, tell, shout\n"
