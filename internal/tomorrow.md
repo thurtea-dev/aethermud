@@ -19,33 +19,3 @@ Investigate first:
 
 Show me the full picture before proposing anything. No
 changes until I say go.
-
-
-
-SEND FIRST 
-
-
-
-Read CLAUDE.md and confirm you are following all rules there
-before doing anything else.
-
-The VPS is confirmed up to date and the driver restarted
-clean, but ooc still outputs the old format:
-  (ooc) You say, "test"
-
-The file on disk is correct. Something else is producing
-this output. Investigate:
-
-1. Is there a second ooc command defined anywhere — in
-   secure/cmds/, domains/adm/, or anywhere else in the
-   command search path that would take priority over
-   cmds/mortal/_ooc.c?
-2. Does the driver's command search path check any directory
-   before cmds/mortal/ that could shadow this file?
-3. Is there a master object, login object, or user.c hook
-   that intercepts the ooc command before it reaches the
-   normal command dispatch?
-
-Read the driver config or master.c to confirm the full
-command search order. Report exactly what you find before
-touching anything.
