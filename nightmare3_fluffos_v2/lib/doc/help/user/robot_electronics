@@ -1,0 +1,15 @@
+ROBOT ELECTRONICS: Repairing a robot's electronic systems
+
+Category: Electrical
+Base skill: 30% (+5%/level, cap 98%)
+
+Understanding and repairing the electronic systems inside a robot or
+robot vehicle: sensor arrays, targeting computers, control systems.
+Covers the electronics, not the mechanical frame - see Robot
+Mechanics for that side of robot upkeep.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, electrical engineer, robot mechanics, pilot robot

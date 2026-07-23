@@ -1,0 +1,14 @@
+COMPUTER REPAIR: Diagnosing and fixing computer hardware
+
+Category: Electrical
+Base skill: 35% (+5%/level, cap 98%)
+
+Diagnosing and repairing broken computer hardware. Distinct from
+Computer Operation (using a computer) and Computer Programming
+(writing software) - this is fixing the machine itself.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, electrical engineer, computer operation, hacking

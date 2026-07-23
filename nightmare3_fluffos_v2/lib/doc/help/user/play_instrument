@@ -1,0 +1,14 @@
+PLAY INSTRUMENT: Playing a musical instrument
+
+Category: Creative
+Base skill: 30% (+5%/level, cap 98%)
+
+Skilled performance on a musical instrument of the character's
+choice, chosen when the skill is learned. A second instrument
+requires learning the skill again separately.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, singing, art
