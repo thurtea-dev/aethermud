@@ -15,10 +15,8 @@ these are standalone pages, not LPC.
 - `classes.html`, `races.html`, `world.html` - reference pages for Classes,
   races, and the game world.
 - `play.html` - how to connect and play.
-- `webclient.html` - in-browser terminal client (WebSocket bridge on
-  port 1129; HTTPS pages need wss, which is a known infra gap).
 - `roadmap.html` - public-facing development roadmap.
-- `css/`, `js/` - static assets for these pages.
+- `css/` - shared stylesheet. `js/` is reserved but currently unused.
 
 See HOWTO.md for editing/publishing these pages (including how to create
 staff Basic Auth users for the gated guides), and WHY.md for why the

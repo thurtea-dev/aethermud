@@ -60,13 +60,13 @@
     <tr><td><code>snoopers</code></td><td>List who is snooping whom.</td></tr>
     <tr><td><code>cache</code> / <code>fdinfo</code> / <code>opcprof</code> / <code>dumpallobj</code></td><td>Driver cache stats, file descriptor status, opcode profiling, dump loaded objects.</td></tr>
     <tr><td><code>commands</code></td><td>Regenerate the compiled command list from the creator, admin, and mortal command directories.</td></tr>
+    <tr><td><code>cref</code></td><td>Clone a referenced object (companion to the ref toolkit under <code>secure/cmds/creator</code>).</td></tr>
   </table>
 
   <h3>Game state</h3>
   <table>
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>end</code></td><td>Start the Armageddon (scheduled shutdown) sequence.</td></tr>
-    <tr><td><code>shutdown</code></td><td>Immediate shutdown. Requires a logged reason.</td></tr>
     <tr><td><code>warmboot</code></td><td>Bulk in-place reload of daemons, commands, and domains. Notifies online admins.</td></tr>
     <tr><td><code>bench</code></td><td>Run driver micro-benchmarks.</td></tr>
   </table>
@@ -96,6 +96,8 @@
     <tr><td><code>lawlog</code></td><td>Open or append a law-matters log for a player.</td></tr>
     <tr><td><code>currency</code></td><td>Balance sheet of currency a player, or everyone, is holding.</td></tr>
     <tr><td><code>setreboot</code></td><td>Set the automatic reboot interval.</td></tr>
+    <tr><td><code>shutdown</code></td><td>Immediate shutdown. Requires a logged reason.</td></tr>
+    <tr><td><code>unbanish</code> / <code>whobanished</code></td><td>Remove a name from the banished list, or list (or check) banished names.</td></tr>
     <tr><td><code>xmote</code></td><td>Promote or demote a player's level or position directly. Logged.</td></tr>
   </table>
 
@@ -151,7 +153,7 @@
     <tr><td><code>uptime</code></td><td>Report how long AetherMUD has been up.</td></tr>
     <tr><td><code>wizheal</code></td><td>Fully heal a living creature.</td></tr>
     <tr><td><code>events</code></td><td>List pending scheduled and domain events.</td></tr>
-    <tr><td><code>banish</code> / <code>unbanish</code> / <code>whobanished</code></td><td>Protect a name from being taken by a new player, remove that protection, or list (or check) banished names.</td></tr>
+    <tr><td><code>banish</code></td><td>Protect a name from being taken by a new player.</td></tr>
   </table>
 
   <h2>secure/cmds/creator</h2>
@@ -171,7 +173,7 @@
   <table>
     <tr><th>Command</th><th>What it does</th></tr>
     <tr><td><code>call</code></td><td>Call an arbitrary function on an object by reference.</td></tr>
-    <tr><td><code>cref</code> / <code>dref</code> / <code>eref</code> / <code>ref</code> / <code>refs</code> / <code>unref</code> / <code>tref</code></td><td>Clone, destruct, or otherwise operate on a referenced object.</td></tr>
+    <tr><td><code>dref</code> / <code>eref</code> / <code>ref</code> / <code>refs</code> / <code>unref</code> / <code>tref</code></td><td>Destruct or otherwise operate on a referenced object. (<code>cref</code> lives under <code>cmds/adm</code>.)</td></tr>
     <tr><td><code>dbxframe</code> / <code>dbxwhere</code></td><td>Inspect a stack frame, or print the last uncaught error trace for a player.</td></tr>
     <tr><td><code>eval</code></td><td>Execute arbitrary LPC inline. Extremely powerful; see callout below.</td></tr>
   </table>
