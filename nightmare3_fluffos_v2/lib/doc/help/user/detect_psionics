@@ -1,0 +1,18 @@
+DETECT PSIONICS: Sensing psionic activity nearby
+
+Category: Psionic
+Base skill: 30% (+5%/level, cap 98%)
+
+This name covers two related but separate things. As a skill, it is
+mundane trained sensitivity to psychic phenomena - noticing that
+something psionic happened nearby, without any special power of your
+own. As an actual psionic power, it is a real, castable ability with
+its own cost and effect (see below); most characters who care about
+detecting psionics will use the power, not the skill.
+
+Command: psi detect psionics
+  Costs 6 ISP. Detects psionic activity in the room for 2 minutes.
+  Requires knowing the psionic power (a Psionic OCC ability), not
+  just the mundane skill.
+
+SEE ALSO: skills, psi, psionics, lore psychic

@@ -301,8 +301,6 @@ mapping query_rifts_skill(string key) {
     case "electrical engineer":
     case "electrical_engineer":
         return ([ "start": 30, "max": 98, "per_level": 5, "category": "electrical" ]);
-    case "basic_electronics":
-        return ([ "start": 40, "max": 98, "per_level": 5, "category": "electrical" ]);
     case "computer repair":
     case "computer_repair":
         return ([ "start": 35, "max": 98, "per_level": 5, "category": "electrical" ]);
@@ -685,7 +683,7 @@ string *query_skills_by_category(string cat) {
         "salvage", "concealment", "beg", "athletics", "horsemanship",
         "seduction", "identify plants", "fly",
         "electrical engineer", "computer repair", "robot electronics",
-        "surveillance systems", "basic_electronics",
+        "surveillance systems",
         "barter", "appraise goods", "black market", "recognize weapon quality",
         "art", "writing", "singing", "dancing", "play instrument", "ventriloquism",
         "geology", "parachuting", "sniping", "lore faerie", "detect psionics",
