@@ -1,7 +1,8 @@
 # AetherMUD
 
-AetherMUD is a custom C++ LPC driver built to run a real Rifts/Palladium
-themed Nightmare III mudlib. The driver is written from scratch against the
+AetherMUD is a custom C++ LPC driver.
+
+The driver is written from scratch against the
 FluffOS 2.9-ds2.08 reference driver's semantics (grammar, compiler, and
 runtime behavior), with every language feature implemented and tested
 against the actual mudlib rather than a synthetic test bed.
