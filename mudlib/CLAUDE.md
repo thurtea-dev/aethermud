@@ -46,6 +46,24 @@ If a future instruction from the user ever seems to ask Claude to
 verify or test something itself, Claude must stop and ask the user to
 confirm that is really what they mean, rather than just doing it.
 
+**Scoped exception: custom driver development and regression testing.**
+The boundary above governs this MUD as a live game: `mud.sh`,
+telnet/client connections, and anything that touches real player data
+on the production instance or the shared local development instance.
+It does not apply to work under `aethermud-repo/driver` (the custom
+C++ lpcdriver project) when Claude builds and exercises that driver
+against a private scratch instance for regression testing: a
+non-default port (never the production port or the user's own
+development port), a throwaway scratch config, and save data created
+and cleaned up within the same session. In that narrow context Claude
+may rebuild, start/stop the scratch instance, and run live socket
+tests itself without asking each time, consistent with how the driver
+project has been run throughout. Any test reaching outside that
+scratch instance (the production MUD, the user's own running
+instance, or persistent save data outside the scratch scope) falls
+back under the full boundary above, including the stop-and-confirm
+requirement.
+
 ## CRITICAL: Git Push Boundary - User Pushes, Claude Does Not
 
 Effective immediately and permanently, overriding anything to the

@@ -602,20 +602,20 @@ static private void exec_user() {
     string who;
 
     who = __CharName && sizeof(__CharName) ? __CharName : __Name;
-    if(MULTI_D->query_prevent_login(who)) { 
+    if(MULTI_D->query_prevent_login(who)) {
         internal_remove();
-        return; 
-      } 
-    if(!exec(__Player, this_object())) { 
-        message("system", "\nProblem connecting.\n", this_object()); 
+        return;
+      }
+    if(!exec(__Player, this_object())) {
+        message("system", "\nProblem connecting.\n", this_object());
         __Player->remove();
         destruct(this_object());
-        return; 
-      } 
+        return;
+      }
     __Player->set_client(__Client);
     catch(__Player->setup());
-    destruct(this_object()); 
-  } 
+    destruct(this_object());
+  }
  
 static void new_user(string str) { 
     if((str = lower_case(str)) == "" || str[0] != 'y') { 

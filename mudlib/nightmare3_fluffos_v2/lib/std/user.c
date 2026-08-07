@@ -1599,11 +1599,33 @@ void reset_terminal() {
     term_info = (mapping)TERMINAL_D->query_term_info(getenv("TERM"));
 }
 
+/* Bootstrap escape hatch, same reasoning and same pattern set_position()
+   below already uses for the identical underlying problem: PRIVS is
+   #undef in options.h, so master()->valid_apply() can never return true
+   for anyone (query_privs() is always falsy with PRIVS off, and
+   check_access()'s own stack-walk denies on the first privs-less object
+   it finds -- confirmed live: secure/daemon/master.c's own
+   compile_object() calls "ob->set_name(nom)" directly, with no
+   unguarded() wrapping, so the resulting valid_apply() call always
+   denies on secure/std/login turning up privs-less in the previous-
+   object chain). set_position() already carries an explicit comment
+   documenting this exact limitation and already has its own bootstrap
+   clause working around it by authenticating the caller's identity
+   instead of going through valid_apply() at all -- set_name() needed
+   the same treatment and never had it, so query_name() silently stayed
+   unset (0, not a string) for every new character, which is what broke
+   several unrelated-looking things downstream (std/user.c's own
+   wiz_setup_workroom() concatenating it into a path, std/user/nmsh.c's
+   own reset_prompt() passing it to replace_string()). The only trusted
+   direct caller of this exact call shape is master.c's own
+   compile_object(), which always calls set_name() as its own code
+   (current_object() == master() throughout compile_object(), so
+   previous_object() from here is the master object itself) -- checking
+   that identity is exactly as strong an authentication as
+   check_access()'s own OB_LOGIN-identity check already relies on
+   elsewhere in this same file. */
 void set_name(string str) {
-    if(!((int)master()->valid_apply(({ str })))){
-//debug_message("tried to set_name(\""+str+"\") in user, got invalid apply");
- return;
-}
+    if(previous_object() != master() && !((int)master()->valid_apply(({ str })))) return;
     char_name = str;
     ::set_name(str);
 }
@@ -1892,15 +1914,25 @@ void window_size(int width, int height) {
     setenv("LINES_AUTO", "" + height);
 }
 
-string query_name() { 
-string tmp;
-
-//tmp =  living::query_name();
-tmp = __TrueName;
-////debug_message("I am "+identify(this_object())+", and my name is: "+tmp);
-//debug_message("My name is: "+tmp);
-return tmp;
-}
+/* Was "tmp = __TrueName;" (with an even earlier "tmp =
+   living::query_name();" attempt commented out above it, still visible
+   in version history). Neither ever worked: __TrueName is not declared
+   anywhere in user.c's own actual inherit chain (AUTOSAVE, EDITOR,
+   FILES, NMSH, MORE, REFS, LIVING -- confirmed by direct reading, none
+   of these inherit std/Object.c, and living.c itself has no inherits
+   at all), and living.c has no query_name() of its own either. Both
+   std/user/autosave.c and std/user/nmsh.c already carry their own
+   placeholder "string query_name() { return 0; }" stubs precisely
+   because the real implementation was always meant to live here, in
+   user.c's own override -- confirmed live: this returned an unset
+   value for every real player, which broke several unrelated-looking
+   things downstream (wiz_setup_workroom()'s own path concatenation,
+   nmsh.c's own reset_prompt() passing it to replace_string()).
+   char_name is the real, reliably-set variable holding the exact same
+   value (set together with it in this file's own set_name(), a few
+   functions above) -- returning that directly is what this function
+   was always supposed to do. */
+string query_name() { return char_name; }
 
 varargs int query_invis(object ob) { return living::query_invis(ob); }
 

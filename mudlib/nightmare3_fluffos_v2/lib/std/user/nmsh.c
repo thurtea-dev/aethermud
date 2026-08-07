@@ -21,20 +21,20 @@ static private int __HistoryCount, __HistoryBottom, __HistoryTop, __HistorySize;
 static private string __Prompt; 
 static private string *__Stack, *__History; 
  
-void create() { 
-    __Nicknames = ([]); 
+void create() {
+    __Nicknames = ([]);
     __Aliases = ([ "l" : "look $*", "bio" : "biography", "i" : "inventory",
       "n" : "go north", "s" : "go south", "e" : "go east", "w" : "go west",
       "ne" : "go northeast", "nw" : "go northwest", "se" : "go southeast",
       "sw" : "go southwest", "d" : "go down", "u" : "go up", "exa" : "look at $*",
     ]);
-    __Xverbs = ([ "'" : "say $*", ":" : "emote $*" ]); 
- } 
+    __Xverbs = ([ "'" : "say $*", ":" : "emote $*" ]);
+ }
  
-void setup() { 
-    if(this_player() != this_object()) return; 
-    reset_history(); 
-    reset_prompt(); 
+void setup() {
+    if(this_player() != this_object()) return;
+    reset_history();
+    reset_prompt();
     if(!__Nicknames) __Nicknames = ([]);
     if(!__Aliases) __Aliases = ([]);
     if(!__Xverbs) __Xverbs = ([]);
@@ -465,21 +465,22 @@ nomask static private string do_nickname(string str) {
     return implode(map_array(explode(str, " "), "replace_nickname", this_object()), " "); 
 } 
  
-nomask static private string do_alias(string str) { 
-    string *words; 
-    string tmp; 
-    int x, i; 
- 
+nomask static private string do_alias(string str) {
+    string *words;
+    string tmp;
+    int x, i;
+
     if(!sizeof(words = explode(str, " "))) return "";
-    if((x = strlen(words[0])) && (tmp = __Xverbs[words[0][0..0]])) {
+    x = strlen(words[0]);
+    if(x && (tmp = __Xverbs[words[0][0..0]])) {
         words[0] = words[0][1..x-1];
         return replace_string(tmp, "$*", implode(words, " "));
     }
-    if(!(tmp = __Aliases[words[0]])) return implode(words, " "); 
-    else str = implode(words[1..sizeof(words)-1], " "); 
-    return replace_string(tmp, "$*", str); 
- 
-} 
+    if(!(tmp = __Aliases[words[0]])) return implode(words, " ");
+    else str = implode(words[1..sizeof(words)-1], " ");
+    return replace_string(tmp, "$*", str);
+
+}
  
 nomask static private string do_history(string str) { 
     string *args;
