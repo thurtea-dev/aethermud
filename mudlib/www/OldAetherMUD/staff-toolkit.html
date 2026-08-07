@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff toolkit - AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <nav><a href="index.html">Home</a></nav>
+  <h1>Staff Toolkit</h1>
+  <p>Ambassador file tools and high-mortal commands. Granted to every staff role (apprentice, rp_wiz, domain_wiz, creator/immortal, arch/head arch) in addition to role-specific tools.</p>
+
+  <h2>Ambassador commands</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>earmuffs</code></td><td>Block/accept shouts.</td></tr>
+    <tr><td><code>goto</code></td><td>Teleport to living name, or file path if no living match.</td></tr>
+    <tr><td><code>home</code></td><td>Own workroom, or another player's by name.</td></tr>
+    <tr><td><code>man</code></td><td>efun / SimulEfun / applies / lfun docs.</td></tr>
+    <tr><td><code>people</code></td><td>Filterable/sortable connected-user roster.</td></tr>
+    <tr><td><code>set</code> / <code>unset</code></td><td>Personal environment variable.</td></tr>
+  </table>
+
+  <h2>File tools</h2>
+  <p><code>secure/cmds/ambassador</code></p>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>pwd</code> / <code>cd</code></td><td>Working directory.</td></tr>
+    <tr><td><code>ls</code></td><td>List dir. Flags: <code>-a</code> <code>-l</code> <code>-t</code> <code>-n</code> <code>-b</code> <code>-s</code>.</td></tr>
+    <tr><td><code>cat</code> / <code>head</code> / <code>tail</code> / <code>more</code></td><td>Dump / first lines / last lines / page.</td></tr>
+    <tr><td><code>cp</code></td><td>Copy file.</td></tr>
+    <tr><td><code>diff</code></td><td>Line diff; paged via <code>more</code>.</td></tr>
+    <tr><td><code>ed</code></td><td>Line editor.</td></tr>
+    <tr><td><code>grep</code></td><td>Regex search; supports <code>&gt; output</code>.</td></tr>
+    <tr><td><code>load</code></td><td>Load/compile object; report errors.</td></tr>
+    <tr><td><code>sc</code> / <code>ss</code></td><td>Deep / shallow inventory scan.</td></tr>
+    <tr><td><code>gauge</code></td><td>Profile command CPU/eval cost. Command checks admin position; only admin can run it in practice.</td></tr>
+  </table>
+
+  <h2>High-mortal commands</h2>
+  <p><code>cmds/hm</code>: all staff roles, and mortals above level 19.</p>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>mark</code></td><td>Mark room as teleport anchor.</td></tr>
+    <tr><td><code>teleport</code></td><td>To marked/start location, or same-class player.</td></tr>
+    <tr><td><code>start</code></td><td>Set login start to current room.</td></tr>
+    <tr><td><code>title</code></td><td>Post-name title. No-op for staff (use <code>setenv TITLE</code>).</td></tr>
+    <tr><td><code>message</code></td><td>Room entry/exit messages.</td></tr>
+    <tr><td><code>review</code></td><td>Show message strings and title.</td></tr>
+    <tr><td><code>create</code></td><td>Conjure weapon, armor, or bag.</td></tr>
+    <tr><td><code>cloak</code></td><td>Rogue stealth toggle.</td></tr>
+    <tr><td><code>marry</code> / <code>divorce</code></td><td>Wed or divorce two players.</td></tr>
+  </table>
+  <div class="callout">
+    <p><strong>Conversion gap:</strong> most of <code>cmds/hm</code> is unconverted Nightmare III. <code>create</code> and <code>cloak</code> check old skill percentages. <code>marry</code>/<code>divorce</code> require admin or legacy class <code>monk</code> (never set by Rifts chargen); in practice admin-only.</p>
+  </div>
+
+  <h2>Legacy skill commands</h2>
+  <div class="callout">
+    <p>Most of <code>cmds/skills/</code> (~70 files, e.g. <code>fireball</code>, <code>backstab</code>, <code>heal</code>) still gates on NM3 classes (mage, cleric, monk, kataan, fighter, rogue). Live in the search path but inert for Rifts characters. Rifts-converted: <code>limbs</code>, <code>replace</code> (Medical Doctor), <code>lockpick</code> (Pick Locks). Spells/psionics: <code>cast</code> / <code>psi</code> (<a href="commands.html">Commands</a>).</p>
+  </div>
+</body>
+</html>

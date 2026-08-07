@@ -1,0 +1,322 @@
+# Playtest checklist: WIZARD round - 2026-07-19 (updated 2026-07-24)
+
+Every test in this file needs staff rank (creatorp or archp) or acts
+on staff-only content. Run as thurtea (or a throwaway wizard account)
+with one throwaway MORTAL online for the gating and stranger checks;
+call it TESTCHAR below. Player-side tests live in
+[playtest-checklist-players.md](playtest-checklist-players.md).
+
+Prerequisites: server running, FULL REBOOT since the last pull of any
+`/std/` file (user.c, living.c, room.c, armour.c, combat.c, and
+everything else under `/std/`) - `update` or `warmboot` is not enough;
+see section 3 for what happens when this gets skipped. Mismatches go to
+`/domains/Praxis/adm/master_gap_report.txt`.
+
+## 1. repairchar and makechar (admin-only, target online)
+
+Syntax:
+
+```
+repairchar <player>                  dump chargen/stat state
+repairchar <player> clear            clear stuck chargen flags
+repairchar <player> finish           force creation_step=done
+repairchar <player> reroll           re-roll racial attributes/pools
+repairchar <player> skills           re-grant OCC skill package
+repairchar <player> setstat <A> <n>  set one attribute (IQ ME MA PS PP PE PB Spd)
+
+makechar <player> <race> <occ|none> <alignment>
+         [zone=<name|/path>] [gear=default|none]
+         [skills=a;b] [spells=a;b] [psi=a;b]
+```
+
+Copy-paste tests (TESTCHAR online):
+
+1. [ ] `repairchar TESTCHAR` - expected: full state dump, all
+       attributes non-zero, creation_step done.
+2. [ ] `repairchar TESTCHAR setstat PS 20` - expected: confirmation;
+       `repairchar TESTCHAR` shows PS 20.
+3. [ ] `makechar TESTCHAR human vagabond scrupulous zone=americas` -
+       expected: full rebuild summary, TESTCHAR moved to
+       `chitown_start` (the Chi-Town waystation, not "the Praxis
+       welcome area" - that wording is stale since the 2026-07-21
+       zone start room pass) with gear, and a rebuild notice shown
+       to them.
+4. [ ] `makechar TESTCHAR titan none anarchist gear=none` -
+       expected: RCC-only rebuild, no equipment granted, zone
+       unchanged.
+
+## 2. Test wing (from your workroom, exit `wing`)
+
+Setup:
+1. [ ] In the hall, `list` at Renn. Expected: 13 entries - one
+       weapon, one protective armor, one implant, nine cosmetic
+       slot samples, and a rebreather mask.
+2. [ ] Buy everything: `buy rifle`, `buy dead boy`, `buy optic eye`,
+       `buy cap`, `buy amulet`, `buy shirt`, `buy backpack`,
+       `buy belt`, `buy trousers`, `buy gloves`, `buy boots`,
+       `buy ring`, and a second `buy ring`.
+
+Cosmetic slots:
+3. [ ] Wear each cosmetic piece. Expected: all nine slots fill
+       (head, neck, shirt, back, belt, legs, hands, feet, ring), no
+       limb messages, `eq` shows each in its slot.
+4. [ ] Wear the second signet ring. Expected: ring2. A third ring is
+       refused: both ring slots full.
+5. [ ] Buy and wear a second cap while one is worn. Expected:
+       refused; one item per slot.
+
+Protective armor and appearance override:
+6. [ ] `wear armor` (Dead Boy). Expected: whole-body wear alongside
+       the cosmetic pieces (no conflict).
+7. [ ] With TESTCHAR (a stranger) able to see you in a public room:
+       they see "A Coalition Dead Boy" in the listing, not your
+       name; anyone who knows you still sees your name.
+
+Damage order (arena, `arena` from the hall):
+8. [ ] Attack the sparring drone (legacy hp target) with anything.
+       Expected: normal damage, dies, respawns on next reset.
+9. [ ] Attack the rift crawler with a NON-mega-damage attack.
+       Expected: shrugged off entirely.
+10. [ ] Attack the rift crawler with the C-12 rifle. Expected: its
+        30 MDC depletes and it dies.
+11. [ ] Wearing the Dead Boy armor, take hits (second staff
+        character, or let a target swing). Expected: armor MDC pool
+        depletes FIRST; your own pools untouched until it empties.
+12. [ ] `cast armor of ithan`, then take hits. Expected order:
+        Ithan barrier, then worn armor pool, then body pools.
+
+Sever/restore (narrative severing, admin command):
+13. [ ] `sever list <target>` for valid limbs, then `sever <limb>`
+        on an ordinary limb. Try `sever head` too. Expected: head,
+        torso, and whole body are all REFUSED; the ordinary limb
+        severs.
+14. [ ] `look` at the victim; have them type `body` and `limbs`.
+        Expected: severed limb shown in all three outputs, no stat
+        or damage change (narrative only).
+15. [ ] `restore <limb>`. Expected: limb back, outputs clean.
+
+## 3. Ring of Dominion (regression retest, post `admin_ring` fix)
+
+Background: after the `admin_ring` cosmetic slot was added to
+`std/armour.c` and `ring_of_dominion.c`'s `rifts_slot` was changed to
+`"admin_ring"`, `wear ring` made the ring vanish from inventory with no
+on-wear message and no error shown. Root cause: the driver had not been
+fully rebooted since the `std/armour.c` change landed, so the connected
+session was still running pre-`admin_ring` code — `resolve_cosmetic_slot()`
+fell through to the old limb-based path, and `ring_of_dominion.c` (which
+never called `set_limbs()`) passed an undefined limb array into
+`equip_armour_to_limb()`. Fixed by (a) a full reboot to load the current
+`std/armour.c`, and (b) a defensive `set_limbs(({ "right hand" }))` added
+to `ring_of_dominion.c` so any future fall-through fails as an ordinary
+limb-based refusal instead of silently destructing/dropping the item.
+
+**This is exactly the failure mode the FULL REBOOT prerequisite at the
+top of this file exists to prevent. Any `/std/` file change needs a real
+`mud.sh stop && mud.sh start`, never just `update` or `warmboot` - those
+only reload the blueprint, not the code already baked into
+already-connected sessions and already-loaded objects. If you're ever
+unsure whether a reboot actually happened after a `/std/` edit, check
+`log/runtime`'s timestamp against the most recent commit touching that
+file (`git log -1 -- std/<file>.c`); if the commit is newer than the
+last boot, the running driver has not picked it up yet.**
+
+**Refactored since (daemon delegation, current code as of 2026-07-21):**
+the ring no longer clones the five physical tool items into inventory
+when worn. `domain`/`promote`/`demote`/`tool`/`rptool`/`inscribe`/
+`review` now delegate directly into the same shared menu daemons the
+physical staff/tool/gun items use (`dominion_menu_d.c`,
+`demotion_menu_d.c`, `rp_skill_menu_d.c`, `tattoo_menu_d.c`,
+`creation_review_menu_d.c`), so there is exactly one copy of each
+menu's logic regardless of whether it is reached by staff, tool, gun,
+or ring. `build`/`clone`/`purge` call QCS directly
+(`/cmds/creator/_qcs.c`), gated on `admin_wizp()` rather than
+requiring a physically carried staff of creation. This supersedes the
+original 2026-07-19 wording of steps 3 and 6 below: nothing is cloned
+on wear, and there is nothing to strip on removal. `query_auto_load()`/
+`init_arg()` also now restore the ring to its worn state automatically
+on reconnect (step 9) - the previous behavior required manually
+re-wearing after every relog.
+
+1. [ ] Confirm the ring is present, unworn, in inventory (`inventory`
+       or `i`).
+2. [ ] `wear ring`. Expected: an on-wear message appears (either "You
+       slide the gold ring onto your finger..." if `admin_wizp`, or
+       "The ring stays cold and inert on your hand." if not). The ring
+       must still be listed afterward as "a plain gold ring (worn)" -
+       not vanished.
+3. [ ] Confirm NO tool items are cloned into inventory. `inventory`/`i`
+       before and after `wear ring` should be identical except for the
+       ring's own "(worn)" tag - no staff of demotion, staff of
+       dominion, staff of creation, RP-Wiz skill tool, or tattoo-gun
+       appears. The ten verbs below work directly off the worn ring;
+       nothing physical is created.
+4. [ ] `eq` or `look` at yourself: confirm the ring shows on its own
+       slot, distinct from `ring_left`/`ring_right`.
+5. [ ] While the ring is worn, also wear a regular ring (e.g. the test
+       wing's signet ring) and/or a wedding band if one is available.
+       Expected: no conflict either direction - the ring of dominion
+       occupies `admin_ring`, never `ring_left`/`ring_right`, so both
+       should be wearable together with no refusal message from
+       either side.
+6. [ ] `remove ring`. Expected exact message: "The ring cools, and its
+       powers fade from your hand." (not "hands", not "the tools it
+       granted" - that wording described the old tool-cloning
+       behavior and no longer applies). Immediately after removal,
+       `domain`/`promote`/`demote`/`tool`/`rptool`/`inscribe`/`review`/
+       `build`/`clone`/`purge` should all stop working (ordinary
+       unknown-command response) UNLESS you separately carry a
+       physical tool granting that same verb, which should keep
+       working undisturbed.
+7. [ ] `askring <question>` while worn (try "promote", "build",
+       "domain", "tattoo", "skill", "reboot", "save"). Expected: a
+       relevant canned answer for each. `askring` while NOT worn:
+       "The ring is silent. It only answers while worn."
+8. [ ] While worn, exercise at least three of the ten delegated verbs
+       directly (e.g. `domain`, `tool`, `review`). Expected: each
+       opens the exact same menu the equivalent physical staff/tool/
+       gun would, since they share the same menu daemon.
+9. [ ] With the ring worn, `quit` and log back in. Expected: the ring
+       shows "(worn)" again immediately, with no need to `wear ring`
+       a second time (the reconnect auto-rewear fix).
+
+## 4. Gating: mortals must reach none of this
+
+1. [ ] As TESTCHAR, type `repairchar TESTCHAR`, `makechar x y z w`,
+       `sever list`, and `playerwipe x`. Expected: every one gets an
+       ordinary unknown-command response or an access refusal;
+       nothing executes.
+2. [ ] Walk TESTCHAR to your workroom and through `wing`. Expected:
+       the containment ward ejects them to Praxis square.
+3. [ ] `trans` TESTCHAR directly into the hall or arena. Expected:
+       ejected the same way on arrival.
+4. [ ] Have TESTCHAR quit while briefly inside the wing (if they can
+       type it before ejection). Expected: on next login they resume
+       at their previous valid start, never inside the wing.
+5. [ ] As TESTCHAR, type `start` and `start here`. Expected:
+       ordinary unknown-command response (mortal command retired
+       2026-07-19). As thurtea, `start here` still works
+       (cmds/hm/_start.c, staff only).
+
+## 5. Poisoned-start repair (admin-side check)
+
+1. [ ] Poison the mortal's start:
+       `eval find_player("TESTCHAR")->set_primary_start("/realms/thurtea/workroom")`
+2. [ ] Have TESTCHAR quit and log back in. Expected: they land at
+       Praxis square, and
+       `eval find_player("TESTCHAR")->query_primary_start()` now
+       shows the square, not the workroom.
+
+Unique-item lock check (added 2026-07-22):
+
+3. [ ] After a mortal has taken the ghostly katana, dragonfire
+       lance, or armor talisman (player checklist section 4),
+       confirm the lock: `eval UNIQUE_ITEMS_D->query_taken(
+       "ghostly_katana")` (swap the key for `dragonfire_lance` /
+       `armor_talisman`) returns 1.
+4. [ ] `eval UNIQUE_ITEMS_D->clear_taken("ghostly_katana")` as an
+       archwizard. Expected: returns cleanly; the Catacomb Side
+       Chamber's next reset respawns the katana. Use this to reset
+       state between playtest passes instead of editing the save
+       file directly.
+
+## 6. Tone spot-check (staff-side strings)
+
+1. [ ] Test wing room descriptions, ward ejection line, and every
+       sample item description (each tag reads SAMPLE: <SLOT>).
+2. [ ] Renn's and Sela's response lines (ask Sela about logs,
+       procedure, damage, armor, spells).
+3. [ ] repairchar/makechar output blocks and the rebuild notice the
+       target sees.
+
+## 7. Look-by-race staff bypass (std/user.c `id()` change, 2026-07-24)
+
+Confirms creatorp() still sees the TRUE race through a disguise, per
+`query_apparent_race()`'s existing precedence (self/staff/knows-you
+always get the true race, everyone else gets the apparent one).
+
+1. [ ] Have TESTCHAR (or any mortal race that supports it) run
+       `metamorph human` while actually a different race. As thurtea
+       (creatorp, and NOT having run `introduce` with them), `look at
+       <their TRUE race>` (not human). Expected: still resolves to
+       them - staff bypasses the disguise, unlike an ordinary
+       stranger (player checklist section 9, step 5).
+2. [ ] As thurtea, `look at <their apparent/disguised race>` (human).
+       Expected: also resolves to them - staff can find them by
+       either word while disguised.
+
+## 8. New zone rooms: reset()-safety check (batch, 2026-07-24)
+
+Content-only rooms (`domains/Praxis/areas/splynn/preserve_{saddle,
+hivecore,nook,cagepit}.c` and `domains/LoneStar/areas/lone_star_
+{bunkroom,armory,motorpool,escape_tunnel}.c`) - `update`-safe, no
+reboot needed for these eight files specifically (only the `id()`
+change in section 7 above needs one).
+
+1. [ ] `goto` directly to each of the 8 new rooms (paths above).
+       Expected: each loads cleanly, no runtime errors in
+       `log/errors/Praxis` or `log/errors/LoneStar`.
+2. [ ] Force a second `reset()` on each new room without leaving it
+       (e.g. `eval find_object("<path>")->reset()` as archwiz, or wait
+       out a natural reset). Expected: monster/NPC counts do NOT
+       increase - the `present()` guards must still hold on repeat
+       resets. Check `preserve_hivecore` (Kydian Overlord + Xiticix
+       warrior), `preserve_cagepit` (captive + Splugorth minion),
+       `lone_star_bunkroom`/`lone_star_armory` (one Dog Boy guard
+       each) specifically - these are the ones with guaranteed
+       (non-random) spawns, where a missed guard would double up
+       fastest.
+3. [ ] `stat` the Kydian Overlord in `preserve_hivecore`. Expected:
+       level 12, consistent with its existing rare-spawn role one
+       room over in `preserve_hivedeep` - confirm it isn't
+       wildly over- or under-tuned as a guaranteed encounter.
+4. [ ] Confirm the pre-existing loops are undisturbed: Lone Star's
+       gate-plaza-lab-containment-perimeter loop, and the Preserves'
+       new single loop (nest-saddle-ridge-snag-hive-blind-bonefield-
+       waterhole-thornbrake-trail-switchback-nest) both still connect
+       exactly as designed with no orphaned rooms.
+
+## 9. Apprentice / staff-system pass
+
+Restored here 2026-07-26. This content was correctly merged out of the
+old `internal/Playtest-list.md` into `playtest-checklist.md` section 8
+(commit `6f8dbd4`), then compressed to a single bullet, then dropped
+entirely when that file was split into the player/wizard pair on
+2026-07-19. It survived only in git history and in the superseded
+file. Do not delete it again without landing it somewhere first.
+
+Run as an admin character after creating an apprentice-to-be and a
+second admin-wiz character (the original pair was removed in the
+2026-07-12 player wipe; any two fresh characters work, e.g. the wiz
+candidates in section 2). The apprentice tooling is
+`domains/adm/wiz_tools/apprentice_kit.c`.
+
+1. [ ] Create the apprentice-to-be; confirm RCC/race stats generate
+       correctly and starting room/equipment match expectations.
+2. [ ] Create the admin-wiz character; confirm wiz-tools, staff
+       supplies chest, and mailbox appear as they did for the first
+       admin.
+3. [ ] Assign the apprentice to the admin-wiz; test the actual
+       apprentice command/mechanic (kit, track selection, submission).
+4. [ ] Confirm apprentice status shows correctly in score/character
+       sheet for both characters - is the mentor/apprentice
+       relationship visible anywhere?
+5. [ ] Test the skill-teaching or skill-request flow if apprentices
+       get skills from their mentor (mailbox/request system in the
+       workroom).
+6. [ ] Test permission boundaries: can the apprentice reach
+       wizard-only commands they should not, and can the admin-wiz
+       manage/demote/promote the apprentice?
+7. [ ] Log out mentor or apprentice mid-session. Does the bond persist
+       across relog?
+8. [ ] Remove/break the apprentice bond cleanly; confirm no orphaned
+       data in either save file afterward.
+9. [ ] Cross-check `staff_of_dominion.c` interaction: apprentice and
+       mentor roles must not conflict with domain wizard permissions
+       (pairs with the Ring of Dominion regression in section 3).
+10. [ ] Log out both test characters; confirm their save files are
+       clean and separate from the admin's (no cross-contamination).
+
+## 10. After the pass
+
+Bugs to `master_gap_report.txt`. When both rounds pass locally:
+commit, pull on the VPS, full-reboot the VPS.

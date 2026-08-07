@@ -1,0 +1,26 @@
+AETHERMUD STAFF COMMAND: MAKEWIZ
+
+SYNTAX
+  makewiz <player>
+
+DESCRIPTION
+  Promotes an online mortal to Apprentice wizard and applies the Wizard
+  RCC. The player must be online.
+
+  Apprentices are temporary staff:
+    - position: apprentice
+    - who tag: [Apprentice]
+    - workroom created under /realms/<name>/
+    - no role staff tools yet
+
+  Full staff roles still use setrole after apprenticeship tasks:
+
+    makewiz ptdacon
+    (tasks...)
+    setrole ptdacon domain
+
+  Restricted to admin-level wizards. Logged to /log/adm/makewiz.
+
+SEE ALSO
+  help setrole *wizard staff
+  help staff *wizard staff

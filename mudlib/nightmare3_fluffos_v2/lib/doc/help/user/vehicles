@@ -1,0 +1,32 @@
+VEHICLES
+
+Certain areas of the game contain rideable vehicles such as hover cycles,
+APCs, and the EX-5 Behemoth giant robot.
+
+BASIC VEHICLE COMMANDS
+  enter <vehicle>       board a vehicle in the room
+  exit                  leave your current vehicle
+  drive <direction>     pilot the vehicle in a direction (when powered)
+
+HOVER CYCLE
+  The hover cycle in Monument Square is available to all players.
+  Enter it, then use compass directions to drive it.
+  The cycle can move through vehicle-accessible areas.
+
+EX-5 BEHEMOTH
+  The EX-5 is a massive giant robot found in the buried chamber beneath
+  the Splynn Dimensional Market.  Access the market, dig through the
+  ground patch, then enter the underground chamber.
+  Inside the EX-5:
+    power on            starts the EX-5's systems
+    power off           shuts it down
+    status              shows current fuel and condition
+    north/south/etc     pilots the machine while powered
+
+NOTES
+  Vehicles require fuel.  The EX-5 can be refueled at the fuel pump in
+  the buried chamber.
+  Not all rooms are vehicle-accessible.  Cramped interiors block vehicle
+  movement.
+
+See also: drive

@@ -1,0 +1,13 @@
+SENSEEVIL: Detect evil in the room
+
+Syntax: senseevil
+        psi sense evil
+
+DESCRIPTION:
+  Detect evil presences in the current room. Costs 2 ISP. No save.
+
+NOTES:
+  You must know sense evil and have enough ISP.
+  In combat, using psionics costs one attack from your APM pool.
+
+SEE ALSO: psi, psionics

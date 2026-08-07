@@ -1,0 +1,16 @@
+WIMPY / WHIMPY: Automatic flee threshold
+
+Syntax:
+  wimpy                 show current setting
+  wimpy <1-90>          auto-flee below this % of max HP
+  wimpy on              enable at 25%
+  wimpy off             disable auto-flee
+
+  whimpy                same command (alternate spelling)
+
+DESCRIPTION:
+  When auto-flee is active, you attempt to flee combat when your HP
+  drops below the given percentage. A single hit can still drop you
+  below the threshold before flee triggers.
+
+SEE ALSO: flee, combat, score

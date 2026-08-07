@@ -1,0 +1,11 @@
+Syntax: stance
+        stance offensive
+        stance defensive
+        stance standard
+
+Sets your combat stance.
+  offensive  +2 to strike, -2 to defense
+  defensive  +2 to defense, -2 to strike
+  standard   balanced (default)
+
+See also: position

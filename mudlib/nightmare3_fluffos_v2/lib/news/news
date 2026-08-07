@@ -1,0 +1,78 @@
+                      === AETHERMUD NEWS ===
+
+A Palladium Rifts roleplaying game. 62 races, 66 OCCs, 158 skills,
+114 spells, 50 psionic powers, 449 playable rooms.
+
+WHERE YOU CAN GO
+  Americas   Chi-Town (Coalition capital and Burbs), Praxis (hub town),
+             Tolkeen (mage city under siege), Horton and its wilderness
+             ring, Lone Star (Coalition genetics complex), Puerto Angel,
+             Lazlo.
+  Atlantis   Splynn Dimensional Market, Alvurron, the Preserves,
+             catacombs.
+  Europe     New Camelot, NGR Germany (Triax tech).
+
+  Character creation starts you in Chi-Town, Splynn, or New Camelot
+  depending on the zone you pick. Praxis is reached by rift; you do not
+  start there.
+
+TRAVEL
+  rift <destination>    pay universal credits, enter before it closes.
+                        Others in the room can follow you through.
+                        Moxim NPCs in Chi-Town, Splynn, New Camelot,
+                        Tolkeen, Lazlo, and Praxis.
+  hovertrain            Chi-Town Burbs to Horton.
+
+COMBAT
+  kill <target>         start combat, melee or ranged. Whatever weapon
+                        you have wielded is what you fight with, so a
+                        wielded rifle is fired for you each round. There
+                        is no separate firing command.
+  reload / unload       manage e-clips and ammo. An empty weapon clicks
+                        and does no damage until you reload.
+  autoparry             free parry against incoming attacks, on by
+                        default.
+  autododge             spend 1 APM per attack to dodge instead.
+  stance                offensive, defensive, or standard.
+  flee / stop           disengage.
+  combat                show your attacks per melee and bonuses.
+
+  Damage is pooled, not per-limb. Incoming hits burn through protective
+  spell fields first, then your worn armor, then your own MDC or SDC and
+  hit points. MDC weapons are needed to hurt MDC creatures.
+
+MAGIC AND PSIONICS
+  cast <spell>          spends PPE. Ley Line Walkers, Mystics, Shifters.
+  psi <power>           spends ISP. Mind Melters and psychic OCCs.
+
+TALKING TO PEOPLE
+  There are no global chat channels on this game, by design.
+  say / whisper / ooc   everyone in your room, and nobody outside it.
+  telepathy             reach a player anywhere, if you have been
+                        introduced to them and they are not shielded.
+                        Costs ISP.
+  radio                 requires a carried radio tuned to a shared
+                        frequency.
+  introduce / greet     how other players learn your name.
+  tell                  contacts online staff only, not other players.
+
+YOUR GEAR
+  Weapons and armor you have wielded or worn stay with you when you
+  quit. Loose items you are only carrying are dropped where you stand,
+  so equip what you want to keep before logging out.
+
+HELP AND REPORTING
+  help                  category list. Then help <category>, then
+                        help <topic>. help index shows everything.
+  bug <message>         report something broken.
+  typo <message>        report bad text.
+  idea <message>        suggest something.
+  who                   see who is online.
+
+STILL BEING BUILT
+  Deeper Chi-Town, Splynn, and NGR interiors. Stormshire and the
+  Federation of Magic. Player housing and storage. More vehicle
+  interiors. Skill help topics are thin: 119 of 158 skills have no help
+  file yet.
+
+Stay alive out there.

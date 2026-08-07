@@ -1,0 +1,58 @@
+The following is a list of shop commands:
+
+<help shop> 
+gives you this screen
+
+<cost>
+<cost item name> will tell you how much the vendor wants of the first item
+	  	 named item name
+<cost item name #> if there are more than one items named item name, this
+		   will give you the cost of the #th item called item name
+		   ex: <cost torch 2> will give you the cost of the 2nd torch
+
+<value>
+<value item name> will tell you how much the vendor is willing to pay
+		  for the first item called item name you have.
+<value item name #> will tell you how much the vendor is willing to pay
+		    for the #th item called item name you have.
+		    ex: <value sword 4> will give you the amount the
+			vendor is willing to pay for your 4th sword.
+
+<buy>
+<buy item name> will have you purchase the first item listed called 
+		item name if you have enough money in the right currency.
+<buy item name #> will have you purchase the #th item listed called
+		  item name.
+		  ex: <buy shield 2> will have you purchase the second
+			shield listed
+
+<sell>
+<sell item name> will have you sell the first item in your inventory with the
+		 name item name
+<sell item name #> will have you sell the #th item named item name in your
+		   inventory
+		   ex: <sell helm 3> will have you sell the third shield
+<sell all> will have you sell all items on you
+
+<show>
+<show item name> will have the vendor give you a closer look at the first item
+		 in the store called item name
+<show item name #> will have the vendor give you a closer look at the #th item
+		   in the store called item name
+
+<list>
+<list> gives you a listing of all items for sale in the shop, as well as their
+       fair price.  This is not necessarily the price the vendor will charge.
+<list weapons> will list all items which are weapons
+<list armours> will list all items which are armours
+<list other> will list all non-weapon and non-armour items for sale
+<list type> will list all weapons or armours of type type
+            ex: <list blade> will list all weapons of type blade for sale
+		<list shield> will list all armours of type shield for sale
+<list item name> will list all items with the name item name
+		 ex: <list sword> will list all items in the store that respond
+		     to the name "sword".  Thus if you notice the fourth item
+		     on the list is the sword you want, <buy sword 4> will get
+		     it for you.  Be aware though that another person selling
+		     at the same time you are checking this could make it the 
+		     fifth sword.

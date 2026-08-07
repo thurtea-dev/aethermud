@@ -1,0 +1,17 @@
+RELOAD: Reload a ranged weapon
+
+Syntax: reload <weapon>
+        reload <weapon> with <ammo>
+
+DESCRIPTION:
+  Loads ammunition into a ranged weapon. The weapon must be in your inventory
+  or wielded. Ammo must also be in your inventory.
+
+  If multiple ammo types are available, specify which to use with "with".
+  E-clips are standard for most Coalition and modern energy weapons.
+
+EXAMPLES:
+  reload cp40 laser
+  reload cp40 laser with e-clip
+
+SEE ALSO: unload, eject, wield, weapons

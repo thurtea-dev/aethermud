@@ -1,0 +1,46 @@
+Containers and chests
+=======================
+
+Base object: /std/container.c
+Closeable storage: /std/storage.c (inherits CONTAINER)
+
+Transparent property
+--------------------
+
+Containers support two visibility modes when they have a lid (set_can_close(1)):
+
+OPAQUE (default):
+  set_property("transparent", 0);
+  When closed: look in and inventory listing show no contents ("It is closed.").
+  When open: normal contents listing and get/put work.
+
+TRANSPARENT / GLASS:
+  set_transparent(1);   /* or set_property("transparent", 1); */
+  When closed: contents are visible on look in, but get/put are blocked with
+  "The lid is closed."
+  When open: same as opaque open (full access).
+
+Functions
+---------
+
+  set_transparent(int n)     Set 1 for glass/see-through, 0 for opaque.
+  query_transparent()        Returns current transparent flag.
+  query_contents_visible()   Returns 1 if look in may show contents.
+  look_in(object who)        Returns formatted contents or blocked message.
+
+Example: glass display case
+---------------------------
+
+inherit STORAGE;
+
+void create() {
+    ::create();
+    set_name("display case");
+    set_short("a glass display case");
+    set_can_close(1);
+    set_transparent(1);
+    set_closed(1);
+    set_max_encumbrance(500);
+}
+
+Existing chests are unchanged: transparent defaults to 0 (opaque).

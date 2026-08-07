@@ -1,0 +1,17 @@
+FIRST AID: Basic emergency medical treatment
+
+Category: Medical
+Base skill: 45% (+5%/level, cap 98%)
+
+Palladium's baseline medical skill: stopping bleeding, treating shock,
+and stabilizing a wounded patient using nothing more than bandages or
+a basic medical kit. Most OCCs with any medical background start with
+some level of First Aid; it does not require the surgical training
+that Paramedic or Medical Doctor do.
+
+Command: treat <target> / bandage <target>
+  Requires bandages, a first aid kit, or a medkit in your inventory.
+  Rolls your First Aid percentage; on success the target recovers 1d6
+  SDC or HP. See "help bandage" for the full command syntax.
+
+SEE ALSO: bandage, treat, skills, medical doctor, paramedic

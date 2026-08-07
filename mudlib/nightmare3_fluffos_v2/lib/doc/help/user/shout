@@ -1,0 +1,14 @@
+SHOUT
+
+Syntax: shout <message>
+
+Shouts a message to everyone in your current room -- the same reach as
+say. No language is needed; everyone in the room understands a shout
+regardless of what language they speak. There is a five-second
+cooldown between shouts.
+
+Shout is not a channel and does not reach outside your room. To
+coordinate with people elsewhere, use tell (private, one-to-one) or a
+carried radio tuned to a shared frequency.
+
+See also: say, ooc, radio

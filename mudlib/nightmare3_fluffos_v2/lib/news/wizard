@@ -1,0 +1,114 @@
+                 === AETHERMUD STAFF NEWS ===
+
+Read this once. Most of it is here because somebody already lost a boot
+to it.
+
+RELOADING: UPDATE IS NOT ENOUGH FOR /std/
+  update <path>   recompiles one file's blueprint. Safe and sufficient
+                  for anything under /daemon/, /cmds/, and single room
+                  files. _update.c moves players to the void and back
+                  around a room reload, so updating the room you are
+                  standing in is fine.
+  warmboot        same limitation, wider blast radius.
+  full reboot     ./mud.sh stop && ./mud.sh start, from the shell.
+
+  In LPC, inherit is resolved at compile time. Anything that already
+  inherited /std/room.c, /std/user.c, /std/living.c, /std/armour.c,
+  /std/monster.c, /std/container.c and so on keeps running the OLD code
+  after you update the parent. Every loaded room, every connected
+  player, every spawned NPC. If you touched a file under /std/ or under
+  secure/cmds/, only a full reboot actually ships it. Never tell anyone
+  warmboot covers those.
+
+  Never use kill on the driver. Always mud.sh.
+
+COMPILING ON FLUFFOS 2.9
+  Declare every variable at the TOP of its function, before any
+  statement. C89 rules, strictly. Mixed declarations and code will not
+  compile.
+  Use /* */ comments. Not //.
+  A function must be declared before it is called. Calling something
+  defined further down the same file is a compile error, so add a
+  prototype near the top. See the prototype blocks in daemon/rifts.c,
+  setter.c, std/monster.c.
+  When an object mysteriously fails to load, the error is in
+  log/errors/<dir>, NOT log/runtime. This is where a missing prototype
+  hides. /std/monster once failed for an entire boot this way and no
+  NPCs loaded anywhere.
+
+BUILDING ROOMS
+  Spawn NPCs and objects in reset(), never in create(). Guard each one
+  with present("id", this_object()). Cloning in create() breaks
+  update <path> and can duplicate or crash. Patterns to copy:
+  domains/Praxis/square.c, domains/Praxis/hospital.c.
+  Never describe a spawned NPC or object in set_long(). They are real
+  objects and list themselves below the exits line; naming them in the
+  long text makes them appear twice, in the wrong order.
+  Room display order is description, exits, NPCs, objects. Already
+  correct in std/user.c describe_current_room(). Do not reorder it.
+  set_smell() and set_listen() text appears only when a player types
+  smell or listen. Never put it in set_long().
+  Do not add ambient messages. The mixin was removed on purpose; they
+  interrupted players.
+
+APIS THAT DO NOT EXIST
+  Containers use set_max_encumbrance(n). There is no set_max_weight().
+  NPC Mega-Damage uses set_stats("MDC", n) and set_stats("max_MDC", n).
+  There is no set_mdc() on monsters, only on rifts_vehicle.c.
+  Non-combat damage goes through
+  RIFTS_COMBAT_D->apply_direct_damage(victim, damage). Do not call
+  do_damage() with a named limb.
+
+THE DAMAGE MODEL
+  Damage is pooled on one pseudo-limb called whole_body. Per-limb
+  damage and limb targeting are retired. Order of depletion is
+  protective spell fields, then worn armor pools, then MDC or SDC and
+  hit points. Limb severing still exists but is narrative only, via the
+  admin sever command. Do not rename whole_body; it is serialized into
+  player saves.
+
+PATHS
+  Player saves      /secure/save/users/<first letter>/<name>.o
+                    NOT /save/players/. That path is dead.
+  Wiz tools         /domains/adm/wiz_tools/
+  Board saves       /secure/save/boards/
+  Daemons must be listed in secure/cfg/preload.cfg or they will not
+  exist at boot.
+  log_file() prepends /log/ itself, so pass a path relative to it:
+  log_file("adm/setrole", ...). write_file() takes the literal absolute
+  path. Mixing the two produces /log//log/ paths.
+
+WRITING TEXT
+  American spelling in player-facing strings: armor, color, defense.
+  The FILE /std/armour.c and its function names stay British. Do not
+  rename them.
+  No em dashes anywhere, in strings, help files, or comments. Use a
+  hyphen, comma, or colon.
+  Multi-word ability names collapse for help keys: help armorofithan,
+  help remoteviewing. Never show underscores to a player.
+
+COMMUNICATION RULES
+  This game has NO player chat channels. All player-to-player reach is
+  room-local, except telepathy (needs an introduction, costs ISP) and
+  radio (needs a carried, tuned radio item). tell and reply are staff
+  contact only.
+  Before you add a player command: if it loops users(), or uses
+  find_player() or tell_object() to reach somebody who is not present()
+  in the room, that is a bug. This applies to system notifications too,
+  not just open chat.
+
+THE STAFF BOARD
+  A shared bulletin board now stands in the Wizard's Lounge, the Admin
+  Chamber, and admin workrooms. All copies share one thread pool, so a
+  note posted at one shows up at all of them. post <subject>,
+  read <number>, followup <number>, remove <number>.
+  Looking at it also prints live pending queues: accounts awaiting
+  approval, skill requests, and apprentice submissions, with the
+  command to act on each. Check it when you log in.
+
+TESTING SOMETHING TRICKY
+  Metamorph and disguises: query_apparent_race() deliberately returns
+  the TRUE race to the character themselves, to any creator, and to
+  anyone who already knows them. A staff character can never see their
+  own disguise work, and a staff disguise is inert for everyone. Test
+  it on a mortal, observed by a different mortal.

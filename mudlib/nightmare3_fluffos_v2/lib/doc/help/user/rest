@@ -1,0 +1,16 @@
+REST: Rest to recover HP and SDC
+
+Syntax: rest
+
+DESCRIPTION:
+  Your character sits down and rests. While resting, HP and SDC regenerate
+  faster than normal. You cannot rest in combat.
+
+  Use 'wake' to stand up and stop resting.
+
+NOTES:
+  - Resting does not work while fighting.
+  - Moving or being attacked interrupts rest.
+  - Your 'resting' status appears in your score.
+
+SEE ALSO: wake, score

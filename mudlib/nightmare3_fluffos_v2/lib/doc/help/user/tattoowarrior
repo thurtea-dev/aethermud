@@ -1,0 +1,34 @@
+Tattoo Warrior
+Atlantean OCC. Available only to the Atlantean race.
+
+The Tattoo Warrior is an Atlantean who has devoted their life to the art of
+living magic. Where the Atlantean Nomad uses tattoos as one tool among many,
+the Tattoo Warrior uses them as their primary weapon, armor, and power
+source. They carry conventional weapons as backup, but their tattoos are
+what makes them dangerous.
+
+Tattoo Warriors do not rely on technology. They have mastered Hand-to-Hand:
+Martial Arts and weapons training, but the battlefield advantage they hold
+comes from magic permanently inscribed on their skin: a flaming sword that
+blazes to life from their forearm, a force field that absorbs MDC damage,
+eyes that pierce darkness and invisibility, and a spear of solid magical
+force that never needs reloading.
+
+Attribute requirements: PS 10, PP 10. Atlantean race required.
+
+Starting tattoos:
+  Right forearm: Flaming sword (3d6 MDC, 5 min, PPE 10)
+  Left forearm:  Spear (2d6 MDC, 10 min, PPE 8)
+  Chest:         Armor of Ithan (50 MDC field, 2 min, PPE 15)
+  Face:          Globe of daylight (light source, 10 min, PPE 4)
+
+Starting equipment: Vibro-sword, light MDC body armor, two energy clips.
+
+PPE: 30 base, +6 per level.
+
+Skills include: Hand-to-Hand: Martial Arts, W.P. Sword, W.P. Knife,
+Acrobatics, Athletics, and 6 picks from Physical, Weapons, and Wilderness.
+
+Use 'tattoo list' to see your tattoos.
+Use 'tattoo activate <location>' or 'tattoo activate <name>' to use one.
+Use 'tattoo status' to see active tattoo timers.

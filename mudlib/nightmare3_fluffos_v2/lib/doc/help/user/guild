@@ -1,0 +1,17 @@
+GUILD: Guild membership commands
+
+Syntax: guild info
+        guild join <guild>
+        guild leave
+        guild list
+
+DESCRIPTION:
+  Manages your guild membership. Guilds provide bonuses and access to
+  guild-specific skills, equipment, and areas.
+
+  guild info       : shows your current guild and standing
+  guild join <name>: applies to join a guild
+  guild leave      : leaves your current guild
+  guild list       : lists all available guilds
+
+SEE ALSO: skills, faction

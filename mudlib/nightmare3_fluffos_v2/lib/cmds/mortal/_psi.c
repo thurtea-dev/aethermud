@@ -1,0 +1,342 @@
+/* /cmds/mortal/_psi.c
+   Syntax: psi <psionic> [at <target>] */
+
+#include <std.h>
+#include <daemons.h>
+
+inherit DAEMON;
+
+/* Psionic effects whose fx_ handler in rifts_psionics_d.c requires a
+   resolved target and fails without one. Checked before ISP and APM are
+   spent so a failed use costs nothing. Keep in sync with the !target
+   guards there. */
+#define NEED_TARGET_EFFECTS ({ \
+    "read_thoughts", "empathy", "obj_read", "tk", "mind_bolt", \
+    "mind_bolt_heavy", "pyro_bolt", "pyro_blast", "psychic_diag", \
+    "psych_surgery", "induce_sleep", "clairvoyance", "remote_viewing", \
+    "bio_manipulation", "tk_punch", "accelerate_healing", \
+    "psychic_purification", "electrokinesis", "hypnotic_suggestion", \
+    "psychic_locator", "mental_stun", "mind_wipe", "read_aura" })
+
+/* Auto-target the caster's current combat opponent when no target was
+   given and the effect requires one. Duplicated from _magicnet.c's
+   find_combat_target() rather than shared, per instruction not to
+   touch that file. */
+private object find_combat_target(object caster) {
+    object *inv;
+    object *atk;
+    int i;
+
+    if(!caster) return 0;
+    atk = (object *)caster->query_attackers();
+    if(atk && sizeof(atk)) return atk[0];
+    inv = all_inventory(environment(caster));
+    for(i = 0; i < sizeof(inv); i++) {
+        if(!inv[i] || !living(inv[i]) || inv[i] == caster) continue;
+        atk = (object *)inv[i]->query_attackers();
+        if(atk && member_array(caster, atk) != -1) return inv[i];
+    }
+    return 0;
+}
+
+int cmd_psi(string str) {
+    string psi_name;
+    string target_str;
+    object target;
+    mapping pdata;
+    int isp;
+    int isp_cost;
+    int i;
+
+    if(!str || !sizeof(str)) {
+        write("Use which psionic power?  Syntax: psi <power> [at <target>]\n");
+        return 1;
+    }
+
+    if(!(int)RIFTS_D->is_rifts_race((string)this_player()->query_race())) {
+        notify_fail("You do not have psionic abilities.\n");
+        return 0;
+    }
+
+    if(!(int)RIFTS_D->player_has_psi_access(this_player())) {
+        write("You do not have psionic abilities.\n");
+        return 1;
+    }
+
+    /* Parse "psionic at target" */
+    i = strsrch(str, " at ");
+    if(i > 0) {
+        psi_name   = lower_case(str[0..i-1]);
+        target_str = lower_case(str[i+4..]);
+        if(!sizeof(target_str)) target_str = 0;
+    } else {
+        psi_name   = lower_case(str);
+        target_str = 0;
+    }
+
+    psi_name = (string)RIFTS_PSIONICS_D->normalize_psionic_name(psi_name);
+
+    pdata = (mapping)RIFTS_PSIONICS_D->query_psionic(psi_name);
+    if(!pdata) {
+        write("You don't know the psionic power '" + psi_name + "'.\n");
+        return 1;
+    }
+
+    if(!(int)RIFTS_D->player_knows_psionic(this_player(), psi_name)) {
+        write("You don't know the psionic power '" + psi_name + "'.\n");
+        return 1;
+    }
+
+    isp_cost = (int)pdata["isp_cost"];
+    isp = (int)this_player()->query_stats("ISP");
+    if(isp < isp_cost) {
+        write("You don't have enough ISP.  (Need " + isp_cost +
+              ", have " + isp + ".)\n");
+        return 1;
+    }
+
+    target = 0;
+    if(target_str) {
+        if((string)pdata["range"] == "remote")
+            target = RIFTS_PSIONICS_D->find_psi_remote_target(this_player(), target_str);
+        if(!target)
+            target = present(target_str, environment(this_player()));
+    }
+
+    /* Target and range validation happens before any resources are
+       spent: a failed use costs nothing. */
+    if(target_str && !target) {
+        if((string)pdata["range"] == "remote")
+            write("You don't sense anyone like that within range.\n");
+        else
+            write("You don't see '" + target_str + "' here.\n");
+        return 1;
+    }
+    if(!target &&
+       member_array((string)pdata["effect"], NEED_TARGET_EFFECTS) != -1) {
+        target = find_combat_target(this_player());
+        if(!target) {
+            write("Use on whom?  Syntax: psi " + psi_name + " at <target>\n");
+            return 1;
+        }
+    }
+
+    if(target && userp(target) && target != this_player() &&
+       !creatorp(this_player()) &&
+       !(int)this_player()->knows_player((string)target->query_name())) {
+        write("You don't know anyone by that name well enough to focus "
+              "your psionics on them. Try 'introduce' when you meet them "
+              "in person.\n");
+        return 1;
+    }
+
+    /* In combat: spend an APM */
+    if(sizeof((object *)this_player()->query_attackers()) > 0) {
+        if(!(int)RIFTS_COMBAT_D->can_do_attack(this_player())) return 1;
+        RIFTS_COMBAT_D->use_rifts_attack(this_player());
+    }
+
+    /* Deduct ISP */
+    this_player()->set_stats("ISP", isp - isp_cost);
+
+    /* Same prowl break as _kill.c: using psi always abandons stealth. */
+    if((int)this_player()->query_property("is_sneaking")) {
+        this_player()->remove_property("is_sneaking");
+        write("You abandon stealth as you attack!\n");
+    }
+
+    /* Apply effect */
+    RIFTS_PSIONICS_D->apply_psionic_effect(psi_name, target);
+    return 1;
+}
+
+int do_psi_power(string psi_name, string args) {
+    string cmd;
+
+    if(!psi_name || !sizeof(psi_name)) return 0;
+    if(!args || !sizeof(args))
+        cmd = psi_name;
+    else
+        cmd = psi_name + " at " + args;
+    return cmd_psi(cmd);
+}
+
+int do_telepathy_send(string target_str, string message) {
+    object target;
+    mapping pdata;
+    int isp;
+    int isp_cost;
+    string psi_name;
+
+    psi_name = "telepathy";
+    if(!target_str || !sizeof(target_str)) {
+        write("Telepathy whom?  Syntax: telepathy <target> <message>\n");
+        return 1;
+    }
+    if(!message || !sizeof(message)) {
+        write("What message do you want to send?\n");
+        return 1;
+    }
+
+    if(!(int)RIFTS_D->is_rifts_race((string)this_player()->query_race())) {
+        write("You do not have psionic abilities.\n");
+        return 1;
+    }
+
+    if(!(int)RIFTS_D->player_has_psi_access(this_player())) {
+        write("You do not have psionic abilities.\n");
+        return 1;
+    }
+
+    pdata = (mapping)RIFTS_PSIONICS_D->query_psionic(psi_name);
+    if(!pdata) {
+        write("You don't know the psionic power '" + psi_name + "'.\n");
+        return 1;
+    }
+
+    if(!(int)RIFTS_D->player_knows_psionic(this_player(), psi_name)) {
+        write("You don't know the psionic power '" + psi_name + "'.\n");
+        return 1;
+    }
+
+    isp_cost = (int)pdata["isp_cost"];
+    isp = (int)this_player()->query_stats("ISP");
+    if(isp < isp_cost) {
+        write("You don't have enough ISP.  (Need " + isp_cost +
+              ", have " + isp + ".)\n");
+        return 1;
+    }
+
+    target = present(target_str, environment(this_player()));
+    if(!target || !living(target))
+        target = find_living(target_str);
+    if(!target || !living(target)) {
+        write("You don't sense anyone like that within range.\n");
+        return 1;
+    }
+    if(userp(target) && !creatorp(this_player())) {
+        if(!(int)this_player()->knows_player((string)target->query_name())) {
+            write("You don't know anyone by that name well enough to reach "
+                  "their mind. Try 'introduce' when you meet them in person.\n");
+            return 1;
+        }
+    }
+    if(userp(target) && !interactive(target)) {
+        write((string)target->query_cap_name() +
+              " is link-dead and cannot hear you.\n");
+        return 1;
+    }
+    if((int)target->query_property("mind_blocked")) {
+        write(target->query_cap_name() +
+              "'s mind is shielded. Your message cannot get through.\n");
+        return 1;
+    }
+
+    if(sizeof((object *)this_player()->query_attackers()) > 0) {
+        if(!(int)RIFTS_COMBAT_D->can_do_attack(this_player())) return 1;
+        RIFTS_COMBAT_D->use_rifts_attack(this_player());
+    }
+
+    this_player()->set_stats("ISP", isp - isp_cost);
+
+    /* Same prowl break as _kill.c. */
+    if((int)this_player()->query_property("is_sneaking")) {
+        this_player()->remove_property("is_sneaking");
+        write("You abandon stealth as you attack!\n");
+    }
+
+    RIFTS_PSIONICS_D->apply_telepathy_send(target, message);
+    return 1;
+}
+
+int do_telepathy(string str) {
+    string target_str;
+    string message;
+    int i;
+
+    if(!str || !sizeof(str)) {
+        write("Telepathy whom?  Syntax: telepathy <target> [message]\n");
+        return 1;
+    }
+    i = strsrch(str, " ");
+    if(i < 0)
+        return do_psi_power("telepathy", str);
+
+    target_str = lower_case(str[0..i - 1]);
+    message = str[i + 1..];
+    if(!message || !sizeof(message))
+        return do_psi_power("telepathy", target_str);
+
+    return do_telepathy_send(target_str, message);
+}
+
+/* Called from chat.c after all other command paths have failed.
+   Receives the full input string (verb + optional " arg"). Mirrors
+   try_spell_shortcut() in _cast.c: supports bare "<psi name> <target>",
+   "<psi name> at <target>", and "<psi name>" alone (relying on
+   cmd_psi()'s own combat auto-target for effects that need one).
+   Returns 1 and activates the psionic if the player knows the named
+   power; 0 to fall through. */
+int try_psi_shortcut(string str) {
+    string psi_part;
+    string target_part;
+    string psi_name;
+    string *words;
+    mapping pdata;
+    int at_pos;
+    int i;
+    int n;
+
+    if(!str || !sizeof(str)) return 0;
+    if(!this_player()) return 0;
+    if(!(int)RIFTS_D->is_rifts_race((string)this_player()->query_race())) return 0;
+    if(!(int)RIFTS_D->player_has_psi_access(this_player())) return 0;
+
+    at_pos = strsrch(str, " at ");
+    if(at_pos > 0) {
+        psi_part = lower_case(str[0..at_pos-1]);
+        target_part = lower_case(str[at_pos+4..]);
+        if(!sizeof(target_part)) target_part = 0;
+    } else {
+        psi_part = lower_case(str);
+        target_part = 0;
+    }
+
+    psi_name = (string)RIFTS_PSIONICS_D->normalize_psionic_name(psi_part);
+    pdata = (mapping)RIFTS_PSIONICS_D->query_psionic(psi_name);
+
+    /* "mindbolt grunt": no " at " and the whole string is not a known
+       psionic. Try progressively shorter word prefixes as the psionic
+       name and treat the remainder as the target. */
+    if(!pdata && !target_part) {
+        words = explode(psi_part, " ");
+        n = sizeof(words);
+        for(i = n - 1; i >= 1; i--) {
+            psi_name = (string)RIFTS_PSIONICS_D->normalize_psionic_name(
+              implode(words[0..i-1], " "));
+            pdata = (mapping)RIFTS_PSIONICS_D->query_psionic(psi_name);
+            if(pdata) {
+                target_part = implode(words[i..n-1], " ");
+                break;
+            }
+        }
+    }
+
+    if(!pdata) return 0;
+    if(!(int)RIFTS_D->player_knows_psionic(this_player(), psi_name)) return 0;
+    if(target_part)
+        return cmd_psi(psi_name + " at " + target_part);
+    return cmd_psi(psi_name);
+}
+
+void help() {
+    write(
+        "Syntax: psi <power> [at <target>]\n\n"
+        "Activate a psionic ability.  Costs ISP.  In combat, costs 1 APM.\n\n"
+        "  Examples:\n"
+        "    psi telepathy at guard\n"
+        "    psi mind block\n"
+        "    psi telekinesis at crate\n\n"
+        "Type <psionics> to see your known powers and ISP cost.\n"
+    );
+}

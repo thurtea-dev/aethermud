@@ -1,0 +1,8 @@
+WITHDRAW
+
+Syntax: withdraw <amount>
+
+Used at the Praxis bank with your ATM card. Withdraws credits from your
+account. You must be in the bank room.
+
+SEE ALSO: currency, give, credits

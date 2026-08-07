@@ -1,0 +1,50 @@
+/*
+// The "ed" command.
+// Written by Buddha (2-19-92)
+// Part of the TMI mudlib.
+*/
+
+#include <std.h>
+
+inherit DAEMON;
+
+int cmd_ed(string file) {
+   string tmp;
+   int i;
+   
+    if(!file) {
+        notify_fail("Syntax: <ed [filename]>\n");
+	return 0;
+    }
+    if(this_player()->query_forced()) {
+        write("Someone tried to force you to ed "+file);
+        return 1;
+    }
+   tmp = (string)this_player()->get_path();
+   file = absolute_path(tmp, file);
+    /* No extension and it doesn't exist as given -- retry as a .c
+       file, since that's what every real source path in this mudlib
+       actually is. */
+    if(file_size(file) == -1 && strsrch(file, ".") == -1)
+        file = file + ".c";
+    if(file_size(file) == -2) {
+	notify_fail("You cannot edit a directory!\n");
+	return 0;
+    }
+   if((i=file_size(file)) > -1)
+      message("write", sprintf("%s , %d bytes:", file, i), this_player());
+   if(!ed(file)) write("Failed to edit " + file);
+   return 1;
+}
+
+int help()
+{
+  write( @EndText
+Syntax: ed [filename]
+Effect: edits the file named <filename>
+See doc: /doc/immortals/ed
+See man: ed
+EndText
+  );
+  return 1;
+}

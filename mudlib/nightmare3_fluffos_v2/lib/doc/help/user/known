@@ -1,0 +1,13 @@
+KNOWN: Players you recognize
+
+Syntax: known
+
+DESCRIPTION:
+  Lists every player whose name you recognize. Online players show their
+  character name. Offline entries show the stored name.
+
+NOTES:
+  Recognition comes from introduce, remember, or being introduced to you.
+  Strangers you do not recognize appear by race in room descriptions.
+
+SEE ALSO: remember, forget, introduce

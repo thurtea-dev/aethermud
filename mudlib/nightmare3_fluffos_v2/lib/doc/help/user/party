@@ -1,0 +1,20 @@
+PARTY
+
+Syntax: party form <name>
+        party join <name>
+        party add <player>
+        party remove <player>
+        party leader <player>
+        party leave
+        party list
+
+Forms or manages a party: a group of players who share experience
+based on relative level when they fight together. The player who
+forms a party is its leader; only the leader may add, remove, or
+transfer leadership.
+
+Party membership has no chat line of its own. To talk with party
+members who are not in your room, use tell (private, one-to-one) or
+agree on a radio frequency and use a carried radio.
+
+See also: follow, kill, radio, tell

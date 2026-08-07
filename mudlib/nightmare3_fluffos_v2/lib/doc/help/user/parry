@@ -1,0 +1,13 @@
+PARRY: Manually parry an incoming attack
+
+Syntax: parry
+
+DESCRIPTION:
+  Attempts to parry the next incoming melee attack in combat. Each parry
+  attempt costs 1 APM. You must have a weapon or shield wielded to parry.
+
+  Parry bonus: +1 per PP above 10 (Physical Prowess attribute).
+
+  For automatic parrying every round, use: autoparry on
+
+SEE ALSO: autoparry, dodge, autododge, combat

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roadmap - AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="play.html">Play</a>
+      <a href="world.html">World</a>
+      <a href="races.html">Races</a>
+      <a href="classes.html">Classes</a>
+      <a href="chargen.html">Chargen</a>
+      <a href="commands.html">Commands</a>
+      <a href="roadmap.html" aria-current="page">Roadmap</a>
+    </nav>
+  </header>
+
+  <h1>Roadmap</h1>
+  <p class="meta-line">Updated 2026-07-26. Sources: <code>docs/ASSESSMENT.md</code>, <code>docs/zone-expansion-plan.md</code>, <code>docs/playtest-checklist.md</code>, <code>CLAUDE.md</code>.</p>
+  <ul>
+    <li>Done: core game, Fedora transfer package, apprentice kit, warmboot, Tolkeen, Horton wilderness, Chi-Town burbs/city, help system, staff <code>www/</code> pages.</li>
+    <li>Counts: 62 races, 66 classes, 114 spells, 51 psionics, 157 skills.</li>
+  </ul>
+
+  <h2>Now (ops and playtest)</h2>
+  <ol>
+    <li>Copy <code>production-aethermud/</code> to Fedora Workstation. Follow <code>internal/install-aethermud.md</code>: SHA256, extract, rebuild FluffOS, <code>./mud.sh start</code>.</li>
+    <li>Playtest from <code>docs/playtest-checklist.md</code> (password <code>playtestaa</code> for <code>pt*</code>):
+      <ul>
+        <li>Races: dragons, vampires, atlanteans, titans</li>
+        <li>Cyber-Knight on <code>ptcknight</code></li>
+        <li>Tolkeen (<code>rift tolkeen</code>) and Horton wilderness</li>
+      </ul>
+    </li>
+    <li>Promote online wizard candidates:
+      <pre>makewiz ptdacon
+makewiz ptcoder
+makewiz ptrpwiz</pre>
+      Then <code>kit</code> (domain / coding / rp). Domain review: <code>domain</code> option 10; coding: <code>review</code>. Then <code>setrole &lt;name&gt; domain|coding|rp</code>.
+    </li>
+    <li>Optional: <code>python3 tools/section8_verify4.py</code> with MUD up.</li>
+  </ol>
+
+  <h2>Phase A (zone depth)</h2>
+  <p>Exit criteria: 2 to 3 hours of exploration from Chi-Town, Splynn, or New Camelot without looping the same ~20 rooms.</p>
+  <ol>
+    <li><strong>Done.</strong> Chi-Town burbs + city (~53 rooms; +1 2026-07-28, a nest room paying off maintenance-tunnel foreshadowing).</li>
+    <li><strong>Done.</strong> Tolkeen (~29 rooms: core, siege edge, crypt).</li>
+    <li><strong>Done.</strong> Horton wilderness (~27 rooms).</li>
+    <li><strong>Partial.</strong> Splynn Preserves (26 rooms, closed loop + depth on 5 dead ends as of 2026-07-28). Remaining: market depth, ~4 more rooms to the original +30 target (2 of the prior dead ends are deliberately terminal, not pending growth; 1 more, Thornbrake Den, is available for a future pass).</li>
+    <li>Optional: more Chi-Town / Splynn / NGR interiors if playtest finds thin spots.</li>
+  </ol>
+
+  <h2>Phase B (signature destinations)</h2>
+  <ol>
+    <li>Stormshire / Federation of Magic v1 (~80 to 120 rooms). Hook via Moxim and Americas wilderness.</li>
+    <li>New Camelot / NGR connectors (~+20 travel rooms, 1 to 2 side villages).</li>
+    <li><strong>Done</strong> against the room-count target (23 rooms as of 2026-07-26: kennel wing, incubation core, drainage escape route, civilian support town; original target was ~+20 to 30 total) <strong>but has zero quest content</strong> - "done" here means the named sub-areas exist, not that the zone is finished. (9 living-being files total, a mix of staff/vendor NPCs and 4 real combat threats - population itself is reasonable for the room count, corrected 2026-07-28 from an earlier undercount of 6.)</li>
+  </ol>
+  <p>Exit criteria: Chi-Town, New Camelot, Splynn, Stormshire, and Tolkeen each support a mid-level visit.</p>
+
+  <h2>Phase C (later)</h2>
+  <ul>
+    <li>Africa (Phoenix Empire postcard)</li>
+    <li>Japan</li>
+    <li>Australia</li>
+    <li>Deeper demon / dimensional planes</li>
+  </ul>
+  <p>Each: 15 to 25 rooms, one vendor, one threat, one unique loot. Do not block soft launch.</p>
+
+  <h2>Systems and parity</h2>
+  <ul>
+    <li><strong>Done.</strong> Chargen accept/reroll; no elective/secondary skill picking at creation; admin <code>repairchar</code> / <code>makechar</code>.</li>
+    <li><strong>Done.</strong> Praxis Refuge Inn (<code>hotelroom101-110</code>), Survivors' Hostel (<code>inn101-110</code>), cemetery under <code>domains/Praxis/cemetary/</code> (legacy spelling).</li>
+    <li>Vehicle interiors; more PLD encyclopedia entries</li>
+    <li>Help: class topics essentially complete. Skill help thin: 119 of 158 skills lack a <code>doc/help/user</code> topic (39 have one), measured 2026-07-27 against 370 topic files.</li>
+    <li>Quest coverage: was thin outside the original 3 hubs (Tolkeen, Horton, Lone Star, Splynn/Atlantis, NGR, Puerto Angel, Lazlo had zero despite built rooms, measured 2026-07-28). Closed same day: one quest added per zone (18 total registered now), each using existing rooms/NPCs/monsters. Still thinner than the original 3 hubs (1 quest each vs. up to 6) - more can be added per zone later, this was a floor not a ceiling.</li>
+    <li>Combat-threat density: fixed for NGR and Puerto Angel (2026-07-28; an initial directory-based count had missed NPCs filed as monsters and vice versa, corrected by re-measuring by content, not folder name). NGR's <code>gargoyle_raider</code> now spawns at 4 points (No Man's Land, the frontline trench, the patrol road, and the new Gargoyle Ridge east of No Man's Land). Puerto Angel's <code>wild_vampire</code> now spawns at 2 (the harbor, the outskirts). Lazlo left as intentionally lower-danger by design, not a gap - see zone-expansion-plan.md.</li>
+    <li>No weather system - environmental hazards (e.g. sunlight vulnerability) are purely time-of-day driven, not weather-driven.</li>
+    <li>Player-run shops</li>
+    <li>Website: in-game help browser over HTTP</li>
+    <li>Modern FluffOS cutover: paused under <code>archive/</code></li>
+  </ul>
+
+  <h2>Sprint order</h2>
+  <pre>1. Fedora install + playtest + wizard promotions
+2. Splynn Preserves (+30, 26/30 done)
+3. Stormshire v1 core (+80)
+4. Europe connectors + Lone Star (+40, Lone Star 23/20-30 done)
+5. Systems/parity as they block play
+6. Phase C when Phase B is solid</pre>
+
+  <h2>Build rules</h2>
+  <ul>
+    <li>Spawns in <code>reset()</code> with <code>present()</code> guards; never NPCs in <code>set_long</code></li>
+    <li>One purpose per area: combat, shopping, RP hub, or quest spine</li>
+    <li>Hook new zones to Moxim and/or a walkable path from an existing hub</li>
+    <li>Preload-compile new rooms; clean <code>log/catch</code> before calling a phase done</li>
+    <li>Full reboot after <code>/std/</code> or simul-efun changes; <code>warmboot</code> for daemons/cmds/domains</li>
+  </ul>
+
+  <h2>Related docs</h2>
+  <ul>
+    <li><code>docs/zone-expansion-plan.md</code></li>
+    <li><code>docs/playtest-checklist.md</code> / <code>docs/playtest-roster.md</code></li>
+    <li><code>internal/install-aethermud.md</code></li>
+    <li><code>CLAUDE.md</code></li>
+    <li><code>nightmare3_fluffos_v2/lib/domains/Praxis/adm/master_gap_report.txt</code></li>
+  </ul>
+</body>
+</html>

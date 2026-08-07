@@ -1,0 +1,18 @@
+IMPROVE: Spend a skill slot to raise a known skill
+
+Syntax: improve <skill>
+
+Spend one pending skill slot to raise a skill you already know. Each
+slot adds that skill's normal per-level percentage (varies by skill,
+usually +4 or +5). You earn one pending slot each time you advance a
+level with the advance command.
+
+Examples:
+  improve first aid
+  improve wp knife
+  improve prowl
+
+Check pending slots on score. List your skills with the skills
+command.
+
+SEE ALSO: skills, advance, score

@@ -1,0 +1,11 @@
+DESCRIBE
+
+Syntax: describe <text>
+        describe
+
+Sets a short description shown when others examine you.
+Example: describe is a scarred veteran in dusty armor.
+
+Clears the description when typed with no argument.
+
+SEE ALSO: customize, look, picture

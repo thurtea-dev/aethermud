@@ -1,0 +1,22 @@
+EMOTE: Perform a social action
+
+Syntax: emote <action>
+        :<action>
+
+DESCRIPTION:
+  Describes an action you perform, visible to everyone in the room.
+  Your name is automatically prepended. The : prefix is shorthand for
+  emote: ":waves at the crowd." works exactly like "emote waves at
+  the crowd."
+
+  emote (and :) is the only action command. There are no separate
+  single-word commands like nod, smile, or wave; type out the action
+  you want instead.
+
+EXAMPLE:
+  emote waves at the crowd.
+  :waves at the crowd.
+
+  Output to others: Thurtea waves at the crowd.
+
+SEE ALSO: say, tell, whisper, ooc, pemote

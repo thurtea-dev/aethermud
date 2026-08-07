@@ -1,0 +1,12 @@
+UNLOAD: Remove ammunition from a ranged weapon
+
+Syntax: unload <weapon>
+
+DESCRIPTION:
+  Removes the current ammo/clip from a ranged weapon and places it in your
+  inventory. Use this to swap to a different ammo type or free up a clip.
+
+EXAMPLE:
+  unload cp40 laser
+
+SEE ALSO: reload, eject, wield, weapons

@@ -1,0 +1,18 @@
+PICTURE: ASCII character portrait
+
+Syntax: picture
+        picture set
+        picture clear
+        picture show <player>
+
+DESCRIPTION:
+  Store a small ASCII portrait on your character.
+
+  picture              view your own portrait
+  picture set          enter a multi-line portrait (. to finish)
+  picture clear        remove your portrait
+  picture show <name>  view a portrait when that player is in the room
+
+  Limits: 15 lines, 72 characters per line.
+
+SEE ALSO: customize, describe, look

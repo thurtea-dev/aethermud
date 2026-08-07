@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Commands - AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="play.html">Play</a>
+      <a href="world.html">World</a>
+      <a href="races.html">Races</a>
+      <a href="classes.html">Classes</a>
+      <a href="chargen.html">Chargen</a>
+      <a href="commands.html" aria-current="page">Commands</a>
+      <a href="roadmap.html">Roadmap</a>
+    </nav>
+  </header>
+
+  <h1>Commands</h1>
+  <ul>
+    <li>Common mortal commands (aliases / niche utilities omitted).</li>
+    <li>In-game: <code>commands</code> for a category column list; <code>help &lt;topic&gt;</code> for detail.</li>
+    <li>Help format: <code>help</code> / <code>help &lt;category&gt;</code> / <code>help &lt;topic&gt;</code> / <code>help index</code>. Multi-word topics as one word (e.g. <code>help armorofithan</code>).</li>
+  </ul>
+
+  <h2>Movement and world</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>look</code></td><td>Room, object, or direction. Handles darkness.</td></tr>
+    <tr><td><code>examine</code></td><td>Long description, condition, value.</td></tr>
+    <tr><td><code>get</code> / <code>take</code></td><td>Pick up an item.</td></tr>
+    <tr><td><code>drop</code></td><td>Drop item or money.</td></tr>
+    <tr><td><code>give</code></td><td>Give item or money to a player or NPC.</td></tr>
+    <tr><td><code>push</code></td><td>Push an object (some triggers hidden).</td></tr>
+    <tr><td><code>dig</code></td><td>Dig at certain Splynn spots with a wielded shovel.</td></tr>
+    <tr><td><code>face</code></td><td>Face a direction or person.</td></tr>
+    <tr><td><code>follow</code></td><td><code>follow allow &lt;who&gt;</code>, or follow someone who allowed you.</td></tr>
+    <tr><td><code>left</code> / <code>right</code></td><td>Active hand.</td></tr>
+    <tr><td><code>where</code></td><td>Site-based location lookup.</td></tr>
+    <tr><td><code>sites</code></td><td>Allowed login sites.</td></tr>
+  </table>
+
+  <h2>Communication</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>say</code></td><td>Speak (language system).</td></tr>
+    <tr><td><code>shout</code></td><td>Room shout; no language filter; 5s cooldown.</td></tr>
+    <tr><td><code>party</code></td><td>Form/join/leave/add/remove/list. No party chat; use radio.</td></tr>
+    <tr><td><code>whisper</code></td><td>Private message, same room.</td></tr>
+    <tr><td><code>tell</code></td><td>Player to staff and staff to player only. Not player to player; use <code>telepathy</code>. Staff also get intermud <code>user@mud</code>.</td></tr>
+    <tr><td><code>reply</code></td><td>Reply to last tell. Same staff-only reach as <code>tell</code>.</td></tr>
+    <tr><td><code>emote</code> / <code>pemote</code></td><td>Emote / possessive emote.</td></tr>
+    <tr><td><code>converse</code></td><td>Repeated say mode.</td></tr>
+    <tr><td><code>speak</code></td><td>Speak a known language.</td></tr>
+    <tr><td><code>language</code> / <code>languages</code></td><td>Set or list spoken languages.</td></tr>
+    <tr><td><code>tongues</code></td><td>Cast Tongues if known; else report comprehension.</td></tr>
+    <tr><td><code>ooc</code></td><td>Room-local [OOC]; not a global channel.</td></tr>
+    <tr><td><code>radio</code></td><td>Carried radio transmit/receive.</td></tr>
+    <tr><td><code>watchradio</code></td><td>Toggle radio receive.</td></tr>
+    <tr><td><code>card</code></td><td>Set/show business card (room or one player).</td></tr>
+    <tr><td><code>greet</code> / <code>introduce</code></td><td>Greet / formal introduce (learn names).</td></tr>
+    <tr><td><code>remember</code> / <code>forget</code></td><td>Face list add/remove.</td></tr>
+    <tr><td><code>known</code></td><td>List recognized players.</td></tr>
+    <tr><td><code>request title &lt;title&gt;</code></td><td>Ask RP-Wiz for RP prefix title.</td></tr>
+    <tr><td><code>echo</code></td><td>RP room echo (staff-logged).</td></tr>
+    <tr><td><code>harass</code></td><td>Toggle abuse session logging.</td></tr>
+    <tr><td><code>snoopable</code></td><td>Grant/revoke low-level staff snoop permission.</td></tr>
+    <tr><td><code>finger</code></td><td>Finger info; remote <code>user@mud</code>.</td></tr>
+    <tr><td><code>chfn</code></td><td>Change own finger info.</td></tr>
+    <tr><td><code>peer</code></td><td>Peer room/direction; light-gated.</td></tr>
+  </table>
+
+  <h2>Combat</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>kill</code></td><td>Start combat. Melee or ranged, whichever you have wielded. There is no separate firing command.</td></tr>
+    <tr><td><code>assist</code></td><td>Join ally combat.</td></tr>
+    <tr><td><code>flee</code></td><td>Flee; 1 APM; PP-based chance, min 30%.</td></tr>
+    <tr><td><code>stop</code></td><td>End attacks.</td></tr>
+    <tr><td><code>dodge</code> / <code>parry</code></td><td>Shortcuts for autododge / autoparry.</td></tr>
+    <tr><td><code>autododge</code></td><td>Spend 1 APM/attack to dodge instead of free autoparry.</td></tr>
+    <tr><td><code>autoparry</code></td><td>Free auto-parry on incoming attacks (default on).</td></tr>
+    <tr><td><code>stance</code></td><td>offensive / defensive / standard.</td></tr>
+    <tr><td><code>combat</code></td><td>Combat stats.</td></tr>
+    <tr><td><code>assassinate</code> / <code>assassination</code></td><td>Prowl ambush with blade; assassin-type class.</td></tr>
+    <tr><td><code>reload</code></td><td>Load e-clip.</td></tr>
+    <tr><td><code>unload</code></td><td>Unload remaining ammo to partial e-clip.</td></tr>
+    <tr><td><code>wimpy</code></td><td>Auto-flee HP %.</td></tr>
+    <tr><td><code>wimpydir</code></td><td>Flee direction.</td></tr>
+    <tr><td><code>sneak</code> / <code>hide</code></td><td>Prowl roll to move silently.</td></tr>
+    <tr><td><code>prowl</code></td><td>Hide move messages on successful Prowl until attack/speak.</td></tr>
+    <tr><td><code>lockpick</code></td><td>Pick Locks skill; failed picks can injure.</td></tr>
+    <tr><td><code>treat</code> / <code>bandage</code></td><td>First Aid: 1d6 HP or SDC.</td></tr>
+    <tr><td><code>limbs</code></td><td>Medical Doctor: condition + missing limbs.</td></tr>
+    <tr><td><code>replace</code></td><td>Medical Doctor: <code>replace &lt;player&gt; &lt;limb&gt;</code>.</td></tr>
+    <tr><td><code>body</code></td><td>Damage pools + missing limbs.</td></tr>
+    <tr><td><code>saving_throws</code></td><td>Saving throws.</td></tr>
+  </table>
+
+  <h2>Magic and psionics</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>cast &lt;spell&gt;</code></td><td>Cast; optional <code>at &lt;target&gt;</code>.</td></tr>
+    <tr><td><code>psi &lt;power&gt;</code></td><td>Use power; optional <code>at &lt;target&gt;</code>.</td></tr>
+    <tr><td><code>spells</code> / <code>psionics</code></td><td>List known spells / powers.</td></tr>
+    <tr><td><code>psihelp</code></td><td>Help for psionics topics.</td></tr>
+    <tr><td><code>telepathy</code>, <code>empathy</code>, <code>mindblock</code>, <code>objectread</code>, <code>senseevil</code>, <code>telekinesis</code></td><td>Power shortcuts.</td></tr>
+    <tr><td><code>psisword</code></td><td>Cyber-Knight psychic blade; 10 ISP.</td></tr>
+    <tr><td><code>remoteview</code></td><td>Locate known player by name.</td></tr>
+    <tr><td><code>readaura</code></td><td>True race/level, same room; pierces disguise / appearance-override armor; costs ISP.</td></tr>
+    <tr><td><code>armorofithan</code></td><td>Cast that spell.</td></tr>
+    <tr><td><code>magicnet</code></td><td>Magic Net on current opponent.</td></tr>
+  </table>
+
+  <h2>Character info and progression</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>score</code></td><td>Character sheet.</td></tr>
+    <tr><td><code>stats</code></td><td>Attributes.</td></tr>
+    <tr><td><code>abilities</code></td><td>Racial and class abilities.</td></tr>
+    <tr><td><code>experience</code></td><td>XP to next level.</td></tr>
+    <tr><td><code>advance</code></td><td>Level up: HP/MDC, PPE/ISP per class table.</td></tr>
+    <tr><td><code>improve</code></td><td>Spend pending skill slot on a known skill.</td></tr>
+    <tr><td><code>skills</code></td><td>Known skills by category.</td></tr>
+    <tr><td><code>pskills</code> / <code>sskills</code></td><td>Primary package / secondary skills.</td></tr>
+    <tr><td><code>skillrequest</code></td><td>Numbered class skill picker; request or cancel.</td></tr>
+    <tr><td><code>roll &lt;skill&gt;</code></td><td>d100 vs named skill.</td></tr>
+    <tr><td><code>bionics</code></td><td>Installed cybernetics.</td></tr>
+    <tr><td><code>eq</code> / <code>equipment</code> / <code>worn</code></td><td>Worn/wielded by slot.</td></tr>
+    <tr><td><code>inventory</code></td><td>Carried items.</td></tr>
+    <tr><td><code>money</code> / <code>credits</code></td><td>Currency on hand.</td></tr>
+    <tr><td><code>exchange</code></td><td>Smuggler credit / black-market exchange.</td></tr>
+    <tr><td><code>faction</code> / <code>reputation</code></td><td>Faction standing.</td></tr>
+    <tr><td><code>wanted</code></td><td>Infamy / wanted status.</td></tr>
+    <tr><td><code>kills</code> / <code>lastkiller</code></td><td>Kill count / last killer.</td></tr>
+    <tr><td><code>biography</code></td><td>Birth, marriage, kills, quests.</td></tr>
+    <tr><td><code>quests</code></td><td>Active and completed quests.</td></tr>
+    <tr><td><code>customize</code></td><td>Appearance editor.</td></tr>
+    <tr><td><code>describe</code></td><td>Set/clear description.</td></tr>
+    <tr><td><code>picture</code></td><td>ASCII portrait.</td></tr>
+    <tr><td><code>position &lt;text&gt;</code></td><td>RP position string in room listings.</td></tr>
+    <tr><td><code>clan</code></td><td>Aerihman clan join/inquire.</td></tr>
+    <tr><td><code>metamorph</code></td><td>GHD / changeling / vampire shapeshift.</td></tr>
+    <tr><td><code>breath</code></td><td>Racial breath weapon.</td></tr>
+    <tr><td><code>fly</code></td><td>Racial flight toggle.</td></tr>
+    <tr><td><code>telemechanics</code></td><td>Racial machine interface.</td></tr>
+    <tr><td><code>tattoo</code> / <code>touch</code></td><td>Atlantean tattoo list/activate/status.</td></tr>
+  </table>
+
+  <h2>Roleplay, social, economy</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>guild</code></td><td>Create/invite/accept/decline/kick/leave/bank/tag.</td></tr>
+    <tr><td><code>trade</code></td><td>Player trade session.</td></tr>
+    <tr><td><code>slave</code></td><td>Splynn: list/free owned slaves.</td></tr>
+    <tr><td><code>mail</code></td><td>List/read/send/delete/clear mail.</td></tr>
+    <tr><td><code>forward</code></td><td>Forward mail to another player.</td></tr>
+    <tr><td><code>rift</code></td><td>Rift travel to purchased destination.</td></tr>
+    <tr><td><code>drive</code></td><td>Tier-1 vehicle; needs fuel and vehicle-accessible room.</td></tr>
+    <tr><td><code>pilot</code></td><td>Mount/status/dismount; matching pilot skill.</td></tr>
+    <tr><td><code>eject</code></td><td>Eject from vehicle or strip power armor quickly.</td></tr>
+    <tr><td><code>store</code> / <code>retrieve</code></td><td>Dimensional pocket store/retrieve.</td></tr>
+    <tr><td><code>rest</code> / <code>wake</code></td><td>Rest heal (tabletop rates) where allowed; wake.</td></tr>
+    <tr><td><code>pray</code></td><td>Death chamber: shorten auto-resurrect (2m to 30s).</td></tr>
+    <tr><td><code>meditate</code></td><td>PPE on ley line, or ISP anywhere; 10m cooldown.</td></tr>
+    <tr><td><code>setrespawn</code></td><td>Set respawn to current room (if allowed).</td></tr>
+  </table>
+
+  <h2>System</h2>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>help</code></td><td>Categories / topics / index (see lead).</td></tr>
+    <tr><td><code>commands</code></td><td>Column list by category.</td></tr>
+    <tr><td><code>faq</code></td><td>FAQ.</td></tr>
+    <tr><td><code>news</code></td><td>Login news.</td></tr>
+    <tr><td><code>date</code></td><td>Mud time.</td></tr>
+    <tr><td><code>version</code></td><td>Mud/driver/mudlib version + uptime.</td></tr>
+    <tr><td><code>nextreboot</code></td><td>Time to scheduled reboot.</td></tr>
+    <tr><td><code>cls</code></td><td>Clear ANSI screen.</td></tr>
+    <tr><td><code>color</code> / <code>colorize</code></td><td>ANSI on/off.</td></tr>
+    <tr><td><code>testcolor</code></td><td>Color-tag sample after <code>colorize</code>.</td></tr>
+    <tr><td><code>brief</code></td><td>Short room descriptions.</td></tr>
+    <tr><td><code>prompt</code></td><td>View/set prompt.</td></tr>
+    <tr><td><code>sbar</code></td><td>Post-move HP/SDC/MDC/PPE/ISP bar.</td></tr>
+    <tr><td><code>password</code> / <code>passwd</code></td><td>Change password.</td></tr>
+    <tr><td><code>save</code></td><td>Force save.</td></tr>
+    <tr><td><code>lineecho</code> / <code>lines</code> / <code>setenv</code></td><td>Line echo; channel block list; env (SCREEN, LINES, TZONE, TERM).</td></tr>
+    <tr><td><code>posting</code></td><td>Who is in editor/mailer.</td></tr>
+    <tr><td><code>idle</code></td><td>Idle time.</td></tr>
+    <tr><td><code>who</code></td><td>Player list; mortals see staff tags + count.</td></tr>
+    <tr><td><code>users</code></td><td>Connected non-invisible names.</td></tr>
+    <tr><td><code>mudlist</code> / <code>mudparty</code> / <code>rwho</code></td><td>Intermud list / party / remote who.</td></tr>
+    <tr><td><code>suicide</code></td><td>Delete level &lt;= 3 character (typed confirm).</td></tr>
+    <tr><td><code>bug</code> / <code>idea</code> / <code>typo</code> / <code>mudidea</code> / <code>praise</code></td><td>Staff reports.</td></tr>
+  </table>
+</body>
+</html>

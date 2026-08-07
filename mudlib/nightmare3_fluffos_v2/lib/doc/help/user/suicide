@@ -1,0 +1,21 @@
+SUICIDE: Permanently delete your character
+
+Syntax: suicide
+
+DESCRIPTION:
+  Permanently deletes your character. Only available to characters
+  level 3 or below. You will be asked to type YES to confirm.
+  Any other response cancels the command.
+
+  Wizards cannot use suicide.
+
+  This command is blocked while you are in combat.
+
+  Once confirmed, your character is deleted immediately and your
+  name becomes available for a new character.
+
+NOTE:
+  Characters above level 3 are permanently lost when killed with
+  zero lives remaining. See 'help death'.
+
+SEE ALSO: quit, death

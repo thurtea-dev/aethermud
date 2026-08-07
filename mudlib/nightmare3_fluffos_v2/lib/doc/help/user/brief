@@ -1,0 +1,28 @@
+BRIEF: Toggle brief room description mode
+
+Syntax: brief
+        brief on
+        brief off
+        brief status
+
+DESCRIPTION:
+  In brief mode you receive shorter room descriptions when you move.
+  The room name and exits are still displayed; the full description
+  is omitted.
+
+  Your brief setting is saved between logins.
+
+COMMANDS:
+  brief
+      Toggles between brief and verbose mode.
+
+  brief on
+      Enables brief mode.
+
+  brief off
+      Disables brief mode (returns to verbose).
+
+  brief status
+      Shows whether brief mode is currently on or off.
+
+SEE ALSO: look, score

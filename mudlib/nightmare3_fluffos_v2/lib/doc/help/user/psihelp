@@ -1,0 +1,29 @@
+PSIHELP: Psionic help shortcut and category
+
+Syntax: psihelp
+        psihelp <topic>
+        help psihelp
+
+DESCRIPTION:
+  Opens psionic help. With no argument, shows the full psionics overview.
+  With a topic, shows help for that psionic command or power.
+
+  Examples:
+    psihelp
+    psihelp psi
+    psihelp telepathy
+    psihelp psionics
+
+  Typing "help psihelp" (rather than running the psihelp command) lists
+  every individual psionic power topic in one category, the same way
+  "help skills" lists skills. Psionic powers are not filed under the
+  general skills category; they live under psihelp.
+
+NOTES:
+  The psihelp command is a shortcut for help psionics and related
+  psionic topics. You must have psionic access through your race or
+  OCC to use psi powers.
+  For this file itself when the "help psihelp" bare word is claimed by
+  the category listing, type: help psihelp overview
+
+SEE ALSO: psionics, psi, telepathy, isp, meditate

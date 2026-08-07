@@ -1,0 +1,10 @@
+REPLY
+
+Syntax: reply <message>
+
+Replies to the last tell you received.
+
+Reply rides the tell channel, so it has the same reach as tell: mortals
+can only reply to staff. To answer another player, use telepathy.
+
+SEE ALSO: tell, telepathy, communication

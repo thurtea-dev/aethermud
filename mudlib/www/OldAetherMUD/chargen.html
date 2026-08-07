@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chargen - AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="play.html">Play</a>
+      <a href="world.html">World</a>
+      <a href="races.html">Races</a>
+      <a href="classes.html">Classes</a>
+      <a href="chargen.html" aria-current="page">Chargen</a>
+      <a href="commands.html">Commands</a>
+      <a href="roadmap.html">Roadmap</a>
+    </nav>
+  </header>
+  <h1>Character creation</h1>
+  <ul>
+    <li>Account login, then character select. Max 5 characters per non-staff account.</li>
+    <li>Room: <code>/domains/Praxis/setter.c</code>. No guide NPC; the room drives every prompt itself.</li>
+    <li>Pool: 62 races, 66 classes, 158 skills (class/RCC package at finish; more skills via RP-Wiz in play).</li>
+    <li>Answers are plain words/names (no command verb).</li>
+  </ul>
+
+  <h2>Login</h2>
+  <ol>
+    <li>Account name</li>
+    <li>Password</li>
+    <li>Character select: number, or <code>new</code></li>
+    <li>New character: gender (<code>male</code> / <code>female</code>), optional display name</li>
+  </ol>
+
+  <h2>Chargen steps</h2>
+  <ol>
+    <li>Zone: <code>americas</code>, <code>atlantis</code>, or <code>europe</code></li>
+    <li>Attributes: <code>roll</code>, then <code>accept</code> or <code>reroll</code> (up to 4 rerolls). Race locked until <code>accept</code>.</li>
+    <li>Race: <code>list</code>, then name (e.g. <code>human</code>)</li>
+    <li>Alignment: name (e.g. <code>scrupulous</code>)</li>
+    <li>Class: <code>list</code>, then name (e.g. <code>headhunter</code>), or <code>none</code></li>
+    <li>Finish: package skills, languages, gear, teleport to zone start. No elective/secondary skill picking at chargen.</li>
+  </ol>
+
+  <h2>Example</h2>
+  <pre>What account name do you wish? myaccount
+Password: ********
+
+=== Character Select ===
+  1. Myfirst
+  new. Create a new character
+Choose a character number, or 'new': new
+Enter a name for your new character: mysecond
+...
+&gt; americas
+&gt; roll
+&gt; reroll
+&gt; accept
+&gt; human
+&gt; scrupulous
+&gt; headhunter</pre>
+
+  <h2>Start rooms</h2>
+  <ul>
+    <li>Americas (Chi-Town): <code>/domains/ChiTown/areas/chitown_start</code></li>
+    <li>Atlantis (Splynn): <code>/domains/Praxis/areas/splynn/splynn_entry</code></li>
+    <li>Europe (New Camelot): <code>/domains/NewCamelot/areas/newcamelot_start</code></li>
+  </ul>
+
+  <h2>Notes</h2>
+  <ul>
+    <li>Disconnect mid-creation resumes from saved <code>creation_step</code>.</li>
+    <li>Dog Boy auto-assigns Coalition Soldier.</li>
+    <li>Race choice may reshape accepted 3d6 attributes to that race's dice and body pools.</li>
+    <li>Staff repair: <code>repairchar</code>, <code>makechar</code> (<a href="admin-commands.html">Admin commands</a>).</li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,13 @@
+Syntax: position
+        position <description>
+
+Sets how you appear in room descriptions after your name.
+
+Example:
+  position sitting by the bar
+  Room shows: "Thurtea is sitting by the bar."
+
+Type position alone to reset to default.
+Your position resets automatically when you move to another room.
+
+See also: stance

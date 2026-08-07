@@ -1,0 +1,15 @@
+AUTODODGE: Toggle automatic dodging in combat
+
+Syntax: autododge [on|off]
+
+DESCRIPTION:
+  Toggles automatic dodging. When enabled, your character will attempt to
+  dodge incoming attacks each round. Dodging costs 1 APM per dodge attempt.
+
+  Dodge bonus is based on Physical Prowess (PP): +1 per PP above 10.
+
+  autododge    : toggles on/off
+  autododge on : enables auto-dodge
+  autododge off: disables auto-dodge
+
+SEE ALSO: autoparry, dodge, parry, combat

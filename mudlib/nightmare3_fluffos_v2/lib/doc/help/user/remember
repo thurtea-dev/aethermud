@@ -1,0 +1,14 @@
+REMEMBER: Add a player to your face list
+
+Syntax: remember <player>
+
+DESCRIPTION:
+  Adds a player to your recognized list so you see their name instead of
+  their race description in room text. This is one-way recognition.
+
+NOTES:
+  Use introduce for mutual recognition.
+  The target may be in the room or online anywhere.
+  Use forget to remove someone from your list.
+
+SEE ALSO: known, forget, introduce

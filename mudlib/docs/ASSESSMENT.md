@@ -1,0 +1,354 @@
+# AetherMUD State-of-the-Project Assessment
+
+Date: 2026-07-17 (content counts remeasured; original narrative audit
+2026-07-13). Scope: `/home/thurtea/aethermud/nightmare3_fluffos_v2` (lib +
+driver), cross-referenced against `docs/reference/invocations.md`, `zone-expansion-plan.md`,
+`playtest-checklist.md`, `staff-handbook/`, `internal/report.md`, and
+`lib/domains/Praxis/adm/master_gap_report.txt`. Read-only audit; no files were
+modified. Counts below were measured directly from the code (grep on case
+labels, data keys, and inherit lines), not taken from prior reports.
+
+**Overall: roughly 80-85% of a playable faithful recreation.** Core systems
+(chargen, OCC/race data, combat, magic, psionics, skills, economy, commands)
+are implemented and verified by scripted tests. The main gaps are world scale
+(Sprints 4-6 of the zone plan), depth of the spell list vs the book text,
+a still-loaded legacy NM3 room tree throwing runtime errors, and stale
+documentation drifting from the code.
+
+---
+
+## 1. OCC / RCC coverage - ~90%
+
+Measured from `daemon/occ.c` (2,163 lines) and `daemon/rifts.c` (1,900 lines):
+
+- **66 unique OCC entries** in `occ.c` (`occ_list` / `query_occ` data
+  blocks; includes a few alias names such as mercenary and coalition
+  soldier). Every entry carries description, XP table, HP/level, base
+  skills, OCC skill categories and pick counts, secondary skill count,
+  attribute requirements, starting equipment text, flags, and PPE/ISP
+  base + per-level.
+- **62 playable races** in `rifts_races_list` in `rifts.c` (plus an
+  admin-grantable list). Includes all four dragon subtypes, vampires,
+  psi-stalkers, mutant animals, faerie folk, giants, Atlanteans, Kittani.
+- **76 starting-package case labels** in `daemon/rifts_start_d.c`, so OCC
+  starting gear/spell/psionic packages exceed the OCC list (aliases and
+  RCC packages included). All 8 Rifts daemons are in `secure/cfg/preload.cfg`.
+
+Against the Rifts core rulebook class list, coverage is complete: all core
+book OCCs (Vagabond, Wilderness Scout, City Rat, Rogue Scholar/Scientist,
+Operator, Body Fixer, Cyber-Doc, Headhunter, Merc Soldier, CS Grunt/Ranger/
+Military Specialist/Technical Officer, Borg, Robot Pilot, Glitter Boy Pilot,
+Juicer, Crazy, Cyber-Knight, Ley Line Walker, Shifter, Techno-Wizard, Mystic,
+Mind Melter) plus core RCCs (Dog Boy, Psi-Stalker, Burster, Dragon Hatchling)
+are present, and the lib goes well beyond the core book (Atlantis tattoo
+classes, Sunaj, NGR/Triax, ISS, juicer variants, warlock, necromancer).
+
+Caveats:
+
+- Many attribute requirements are marked `/* approx */` in `occ.c` - fine for
+  play, but not yet book-audited.
+- The reference file `RiftsMUD-AetherMUD RCC's OCC's List.txt` cited in
+  CLAUDE.md **no longer exists in the repo**, so the original target list can
+  no longer be diffed against. `docs/reference/reference-chart.md` notes full tabletop detail
+  exists only for Shifter, Techno-Wizard, and Mind Melter.
+- CLAUDE.md's older "51/51 races, 38/38 OCCs" figures are stale; actual
+  counts are 62 races, 66 OCCs.
+- Gap report notes ~25 OCC help-file gaps; `doc/help/user/` has 331 topics
+  including per-OCC/per-race entries, so the remaining gaps are narrow.
+
+**Next:** restore or reconstruct the target RCC/OCC list file; book-audit the
+"approx" attribute requirements; fill the remaining OCC help files.
+
+## 2. Magic and psionics - ~75%
+
+Measured from `daemon/rifts_spells_d.c` (3,907 lines) and
+`daemon/rifts_psionics_d.c` (1,726 lines):
+
+- **115 spells** defined (`ppe_cost` entries) with **114 distinct effect
+  handlers**, and every effect string in the data has a matching case in the
+  `apply_spell_effect()` dispatch - no dangling effects.
+- **51 psionic powers** (`isp_cost` entries) with a complete
+  `apply_psionic_effect()` dispatch and ~100 `fx_` references.
+- **157 skills** in `daemon/rifts_skills.c` (start/per_level/max/category
+  data for each), well past the "~102" noted in CLAUDE.md.
+
+Versus `docs/reference/invocations.md` (146 named invocations extracted from the book text):
+after normalizing punctuation differences, roughly **55-65 book invocations
+have no implementation**, concentrated in ritual/utility magic: summoning
+(Summon and Control Animals/Rain/Storm, Summon Lesser Being, Shadow Beast),
+creation rituals (Golem, Zombie, Mummy, Magic Scroll, Talisman, Amulet,
+Wards/Sanctum/Protection Circle: Superior), curses and removals (Minor Curse,
+Curse: Phobia, Remove Curse, Sickness, Spoil, Mute), travel (Dimensional
+Portal, Teleport: Superior, Ley Line Transmission, Wind Rush is present but
+e.g. Fly as the Eagle exists only partially), and misc (Anti-Magic Cloud,
+Invulnerability, Oracle, Second Sight, Stone to Flesh, Transferal, Wards).
+Conversely the code contains spells beyond that file (it only covers part of
+the book list). So: **combat/buff/utility magic that matters in a MUD loop is
+in; ritual-flavored magic is the open tail.**
+
+Targeting consistency:
+
+- **Range field completeness: RESOLVED (verified 2026-07-28).** All 115
+  spell definitions now carry a `range` field (`self` 38, `room` 26,
+  `single` 22, `touch` 21, plus `dimensional`/`unlimited`) - the "~7
+  entries lack the field" gap noted below is closed.
+- **Range enforcement: still open, not a quick fix.** `_cast.c` still does
+  not mechanically distinguish `touch`/`single`/`room` using that field -
+  it parses an optional "at target" and passes whatever it found (or 0) to
+  the effect function. Each `fx_` function individually guards against a
+  missing target, so behavior is correct in practice but duplicated ~114
+  times. Room-effect spells (e.g. windrush) already get bespoke no-target
+  handling elsewhere rather than reading `range` directly. Building real
+  enforcement is a combat-behavior design question (how strict, given the
+  existing bespoke handling already covers the highest-value case), not a
+  drop-in fix.
+- **Resource-loss bug: RESOLVED (fixed and verified live 2026-07-13,
+  see CLAUDE.md).** `_cast.c`/`_psi.c` now validate the target BEFORE
+  spending PPE/ISP/APM (`NEED_TARGET_EFFECTS` lists audited against every
+  `!target` guard in both daemons). This paragraph describing the
+  resource-loss order as a live bug was stale.
+- Classic no-verb casting (`windrush grunt`) is supported via
+  `try_spell_shortcut()` with longest-prefix matching - nice fidelity touch.
+
+**Next:** work down the ritual-magic tail (summoning and circles first,
+they are the most remembered); decide how much range enforcement is worth
+building given the existing bespoke room-spell handling.
+
+## 3. Combat system - ~85%
+
+`daemon/rifts_combat.c` (1,510 lines) is a substantive Palladium adaptation:
+
+- **APM system:** OCC-based attacks per melee (`occ_base_apm`), +PP bonus,
+  +level bonus at 3/6/9/12/15 via `rifts_apm_bonus`; per-round attack
+  budgeting (`can_do_attack`/`use_rifts_attack`), spells/psionics consume APM.
+- **MDC/SDC:** `apply_rifts_damage()` implements the full gate - SDC attackers
+  cannot hurt MDC defenders (damage is soaked by the SDC buffer with
+  "scratches the surface" messaging), MDC weapon detection, psi-sword unarmed
+  penetration, `built_in_mdc`, armor bypass properties (`armor_bypass`,
+  `penetrate_ar`, `ar_bypass_half`), and separate vehicle MDC handling with
+  armor HP tracking and destruction (`init_armor_hp`/`destroy_armor`).
+- **Damage typing:** elemental tags via `last_attack_element` with
+  impervious-to-fire/cold/energy checks. There is no broader kinetic vs
+  energy vs explosive matrix; that matches the original MUD's simplicity.
+- **Defense:** strike/parry/dodge bonuses from PP, position and stance
+  modifiers, autododge/autoparry commands, saving throws command.
+- **Initiative:** `query_initiative_bonus()` exists but rounds are ordered
+  "player acts first by default" rather than a per-round opposed roll - a
+  deliberate simplification, worth knowing about rather than fixing.
+- **NPC side:** NPC combat ticks, ranged auto-equip, NPC psionic use,
+  regen (`do_rifts_regen`), death handling.
+
+Caveats: `daemon/bionic_d.c` scope reviewed and RESOLVED as a non-issue
+(2026-07-28) - it's 141 lines but is a complete, generic, table-driven
+install/remove system (20 named bionics) already wired into a real NPC
+install flow (`domains/Praxis/npcs/cyber_doc_medic.c`), not cosmetic or a
+stub. The cybernetics item count was also stale: 18 purchasable items
+under `equipment/cybernetics/`, not 26. One real data bug found and fixed
+in the same pass: `cyber_arm_right.c`/`cyber_arm_left.c` described and
+stored a +8 PS bonus that didn't match the daemon table's actual +5;
+corrected both files to +5. Catalog breadth (20 generic bionics vs.
+Palladium's much larger per-class item list) was a deliberate scope
+decision, not deepened further. Gap report flags a few item-level
+PARTIALs (flame hilt damage unverified, hawrk-duhk talisman exclusion
+broken) - still open. Scripted verification (section8) covered chargen,
+combat autododge/autoparry, psi-sword, bank, radio.
+
+**Next:** decide whether per-round initiative rolls matter for fidelity;
+fix the two flagged item bugs (flame hilt, hawrk-duhk).
+
+## 4. Zones and rooms - ~60% of the zone plan's near-term vision
+
+Measured by counting files that inherit a room base (ROOM/vault/pier/vote
+room). Note: `zone-expansion-plan.md`'s "current footprint" numbers appear to
+be **file counts** (rooms + NPCs + items), which overstate rooms - e.g. New
+Camelot is listed as ~54 but has 30 actual rooms; NGR listed ~25, actual 14.
+
+| Zone | Rooms (measured) | Status |
+|------|-----------------:|--------|
+| Praxis hub (top level) | 143 | Complete, reskinned, live hub |
+| Praxis/areas (CS territory, market, nexus, catacombs) | ~35 | Complete |
+| Splynn + Alvurron + ocean + Preserves | ~47 | Preserves loop closed + depth added 2026-07-24 (see Sprint 4) |
+| Praxis sub-areas (cemetery 8, mountains 9, orc valley 8, vehicles 10, misc 2) | 37 | Complete but some still legacy-flavored |
+| Praxis/standardOld | 0 (moved) | **Moved 2026-07-19 to `attic/domains/Praxis/standardOld/`, outside the lib root - no longer live, no longer erroring. The 133 legacy NM3 rooms below are historical, not part of the current tree.** |
+| Chi-Town (burbs + fortified city) | 52 | Complete per Sprint 1 (+1 for `chitown_start.c`, the 2026-07-21 zone start room) |
+| New Camelot | 31 | Complete stub-plus (+1 for `newcamelot_start.c`, the 2026-07-21 zone start room) |
+| Tolkeen | 29 | Complete per Sprint 2 |
+| Horton + wilderness ring | 27 | Complete per Sprint 3 |
+| NGR Germany | 14 | Partial (plan calls for connectors) |
+| Demon plane | 9 | Placeholder sliver (by design) |
+| Lazlo | 8 | Stub |
+| Lone Star | 11 | Expanding 2026-07-24: barracks/armory, motor pool, breached escape tunnel (Sprint 6 target: +20-30 total) |
+| Puerto Angel | 7 | Stub |
+| adm / Examples / wizards | ~20 | Non-play infrastructure |
+
+Total room files at original measurement (2026-07-13): **583** (this figure
+included the 133 standardOld rooms, since gone). Current total: **~458**
+(583 minus the 133 standardOld rooms, moved out of the lib root
+2026-07-19, plus 8 rooms added 2026-07-24), of which **~440 are playable
+Rifts content** (~430 at original measurement, plus the two 2026-07-21
+zone start rooms `chitown_start.c`/`newcamelot_start.c`, plus the
+2026-07-24 Preserves and Lone Star batches, excluding admin/example
+rooms).
+
+Against the sprint table in `zone-expansion-plan.md`:
+
+- Sprints 1-3 (Chi-Town, Tolkeen, Horton): **done**, targets met or exceeded.
+- **Sprint 4 (Splynn Preserves, +30): ~80% done as of 2026-07-24.** 24
+  Preserves rooms exist (`preserve_*.c` + `splynn_preserves.c`). The
+  2026-07-24 batch also fixed a structural gap the previous count had
+  missed: at 20 rooms the graph was a pure tree with zero loops despite
+  being documented as a "closed loop" - it now has exactly one loop
+  (nest-saddle-ridge-snag-hive-blind-bonefield-waterhole-thornbrake-
+  trail-switchback-nest) plus depth on 3 of the 8 former dead ends.
+  About 6 more rooms would hit the original +30 target.
+- **Sprint 5 (Stormshire v1, +80): not started.** No domain or files exist.
+  This is the plan's own "biggest feel gap" item.
+- **Sprint 6 (Europe connectors + Lone Star, +40): Lone Star portion
+  started 2026-07-24** (+4 rooms: NCO bunkroom/armory off barracks, motor
+  pool off supply, a breached maintenance tunnel off perimeter). Europe
+  connectors (New Camelot/NGR) not started.
+
+**Next:** finish the Preserves to ~30 rooms, continue Lone Star toward its
++20-30 target, then Stormshire core. `standardOld/`'s fate (see section 7)
+is decided and done: moved to `attic/` 2026-07-19, no longer part of the
+live tree.
+
+## 5. Commands - ~90%
+
+- **174 mortal commands** in `cmds/mortal/` - all classic original-game verbs
+  the gap report tracked (cast, psi, breath, fly, metamorph, psisword, radio,
+  store/retrieve, remoteview, assassinate, card/chat/assist, sbar, slave,
+  stance, position, customize, suicide, pemote, etc.). The gap report's
+  2026-07-07 pass concluded "GENUINELY MISSING, deferred: (none)" with the
+  sole exception of `email` (covered by `mail`).
+- **33 admin commands** (`cmds/adm/`): makewiz, setrole, setocc, setrcc,
+  grantrace, grantskills, setskill, playerwipe, force, trans, warmboot, etc.
+- **74 creator commands** across `secure/cmds/creator/` (28, including the
+  room-safe `_update.c`) and `cmds/creator/` (46: qcs suite, roomcheck,
+  clean, dest, etc.), plus hm/ambassador/guild/soul trees.
+- **Staff-handbook verbs check out** with one documentation quirk: the
+  apprentice/staff workflow verbs (kit, build, inscribe, approve, deny,
+  promote, demote, purge, review, rptool, tool, domain) are `add_action`
+  verbs on the wiz-tool objects in `domains/adm/wiz_tools/`, not command
+  files - they all exist. But `playtest-checklist.md` says "Domain review:
+  `dominate` option 10" while the actual verb on `staff_of_dominion.c` is
+  **`domain`**. Small checklist error that will trip a playtester.
+- `cmds/wiz/` is an empty directory (roles use adm/creator/hm trees instead).
+
+**Next:** fix the `dominate` -> `domain` reference in playtest-checklist.md;
+optionally delete the empty `cmds/wiz/` dir to avoid confusion.
+
+## 6. Player systems - ~85%
+
+- **Chargen:** full flow (name, gender, region -> start delegation, race,
+  attribute rolls + rerolls, alignment picker, OCC with attribute gating,
+  skill picks) in `domains/Praxis/setter.c` + `rifts_start_d.c`, with a
+  chargen guide NPC. The 2026-07-10 fix wired racial attribute dice
+  (`apply_rifts_race_attributes`), previously a real fidelity bug. Scripted
+  verification covered 3 OCC flows end to end.
+- **Saves:** correct path (`/secure/save/users/<letter>/<name>.o`), frequent
+  `save_player()` calls throughout `user.c`.
+- **Prompt/score/display:** custom prompt (`query_prompt` override), room
+  display order fixed (desc -> exits -> NPCs -> objects). Gap report flags
+  the remaining cosmetic gap: **score has no blue status effects** (thirst
+  quenched, stoned) - alcohol intoxication is the only status shown.
+- **Skills:** 157-skill daemon, category picks at chargen, `improve`,
+  `skillrequest` flow (though `skill_request_d.c` is only 40 lines - verify
+  it does what the command promises).
+- **Inventory/equipment:** eq display with `rifts_slot`, GHD armor size
+  enforcement verified, encumbrance API correct.
+- **Alignment: RESOLVED (was flagged 2026-07-13/17, verified integrated
+  2026-07-28).** Chargen (`setter.c` `alignment_cmd()`) sets the numeric
+  NM3 scale and the `rifts_alignment` label together from one mapping.
+  `rifts_combat.c npc_died()` shifts the numeric value on killing a
+  clearly-good or clearly-evil NPC and re-derives/re-writes the label
+  from the same threshold table `_score.c` uses, so the two never drift.
+  Scope limit, not a bug: only NPC kills shift alignment; non-combat
+  actions and PvP kills do not. OCC-alignment gating also exists (CS
+  military OCCs refuse Miscreant/Aberrant/Diabolic characters,
+  `setter.c`), just scoped to the Coalition only.
+- **Known incomplete:** pet corpse-eating exists but is never triggered
+  (PARTIAL in gap report). **Insanities are intentionally out of scope
+  (decision 2026-07-28), not an oversight** - see
+  `staff-handbook/ch15-insanities.md`. The system would need Horror
+  Factor save-triggering infrastructure that doesn't exist either
+  (`vs_hf`/`vs_insanity` in `_saving_throws.c` are flavor-only display
+  numbers with no code path reading them, by design).
+
+**Next:** blue status effects in score (small, high-nostalgia); audit
+skill_request end to end.
+
+## 7. Known technical debt
+
+Ranked by risk:
+
+1. **RESOLVED 2026-07-19.** `domains/Praxis/standardOld/` (133 legacy NM3
+   rooms) was live and erroring (`log/runtime` showed recurring `Bad
+   argument 1 to call_other()` in `reset()` for `standardOld/pit`,
+   `spider_pit`, `app_room`, and `crypt`). Fixed by moving the tree to
+   `nightmare3_fluffos_v2/attic/domains/Praxis/standardOld/`, outside the
+   driver's lib root, after confirming zero code/config/save-file
+   references. It is no longer loaded, reachable, or erroring.
+2. **`/secure/daemon/events` destructed function-pointer errors** referencing
+   `domains/Praxis/supply2` (`change_sky` at line 190): an object registered
+   an event callback and was destructed. Needs a liveness guard in the events
+   daemon; currently a steady error source.
+3. **`log/crashes` shows 15 "Process terminated" entries July 10-12.** Some
+   are likely manual `mud.sh stop` cycles during the playtest push, but the
+   volume is worth confirming - if any were real crashes, nothing else in the
+   logs attributes them.
+4. **Casting resource-loss bug** (section 2): PPE/ISP and APM spent before
+   target validation in `_cast.c`/`_psi.c`.
+5. **Uncommitted working-tree change:** `daemon/command.c` has a real fix
+   (rehash no longer appends duplicate path entries; uses
+   `distinct_array`). Commit it or lose it on the next reset - the memory
+   note says a fresh git repo/remote move is pending, which raises the risk.
+6. **Editor droppings in the repo:** `#s_centre2.c#`, `n_centre1.c~`,
+   `adv_main.c~`, `wild2.backup`, `daemon/services.old`, several `.c~` under
+   `standardOld/` and `obj/mon/`. Harmless at runtime, noise in review.
+7. **Documentation drift:** Public counts were refreshed 2026-07-17 to the
+   measured figures (62 races, 66 OCCs, 115 spells, ~50 psionics, 158
+   skills) in README, www/, and this file. Remaining drift: the RCC/OCC
+   target list file CLAUDE.md once cited is gone; zone plan footprint
+   numbers are file counts, not room counts; `master_gap_report.txt` body
+   may still carry stale MISSING entries that its own header sections
+   supersede.
+8. **CLAUDE.md's "no `//` comments" rule vs reality:** 146 files under
+   daemon/cmds/std use `//` comments (including `occ.c` line 1) and compile
+   fine on this driver. Either the rule is stale or a latent portability trap
+   for the planned modern-FluffOS cutover - worth resolving one way.
+9. **Zero TODO/FIXME markers in the lib** - genuinely clean on that axis; the
+   debt above lives in logs and structure, not in marked stubs.
+
+---
+
+## Bottom line
+
+The systems layer is in strong shape and matches the "faithful recreation"
+brief; scripted verification and the July playtest push clearly paid off.
+The honest gaps are: world scale (Sprints 4-6 unstarted or 1/3 done, no
+Stormshire), the ritual-magic tail of the spell list, the casting
+resource-loss ordering, and documentation that has fallen behind a codebase
+moving faster than its own trackers. (The standardOld legacy tree, also
+listed here at original write time, was resolved 2026-07-19 - see the
+addendum below and section 7 item 1.)
+
+---
+
+## Addendum: fixed after this assessment (2026-07-13, same day)
+
+Do not re-fix these; the sections above describe the pre-fix state:
+
+- **Casting resource-loss ordering (sections 2, 7.4): FIXED.** `_cast.c`
+  and `_psi.c` now validate the target before PPE/ISP/APM deduction,
+  gated per effect via `NEED_TARGET_EFFECTS` lists audited against every
+  `!target` guard in both daemons. Verified live.
+- **Uncommitted `daemon/command.c` rehash fix (section 7.5): COMMITTED**
+  in `affed3b` (2026-07-13 00:28), together with this assessment file.
+- **CLAUDE.md stale counts (section 7.7): UPDATED** on 2026-07-13 to the
+  then-measured figures; remeasured 2026-07-17 to 62 races, 66 OCCs, 115
+  spells, ~50 psionics, 158 skills across README, www/, and this file. The
+  `dominate` -> `domain` checklist error is also fixed.
+- **Help system:** rewritten to a two-level index (categories, then
+  topics per category) with separator-insensitive topic lookup; the flat
+  list survives as `help index`. Not a finding above, noted for currency.

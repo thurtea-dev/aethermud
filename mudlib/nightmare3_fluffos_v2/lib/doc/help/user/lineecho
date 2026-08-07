@@ -1,0 +1,17 @@
+LINEECHO: Client line echo preference
+
+Syntax: lineecho [on|off]
+
+DESCRIPTION:
+  Lineecho is primarily a MUD client feature, not a server command.
+  Many clients (Mudlet, MUSHclient, etc.) can echo each command line
+  locally before sending it to the game.
+
+  This command stores an on/off flag on your character file in case
+  a client reads it. The stock AetherMUD server does not change how
+  lines display based on this flag.
+
+  Configure local line echo in your client preferences if typed lines
+  do not appear in your output window.
+
+SEE ALSO: triggers, prompt

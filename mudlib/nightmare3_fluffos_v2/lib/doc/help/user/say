@@ -1,0 +1,13 @@
+SAY: Speak aloud in your current room
+
+Syntax: say <message>
+
+DESCRIPTION:
+  Speaks a message aloud. Everyone in the same room will hear you.
+
+EXAMPLE:
+  say Hello there, traveler.
+
+  Output to others: Thurtea says, "Hello there, traveler."
+
+SEE ALSO: tell, whisper, ooc, emote, converse

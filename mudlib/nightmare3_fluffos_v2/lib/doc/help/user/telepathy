@@ -1,0 +1,23 @@
+TELEPATHY: Psionic thought communication
+
+Syntax: telepathy <target>
+        telepathy <target> <message>
+        psi telepathy at <target>
+
+DESCRIPTION:
+  Read surface thoughts or send a private psionic message to a target.
+  Costs ISP and one APM in combat.
+
+  telepathy <target>
+      Use the telepathy psionic power on the target (read thoughts).
+
+  telepathy <target> <message>
+      Send a private psionic message to the target.
+
+NOTES:
+  You must know the telepathy power and have enough ISP.
+  Sending a telepathic message to another player requires that you
+  recognize them (use introduce when you meet in person).
+  This command delegates to the standard psi path for thought reading.
+
+SEE ALSO: psi, psionics, psihelp, introduce, tell

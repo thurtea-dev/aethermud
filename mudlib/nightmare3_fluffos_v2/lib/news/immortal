@@ -1,0 +1,65 @@
+                    === CREATOR NEWS ===
+
+Current state of the lib and what is open. Staff mudlib rules and
+compile gotchas are in the staff news block above this one.
+
+WHAT IS LIVE
+  449 playable rooms. 62 races, 66 OCCs, 158 skills, 114 spells, 50
+  psionic powers.
+  Zones: Chi-Town (52 rooms), New Camelot (31), Tolkeen (29), Horton
+  and its wilderness ring (27), Lone Star (23), NGR Germany (14),
+  demon plane (9), Lazlo (8), Puerto Angel (7), Praxis and its areas
+  (256, which includes the 62-room Splynn and Atlantis zone nested
+  under domains/Praxis/areas/splynn/).
+
+RECENT CHANGES WORTH KNOWING
+  Equipped gear now survives a quit. /std/weapon.c and /std/armour.c
+  implement query_auto_load() gated on being wielded or worn, so worn
+  and wielded items are captured into __AutoLoad before anything
+  unequips. Loose inventory still drops on the floor on quit, exactly
+  as before.
+  Ranged combat has no separate command. The old shoot and fire
+  commands were aliases for kill and have been removed. A wielded
+  ranged weapon is fired by the normal combat round, which also spends
+  one shot of ammo per attack.
+  tell and reply are staff-contact only, and the intermud paths are
+  staff-only too. Telepathy no longer seeds the tell reply buffer,
+  because that had been handing players a free cross-room reply that
+  skipped telepathy's ISP cost, introduction check, and mind block.
+  Pets can be stored. stable puts one away as plain env strings on the
+  owner; call brings it back.
+  The chargen guide NPC is gone entirely. setter.c drives every prompt
+  itself, and chargen answers are plain words with no verb prefix:
+  americas, roll, reroll, human, scrupulous, headhunter, none.
+
+STAFF TOOLS
+  The staff bulletin board in the Wizard's Lounge, the Admin Chamber,
+  and admin workrooms shares one thread pool across every copy, and
+  prints live pending queues when you look at it: accounts awaiting
+  approval, skill requests, apprentice submissions.
+  accountapproval list / approve <account>   account requests.
+  read mailbox                               skill requests, in a
+                                             workroom.
+  sever / restore / list                     narrative limb severing.
+  setrole, makewiz                           promotions. Both auto-set
+                                             a default who-title per
+                                             rank and will not stomp a
+                                             custom one.
+
+KNOWN GAPS
+  Skill help is the biggest documentation hole: 119 of 158 skills have
+  no topic under doc/help/user. Roughly 25 OCC help topics are also
+  missing.
+  Legacy heal skills (_mheal, _mend, _heal, _rot) still call
+  heal_limb() and are harmless no-ops under the pooled damage model.
+  They need a cleanup pass with their class gating.
+  Player housing and storage is designed but parked.
+  Vehicle interiors are thin.
+
+CONVENTIONS FOR CONTENT
+  Read docs/STYLE.md before writing player-facing strings.
+  Check /domains/Praxis/adm/master_gap_report.txt for the current gap
+  analysis before starting new content.
+  Directory naming under domains/ is documented in CLAUDE.md rule 19.
+  Renames need explicit approval; flag inconsistencies instead of
+  fixing them silently.

@@ -1,0 +1,75 @@
+# Local runtime config (use *.example templates + init-local-config.sh)
+nightmare3_fluffos_v2/bin/mudos.cfg
+nightmare3_fluffos_v2/lib/secure/cfg/mudos.cfg
+nightmare3_fluffos_v2/lib/secure/cfg/groups.cfg
+
+# Player character saves and all secure/daemon runtime save blobs
+nightmare3_fluffos_v2/lib/secure/save/**/*.o
+nightmare3_fluffos_v2/lib/daemon/save/**/*.o
+nightmare3_fluffos_v2/lib/domains/**/data/*.o
+
+# Runtime PID files
+nightmare3_fluffos_v2/bin/mud.pid
+nightmare3_fluffos_v2/bin/addr.pid
+nightmare3_fluffos_v2/bin/ws-bridge.pid
+
+# Runtime logs (files and subdirs under lib/log/)
+nightmare3_fluffos_v2/lib/log/*
+!nightmare3_fluffos_v2/lib/log/.gitkeep
+
+# Transient mudlib tmp
+nightmare3_fluffos_v2/lib/tmp/**/*
+!nightmare3_fluffos_v2/lib/tmp/.gitkeep
+
+# Transient eval scratch dir (keep directory, ignore temp eval files)
+nightmare3_fluffos_v2/lib/secure/tmp/**/*
+!nightmare3_fluffos_v2/lib/secure/tmp/.gitkeep
+
+# Personal wizard realms (keep directory, ignore per-user sandboxes)
+nightmare3_fluffos_v2/lib/realms/*/
+!nightmare3_fluffos_v2/lib/realms/.gitkeep
+# Targeted exception: thurtea's canonical workroom deploys via git.
+# Git cannot re-include a file inside an excluded directory, so the
+# directory itself is un-ignored, its contents re-ignored, then the
+# one file un-ignored. Everything else under realms/thurtea/ stays
+# out of git.
+!nightmare3_fluffos_v2/lib/realms/thurtea/
+nightmare3_fluffos_v2/lib/realms/thurtea/*
+!nightmare3_fluffos_v2/lib/realms/thurtea/workroom.c
+
+# FluffOS build tree artifacts (binaries install to ../bin via make install)
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/tmp/
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/obj/
+
+# Prebuilt driver binaries (build locally with make install)
+nightmare3_fluffos_v2/bin/driver
+nightmare3_fluffos_v2/bin/addr_server
+nightmare3_fluffos_v2/bin/portbind
+
+# Build-tree compiled output (rebuild locally from source; never sync via git)
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/driver
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/addr_server
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/portbind
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/edit_source
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/comptest
+nightmare3_fluffos_v2/fluffos-2.9-ds2.08/packages/packages.a
+
+# Local archive bundle (not required to run the MUD)
+zip-files/
+
+# Reference-only source trees (DeadSouls, Lima). Nothing under
+# nightmare3_fluffos_v2/ references either directory; kept on disk
+# locally for reference, untracked from git 2026-07-26.
+ds/
+lima/
+
+# Personal note unrelated to the MUD (backup-tooling prompt draft)
+backups-prompt.md
+
+# Python bytecode caches (some were committed earlier; git rm -r --cached to untrack)
+__pycache__/
+*.pyc
+
+# Web Basic Auth password file (generate on VPS only; never commit hashes)
+www/.htpasswd
+.htpasswd

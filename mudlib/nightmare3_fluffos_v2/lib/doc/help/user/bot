@@ -1,0 +1,21 @@
+BOT / MACRO POLICY
+
+A bot or macro is anything that plays your character without you actively
+present and paying attention: an auto-combat script, unattended AFK
+grinding, or a client script that fights, travels, or loots on its own.
+
+Allowed:
+  - Client-side triggers and aliases that react to game text while you
+    are at the keyboard (see help trigger)
+  - Simple keybinds for commands you type yourself
+
+Not allowed:
+  - Unattended botting: leaving a script to fight, travel, or grind
+    while you are away from the keyboard
+  - Any automation used to gain XP, loot, or currency faster than
+    normal play would allow
+
+Staff may approve narrow exceptions case by case; ask first if unsure.
+Violations are handled under the three strikes policy.
+
+SEE ALSO: trigger, triggers, multi-playing, rules, three strikes

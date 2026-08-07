@@ -1,0 +1,19 @@
+# groups.cfg.example - security group membership template
+#
+# Copy to groups.cfg and replace YOUR_ADMIN_NAME with your login name:
+#
+#   cp groups.cfg.example groups.cfg
+#
+# Or from project root:
+#   ./scripts/init-local-config.sh
+#
+# After editing, run: ./mud.sh restart
+#
+# Groups:
+#   SECURE     - full admin (login.c master access)
+#   ASSIST     - assistant admin
+#   AMBASSADOR - ambassador tools
+
+(SECURE) YOUR_ADMIN_NAME
+(ASSIST) YOUR_ADMIN_NAME
+(AMBASSADOR)

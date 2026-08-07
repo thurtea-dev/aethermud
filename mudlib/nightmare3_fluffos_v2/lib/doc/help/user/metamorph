@@ -1,0 +1,33 @@
+METAMORPH: Change visible form
+
+Syntax: metamorph
+        metamorph human
+        metamorph <race name>
+        metamorph dragon
+        metamorph true
+
+DESCRIPTION:
+  Shapeshifting for dragon, changeling, and vampire races.
+
+  metamorph
+      Shows your current form.
+
+  metamorph human
+      Take a humanoid form. Great Horned Dragons can wear human-sized armor
+      in this form.
+
+  metamorph <race name>
+      Take on the appearance of another race. Vampires may only use human.
+
+  metamorph dragon
+      Revert to true dragon form (Great Horned Dragon only).
+
+  metamorph true
+      Revert to your natural form. Reverting from human form removes armor
+      that no longer fits your true body.
+
+NOTES:
+  Strangers who have not been introduced see your current form in room text.
+  Your real race on score is unchanged.
+
+SEE ALSO: wear, score, introduce

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin commands - AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <nav><a href="index.html">Home</a> <a href="admin.html">Admin</a></nav>
+  <h1>Admin Command Reference</h1>
+  <ul>
+    <li>Position: arch / head arch only.</li>
+    <li>Paths: <code>cmds/adm</code>, <code>secure/cmds/adm</code>, <code>cmds/creator</code>, <code>secure/cmds/creator</code> - added only when position is exactly arch or head arch.</li>
+    <li>Coding wizards (creator/immortal) do not get these directories; see <a href="coding.html">Coding</a>.</li>
+  </ul>
+
+  <h2>cmds/adm</h2>
+
+  <h3>Player and character</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>advance</code></td><td>Force-advance N levels; reroll HP/SDC/PPE/ISP gains.</td></tr>
+    <tr><td><code>give</code></td><td>Clone path object to online player.</td></tr>
+    <tr><td><code>grantrace</code> / <code>grantskills</code></td><td>Backfill race spells/psionics or class skills.</td></tr>
+    <tr><td><code>repairchar</code></td><td>Diagnose/repair: dump chargen flags; <code>clear</code>/<code>finish</code> stuck creation; <code>reroll</code> attributes; <code>skills</code> re-grant package; <code>setstat</code>. Online only. Not a substitute for <code>setocc</code>/<code>setrcc</code>.</td></tr>
+    <tr><td><code>fixdemote</code></td><td>Offline demotion repair on a named save.</td></tr>
+    <tr><td><code>sever</code></td><td>Narrative limb sever/restore: <code>sever &lt;player&gt; &lt;limb&gt;</code>, <code>... restore &lt;limb&gt;</code>, or <code>... list</code>. No combat damage.</td></tr>
+    <tr><td><code>makechar</code></td><td><code>makechar &lt;player&gt; &lt;race&gt; &lt;occ|none&gt; &lt;alignment&gt;</code> plus optional <code>zone=</code>, <code>gear=</code>, <code>skills=</code>, <code>spells=</code>, <code>psi=</code>.</td></tr>
+    <tr><td><code>setfaction</code></td><td>Set/clear faction.</td></tr>
+    <tr><td><code>setocc</code> / <code>setrcc</code></td><td>Set class, or set race and re-roll race stats.</td></tr>
+    <tr><td><code>setrole</code></td><td>Wizard position/role: admin, domain, coding, rp.</td></tr>
+    <tr><td><code>setskill</code></td><td>Set Rifts skill %.</td></tr>
+    <tr><td><code>stat</code></td><td>Full stat dump (online).</td></tr>
+    <tr><td><code>makewiz</code></td><td>Promote online mortal to Apprentice.</td></tr>
+    <tr><td><code>playerwipe</code></td><td>Wipe save, postal data, realm directory.</td></tr>
+  </table>
+
+  <h3>World and movement</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>goto</code></td><td>Teleport to player or room path.</td></tr>
+    <tr><td><code>trans</code></td><td>Bring player to you.</td></tr>
+    <tr><td><code>force</code></td><td>Force player to run a command. Logged.</td></tr>
+    <tr><td><code>haven</code></td><td>Hide from <code>users()</code> / who / finger.</td></tr>
+  </table>
+
+  <h3>Communication</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>archshout</code></td><td>Shout without language.</td></tr>
+    <tr><td><code>broadcast</code></td><td>Message all users; bypasses blocks.</td></tr>
+    <tr><td><code>channel</code></td><td>Restrict/unrestrict a player on a channel.</td></tr>
+  </table>
+
+  <h3>Logging and diagnostics</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>monitor</code></td><td>Notify when named player stops idling.</td></tr>
+    <tr><td><code>snoopers</code></td><td>Who is snooping whom.</td></tr>
+    <tr><td><code>cache</code> / <code>fdinfo</code> / <code>opcprof</code> / <code>dumpallobj</code></td><td>Driver cache, FDs, opcode profile, dump objects.</td></tr>
+    <tr><td><code>commands</code></td><td>Regenerate compiled command list.</td></tr>
+    <tr><td><code>cref</code></td><td>Clone a referenced object (see ref toolkit under <code>secure/cmds/creator</code>).</td></tr>
+  </table>
+
+  <h3>Game state</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>end</code></td><td>Start Armageddon (scheduled shutdown).</td></tr>
+    <tr><td><code>warmboot</code></td><td>Bulk reload daemons/commands/domains; notify admins.</td></tr>
+    <tr><td><code>bench</code></td><td>Driver micro-benchmarks.</td></tr>
+  </table>
+
+  <h2>secure/cmds/adm</h2>
+
+  <h3>Account gatekeeping</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>addguest</code> / <code>removeguest</code> / <code>whoguests</code></td><td>Guest list while mud locked.</td></tr>
+    <tr><td><code>allow</code> / <code>unallow</code> / <code>whoallowed</code></td><td>Site allowance for a character name.</td></tr>
+    <tr><td><code>register</code> / <code>unregister</code> / <code>whoregistered</code></td><td>Registration-required sites.</td></tr>
+    <tr><td><code>tempban</code></td><td>Put site on registration for N minutes.</td></tr>
+    <tr><td><code>watch</code> / <code>unwatch</code> / <code>whowatched</code></td><td>Log logins for name/site.</td></tr>
+    <tr><td><code>arrest</code></td><td>Remove player pending law review.</td></tr>
+    <tr><td><code>rid</code></td><td>Permanently remove player (safe save delete).</td></tr>
+  </table>
+
+  <h3>Grants, accounts, logs</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>grant</code> / <code>revoke</code></td><td>RP title grant/revoke.</td></tr>
+    <tr><td><code>wizard</code></td><td>Apply Wizard race/RCC package.</td></tr>
+    <tr><td><code>link</code> / <code>unlink</code></td><td>Link/unlink alt names.</td></tr>
+    <tr><td><code>elections</code></td><td>Start/end elections or set next date.</td></tr>
+    <tr><td><code>economy</code></td><td>Add/change currency rate, inflation, weight.</td></tr>
+    <tr><td><code>lawlog</code></td><td>Open/append law log for a player.</td></tr>
+    <tr><td><code>currency</code></td><td>Currency held by a player or everyone.</td></tr>
+    <tr><td><code>setreboot</code></td><td>Auto-reboot interval.</td></tr>
+    <tr><td><code>shutdown</code></td><td>Immediate shutdown; logged reason required.</td></tr>
+    <tr><td><code>unbanish</code> / <code>whobanished</code></td><td>Clear or list banished names.</td></tr>
+    <tr><td><code>xmote</code></td><td>Set level/position directly. Logged.</td></tr>
+  </table>
+
+  <h2>cmds/creator</h2>
+
+  <h3>File and object</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>pushd</code> / <code>popd</code></td><td>Directory stack.</td></tr>
+    <tr><td><code>pupdate</code></td><td>Update/recompile relative to cwd.</td></tr>
+    <tr><td><code>clone</code></td><td>QCS-aware clone to inventory.</td></tr>
+    <tr><td><code>dest</code></td><td>Destruct object, or all non-interactive room items.</td></tr>
+    <tr><td><code>reset</code></td><td>Force <code>reset()</code> on room or object.</td></tr>
+    <tr><td><code>clean</code></td><td>Destruct non-auto-loading inventory items.</td></tr>
+  </table>
+
+  <h3>Debugging</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>malloc</code> / <code>mstatus</code> / <code>netstat</code></td><td>Allocator / driver stats / sockets.</td></tr>
+    <tr><td><code>callouts</code></td><td>Pending <code>call_out()</code> list.</td></tr>
+    <tr><td><code>scan</code></td><td>Inventory/environment tree.</td></tr>
+    <tr><td><code>localcmds</code></td><td>Commands added by other objects.</td></tr>
+    <tr><td><code>rehash</code></td><td>Re-scan a command directory.</td></tr>
+  </table>
+
+  <h3>Validators</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>acheck</code> / <code>wcheck</code> / <code>roomcheck</code></td><td>Sanity-check armor, weapon, or room.</td></tr>
+    <tr><td><code>ac</code> / <code>wc</code></td><td>Legacy AC / limbs, or Weapon Class. Rifts damage uses armor pools and <code>whole_body</code>.</td></tr>
+  </table>
+
+  <h3>QCS</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>qcsdirs</code></td><td>Create missing realm area directory scaffold.</td></tr>
+  </table>
+  <p><code>create</code> / <code>modify</code> / <code>add</code> / <code>delete</code>: see <a href="qcs.html">QCS</a>.</p>
+
+  <h3>Misc</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>wizshout</code></td><td>Staff global shout. Logged.</td></tr>
+    <tr><td><code>codeblock</code> / <code>tellblock</code></td><td>Block remote comms / tells.</td></tr>
+    <tr><td><code>invis</code> / <code>vis</code></td><td>Invisible to lower levels / visible.</td></tr>
+    <tr><td><code>langs</code></td><td>Languages a player knows.</td></tr>
+    <tr><td><code>domains</code> / <code>realms</code></td><td>Activity leaderboards.</td></tr>
+    <tr><td><code>elog</code> / <code>replog</code></td><td>Personal error log / reports log.</td></tr>
+    <tr><td><code>sethome</code></td><td>Home room for <code>workroom</code>.</td></tr>
+    <tr><td><code>echo</code> / <code>echoto</code></td><td>Echo to room or player. Logged.</td></tr>
+    <tr><td><code>uptime</code></td><td>Process uptime.</td></tr>
+    <tr><td><code>wizheal</code></td><td>Full heal a living.</td></tr>
+    <tr><td><code>events</code></td><td>Pending scheduled/domain events.</td></tr>
+    <tr><td><code>banish</code></td><td>Protect a name from new players.</td></tr>
+  </table>
+
+  <h2>secure/cmds/creator</h2>
+
+  <h3>File and object</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>mkdir</code> / <code>rmdir</code></td><td>Create/remove directory.</td></tr>
+    <tr><td><code>mv</code> / <code>du</code></td><td>Rename/move; recursive disk usage.</td></tr>
+    <tr><td><code>clone</code></td><td>Clone path to inventory.</td></tr>
+    <tr><td><code>move</code></td><td>Move one referenced object to another.</td></tr>
+    <tr><td><code>update</code></td><td>Destruct and reload one blueprint (see <a href="admin.html">Admin</a> reload rules).</td></tr>
+    <tr><td><code>rm</code></td><td>Remove files.</td></tr>
+  </table>
+
+  <h3>Refs and debugging</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>call</code></td><td>Call a function on a referenced object.</td></tr>
+    <tr><td><code>dref</code> / <code>eref</code> / <code>ref</code> / <code>refs</code> / <code>unref</code> / <code>tref</code></td><td>Operate on referenced objects. <code>cref</code> is under <code>cmds/adm</code>.</td></tr>
+    <tr><td><code>dbxframe</code> / <code>dbxwhere</code></td><td>Stack frame / last uncaught error for a player.</td></tr>
+    <tr><td><code>eval</code></td><td>Run arbitrary LPC inline. Can destroy player data. Test on self/NPC first. Non-SECURE use is logged.</td></tr>
+  </table>
+
+  <h3>Access and logging</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>grant</code></td><td>Grant read/write/full on domain or realm subtree.</td></tr>
+    <tr><td><code>sponsor</code></td><td>Promote immortal; create realm and workroom.</td></tr>
+    <tr><td><code>changelog</code></td><td>Interactive changelog entry.</td></tr>
+    <tr><td><code>log</code></td><td>Tail file under <code>/log/</code>.</td></tr>
+    <tr><td><code>locate</code> / <code>imcp</code></td><td>Intermud locate / file copy.</td></tr>
+  </table>
+
+  <h3>Misc</h3>
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>wizz</code></td><td>Teleport to Wizard's Lounge.</td></tr>
+    <tr><td><code>force</code></td><td>Force a living to run a command.</td></tr>
+    <tr><td><code>snoop</code></td><td>Snoop / un-snoop a player.</td></tr>
+  </table>
+</body>
+</html>

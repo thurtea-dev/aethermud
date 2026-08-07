@@ -1,0 +1,8 @@
+LINEROWS
+
+See help lines for the lines command (channel on/off/status).
+
+linerows was a historical client display setting on the original MUD.
+Configure line display in your MUD client.
+
+SEE ALSO: lines, lineecho

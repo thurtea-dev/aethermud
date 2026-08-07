@@ -1,0 +1,69 @@
+# Driver build tree (rebuild locally with cmake, never sync via git)
+driver/build/
+
+# Mudlib runtime save data (player/account/domain save blobs)
+mudlib/nightmare3_fluffos_v2/lib/secure/save/**/*.o
+mudlib/nightmare3_fluffos_v2/lib/daemon/save/**/*.o
+mudlib/nightmare3_fluffos_v2/lib/domains/**/data/*.o
+
+# Mudlib local runtime config (use *.example templates + init-local-config.sh)
+mudlib/nightmare3_fluffos_v2/bin/mudos.cfg
+mudlib/nightmare3_fluffos_v2/lib/secure/cfg/mudos.cfg
+mudlib/nightmare3_fluffos_v2/lib/secure/cfg/groups.cfg
+
+# Mudlib runtime PID files
+mudlib/nightmare3_fluffos_v2/bin/mud.pid
+mudlib/nightmare3_fluffos_v2/bin/addr.pid
+mudlib/nightmare3_fluffos_v2/bin/ws-bridge.pid
+
+# Mudlib runtime logs (files and subdirs under lib/log/)
+mudlib/nightmare3_fluffos_v2/lib/log/*
+!mudlib/nightmare3_fluffos_v2/lib/log/.gitkeep
+
+# Mudlib transient tmp
+mudlib/nightmare3_fluffos_v2/lib/tmp/**/*
+!mudlib/nightmare3_fluffos_v2/lib/tmp/.gitkeep
+
+# Mudlib transient eval scratch dir (keep directory, ignore temp eval files)
+mudlib/nightmare3_fluffos_v2/lib/secure/tmp/**/*
+!mudlib/nightmare3_fluffos_v2/lib/secure/tmp/.gitkeep
+
+# Mudlib personal wizard realms (keep directory, ignore per-user sandboxes)
+mudlib/nightmare3_fluffos_v2/lib/realms/*/
+!mudlib/nightmare3_fluffos_v2/lib/realms/.gitkeep
+!mudlib/nightmare3_fluffos_v2/lib/realms/thurtea/
+mudlib/nightmare3_fluffos_v2/lib/realms/thurtea/*
+!mudlib/nightmare3_fluffos_v2/lib/realms/thurtea/workroom.c
+
+# Mudlib FluffOS build tree artifacts (reference driver kept for comparison only)
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/tmp/
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/obj/
+
+# Mudlib prebuilt driver binaries (build locally, never sync via git)
+mudlib/nightmare3_fluffos_v2/bin/driver
+mudlib/nightmare3_fluffos_v2/bin/addr_server
+mudlib/nightmare3_fluffos_v2/bin/portbind
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/driver
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/addr_server
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/portbind
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/edit_source
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/comptest
+mudlib/nightmare3_fluffos_v2/fluffos-2.9-ds2.08/packages/packages.a
+
+# Mudlib local archive bundle (not required to run the MUD)
+mudlib/zip-files/
+
+# Mudlib reference-only source trees, kept on disk locally, untracked from git
+mudlib/ds/
+mudlib/lima/
+
+# Mudlib personal note unrelated to the MUD
+mudlib/backups-prompt.md
+
+# Python bytecode caches
+__pycache__/
+*.pyc
+
+# Mudlib web basic auth password file (generate on VPS only, never commit hashes)
+mudlib/nightmare3_fluffos_v2/www/.htpasswd
+mudlib/.htpasswd

@@ -1,0 +1,18 @@
+SCORE: Display your Rifts character sheet
+
+Syntax: score
+
+DESCRIPTION:
+  Displays your full Palladium Rifts character sheet, including:
+    - Name, race, alignment, O.C.C. level and experience
+    - All eight Palladium attributes (IQ, ME, MA, PS, PP, PE, PB, Spd)
+      with derived combat bonuses for each
+    - Vitals: HP/SDC for SDC characters, MDC for MDC beings
+    - PPE (magic power) and ISP (psionic power) if applicable
+    - Active status effects in a boxed panel (Thirst quenched and Stoned show in blue)
+    - Combat stats: APM, strike/parry/dodge bonuses, damage bonus
+
+EXAMPLE:
+  score
+
+SEE ALSO: skills, spells, psionics, sbar, combat

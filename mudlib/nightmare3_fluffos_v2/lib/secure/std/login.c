@@ -1,0 +1,861 @@
+/*    /adm/obj/login.c
+ *    from Nightmare IV
+ *    the login object, connecting players to their objects
+ *    created by Descartes of Borg 940115
+ *
+ *    2026-07-18: account-separate login. Account name + password, then
+ *    character select (up to 5 chars per account). See account_d.c.
+ */
+
+#include <config.h> 
+#include <news.h>
+#include <flags.h>
+#include <security.h> 
+#include <daemons.h> 
+#include <objects.h>
+ 
+static private int __CrackCount, __CopyExists, __IsNewAccount; 
+static private string __Name, __CapName, __Client, __CharName; 
+static private object __Player; 
+ 
+static void logon();
+static void get_name(string str);
+string query_name();
+string query_char_name();
+static void get_password(string str);
+static private int locked_access();
+static private int check_password(string str);
+static private int valid_site(string ip);
+static private int boot_copy();
+static void disconnect_copy(string str);
+static private void exec_user();
+static void new_user(string str);
+static void choose_password(string str);
+static void confirm_password(string str2, string str1);
+static int register_client();
+static void continue_login();
+static void choose_gender(string str);
+static void enter_email(string str);
+static void enter_real_name(string str);
+static void offer_admin_promotion();
+static void confirm_admin_promotion(string str);
+static private int check_pending_approval();
+static private int count_connected_players();
+static void idle();
+static void receive_message(string cl, string msg);
+static private void internal_remove();
+void remove();
+static void show_char_menu();
+static void select_character(string str);
+static void confirm_delete_character(string str, string charname);
+static void get_new_char_name(string str);
+static private int enter_character(string charname);
+static private void prompt_password();
+static private void sync_login_account_env();
+
+void create() { 
+    __Name = ""; 
+    __CapName = "";
+    __CharName = "";
+    __Client = 0;
+    __CrackCount = 0; 
+    __CopyExists = 0;
+    __IsNewAccount = 0;
+    __Player = 0; 
+  } 
+ 
+static void logon() { 
+    call_out("idle", LOGON_TIMEOUT); 
+    receive(read_file(WELCOME));
+    receive("\nWhat account name do you wish? ");
+    input_to("get_name"); 
+} 
+ 
+static void get_name(string str) { 
+    if(!str || str == "") { 
+        receive("\nInvalid entry.  Please try again.\n");
+        internal_remove();
+        return; 
+      } 
+    if(sscanf(str, "%s:%s", __CapName, __Client) != 2) {
+        __Client = 0;
+        __Name = convert_name(__CapName = str);
+    }
+    else {
+        __Name = convert_name(__CapName);
+        receive("\n");
+        if(!register_client()) return;
+    }
+    __CopyExists = 0;
+    __CharName = "";
+    __IsNewAccount = 0;
+    continue_login();
+}
+
+/* Counts currently-connected objects that are neither a raw login
+   shell (someone else still mid-authentication) nor staff/wizards.
+   base_name() is checked before creatorp() deliberately: creatorp()
+   calls userp(), which is driver query_once_interactive(), true for
+   any object that was ever handed a connection (including a login.c
+   shell) -- not just for objects that stayed interactive. Filtering
+   OB_LOGIN out first avoids calling query_position() on a login.c
+   instance, which does not define it. */
+static private int count_connected_players() {
+    object *all;
+    int i, n;
+
+    all = users();
+    n = 0;
+    for(i = 0; i < sizeof(all); i++) {
+        if(!all[i] || base_name(all[i]) == OB_LOGIN) continue;
+        if(!creatorp(all[i])) n++;
+    }
+    return n;
+}
+
+static void continue_login() {
+    object tmp;
+
+    if(!(int)ACCOUNT_D->is_staff_account(__Name) &&
+       count_connected_players() >= MAX_CONCURRENT_PLAYERS) {
+        message("system",
+          "\nThe game is full right now. Please try again shortly.\n",
+          this_object());
+        internal_remove();
+        return;
+    }
+
+    if((int)master()->is_locked()) {
+        message("news", read_file(LOCKED_NEWS), this_object());
+        if(locked_access()) 
+          message("system", "\n    >>> Access allowed <<<\n", this_object()); 
+        else { 
+            message("system", "\n    >>> Access denied <<<\n", this_object()); 
+            internal_remove();
+            return; 
+          } 
+      }
+
+    /* Existing character with no account yet: migrate on the fly. */
+    if(!(int)ACCOUNT_D->account_exists(__Name) && user_exists(__Name)) {
+        tmp = (object)master()->player_object(__Name);
+        if(!tmp) {
+            message("system", "\nUnable to load character for account migration.\n",
+              this_object());
+            internal_remove();
+            return;
+        }
+        if(!(int)ACCOUNT_D->migrate_from_character(__Name,
+            (string)tmp->query_password())) {
+            message("system",
+              "\nUnable to create an account for this character.\n"
+              "Contact staff for help.\n", this_object());
+            if(tmp && !interactive(tmp)) destruct(tmp);
+            internal_remove();
+            return;
+        }
+        /* Destruct so we do not leak a non-interactive copy before
+           character select. */
+        if(tmp && !interactive(tmp)) destruct(tmp);
+        tmp = 0;
+    }
+
+    if(!(int)ACCOUNT_D->account_exists(__Name)) {
+        /* Brand-new account (and first character of the same name). */
+        if(!((int)BANISH_D->valid_name(__Name))) { 
+            message("system", sprintf("\n%s is not a valid name choice for %s.\n", 
+              capitalize(__Name), mud_name()), this_object()); 
+            message("system", sprintf("Names must be alphabetic characters no " 
+              "longer than %d letters,\nand no less than %d letters.\n", 
+              MAX_USER_NAME_LENGTH, MIN_USER_NAME_LENGTH), this_object()); 
+            message("prompt", "\nPlease enter another account name: ", this_object()); 
+            input_to("get_name"); 
+            return; 
+          } 
+        if(!((int)BANISH_D->allow_logon(__Name, query_ip_number()))) { 
+            message("news", read_file(REGISTRATION_NEWS), this_object()); 
+            internal_remove();
+            return; 
+          } 
+        message("prompt", sprintf(
+          "Account name: %s\n"
+          "Note: this will also be your FIRST character's name, and the two\n"
+          "cannot be split apart later. Any additional characters you make\n"
+          "after logging in (type 'new' at the character menu) can have\n"
+          "their own separate names.\n"
+          "Confirm %s as your account and first character name? (y/n) ",
+          __CapName, capitalize(__Name)), this_object());
+        __IsNewAccount = 1;
+        __Player = (object)master()->player_object(__Name);
+        input_to("new_user"); 
+        return; 
+      }
+
+    if(!((int)BANISH_D->allow_logon(__Name, query_ip_number()))) { 
+        message("news", read_file(BANISHED_NEWS), this_object()); 
+        internal_remove();
+        return; 
+      } 
+    prompt_password();
+  } 
+
+static private void prompt_password() {
+    message("password", "Password: ", this_object());
+    if(__Client) input_to("get_password");
+    else input_to("get_password", I_NOECHO | I_NOESC);
+}
+ 
+static void get_password(string str) { 
+    if(!str || str == "") { 
+        message("system", "\nYou must enter a password.  Try again later.\n", 
+          this_object()); 
+        internal_remove();
+        return; 
+      } 
+    if(!check_password(str)) { 
+        message("system", "\nInvalid password.\n", this_object()); 
+        if(++__CrackCount > MAX_PASSWORD_TRIES) { 
+            message("system", "No more attempts allowed.\n", this_object()); 
+            internal_remove();
+            return; 
+          } 
+        log_file("watch/logon", sprintf("%s from %s\n", __Name, query_ip_number()));
+        prompt_password();
+        return;
+      }
+    if(check_pending_approval()) return;
+    show_char_menu();
+  } 
+
+static void show_char_menu() {
+    string *chars;
+    string line;
+    int i;
+
+    chars = (string *)ACCOUNT_D->query_characters(__Name);
+    if(!chars) chars = ({});
+    message("system",
+      "\n=== Character Select ===\n"
+      "------------------------\n", this_object());
+    if(!sizeof(chars)) {
+        message("system",
+          "\n(No characters on this account yet.)\n", this_object());
+    } else {
+        message("system", "\n", this_object());
+        for(i = 0; i < sizeof(chars); i++) {
+            line = sprintf("  %d. %s", i + 1, capitalize(chars[i]));
+            if(find_player(chars[i]) && interactive(find_player(chars[i])))
+                line += "  (online)";
+            message("system", line + "\n", this_object());
+        }
+    }
+    message("system",
+      "\n  new. Create a new character\n", this_object());
+    if(sizeof(chars))
+        message("system",
+          "  delete <number or name>. Delete a character (asks to confirm)\n",
+          this_object());
+    message("prompt",
+      "\nChoose a character number, or 'new': ", this_object());
+    input_to("select_character");
+}
+
+static void select_character(string str) {
+    string *chars;
+    string sib;
+    string target;
+    string tail;
+    int n;
+
+    if(!str || !sizeof(str)) {
+        show_char_menu();
+        return;
+    }
+    str = lower_case(str);
+    if(sscanf(str, "delete %s", tail) == 1) {
+        chars = (string *)ACCOUNT_D->query_characters(__Name);
+        if(!chars) chars = ({});
+        n = to_int(tail);
+        if(n >= 1 && n <= sizeof(chars)) target = chars[n - 1];
+        else target = convert_name(tail);
+        if(!sizeof(chars) || member_array(target, chars) == -1) {
+            message("system",
+              "\nThat is not a character on this account.\n", this_object());
+            show_char_menu();
+            return;
+        }
+        if(find_player(target) && interactive(find_player(target))) {
+            message("system",
+              "\nThat character is currently online and cannot be deleted.\n",
+              this_object());
+            show_char_menu();
+            return;
+        }
+        if((int)ACCOUNT_D->is_staff_character(target)) {
+            message("system",
+              "\nThat character is a wizard and cannot be self-deleted here. "
+              "Contact an admin.\n", this_object());
+            show_char_menu();
+            return;
+        }
+        message("prompt", sprintf(
+          "\nDelete %s permanently? This cannot be undone. (y/n) ",
+          capitalize(target)), this_object());
+        input_to("confirm_delete_character", target);
+        return;
+    }
+    if(str == "new" || str == "n") {
+        if((int)ACCOUNT_D->at_character_limit(__Name)) {
+            message("system",
+              "\nThis account already has the maximum of 5 characters.\n"
+              "Delete or retire one before creating another.\n",
+              this_object());
+            show_char_menu();
+            return;
+        }
+        sib = (string)ACCOUNT_D->sibling_online(__Name, 0);
+        if(sib) {
+            message("system", sprintf(
+              "\nAnother character on this account (%s) is already logged in.\n"
+              "Log out that character before creating a new one.\n",
+              capitalize(sib)), this_object());
+            show_char_menu();
+            return;
+        }
+        message("prompt",
+          "\nEnter a name for your new character: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    chars = (string *)ACCOUNT_D->query_characters(__Name);
+    if(!chars || !sizeof(chars)) {
+        message("system", "\nNo characters to select.\n", this_object());
+        internal_remove();
+        return;
+    }
+    n = to_int(str);
+    if(n < 1 || n > sizeof(chars)) {
+        message("system", "\nInvalid choice.\n", this_object());
+        show_char_menu();
+        return;
+    }
+    if(!enter_character(chars[n - 1]))
+        return;
+}
+
+static void confirm_delete_character(string str, string charname) {
+    if(!str || !sizeof(str) || lower_case(str)[0..0] != "y") {
+        message("system", "\nDeletion cancelled.\n", this_object());
+        show_char_menu();
+        return;
+    }
+    if(find_player(charname) && interactive(find_player(charname))) {
+        message("system",
+          "\nThat character is currently online and cannot be deleted.\n",
+          this_object());
+        show_char_menu();
+        return;
+    }
+    ACCOUNT_D->remove_character(__Name, charname);
+    log_file("new_players", sprintf("%s : account %s deleted char %s : %s\n",
+      query_ip_number(), __Name, charname, ctime(time())));
+    message("system",
+      sprintf("\n%s has been deleted.\n", capitalize(charname)),
+      this_object());
+    show_char_menu();
+}
+
+/* Additional character on an existing account: name, then gender/cap-name
+   chargen path. Password is copied from the account hash. */
+static void get_new_char_name(string str) {
+    string name;
+    string pass;
+
+    if(!str || !sizeof(str)) {
+        show_char_menu();
+        return;
+    }
+    __CapName = str;
+    name = convert_name(str);
+    if(!((int)BANISH_D->valid_name(name))) {
+        message("system", sprintf(
+          "\n%s is not a valid character name.\n"
+          "Names must be alphabetic characters no longer than %d letters,\n"
+          "and no less than %d letters.\n",
+          capitalize(name), MAX_USER_NAME_LENGTH, MIN_USER_NAME_LENGTH),
+          this_object());
+        message("prompt", "Character name: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    if(user_exists(name)) {
+        message("system",
+          "\nThat name is already in use. Choose another.\n", this_object());
+        message("prompt", "Character name: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    if((int)ACCOUNT_D->owns_character(__Name, name)) {
+        message("system",
+          "\nThat character is already on this account.\n", this_object());
+        message("prompt", "Character name: ", this_object());
+        input_to("get_new_char_name");
+        return;
+    }
+    if(!((int)BANISH_D->allow_logon(name, query_ip_number()))) {
+        message("news", read_file(REGISTRATION_NEWS), this_object());
+        show_char_menu();
+        return;
+    }
+    if((int)ACCOUNT_D->at_character_limit(__Name)) {
+        message("system",
+          "\nThis account already has the maximum of 5 characters.\n",
+          this_object());
+        show_char_menu();
+        return;
+    }
+    if(__Player && !__CopyExists && !interactive(__Player))
+        destruct(__Player);
+    /* Set before player_object(), not after: master()->compile_object()
+       checks query_char_name() against the save-path name while
+       player_object() is still on the stack, so it has to already be
+       correct by the time we make that call, matching how
+       enter_character() below already does this for existing
+       characters. */
+    __CharName = name;
+    __Player = (object)master()->player_object(name);
+    if(!__Player) {
+        message("system", "\nUnable to create that character.\n",
+          this_object());
+        internal_remove();
+        return;
+    }
+    pass = (string)ACCOUNT_D->query_password_hash(__Name);
+    if(!pass || !sizeof(pass)) {
+        message("system",
+          "\nAccount password missing. Contact staff.\n", this_object());
+        if(__Player && !interactive(__Player)) destruct(__Player);
+        __Player = 0;
+        internal_remove();
+        return;
+    }
+    if(!(int)ACCOUNT_D->add_character(__Name, name)) {
+        message("system",
+          "\nCould not add the character to this account.\n", this_object());
+        if(__Player && !interactive(__Player)) destruct(__Player);
+        __Player = 0;
+        show_char_menu();
+        return;
+    }
+    __IsNewAccount = 0;
+    __Player->set_password(pass);
+    __Player->setenv("login_account", __Name);
+    ACCOUNT_D->set_last_character(__Name, name);
+    log_file("new_players", sprintf("%s : account %s char %s : %s\n",
+      query_ip_number(), __Name, name, ctime(time())));
+    message("prompt", "\nChoose your gender: Male, Female\nGender: ",
+      this_object());
+    input_to("choose_gender");
+}
+
+static private void sync_login_account_env() {
+    if(__Player && __Name && sizeof(__Name))
+        __Player->setenv("login_account", __Name);
+}
+
+static private int enter_character(string charname) {
+    string sib;
+    string pd_name;
+    string pd_killer;
+    string pd_stone;
+    int pd_level;
+
+    __CharName = lower_case(charname);
+    if(!(int)ACCOUNT_D->owns_character(__Name, __CharName)) {
+        message("system", "\nThat character is not on this account.\n",
+          this_object());
+        show_char_menu();
+        return 0;
+    }
+    sib = (string)ACCOUNT_D->sibling_online(__Name, __CharName);
+    if(sib) {
+        message("system", sprintf(
+          "\nAnother character on this account (%s) is already logged in.\n"
+          "Log out that character first, or ask staff about exemptions.\n",
+          capitalize(sib)), this_object());
+        internal_remove();
+        return 0;
+    }
+    if(__Player && !__CopyExists && !interactive(__Player))
+        destruct(__Player);
+    __Player = (object)master()->player_object(__CharName);
+    if(!__Player) {
+        message("system", "\nUnable to load that character.\n", this_object());
+        internal_remove();
+        return 0;
+    }
+    sync_login_account_env();
+    if((int)__Player->query_property("permanently_dead")) {
+        pd_name   = (string)__Player->query_cap_name();
+        pd_level  = (int)__Player->query_property("death_level");
+        pd_killer = (string)__Player->query_property("death_killer");
+        if(!pd_name || pd_name == "")   pd_name   = capitalize(__CharName);
+        if(!pd_killer || pd_killer == "") pd_killer = "the Rifts";
+        pd_stone = sprintf(
+            "\n+-----------------------------+\n"
+            "|                             |\n"
+            "|         R . I . P .         |\n"
+            "|                             |\n"
+            "|  %-25s  |\n"
+            "|  Level %-21d|\n"
+            "|  Slain by: %-17s|\n"
+            "|                             |\n"
+            "|  The Rifts claimed another  |\n"
+            "|          soul.              |\n"
+            "|                             |\n"
+            "+-----------------------------+\n\n",
+            pd_name, pd_level, pd_killer);
+        message("system", pd_stone, this_object());
+        internal_remove();
+        return 0;
+    }
+    if(!valid_site(query_ip_number())) {
+        message("system", "\nLogin from this site is not allowed.\n",
+          this_object());
+        internal_remove();
+        return 0;
+    }
+    ACCOUNT_D->set_last_character(__Name, __CharName);
+    if(find_player(__CharName) && interactive(find_player(__CharName))) {
+        __CopyExists = 1;
+        __Player = find_player(__CharName);
+        boot_copy();
+        return 1;
+    }
+    __CopyExists = 0;
+    exec_user();
+    return 1;
+}
+ 
+static private int locked_access() { 
+    int i; 
+    
+    if((int)BANISH_D->is_guest(__Name)) return 1; 
+    i = sizeof(LOCKED_ACCESS_ALLOWED); 
+    while(i--) if(member_group(__Name, LOCKED_ACCESS_ALLOWED[i])) return 1; 
+    return 0; 
+  } 
+ 
+static private int check_password(string str) { 
+    return (int)ACCOUNT_D->check_password(__Name, str);
+  } 
+ 
+static private int valid_site(string ip) { 
+    string a, b; 
+    string *miens; 
+    int i; 
+ 
+    if(!__Player) return 1;
+    if(!(i = sizeof(miens = (string *)__Player->query_valid_sites()))) return 1; 
+    while(i--) { 
+        if(ip == miens[i]) return 1; 
+        if(sscanf(miens[i], "%s.*s", a) && sscanf(ip, a+"%s", b)) return 1; 
+      } 
+    return 0; 
+  } 
+ 
+static private int boot_copy() { 
+    if(interactive(__Player)) { 
+        message("system", "\nThere currently exists an interactive copy of you.\n", 
+          this_object()); 
+        message("prompt", "Do you wish to take over this interactive copy? (y/n) ", 
+          this_object()); 
+        input_to("disconnect_copy", I_NORMAL); 
+        return 1; 
+      } 
+    log_file("enter", sprintf("%s/%s (exec): %s\n", __Name, __CharName,
+      ctime(time()))); 
+    if(exec(__Player, this_object())) __Player->restart_heart(); 
+    else message("system", "Problem reconnecting.\n", this_object()); 
+    internal_remove();
+    return 1; 
+  } 
+ 
+static void disconnect_copy(string str) { 
+    object tmp; 
+ 
+    if((str = lower_case(str)) == "" || str[0] != 'y') { 
+        message("system", "\nThen please try again later!\n", this_object()); 
+        internal_remove();
+        return; 
+      } 
+    message("system", "You are being taken over by hostile aliens!", __Player); 
+    exec(tmp = new(OB_USER), __Player); 
+    exec(__Player, this_object()); 
+    __Player->set_client(__Client);
+    destruct(tmp); 
+    message("system", "\nAllowing login.\n", __Player); 
+    internal_remove();
+  } 
+ 
+static private void exec_user() {
+    string who;
+
+    who = __CharName && sizeof(__CharName) ? __CharName : __Name;
+    if(MULTI_D->query_prevent_login(who)) { 
+        internal_remove();
+        return; 
+      } 
+    if(!exec(__Player, this_object())) { 
+        message("system", "\nProblem connecting.\n", this_object()); 
+        __Player->remove();
+        destruct(this_object());
+        return; 
+      } 
+    __Player->set_client(__Client);
+    catch(__Player->setup());
+    destruct(this_object()); 
+  } 
+ 
+static void new_user(string str) { 
+    if((str = lower_case(str)) == "" || str[0] != 'y') { 
+        message("prompt", "\nOk, then enter the account name you really want: ",
+          this_object()); 
+        if(__Player) { __Player->remove(); __Player = 0; }
+        input_to("get_name"); 
+        return; 
+      } 
+    log_file("new_players", sprintf("%s : account %s : %s\n", query_ip_number(),
+      __Name, ctime(time()))); 
+    message("password", "Please choose a password of at least 5 letters: ", 
+      this_object()); 
+    if(__Client) input_to("choose_password");
+    else input_to("choose_password", I_NOECHO | I_NOESC);
+  } 
+ 
+static void choose_password(string str) { 
+    if(strlen(str) < 5) { 
+        message("system", "\nYour password must be at least 5 letters long.\n", 
+          this_object()); 
+        message("password", "Please choose another password: ", this_object()); 
+        if(__Client) input_to("choose_password");
+        else input_to("choose_password", I_NOECHO | I_NOESC);
+        return;
+      } 
+    message("password", "\nPlease confirm your password choice: ", this_object()); 
+    if(__Client) input_to("confirm_password", str);
+    else input_to("confirm_password", I_NOECHO | I_NOESC, str);
+  } 
+ 
+static void confirm_password(string str2, string str1) {
+    string crypted;
+
+    if(str1 == str2) { 
+        crypted = crypt(str2, 0);
+        /* Account first, then mirror password onto the first character.
+           pending_approval is set only if an admin already exists: the
+           very first account on a fresh install must sail through to
+           the first-admin bootstrap offer below (offer_admin_promotion()),
+           since nobody would otherwise exist to approve it. */
+        if(__IsNewAccount) {
+            /* create_account() now returns 0 if the account file is not
+               verifiably on disk afterward. Its return was previously
+               discarded, so a failed write let login carry on and build a
+               character with no account behind it -- a state nothing
+               downstream can recover from. Stop here instead; the daemon
+               has already logged the reason to /log/secure/account_d. */
+            if(!(int)ACCOUNT_D->create_account(__Name, crypted, ({ __Name }))) {
+                message("system",
+                  "\nYour account could not be saved, so nothing has been "
+                  "created.\nPlease contact staff: the failure has been "
+                  "logged.\n", this_object());
+                internal_remove();
+                return;
+            }
+            if((int)__Player->any_admin_exists())
+                ACCOUNT_D->set_pending_approval(__Name, 1);
+            __CharName = __Name;
+        }
+        __Player->set_password(crypted);
+        __Player->setenv("login_account", __Name);
+        message("prompt", "\nChoose your gender: Male, Female\nGender: ",
+          this_object());
+        input_to("choose_gender");
+        return;
+      }
+    else { 
+        message("password", "\nPassword entries do not match.  Choose a password: ", 
+          this_object()); 
+        if(__Client) input_to("choose_password");
+        else input_to("choose_password", I_NOECHO | I_NOESC); 
+        return; 
+      } 
+  } 
+ 
+static void choose_gender(string str) {
+    if(str) str = lower_case(str);
+    if(str != "male" && str != "female") {
+        message("system", "\nPlease type male or female.\n",
+          this_object());
+        message("prompt", "Gender: ", this_object());
+        input_to("choose_gender");
+        return;
+      }
+    __Player->set_gender(str);
+    message("system", sprintf("You may format %s to appear however you want "
+      "using alternative\ncapitalization, spaces, \"'\", or \"-\".\n", __CapName), 
+        this_object());
+    message("prompt", sprintf("Please choose a display name (default: %s): ", __CapName), this_object());
+    input_to("choose_cap_name");
+}
+
+static void choose_cap_name(string str) {
+    string who;
+
+    if(!str || str == "") str = capitalize(__CapName);
+    who = __CharName && sizeof(__CharName) ? __CharName : __Name;
+    if(!((int)BANISH_D->valid_cap_name(str, who))) {
+        message("prompt", "Incorrect format.  Choose again: ", this_object());
+        input_to("choose_cap_name");
+        return;
+    }
+    __Player->set_cap_name(capitalize(str));
+    message("system", "\nEmail address (for account recovery, optional):\n",
+      this_object());
+    message("prompt", "Email: ", this_object());
+    input_to("enter_email");
+  }
+
+static void enter_email(string str) {
+    if(!str || str == "") str = "none";
+    __Player->set_email(str);
+    if(__IsNewAccount)
+        ACCOUNT_D->set_account_email(__Name, str);
+    message("prompt", "\nIf you do not mind, enter your real name (optional): ", 
+      this_object()); 
+    input_to("enter_real_name"); 
+  } 
+ 
+static void enter_real_name(string str) {
+    if(!str || str == "") str = "Unknown";
+    __Player->set_rname(str);
+    log_file("enter", sprintf("%s/%s (new player): %s\n", __Name,
+      __CharName && sizeof(__CharName) ? __CharName : __Name, ctime(time())));
+    if(check_pending_approval()) return;
+    offer_admin_promotion();
+  }
+
+/* Blocks a still-pending account from reaching chargen/exec_user(),
+   for both a brand-new account (called from enter_real_name(), right
+   after the account-shell questions and before real chargen starts)
+   and a returning one (called from get_password(), before the
+   character select menu). Staff are always exempt. Returns 1 and
+   disconnects if blocked, 0 if the login may continue. */
+static private int check_pending_approval() {
+    if((int)ACCOUNT_D->is_staff_account(__Name)) return 0;
+    if(!(int)ACCOUNT_D->is_pending_approval(__Name)) return 0;
+    message("system",
+      "\nYour account is pending approval by staff. Please check back "
+      "later.\n", this_object());
+    internal_remove();
+    return 1;
+}
+
+/* Brand-new account only. Additional characters skip the founder offer. */
+static void offer_admin_promotion() {
+    if(!__IsNewAccount || (int)__Player->any_admin_exists()) {
+        exec_user();
+        return;
+    }
+    message("system",
+      "\nNo admin exists on this MUD yet.\n", this_object());
+    message("prompt",
+      "Become the admin? (y/n) ", this_object());
+    input_to("confirm_admin_promotion");
+}
+
+static void confirm_admin_promotion(string str) {
+    if(str && strlen(str) && lower_case(str)[0..0] == "y") {
+        __Player->set_position("head arch");
+        __Player->setenv("rifts_occ", "none");
+        __Player->setenv("rifts_occ_flags", "magic,psychic,borg,cybernetic");
+        message("system",
+          "\nYou have been granted admin rank.\n", this_object());
+    }
+    exec_user();
+}
+
+static void idle() {
+    receive("\nLogin timed out.\n");
+    internal_remove();
+  } 
+ 
+void receive_message(string cl, string msg) { 
+    if(__Client) receive("<"+cl+">"+msg+"\n");
+    else receive(msg);
+  } 
+
+static private void internal_remove() {
+    if(__Player && !__CopyExists && !interactive(__Player))
+        destruct(__Player);
+    destruct(this_object());
+}
+
+void remove() {
+    internal_remove();
+}
+
+static int register_client() {
+    string client, ver;
+
+    if(sscanf(__Client, "%s/%s", client, ver) != 2) ver = 0;
+    if(member_array(__Client, SUPPORTED_CLIENTS) == -1) {
+        receive("<protocol>"+implode(SUPPORTED_CLIENTS, ",")+"\n");
+        input_to("input_protocol");
+        return 0;
+    }
+    receive("<connect>\n");
+    return 1;
+}
+
+static void input_protocol(string str) {
+    string str_class, client;
+
+    if(sscanf(str, "<%s>%s", str_class, client) != 2  || str_class != "protocol" ||
+      member_array(client, SUPPORTED_CLIENTS) == -1 || client == "none")
+        __Client = 0;
+    else __Client = client;
+    if(__Client) receive("<connect>\n");
+    continue_login();
+}
+
+string query_name() {
+    if(!interactive(this_object())) return 0;
+    else if(__Name) return __Name;
+    else return "";
+}
+
+/* The character name currently being created or selected, distinct
+   from query_name()'s account name since the 2026-07-18 account-
+   separate login split. master()->compile_object() needs this one
+   to match the "nom" it parses out of the player-save path -- see
+   the DIR_USERS branch there. Falls back to the account name when
+   __CharName isn't set yet (same idiom already used at the "who"
+   assignments elsewhere in this file): the two flows that call
+   player_object(__Name) directly -- brand-new-account signup and
+   legacy pre-account migration -- run before __CharName is ever
+   assigned, and for both of those the character name genuinely is
+   the account name. */
+string query_char_name() {
+    if(!interactive(this_object())) return 0;
+    else if(__CharName && sizeof(__CharName)) return __CharName;
+    else if(__Name) return __Name;
+    else return "";
+}
+
+string query_CapName() {
+    string tmp;
+
+    tmp = query_name();
+    return (tmp ? capitalize(tmp) : "");
+}

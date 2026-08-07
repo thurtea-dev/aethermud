@@ -1,0 +1,16 @@
+PARAMEDIC: Advanced field trauma care
+
+Category: Medical
+Base skill: 40% (+5%/level, cap 98%)
+
+A step above First Aid: stabilizing critically wounded patients in
+the field, recognizing and treating shock and internal bleeding, and
+keeping someone alive long enough to reach a hospital or a Medical
+Doctor. Common among Coalition medics, mercenary company corpsmen,
+and anyone whose job puts them near a battlefield.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, first aid, medical doctor

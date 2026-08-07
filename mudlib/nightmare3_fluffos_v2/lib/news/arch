@@ -1,0 +1,57 @@
+                      === ARCH NEWS ===
+
+Administrative items only. Content and mudlib news are in the blocks
+above.
+
+DEPLOYMENT
+  The VPS at aethermud.com is the live production server. SSH host
+  zeus.cybercitizen.net, working directory /home/thurtea/aethermud.
+  The local checkout is where development and testing happen.
+  Changes go local -> commit -> push -> pull on the VPS. Never edit the
+  VPS directly except to pull commits that were already tested locally.
+  www/ is copied to public_html by hand; it does not ride the git pull.
+  realms/*/ is gitignored except realms/thurtea/workroom.c, which is
+  explicitly un-ignored. Anything else you put in a personal realm will
+  not deploy.
+
+ACCOUNTS AND APPROVAL
+  accountapproval list              accounts awaiting approval.
+  accountapproval approve <name>    approve one. Logged to
+                                    /log/adm/accountapproval.
+  A brand-new account created after this MUD already has an admin
+  cannot finish character creation until approved. The very first
+  account on a fresh install is never flagged, so the first-admin
+  bootstrap cannot deadlock.
+  Pending accounts also show on the staff bulletin board, so you do not
+  have to remember to run the list command.
+
+PROMOTIONS
+  makewiz then setrole is the normal pipeline. Both auto-set a default
+  who-title for the new rank and correctly progress through titles, but
+  neither will overwrite a genuine custom title set another way.
+  setrole admin sets position "arch", never "head arch". The founder's
+  "head arch" position and its hardcoded who-list title are untouched
+  by the role commands.
+  Group membership lives in /secure/cfg/groups.cfg. A member-less group
+  line such as (AMBASSADOR) is valid by design; master.c load_access()
+  has a second sscanf pass for it. Do not "fix" that by requiring a
+  trailing space.
+
+LOGS
+  log_file() prepends /log/. Pass paths relative to it.
+  /log/adm/setrole, /log/adm/accountapproval, /log/errors/<dir> for
+  compile failures, /log/runtime for runtime errors. Object load
+  failures appear only in log/errors, which is the usual reason a
+  "mysteriously missing" object goes unnoticed.
+
+OPEN DECISIONS
+  Permission review is pending on _playerwipe.c, _suicide.c,
+  apprentice_d.c, _arrest.c, and _rid.c.
+  cmds/mortal/_wish.c is a legacy Nightmare III command still reachable
+  by mortals. It clones weapons and armor to a player-supplied strength
+  value with no cap, and hands the item over before its failure branch
+  kills the player. It should be removed or restricted; it is not a bug
+  reporting command despite what older news files claimed.
+  Moving the Atlantis zone out from under domains/Praxis/areas/splynn/
+  to its own top-level domain is unscheduled. It would touch 220 path
+  references across 74 files; no player save references the path.

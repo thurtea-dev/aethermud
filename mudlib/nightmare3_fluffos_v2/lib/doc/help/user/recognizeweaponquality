@@ -1,0 +1,15 @@
+RECOGNIZE WEAPON QUALITY: Judging a weapon's craftsmanship
+
+Category: Trade
+Base skill: 25% (+5%/level, cap 98%)
+
+Examining a weapon and judging its true craftsmanship, condition, and
+worth at a glance: whether it is a masterwork piece, a reliable
+working weapon, or barely-functional junk dressed up to look better
+than it is.
+
+NOTES:
+  No AetherMUD command currently rolls this skill directly. It is
+  available for character concept and staff-adjudicated roleplay.
+
+SEE ALSO: skills, appraise goods, armorer

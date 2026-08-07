@@ -1,0 +1,15 @@
+BANDAGE: First aid on a wounded target
+
+Syntax: bandage <target>
+        treat <target>
+
+DESCRIPTION:
+  Bandage or treat wounds on a living target in the same room. Requires the
+  First Aid skill and bandages, a first aid kit, or a medkit in inventory.
+
+NOTES:
+  A successful roll restores a small amount of SDC or HP.
+  treat and bandage are the same command.
+  Body Fixers and other medical OCCs may have better healing options.
+
+SEE ALSO: treat, skills, rest

@@ -1,0 +1,16 @@
+ECHO: Room narration
+
+Syntax: echo <message>
+
+DESCRIPTION:
+  Sends text to everyone in your current room without prefixing your
+  name. Use for ambient sounds, weather, or shared scene narration
+  during roleplay.
+
+  Example:
+    echo A distant thunder roll shakes the windows.
+
+  All echo use is logged for staff review. Wizards have a separate
+  creator echo command.
+
+SEE ALSO: say, emote, ooc

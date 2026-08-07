@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QCS - AetherMUD</title>
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <nav><a href="index.html">Home</a> <a href="coding.html">Coding</a></nav>
+
+  <h1>Quick Creation System</h1>
+  <p>Staff of Creation verbs for rooms, NPCs, weapons, and armor. Work in your realm sandbox first.</p>
+
+  <h2>Core verbs</h2>
+  <pre>create room &lt;dir&gt; &lt;filename&gt;
+create npc|weapon|armor &lt;filename&gt;
+modify here|&lt;filename&gt; &lt;property&gt; &lt;value&gt;
+add exit &lt;dir&gt; &lt;path&gt;
+add &lt;npcfile&gt; to here
+add &lt;npcfile&gt; to &lt;roomfile&gt;
+delete &lt;object&gt;
+about &lt;filename|here&gt;
+more &lt;filename|here&gt;
+clone &lt;filename&gt;
+purge &lt;object&gt;</pre>
+
+  <h3>Properties</h3>
+  <pre>Room:   short, long, light, indoors
+NPC:    name, short, long, level, hp, race, occ, align, mdc
+Weapon: name, short, long, wc, type, damage (NdN), mdc (0/1)
+Armor:  name, short, long, ac, ar, sdc, mdc, slot</pre>
+
+  <h3>HP, SDC, MDC</h3>
+  <ul>
+    <li><strong>SDC being</strong> (<code>mdc 0</code>, default): HP via <code>hp</code> / <code>rifts_hp</code>; optional SDC buffer drains first. Unconscious at 0 HP; dead at -10 HP. QCS starts with HP only (SDC 0). Add buffer by hand: <code>set_stats("SDC", n);</code> and <code>set_stats("max_SDC", n);</code>.</li>
+    <li><strong>MDC being</strong> (<code>mdc N</code>, N &gt; 0): single MDC pool. Only MDC weapons damage the pool.</li>
+    <li>Worn armor drains first (armor MDC/SDC), then wearer pools.</li>
+  </ul>
+
+  <h2>Paths</h2>
+  <pre>/realms/&lt;you&gt;/area/room/
+/realms/&lt;you&gt;/area/npc/
+/realms/&lt;you&gt;/area/weap/
+/realms/&lt;you&gt;/area/armor/</pre>
+
+  <h2>Example session</h2>
+  <p>Wizard name in paths: <code>coder</code>. Start from workroom with Staff of Creation in inventory.</p>
+
+  <h3>Room</h3>
+  <pre>create room north practice_room</pre>
+  <pre>QCS: wrote and updated /realms/coder/area/room/practice_room.c
+QCS: wrote and updated /realms/coder/workroom.c
+QCS: room created. Exit 'north' wired to /realms/coder/area/room/practice_room</pre>
+  <pre>north
+modify here short A practice chamber
+modify here long A bare chamber for learning the builder.</pre>
+  <pre>add exit east /realms/coder/area/room/armory</pre>
+  <pre>about here</pre>
+  <pre>/* /realms/coder/area/room/practice_room.c */
+/* QCS room by Coder */
+
+#include &lt;std.h&gt;
+#include &lt;rooms.h&gt;
+
+inherit ROOM;
+
+void create() {
+    ::create();
+    set_property("light", 2);
+    set_property("indoors", 0);
+    set_short("A practice chamber");
+    set_long("A bare chamber for learning the builder.");
+    add_exit("south", "/realms/coder/workroom");
+    add_exit("east", "/realms/coder/area/room/armory");
+}</pre>
+
+  <h3>NPC</h3>
+  <p>Filename becomes the id (<code>set_id(({ "bandit" }))</code>). No separate QCS verb for ids; hand-edit for extras.</p>
+  <pre>create npc bandit
+modify bandit name bandit
+modify bandit short a lean bandit
+modify bandit long A lean bandit in scavenged armor watches the exits.
+modify bandit race human
+modify bandit level 5</pre>
+  <pre>about bandit</pre>
+  <pre>/* /realms/coder/area/npc/bandit.c */
+/* QCS NPC by Coder */
+
+#include &lt;std.h&gt;
+
+inherit "/std/rifts_npc";
+
+void create() {
+    ::create();
+    set_name("bandit");
+    set_npc_name("Bandit");
+    set_id( ({ "bandit" }) );
+    set_short("a lean bandit");
+    set_long("A lean bandit in scavenged armor watches the exits.");
+    set_level(5);
+    set_max_hp(20);
+    set_hp(20);
+    set_stats("rifts_hp", 20);
+    set_aggressive(0);
+    set_moving(0);
+    set_gender("neuter");
+    set_race("human");
+    setenv("rifts_occ", "mercenary");
+    set_alignment(0);
+    set_body_type("human");
+    set_property("mdc_creature", 0);
+    set_stats("MDC", 0);
+    set_stats("max_MDC", 0);
+    set_default_response("The creature watches silently.");
+}</pre>
+  <ul>
+    <li>This bandit is SDC: 20 HP, no SDC buffer. Add SDC with hand-edit as above.</li>
+    <li><code>modify bandit mdc 90</code> switches to a 90-MDC pool (no HP/SDC layering).</li>
+  </ul>
+
+  <h3>Weapon</h3>
+  <pre>create weapon vibro_knife
+modify vibro_knife name vibro knife
+modify vibro_knife short a vibro-knife
+modify vibro_knife long A short blade that hums with ultrasonic vibration.
+modify vibro_knife type blade
+modify vibro_knife damage 2d6
+modify vibro_knife mdc 1</pre>
+  <p><code>damage</code> writes <code>damage_num</code>, <code>damage_sides</code>, <code>damage_string</code>. <code>mdc 1</code> clears the SDC weapon flag (multiple "wrote and updated" lines per command are normal).</p>
+  <pre>about vibro_knife</pre>
+  <pre>/* /realms/coder/area/weap/vibro_knife.c */
+/* QCS weapon by Coder */
+
+#include &lt;std.h&gt;
+
+inherit "/std/weapon";
+
+void create() {
+    ::create();
+    set_name("vibro knife");
+    set_id( ({ "vibro_knife", "weapon" }) );
+    set_short("a vibro-knife");
+    set_long("A short blade that hums with ultrasonic vibration.");
+    set_mass(50);
+    set_value(100);
+    set_wc(5);
+    set_type("blade");
+    set_property("sdc_weapon", 0);
+    set_property("mdc_weapon", 1);
+    set_property("damage_num", 2);
+    set_property("damage_sides", 6);
+    set_property("damage_string", "2d6");
+}</pre>
+  <p>Armor: same pattern with <code>create armor</code> and properties <code>ac</code>, <code>ar</code>, <code>sdc</code>, <code>mdc</code>, <code>slot</code>.</p>
+
+  <h3>Spawn / clone</h3>
+  <pre>add bandit to here</pre>
+  <p>Appends a guarded <code>reset()</code> spawn. Refuses if the room already has <code>reset()</code> (hand-edit then).</p>
+  <pre>void reset() {
+ ::reset();
+ if(!present("bandit", this_object()))
+  clone_object("/realms/coder/area/npc/bandit")->move(this_object());
+}</pre>
+  <pre>clone vibro_knife</pre>
+  <pre>QCS: cloned /realms/coder/area/weap/vibro_knife.c to your inventory.</pre>
+
+  <h2>Tips</h2>
+  <ul>
+    <li>Short lowercase filenames with underscores; QCS sanitizes them</li>
+    <li><code>create room</code> links exits both ways in your realm</li>
+    <li>Spawn NPCs from <code>reset()</code> with <code>present()</code> guards</li>
+    <li>Test with <code>clone</code> before promoting into <code>/domains/</code></li>
+    <li>Generated files are plain LPC; polish with <code>ed</code>, then <code>update</code></li>
+  </ul>
+</body>
+</html>

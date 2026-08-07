@@ -1,0 +1,32 @@
+PROMPT: View and customize your command prompt
+
+Syntax: prompt
+        prompt <string>
+        prompt default
+        prompt tokens
+
+DESCRIPTION:
+  By default your prompt automatically shows the stat pools that
+  apply to your race and OCC. An MDC being with magic sees:
+    MDC:450/450 PPE:120/120>
+  while an SDC character with psionics sees:
+    HP:80/80 SDC:200/200 ISP:60/60>
+  Pools you do not have (no PPE, no ISP) are not shown.
+
+  prompt            Show your current prompt setting.
+  prompt <string>   Set a custom prompt. Tokens like $k (current MDC)
+                    or $p (current PPE) are expanded each time the
+                    prompt is displayed; see 'prompt tokens'.
+  prompt default    Return to the automatic pool display.
+                    ('prompt reset' does the same.)
+  prompt tokens     List every available token.
+
+  The words 'default', 'reset', and 'tokens' are reserved by this
+  command. To set a prompt literally starting with one of them, use
+  'set PROMPT <string>' instead.
+
+EXAMPLE:
+  prompt [$k/$K MDC $p/$P PPE]>
+  prompt default
+
+SEE ALSO: sbar, score, set, unset
