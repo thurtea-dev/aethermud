@@ -52,6 +52,17 @@ void create() {
         limbs[b_types[i]] = ([]);
         for(j=0, tmp2=sizeof(lines=explode(read_file(LIMB_DIR+b_types[i]), "\n"));
           j<tmp2; j++) {
+            /* explode() on a file that ends in a trailing newline (every
+               file in LIMB_DIR does) yields a trailing empty string as
+               its own last element; indexing [0] on it threw "string
+               index out of bounds" and aborted this daemon's create()
+               entirely (RACE_D unusable for every race). read_database()
+               elsewhere in this mudlib already guards the same case via
+               database_filter()'s own "!str || str == \"\"" check; this
+               loop reads LIMB_DIR files directly instead, so it needs
+               its own guard. */
+            if(!lines[j] || lines[j] == "")
+	      continue;
             if(lines[j][0] == '#')
 	      continue;
             if(sizeof(data = explode(lines[j], ":")) != 4) 

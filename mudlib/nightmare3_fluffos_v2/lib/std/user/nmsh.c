@@ -570,14 +570,14 @@ void reset_history() {
     __History = allocate(__HistorySize = query_history_size()); 
 } 
  
-void reset_prompt() { 
-    __Prompt = query_prompt(); 
+void reset_prompt() {
+    __Prompt = query_prompt();
     if(!stringp(__Prompt)) __Prompt = "Prompt screwey> ";
-    __Prompt = replace_string(__Prompt, "$M", mud_name()); 
-    __Prompt = replace_string(__Prompt, "$m", lower_case(mud_name())); 
-    __Prompt = replace_string(__Prompt, "$N", (string)this_object()->query_CapName()); 
+    __Prompt = replace_string(__Prompt, "$M", mud_name());
+    __Prompt = replace_string(__Prompt, "$m", lower_case(mud_name()));
+    __Prompt = replace_string(__Prompt, "$N", (string)this_object()->query_CapName());
     __Prompt = replace_string(__Prompt, "$n", query_name());
-} 
+}
  
 /* Initialize cwd to this wizard's own /realms/<name> home directory.
    Public so promotion tools (makewiz) can set it right away; harmless
