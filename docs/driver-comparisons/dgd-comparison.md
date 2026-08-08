@@ -31,7 +31,7 @@ C++20 FluffOS/MudOS-oriented subset: stack VM, master + simul_efun objects, TCP 
 
 | Feature | Our driver (STATUS.md) | DGD |
 |---|---|---|
-| **Closures / function pointers** | MudOS-style bare `(: name, args… :)` only (partial). | Historically **no** closures (2003-era comparisons). Modern builds may enable **`-DCLOSURES`** (`function` keyword); not the FluffOS `(: :)` grammar this mudlib uses. |
+| **Closures / function pointers** | MudOS-style `(: :)` family: bare-name, general inline lambda, bare string-constant, and `(*fp)(args)` all implemented (2026-08-07: no longer "partial" -- only `$1`/`$(name)` placeholder forms remain, unused on any path reached live). | Historically **no** closures (2003-era comparisons). Modern builds may enable **`-DCLOSURES`** (`function` keyword); not the FluffOS `(: :)` grammar this mudlib uses. |
 | **catch / throw** | `catch(expr)` implemented; **`throw()` not implemented**. | `catch` (expr and richer forms with `:` handlers in kernel lib patterns); `error()` kfun; atomic rollback interacts with errors differently than MudOS throw. |
 | **Inheritance** | Multi-level `inherit`, flattened vars, `::` calls, cycle detection. | Multiple inheritance; **recompile/upgrade** rules constrain what can be recompiled in place (inheritable vs non-inheritable discipline in Kernel Library). |
 | **Arrays / mappings** | Supported with STATUS-noted operator gaps. | Supported; **copy-on-timeslice** when shared across object arenas — semantic difference from MudOS shared references. |
@@ -39,7 +39,7 @@ C++20 FluffOS/MudOS-oriented subset: stack VM, master + simul_efun objects, TCP 
 | **simul_efuns** | Real simul_efun object + tier-3 lookup + `efun::`. | **No simul_efun object.** **Auto object** is implicitly inherited by all; kfuns can be shadowed by auto/afuns. |
 | **heart_beat** | Apply recognized; **never called** (stub). | **No dedicated heart_beat apply** in the MudOS sense. Recurring work is done with **`call_out`** (and mudlib conventions). |
 | **call_out scheduling** | Efun exists; **scheduler does not fire**. | First-class **`call_out` / `remove_call_out`** kfuns; timing rules documented (order among equal delays not guaranteed; long vs ms callouts). |
-| **Efun / kfun count** | ~**58** efuns. | ~**99** documented kfuns in the public index (math, ASN.1, crypto hashes, files, network, compile, dump_state, …) — smaller surface than FluffOS, larger than ours, differently shaped. |
+| **Efun / kfun count** | ~**91** efuns (up from ~58; see `docs/driver-comparisons/fluffos-comparison.md` for the current breakdown). | ~**99** documented kfuns in the public index (math, ASN.1, crypto hashes, files, network, compile, dump_state, …) — smaller surface than FluffOS, larger than ours, differently shaped. |
 | **Threading / coroutines** | Single-threaded loop. | Sequential tasks; Hydra adds speculative parallel timeslices with rollback. No LPC coroutines. |
 | **Persistence** | Per-object `save_object`/`restore_object` (custom format). | World-level **statedump**, swapout, hotboot; objects immortal-by-default across restarts. |
 | **Master / connect** | FluffOS master `connect`/`logon`/`compile_object`. | **Driver object** callbacks (`path_read`/`path_write`, compile hooks, connection handling) + auto object — different boot API. |
@@ -92,7 +92,7 @@ Our tiered runtime call chain is a FluffOS/MudOS fidelity choice. DGD’s auto-i
 
 ## Sources
 
-- `docs/STATUS.md`
+- `docs/STATUS.md` (last cross-checked against this doc 2026-08-07 after chargen reached a full end-to-end run)
 - https://www.dworkin.nl/dgd/ (features, timeline, Hydra)
 - https://chattheatre.github.io/lpc-doc/dgd/unusual.html (tasks, atomic, disk-based, snapshots)
 - https://chattheatre.github.io/lpc-doc/dgd/kfuns.html (~99 kfuns)

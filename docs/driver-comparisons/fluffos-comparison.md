@@ -22,12 +22,12 @@
 
 | Layer | Design |
 |---|---|
-| Implementation | Modern C++20, CMake, unit-tested (212 cases per STATUS). |
+| Implementation | Modern C++20, CMake, unit-tested (293 cases per STATUS, 2026-08-07). |
 | Compile path | Hand-written lexer/parser → AST → stack bytecode (`CodeGen`) → `CompiledProgram`. Preprocess via system `cpp` with FluffOS-compatible predefined macros. |
 | VM | Stack-based VM (`VM::run`), `Value` variant (int/float/string/array/mapping/object/closure). Catch frames via `PushCatchFrame`/`PopCatchFrame`. |
 | Object model | `LpcObject` + `ObjectManager` cache; inherit flattens object-variable layout and keeps `inheritedPrograms` for `::` / `CallParent`. Destruct is incomplete vs FluffOS (no full `O_DESTRUCTED` apply guards). |
 | Runtime model | Non-blocking TCP poll loop + `Scheduler` (50 ms sleep). `tickHeartbeats()` / `tickCallOuts()` exist but are empty stubs. Fixed ~1e6 instruction eval ceiling per `VM::run()` call. |
-| Extensibility | ~58 registered efuns (including aliases). Real simul_efun object load + four-tier call resolution. Master applies used live: `connect`, `compile_object`, etc. |
+| Extensibility | ~91 registered efuns (including aliases; up from ~58 as of earlier revisions of this doc). Real simul_efun object load + four-tier call resolution. Master applies used live: `connect`, `compile_object`, `privs_file`, etc. Real `add_action()`/`enable_commands()` command-dispatch subsystem (see below). |
 
 **Intentional relationship:** Our driver is built to run *this* FluffOS mudlib (Nightmare III / AetherMUD). Architecture choices are repeatedly checked against FluffOS 2.9 source (`grammar.y`, `interpret.c`, `function.c`, `simulate.c`, `backend.c`, `comm.c`), not invented in isolation.
 
@@ -39,7 +39,7 @@ Our column is taken from `docs/STATUS.md` “Working now” / “Known stubs” 
 
 | Feature | Our driver (STATUS.md) | FluffOS 2.9 / modern |
 |---|---|---|
-| **Closures / function pointers** | Bare-name form `(: name, bound_args... :)` only; `Closure` value; `evaluate`/`funcall`; lazy name resolve at invoke. Object-bound / string-constant / `(*fp)(...)` / `$1` lambdas **not** implemented (STATUS stubs / next blocker). | Full `function` type: bare-name, bound args, inline functionals (`FP_FUNCTIONAL`), string-constant form, `(*fp)(args)`, `$n`/`$(var)` placeholders; bind type baked at construction (`FP_LOCAL`/`FP_SIMUL`/`FP_EFUN`/…). |
+| **Closures / function pointers** | Bare-name form `(: name, bound_args... :)`, general inline lambda (`(: expr, expr... :)`, comma-expression body), bare string-constant closures (`(: "literal" :)`), and `(*fp)(args)` dereference-call syntax are all implemented (see STATUS's "Closure/function-pointer forms completed"). `Closure` value; `evaluate`/`funcall`; lazy name resolve at invoke. Only `$1`/`$2`/`$(name)` positional/captured-variable placeholder lambdas remain unimplemented (confirmed not used on any path reached live yet). | Full `function` type: bare-name, bound args, inline functionals (`FP_FUNCTIONAL`), string-constant form, `(*fp)(args)`, `$n`/`$(var)` placeholders; bind type baked at construction (`FP_LOCAL`/`FP_SIMUL`/`FP_EFUN`/…). |
 | **catch / throw** | `catch(expr)` as real VM control flow (`PushCatchFrame`/`PopCatchFrame`); success → `0`, error → message string; eval-cost errors not catchable. **`throw()` not implemented.** | `catch` + `F_CATCH`/`F_END_CATCH`; `throw()` efun (`f_throw` / `throw_error`). Block form `catch { }` also supported in grammar. |
 | **Inheritance depth** | Single- and multi-level `inherit "path";`, cycle detection, flattened variables, `::name` / `qualifier::name` via `CallParent`. No hard depth constant called out in STATUS. | Multi-level inherit with program inherit tables; config `inherit chain size` (this mud’s `mudos.cfg`: **30**). `deep_inherit_list` / `shallow_inherit_list` efuns. |
 | **Arrays / mappings** | Literals (trailing comma ok), indexing R/W, range + `<N` from-end, concat; `&` intersection (order/duplicates differ from FluffOS); `\|` int-only (no array union). | Full arrays/mappings/buffers/classes; sorted de-duped array `&`; array `\|` union; rich efun surface (`filter`, `map`, `sort_array`, …). |
@@ -47,7 +47,7 @@ Our column is taken from `docs/STATUS.md` “Working now” / “Known stubs” 
 | **simul_efuns** | Config `simul_efun_file` loaded at boot; tier-3 in call chain; `efun::name` bypass. | Same model: dedicated simul_efun object; lookup prefers simul over core efun; `efun::` escape. |
 | **heart_beat** | Apply name recognized in `ApplyTable`; `Scheduler::tickHeartbeats()` **empty stub**; never called. | Full: `set_heart_beat()`, backend `call_heart_beat()`, mud-time-relative beats (FluffOS changelog). |
 | **call_out scheduling** | Efun validates args (string or closure), returns handle; **`tickCallOuts()` stub — does not schedule/fire.** | Full scheduler in `call_out.c`: delay queue, handles, remove/find, fires from backend; accepts string or function. |
-| **Efun count** | **~58** registered names (aliases counted once each: e.g. `new`/`clone_object`, `evaluate`/`funcall`). | Local 2.9: ~**180** core + ~**120** package ≈ **~300**; modern FluffOS docs cite **600+** with packages/DB/crypto/etc. |
+| **Efun count** | **~91** registered names (aliases counted once each: e.g. `new`/`clone_object`, `evaluate`/`funcall`, `find_object`/`load_object`). | Local 2.9: ~**180** core + ~**120** package ≈ **~300**; modern FluffOS docs cite **600+** with packages/DB/crypto/etc. |
 | **Threading / coroutines** | Single-threaded poll loop; no LPC coroutines. | Single-threaded backend; no LPC threads/coroutines. Optional async package for non-LPC work. |
 | **Master / connect / input_to** | Master load, `connect()`, `logon()`, `input_to()`, `process_input` fallback — live end-to-end. | Same protocol (`backend`/`comm`); plus telnet negotiation, MXP, etc. |
 | **Virtual objects** | `master()->compile_object()` wired into `loadObject()` when `.c` missing. | `int_load_object` + `load_virtual_object`; also clone-of-virtual paths. |
@@ -60,14 +60,13 @@ Our column is taken from `docs/STATUS.md` “Working now” / “Known stubs” 
 
 Priority-shaped for *this* mudlib, not a full FluffOS checklist:
 
-1. **Closure surface area** — general lambda / bare string-constant / `(*fp)(args)` still missing; STATUS’s next compile blocker for `std/user/editor.c`.
-2. **Real `call_out` + `heart_beat`** — efun/API present, scheduler stubs empty; idle timeouts and most daemons will hang without this.
-3. **`throw()`** — catch without throw blocks mudlib patterns that rethrow or signal via `throw`.
-4. **Efun breadth** — missing hundreds of efuns (`add_action`, living/inventory, shadows, sockets package, regexp-rich string ops, full `sprintf`/`sscanf`, `map`/`filter`/`sort_array` as closure consumers, etc.).
-5. **Object lifecycle fidelity** — weak destruct / once-interactive / living tables; `message()` only hits current connection.
-6. **Save-file compatibility** — cannot restore historical FluffOS `.o` files.
-7. **Telnet / interactive polish** — echo suppression, terminal_colour, MXP, etc.
-8. **Partial operator parity** — array `|`, exact `&` semantics, `arr[i]++`, full `replace_string` bounds, eval-limit accumulation across nested calls.
+1. **Real `call_out` + `heart_beat` — now the single largest remaining gap.** Chargen runs completely end to end as of 2026-08-07 (login through a real room with working `look`), which makes this the next thing that actually blocks gameplay: `Scheduler::tickHeartbeats()`/`tickCallOuts()` are still literally empty function bodies (confirmed by reading `src/scheduler/Scheduler.cpp` directly, not inferred). Nothing time-based fires at all — no combat rounds, no NPC AI, no regen, no respawns, not even `logon()`'s own 180-second idle-disconnect timer.
+2. **`throw()`** — catch without throw blocks mudlib patterns that rethrow or signal via `throw`.
+3. **Efun breadth vs FluffOS's ~300-600** — `add_action`/`enable_commands` (a full command-dispatch subsystem, not just the efuns), `living()`, `all_inventory()`/`deep_inventory()`/`present()`, and several other historically-cited gaps are now implemented (~91 efuns registered, up from ~58); still missing: shadows, sockets package, regexp-rich string ops, full `sprintf`/`sscanf`, `map`/`filter`/`sort_array` as closure consumers over arbitrary collections.
+4. **Object lifecycle fidelity** — weak destruct / once-interactive / living tables; `message()` only hits current connection.
+5. **Save-file compatibility** — cannot restore historical FluffOS `.o` files.
+6. **Telnet / interactive polish** — echo suppression, terminal_colour, MXP, etc.
+7. **Partial operator parity** — array `|`, exact `&` semantics, `arr[i]++`, full `replace_string` bounds, eval-limit accumulation across nested calls.
 
 ---
 
@@ -96,6 +95,6 @@ Priority-shaped for *this* mudlib, not a full FluffOS checklist:
 
 ## Sources
 
-- `docs/STATUS.md` (our feature inventory)
+- `docs/STATUS.md` (our feature inventory; last cross-checked against this doc 2026-08-07 after chargen reached a full end-to-end run)
 - Local FluffOS 2.9-ds2.08 (`func_spec.c`, `packages/*_spec.c`, `backend.c`, `call_out.c`, `interpret.c`, `function.c`, mudos.cfg)
 - https://github.com/fluffos/fluffos (modern architecture summary)

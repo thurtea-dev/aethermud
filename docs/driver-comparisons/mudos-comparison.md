@@ -43,7 +43,7 @@ Same summary as in the FluffOS report: C++20 stack VM, AST→bytecode, FluffOS/M
 
 | Feature | Our driver (STATUS.md) | MudOS (v22-line / MudOS docs) | Amylaar / LDMud (contrast only) |
 |---|---|---|---|
-| **Closures / function pointers** | Bare `(: name, args… :)`; `evaluate`/`funcall`; lazy resolve. Missing general lambda, `(*fp)()`, string-constant form, `$n` forms. | Full `function` type; `(: obj, "fn" :)`, `(: "fn" :)`, functionals, `(*f)(args)` → `call_function_pointer`. | Different surface: `#'name`, `lambda()`, symbols, operator closures; inline closures inspired by MudOS but not identical. |
+| **Closures / function pointers** | Bare `(: name, args… :)`, general inline lambda, `(*fp)(args)`, and bare string-constant closures all implemented (2026-08-07); `evaluate`/`funcall`; lazy resolve. Only `$n`/`$(var)` placeholder forms remain missing. | Full `function` type; `(: obj, "fn" :)`, `(: "fn" :)`, functionals, `(*f)(args)` → `call_function_pointer`. | Different surface: `#'name`, `lambda()`, symbols, operator closures; inline closures inspired by MudOS but not identical. |
 | **catch / throw** | `catch(expr)` only; no `throw()`. | `catch` + `throw` efun; longjmp-style unwind to catch frame. | `catch` / `throw` also present (details differ). |
 | **Inheritance** | Multi-level inherit, cycle detect, flattened vars, `::` / `qualifier::`. | Multi-level inherit; configurable inherit chain size; inherit list efuns. | Multi-level; historically deep feature set around replaces/shadows. |
 | **Arrays / mappings** | Present with noted `&`/`\|` and range gaps. | First-class arrays & mappings; buffers in later MudOS. | Arrays & mappings; mapping “width” model differs from MudOS in LDMud. |
@@ -51,7 +51,7 @@ Same summary as in the FluffOS report: C++20 stack VM, AST→bytecode, FluffOS/M
 | **simul_efuns** | Loaded; tier-3 resolution; `efun::` bypass. | Canonical simul_efun object model (MudOS popularized the pattern for TMI mudlibs). | simul_efuns exist; lookup prefers them similarly. |
 | **heart_beat** | Recognized apply; **scheduler stub — never fires**. | `set_heart_beat` + backend heartbeat pass every cycle. | Same general idea. |
 | **call_out** | Validates + returns handle; **does not schedule**. | Full delayed-call queue from backend. | Full `call_out` / `remove_call_out`. |
-| **Efun count** | ~**58** | Large core set (same order as FluffOS 2.9 core ~180 before packages); sockets and contrib packages expand further. | Very large (LDMud often cited as biggest LPC feature set). |
+| **Efun count** | ~**91** (up from ~58) | Large core set (same order as FluffOS 2.9 core ~180 before packages); sockets and contrib packages expand further. | Very large (LDMud often cited as biggest LPC feature set). |
 | **Threading** | Single-threaded poll loop. | Single-threaded; no LPC threads. | Single-threaded LPC; tick limits. |
 | **Sockets / intermud** | Plain game TCP only. | Native socket efuns (MudOS hallmark). | Socket support in LDMud as well (API differs). |
 | **LPC→C** | None. | Optional / historical binaries & compilation packages. | Not the same LPC→C story as MudOS/BeekOS. |
@@ -63,10 +63,10 @@ Same summary as in the FluffOS report: C++20 stack VM, AST→bytecode, FluffOS/M
 
 Because our semantic target *is* MudOS/FluffOS LPC, gaps vs MudOS largely mirror the FluffOS report:
 
-1. **Incomplete `function` type** — MudOS mudlibs (including Nightmare) assume `(*fp)()`, stored functionals, and string-constant closures; STATUS flags these as the next compile blockers.
-2. **Non-functional timers** — MudOS gameplay assumes live `call_out` and `heart_beat`; ours only stubs the scheduler.
-3. **Missing `throw`** — MudOS error idiom is catch/throw pairs.
-4. **Tiny efun surface** — no `add_action`/command parser stack, no socket efuns, no living/inventory efuns, incomplete string/format efuns.
+1. **Non-functional timers — now the single largest remaining gap.** Chargen runs completely end to end as of 2026-08-07 (login through a real room, working `look`), which makes this the next thing that actually blocks gameplay: `Scheduler::tickHeartbeats()`/`tickCallOuts()` are still empty function bodies, confirmed by reading `src/scheduler/Scheduler.cpp` directly. MudOS gameplay assumes live `call_out` and `heart_beat`; nothing time-based fires here at all yet.
+2. **Missing `throw`** — MudOS error idiom is catch/throw pairs.
+3. **`function` type is now essentially complete** for this mudlib's dialect — `(*fp)()`, stored/inline functionals, and string-constant closures are all implemented; only `$n`/`$(var)` placeholder forms remain, unused on any path reached live.
+4. **Efun surface has grown (~91, up from ~58) but is still tiny next to MudOS's hundreds** — `add_action`/`enable_commands` is now a real command-dispatch subsystem (not missing), `living()`/`all_inventory()`/`deep_inventory()`/`present()` implemented; still no socket efuns, incomplete string/format efuns (`sprintf` lacks field-width specifiers like `%*`, `sscanf` lacks floats/hex/regexp).
 5. **No object swap / binary programs** — MudOS-era memory management and optional compiled binaries absent (acceptable for bring-up).
 6. **Destruct / interactive semantics** — MudOS tracks destructed and once-interactive objects carefully; STATUS documents weaker behavior.
 7. **Save format** — not MudOS `.o` compatible.
@@ -101,7 +101,7 @@ MudOS’s big architectural bet — **driver as OS, mudlib as userspace, sockets
 
 ## Sources
 
-- `docs/STATUS.md`
+- `docs/STATUS.md` (last cross-checked against this doc 2026-08-07 after chargen reached a full end-to-end run)
 - Local MudOS-family tree: FluffOS 2.9-ds2.08 (Credits.MudOS, interpret.c, func_spec.c, backend.c)
 - MudOS conceptual docs (e.g. “What is the MudOS driver?” / Intermediate LPC ch.2 heart_beat & call_out)
 - Historical notes: LPMud FAQ / Mateese comparison (MudOS vs LDMud vs DGD feature posture)
