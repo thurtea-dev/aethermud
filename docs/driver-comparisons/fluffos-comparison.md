@@ -60,13 +60,14 @@ Our column is taken from `docs/STATUS.md` “Working now” / “Known stubs” 
 
 Priority-shaped for *this* mudlib, not a full FluffOS checklist:
 
-1. **Real `call_out` + `heart_beat` — now the single largest remaining gap.** Chargen runs completely end to end as of 2026-08-07 (login through a real room with working `look`), which makes this the next thing that actually blocks gameplay: `Scheduler::tickHeartbeats()`/`tickCallOuts()` are still literally empty function bodies (confirmed by reading `src/scheduler/Scheduler.cpp` directly, not inferred). Nothing time-based fires at all — no combat rounds, no NPC AI, no regen, no respawns, not even `logon()`'s own 180-second idle-disconnect timer.
+1. **`call_out`/`heart_beat` are now real** (2026-08-07): a genuine Scheduler with correct FluffOS-grounded semantics (delay clamping, handle-based and name-based removal, self-rescheduling call-outs, per-object heartbeat interval), confirmed live end to end (a scheduled message firing after its real delay, an NPC's own heartbeat-driven dialogue, both reaching the player through a corrected `message()`/`tell_object()` path). No longer a gap.
 2. **`throw()`** — catch without throw blocks mudlib patterns that rethrow or signal via `throw`.
-3. **Efun breadth vs FluffOS's ~300-600** — `add_action`/`enable_commands` (a full command-dispatch subsystem, not just the efuns), `living()`, `all_inventory()`/`deep_inventory()`/`present()`, and several other historically-cited gaps are now implemented (~91 efuns registered, up from ~58); still missing: shadows, sockets package, regexp-rich string ops, full `sprintf`/`sscanf`, `map`/`filter`/`sort_array` as closure consumers over arbitrary collections.
-4. **Object lifecycle fidelity** — weak destruct / once-interactive / living tables; `message()` only hits current connection.
-5. **Save-file compatibility** — cannot restore historical FluffOS `.o` files.
-6. **Telnet / interactive polish** — echo suppression, terminal_colour, MXP, etc.
-7. **Partial operator parity** — array `|`, exact `&` semantics, `arr[i]++`, full `replace_string` bounds, eval-limit accumulation across nested calls.
+3. **`sprintf`'s `%*` dynamic field width** — still missing; the only other gap this driver's own live testing has actually hit (the score panel's two-column layout).
+4. **Efun breadth vs FluffOS's ~300-600** — `add_action`/`enable_commands` (a full command-dispatch subsystem, not just the efuns), `living()`, `all_inventory()`/`deep_inventory()`/`present()`, `get_dir()` glob patterns, and several other historically-cited gaps are now implemented (~95+ efuns registered, up from ~58); still missing: shadows, sockets package, regexp-rich string ops, `map`/`filter`/`sort_array` as closure consumers over arbitrary collections.
+5. **Object lifecycle fidelity** — weak destruct / once-interactive / living tables (`message()`'s own targeting gap closed, see item 1).
+6. **Save-file compatibility** — cannot restore historical FluffOS `.o` files.
+7. **Telnet / interactive polish** — echo suppression, terminal_colour, MXP, etc.
+8. **Partial operator parity** — array `|`, exact `&` semantics, `arr[i]++`, full `replace_string` bounds, eval-limit accumulation across nested calls.
 
 ---
 

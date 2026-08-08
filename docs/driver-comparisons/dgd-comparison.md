@@ -37,8 +37,8 @@ C++20 FluffOS/MudOS-oriented subset: stack VM, master + simul_efun objects, TCP 
 | **Arrays / mappings** | Supported with STATUS-noted operator gaps. | Supported; **copy-on-timeslice** when shared across object arenas — semantic difference from MudOS shared references. |
 | **sscanf** | Partial format set. | `sscanf` kfun present (full DGD semantics). Also distinctive **`parse_string`** grammar kfun. |
 | **simul_efuns** | Real simul_efun object + tier-3 lookup + `efun::`. | **No simul_efun object.** **Auto object** is implicitly inherited by all; kfuns can be shadowed by auto/afuns. |
-| **heart_beat** | Apply recognized; **never called** (stub). | **No dedicated heart_beat apply** in the MudOS sense. Recurring work is done with **`call_out`** (and mudlib conventions). |
-| **call_out scheduling** | Efun exists; **scheduler does not fire**. | First-class **`call_out` / `remove_call_out`** kfuns; timing rules documented (order among equal delays not guaranteed; long vs ms callouts). |
+| **heart_beat** | Real: fires on a genuine per-object interval (2026-08-07), FluffOS-grounded semantics, confirmed live. | **No dedicated heart_beat apply** in the MudOS sense. Recurring work is done with **`call_out`** (and mudlib conventions). |
+| **call_out scheduling** | Real: a genuine Scheduler fires due call-outs, handle- and name-based removal, self-rescheduling call-outs supported, confirmed live. | First-class **`call_out` / `remove_call_out`** kfuns; timing rules documented (order among equal delays not guaranteed; long vs ms callouts). |
 | **Efun / kfun count** | ~**91** efuns (up from ~58; see `docs/driver-comparisons/fluffos-comparison.md` for the current breakdown). | ~**99** documented kfuns in the public index (math, ASN.1, crypto hashes, files, network, compile, dump_state, …) — smaller surface than FluffOS, larger than ours, differently shaped. |
 | **Threading / coroutines** | Single-threaded loop. | Sequential tasks; Hydra adds speculative parallel timeslices with rollback. No LPC coroutines. |
 | **Persistence** | Per-object `save_object`/`restore_object` (custom format). | World-level **statedump**, swapout, hotboot; objects immortal-by-default across restarts. |
@@ -56,7 +56,7 @@ These are “DGD has it, we don’t” — **not** a backlog we must copy to run
 3. **LWO / per-object memory arenas** — DGD’s copy-at-timeslice-end model.
 4. **In-place object upgrade** — recompile and migrate live instances.
 5. **Auto/driver object architecture** — different privileged API than master/simul_efun.
-6. **Working `call_out`** — DGD and MudOS both need this; we still stub it (gap shared with FluffOS comparison).
+6. ~~Working `call_out`~~ — real now (2026-08-07), confirmed live; no longer a gap either DGD or MudOS comparison shares.
 7. **`parse_string`, ASN.1, dump_state, editor kfuns** — DGD specialities unused by FluffOS mudlibs.
 8. **Optional DGD closures** — still would not parse Nightmare `(: :)` sources without a separate frontend.
 

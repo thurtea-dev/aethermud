@@ -63,10 +63,10 @@ Same summary as in the FluffOS report: C++20 stack VM, AST→bytecode, FluffOS/M
 
 Because our semantic target *is* MudOS/FluffOS LPC, gaps vs MudOS largely mirror the FluffOS report:
 
-1. **Non-functional timers — now the single largest remaining gap.** Chargen runs completely end to end as of 2026-08-07 (login through a real room, working `look`), which makes this the next thing that actually blocks gameplay: `Scheduler::tickHeartbeats()`/`tickCallOuts()` are still empty function bodies, confirmed by reading `src/scheduler/Scheduler.cpp` directly. MudOS gameplay assumes live `call_out` and `heart_beat`; nothing time-based fires here at all yet.
+1. **Timers are now real** (2026-08-07): `call_out`/`heart_beat` fire through a genuine Scheduler, FluffOS-grounded (real delay clamping, handle- and name-based removal, self-rescheduling call-outs, per-object heartbeat interval), confirmed live end to end. No longer a gap.
 2. **Missing `throw`** — MudOS error idiom is catch/throw pairs.
 3. **`function` type is now essentially complete** for this mudlib's dialect — `(*fp)()`, stored/inline functionals, and string-constant closures are all implemented; only `$n`/`$(var)` placeholder forms remain, unused on any path reached live.
-4. **Efun surface has grown (~91, up from ~58) but is still tiny next to MudOS's hundreds** — `add_action`/`enable_commands` is now a real command-dispatch subsystem (not missing), `living()`/`all_inventory()`/`deep_inventory()`/`present()` implemented; still no socket efuns, incomplete string/format efuns (`sprintf` lacks field-width specifiers like `%*`, `sscanf` lacks floats/hex/regexp).
+4. **Efun surface has grown (~95+, up from ~58) but is still tiny next to MudOS's hundreds** — `add_action`/`enable_commands` is now a real command-dispatch subsystem (not missing), `living()`/`all_inventory()`/`deep_inventory()`/`present()`/`get_dir()` glob patterns implemented; still no socket efuns, incomplete string/format efuns (`sprintf` lacks field-width specifiers like `%*`, `sscanf` lacks floats/hex/regexp).
 5. **No object swap / binary programs** — MudOS-era memory management and optional compiled binaries absent (acceptable for bring-up).
 6. **Destruct / interactive semantics** — MudOS tracks destructed and once-interactive objects carefully; STATUS documents weaker behavior.
 7. **Save format** — not MudOS `.o` compatible.
